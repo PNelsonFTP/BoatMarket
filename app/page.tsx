@@ -48,6 +48,7 @@ import { Compare } from "@/components/compare";
 import { Market } from "@/components/market";
 import { SavedSearches } from "@/components/saved-searches";
 import { Settings } from "@/components/settings";
+import { storageKey } from "@/lib/storage";
 import { SourceCoverage } from "@/components/source-coverage";
 import {
   Dialog,
@@ -113,7 +114,8 @@ export default function Page() {
         ].includes(hash)
       )
         setTab(hash as Tab);
-      const d = localStorage.getItem("boatscout.theme") === "dark";
+      const d =
+        localStorage.getItem(storageKey("preferences", "theme")) === "dark";
       setDark(d);
       document.documentElement.dataset.theme = d ? "dark" : "light";
     } catch {
@@ -390,7 +392,10 @@ export default function Page() {
               const value = !dark;
               setDark(value);
               document.documentElement.dataset.theme = value ? "dark" : "light";
-              localStorage.setItem("boatscout.theme", value ? "dark" : "light");
+              localStorage.setItem(
+                storageKey("preferences", "theme"),
+                value ? "dark" : "light",
+              );
             }}
           >
             {dark ? <Sun size={18} /> : <Moon size={18} />}

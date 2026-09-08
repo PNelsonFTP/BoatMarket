@@ -17,9 +17,9 @@ Research pass: September 7, 2026. Counts and the current shortlist are in [LIVE_
 | Craigslist | 17 nearby regions | Public owner and dealer result pages, joined to their metadata; preferred-make details below 21 ft or missing length |
 | Starved Rock Marina | Ottawa, IL | All three used-inventory pages, including advertised prices and lengths |
 
-Craigslist regions: Chicago, La Salle County, Rockford, Peoria, Quad Cities, Milwaukee, Madison, South Bend, Bloomington–Normal, Champaign–Urbana, Springfield IL, Decatur IL, Janesville, Kenosha–Racine, Dubuque, southwest Michigan and Kalamazoo. Out-of-area dealer ads may still appear on these boards; the app uses each ad’s location, not the board’s location, to calculate distance. Cross-posts with different ad IDs may remain separate.
+Craigslist regions: Chicago, La Salle County, Rockford, Peoria, Quad Cities, Milwaukee, Madison, South Bend, Bloomington–Normal, Champaign–Urbana, Springfield IL, Decatur IL, Janesville, Kenosha–Racine, Dubuque, southwest Michigan and Kalamazoo. Out-of-area dealer ads may still appear on these boards; the app uses each ad’s location, not the board’s location, to calculate distance. Cross-posts with different ad IDs may remain separate until reviewed. Connected Settings now shows ranked duplicate pairs and reversible identity decisions.
 
-OnlyInboards, Dealer Spike sites, Gordy’s, Bass Boat Central and Starved Rock now support automatic pagination. Collection has page and detail limits, and inventory-page limits produce a coverage warning. Source URLs and limits are editable in `config/sources.json`. Craigslist result pages expose public static results but no total-page census, so their coverage should not be assumed exhaustive.
+OnlyInboards, Dealer Spike sites, Gordy’s, Bass Boat Central and Starved Rock now support automatic pagination. Collection has page and detail limits, and inventory and requested-detail limits produce a partial outcome with coverage metrics. Source URLs and limits are editable in `config/sources.json`. Craigslist result pages expose public static results but no total-page census, so their coverage should not be assumed exhaustive.
 
 ## Remaining gaps and other sources examined
 
@@ -49,3 +49,9 @@ The main nearby preset selects the preferred fishing and ski makes, active ads w
 Use **Include unknown lengths · verify first** for potential candidates whose dimensions need confirmation. Use **All nearby ads · no lake screen** to inspect the broader local inventory without the make, power or lake-length filters. These views are explicit about their wider scope.
 
 The collector does not infer hull length from a model number, trolling motor shaft, Power Pole or trailer measurement. Likewise, displacement such as a 350-cubic-inch inboard is not treated as horsepower. Prices on request and ambiguous locations remain unknown. Sold/pending indicators are retained when exposed by a source.
+
+## September 8 engineering follow-up
+
+The source roster and dated access observations above remain unchanged; this pass did not re-probe blocked sites. [config/source-access.json](config/source-access.json) now stores all 21 source/service gaps for the Settings health panel. Full refresh reports show configured/discovered/attempted inventory pages, detail eligibility/success/failure/caps, cache hits, successful fetched HTML pages and observation dates. These measures expose bounded collection; they do not prove complete inventory. Existing successful source summaries can still be useful when detail caps make the overall result partial.
+
+Duplicate review now includes same-source reposts; 163 candidate pairs were identified in the existing 1,538 ads. The HIN reindex found 144 structurally usable HINs but no repeated valid HINs, so no automatic groups were created. City enrichment ranks state/ZIP evidence and suburbs, retains ambiguous lookups, and supports reviewed approximate-city corrections. Actual offsite boat locations remain unknown.

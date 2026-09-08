@@ -29,6 +29,7 @@ export const sourceConfigSchema = z.object({
     .default([]),
   area: z.string().max(200).default("Configured inventory"),
   render: z.boolean().default(false),
+  cacheMaxAgeHours: z.number().min(1).max(720).optional(),
   autoPaginate: z.boolean().default(false),
   maxInventoryPages: z.number().int().min(1).max(100).default(40),
   followDetails: z.boolean().default(false),

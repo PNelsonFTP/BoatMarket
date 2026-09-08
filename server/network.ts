@@ -36,6 +36,7 @@ export async function requestPublic(
     body?: string;
     headers?: Record<string, string>;
     maxBytes?: number;
+    signal?: AbortSignal;
   } = {},
   redirects = 0,
 ): Promise<{
@@ -43,13 +44,16 @@ export async function requestPublic(
   body: string;
   headers: http.IncomingHttpHeaders;
 }> {
+  options.signal?.throwIfAborted();
   const { url, address } = await publicUrl(input);
+  options.signal?.throwIfAborted();
   return new Promise((resolve, reject) => {
     const client = url.protocol === "https:" ? https : http;
     const req = client.request(
       url,
       {
         method: options.method || "GET",
+        signal: options.signal,
         headers: {
           "user-agent":
             process.env.GEOCODER_USER_AGENT ||

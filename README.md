@@ -53,7 +53,12 @@ On macOS, double-click **Start-BoatScout.command**. On Windows, run **Start-Boat
 - Shortlist, private notes, data flags, photo galleries, source links, engine records, price history, similar boats, and comparison of up to six boats.
 - Saved searches; in-app alerts; email and webhook delivery; hourly/daily/weekly cadence; optional digest.
 - Market charts for the current filtered dataset.
-- Source configuration, manual import, run summaries, geocode cache, rule and reference-place editors.
+- Source health with a dated coverage-gap ledger, page/detail caps, cache/fetch metrics, and explicit refresh outcomes.
+- Reversible duplicate review, HIN conflict protection, and same-marketplace repost suggestions.
+- Validated, chunked full-dataset imports with progress and failure manifests; previewed workspace merge/restore.
+- City-center review and correction, ambiguity-aware geocoding, rule and reference-place editors.
+- Downloadable comparison packets with printable seller and inspection checklists.
+- Consistent SQLite backups with integrity verification, configuration copies, and SHA-256 manifests.
 - Light/dark mode, mobile layouts, native keyboard controls, and Cmd/Ctrl+K search focus.
 - Authenticated, validated API with rate limits and optimistic concurrency for workspace updates.
 
@@ -65,7 +70,7 @@ On macOS, double-click **Start-BoatScout.command**. On Windows, run **Start-Boat
 | Snapshot | Published `snapshot.json`, or a JSON file imported for the current session | This browser’s snapshot workspace | No |
 | Connected | Local API and SQLite database | Persisted in the backend | Yes, while the worker runs |
 
-Connecting opens a separate backend workspace. It does not silently copy fictional listings or sample notes into your real database. The top banner always identifies the current mode. Sample photographs illustrate boat categories and are **not photos of the named model or an actual offering**. See [PHOTO_CREDITS.md](PHOTO_CREDITS.md).
+Connected workspaces also keep an isolated browser backup; the backend remains authoritative and that cache is never silently restored over it. Connecting opens a separate backend workspace. It does not silently copy fictional listings or sample notes into your real database. Browser storage is separated by deployment path, data mode, and backend URL. Earlier unscoped browser workspaces can be deliberately restored through Settings; they are not silently copied. The top banner always identifies the current mode. Sample photographs illustrate boat categories and are **not photos of the named model or an actual offering**. See [PHOTO_CREDITS.md](PHOTO_CREDITS.md).
 
 ## GitHub Pages
 
@@ -83,11 +88,11 @@ The workflow uses GitHub’s [custom Pages workflow](https://docs.github.com/en/
 Collect/import listings locally, then:
 
 ```bash
-npm run export:snapshot
+npm run refresh
 npm run build
 ```
 
-This writes `public/snapshot.json` and enables it in `public/data-mode.json`. Review the exported listing data, then commit those two files and push. Raw payloads, sample listings, notes, favorites, alert destinations, and credentials are excluded. The public site works while your computer is off. Update the snapshot whenever you want fresh listings. Restore `{"snapshot":false}` in `public/data-mode.json` to show the built-in samples again.
+A successful full refresh backs up the database, collects, validates the outcome, then atomically writes `public/snapshot.json` and enables it in `public/data-mode.json`. Partial or failed collection preserves the previous snapshot. To export an already-reviewed database without collection, use `npm run export:snapshot`. Review the exported listing data, then commit those two files and push. Raw payloads, sample listings, notes, favorites, alert destinations, and credentials are excluded. The public site works while your computer is off. Update the snapshot whenever you want fresh listings. Restore `{"snapshot":false}` in `public/data-mode.json` to show the built-in samples again.
 
 A snapshot exported by the Settings button includes all currently displayed source records, including explicitly labeled samples. Importing a JSON file in Settings changes the current session; exporting/publishing it makes it persistent across reloads.
 
@@ -141,13 +146,13 @@ Open **Settings → Your data → Add a boat**. Supply the original listing URL,
 
 ### JSON import
 
-Use **Settings → Import listings** with an object containing a `listings` array. Download the example from the site or inspect `public/import-example.json`. The canonical Zod schema is in `lib/types.ts`; filter attributes not represented by dedicated properties belong in `specs`. Unknown values are `null`, not zero or fabricated guesses. Prices are USD. Set `isSample: false` only for actual listings. The example is intentionally marked as a sample.
+Use **Settings → Import listings** with an object containing a `listings` array. Download the example from the site or inspect `public/import-example.json`. The canonical Zod schema is in `lib/types.ts`; filter attributes not represented by dedicated properties belong in `specs`. Unknown values are `null`, not zero or fabricated guesses. Prices are USD. Set `isSample: false` only for actual listings. The example is intentionally marked as a sample. The import preview validates the entire file and sends connected imports in chunks of at most 1,000 records and 12 MiB. It stops at the first failure and offers a manifest of accepted, failed, uncertain, and unattempted IDs for safe retry. **Restore workspace** previews notes, favorites, searches, rules and references; merge preserves current edits by default. Explicit replacement first downloads a backup and still checks the backend revision.
 
 ### Configure an adapter
 
 Open **Settings → Sources & collection → Edit configuration**. Enter one or more search/inventory URLs, choose the right adapter, and enable it. Search the marketplace yourself to create a URL for each desired area. The collector fetches these configured inventory pages; changing a dashboard filter does not automatically rewrite external marketplace queries or crawl every page on a marketplace.
 
-All configured sources live in `config/sources.json`. Save configuration, run enabled sources, and refresh status to review results. This checkout enables ten sources after successful live collection, including regional classifieds and seven dealer inventories. See [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) for the source list, geographic scope and remaining gaps. Failed sources remain disabled with their URLs and run history retained. An adapter with a robots denial or access challenge stops; it does not attempt to bypass the restriction. Requests are throttled with jitter and cached for 24 hours, and failed sources do not stop others.
+All configured sources live in `config/sources.json`. Save configuration, run enabled sources, and refresh status to review results. This checkout enables ten sources after successful live collection, including regional classifieds and seven dealer inventories. See [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) for the source list, geographic scope and remaining gaps. Failed sources remain disabled with their URLs and run history retained. An adapter with a robots denial or access challenge stops; it does not attempt to bypass the restriction. Requests are throttled with jitter and cached for 24 hours by default, and failed sources do not stop others. Configure `cacheMaxAgeHours` per source (1–720 hours), `COLLECTION_CACHE_HOURS` globally, or `--cache-hours=N` for one CLI run. An inventory/detail cap is reported as partial coverage, not silent success.
 
 | Adapter | Implementation and current limits |
 |---|---|
@@ -188,11 +193,11 @@ To add code for a source, implement the `Adapter` interface in `server/adapters/
 
 ## Refresh and schedules
 
-For a full local data update, run `npm run collect`, inspect the per-source results, resolve new cities with `npm run geocode:listings`, then run `npm run export:snapshot`. Reload the development snapshot; rebuild for local production or publish the changed snapshot through the configured Pages workflow. A collection exit code of zero does not prove every source succeeded.
+Run `npm run refresh` for backup → collect → validate → atomic snapshot export. Add `-- --geocode` to resolve newly discovered cities using explicit, bounded lookups. Source errors or page/detail caps produce exit **2** and preserve the previous snapshot. Exit **0** means success, **1** failure, **3** busy, and **130** cancellation. After inspecting the report, `--allow-partial` can deliberately export a partial dataset with that status recorded; it still returns 2.
 
-In connected mode use **Settings → Sources & collection → Run enabled sources**, inspect **Refresh status**, then choose **Refresh data** when the run finishes. Refresh data reloads the database; it does not crawl sources.
+In connected mode, **Settings → Source health & refresh → Refresh data & snapshot** runs the same pipeline and shows its outcome. **Run enabled sources** collects only; **Refresh data** reloads the database only. The public health endpoint checks database connectivity and reports worker heartbeat status. Authenticated source health includes page/detail counts, cache observations and the dated missing-source ledger. Reports persist in `data/refresh-runs/`.
 
-The worker currently runs at a 30-minute interval while the process/computer is running, and pages have a 24-hour cache. It does not automatically geocode, export snapshots, build, deploy, or discover new sources. Daily/weekly full-refresh options were discussed, but no new fixed daily/weekly automation was created. Collection interval, page freshness, and saved-search alert cadence are separate settings. See [OPERATIONS.md](OPERATIONS.md) for exact steps and the values for daily or weekly worker intervals.
+The worker runs every 30 minutes after each completed cycle while the process/computer is running. Set `WORKER_INTERVAL_MINUTES=1440` for daily intervals or `10080` for weekly, and `WORKER_AUTO_EXPORT=true` to run the complete safe snapshot pipeline on daemon cycles. `WORKER_AUTO_GEOCODE=true` additionally enables bounded city lookups. No OS schedule or Codex automation was installed; these are interval settings, not fixed wall-clock appointments. Builds, commits and publication remain separate. Collection interval, cache freshness and saved-search alert cadence are different settings. See [OPERATIONS.md](OPERATIONS.md).
 
 ## Alerts
 
@@ -206,7 +211,7 @@ The UI supports a combined digest or one alert per matching change. Failed deliv
 
 Open **Settings → Lake & towing rules** to add/edit limits. Apply the named rule from the Discover filter rail. A saved search captures the rule as it was saved; edit/re-save the search to adopt later rule changes. The editable Lake Holiday screening preset uses a strict under-21-ft limit from the publicly available 2024 association rulebook. It is a screening aid, not registration approval. Wakesurfing and use of wake-enhancing devices are prohibited by that publication; current rules and platform measurement require association confirmation. See [LIVE_DATA.md](LIVE_DATA.md).
 
-Length and beam/draft are decimal feet (18 ft 6 in = 18.5); shaft length is inches; weights and thrust are pounds; distances are great-circle miles, not driving/towing mileage. Reference places can be added in Settings. Place lookup uses a cached, explicit Nominatim request limited to one at a time and at least 1.1 seconds apart, following its [usage policy](https://operations.osmfoundation.org/policies/nominatim/). The site does not send keystrokes for autocomplete.
+Length and beam/draft are decimal feet (18 ft 6 in = 18.5); shaft length is inches; weights and thrust are pounds; distances are great-circle miles, not driving/towing mileage. Reference places can be added in Settings. Place lookup uses a cached, explicit Nominatim request limited to one at a time and at least 1.1 seconds apart, following its [usage policy](https://operations.osmfoundation.org/policies/nominatim/). The site does not send keystrokes for autocomplete. Batch enrichment requires matching city/state evidence, considers ZIP and suburbs, and queues ambiguous results. **Settings → Location review** corrects approximate city centers with local evidence; exact source coordinates remain unchanged and offsite boats are not assigned the seller’s location. Distances remain straight-line estimates after review.
 
 Unknown values pass an active filter unless you check its **Exclude unknown**, enable the global unknown exclusion, or require known values in a rule. Boolean equipment filters have Any, Include/yes, and Exclude/no. Known-photo counts and `hasPrice` are computed from the record. Price drops compare the latest asking price to the observed price at the start of the chosen window (or first observation inside it).
 
@@ -222,7 +227,10 @@ server/repository.ts  Prisma persistence, price history, workspace concurrency
 server/collector.ts   Robots checks, cache, source isolation and job leases
 server/adapters/      Source contracts, parsers and normalization
 server/alerts.ts      Saved-search evaluation and delivery outbox
-server/worker.ts      Periodic/one-shot execution
+server/worker.ts      Periodic/one-shot execution and heartbeat
+server/refresh.ts     Backups, complete pipeline and durable reports
+server/duplicates.ts  Candidate review, decisions and group reindex
+server/location-review.ts City correction and retained evidence
 prisma/               Relational schema, initial SQL migration, sample seeder
 config/               Editable source configuration
 scripts/              Setup, snapshot export, Docker startup
@@ -231,7 +239,7 @@ public/               Sample photos, attribution, import example, static data
 .vscode/tasks.json    Cursor/VS Code task launchers
 ```
 
-The database has User, Listing, Engine, Seller, PriceHistory, BoatGroup, SearchArea, SavedSearch, Favorite, Note, RuleSet, Alert, IngestRun, GeocodeCache and JobLock models. Less-common listing specifications are validated JSON; frequently accessed fields are indexed columns. See [DECISIONS.md](DECISIONS.md) for differences from the initial prompt and tradeoffs.
+The database has User, Listing, Engine, Seller, PriceHistory, BoatGroup, SearchArea, SavedSearch, Favorite, Note, RuleSet, Alert, IngestRun, GeocodeCache, DuplicateDecision and JobLock models. Less-common listing specifications are validated JSON; frequently accessed fields are indexed columns. See [DECISIONS.md](DECISIONS.md) for differences from the initial prompt and tradeoffs.
 
 ## Verification
 
@@ -253,8 +261,8 @@ Run `npm run sbom` to regenerate the supported CycloneDX inventories and full lo
 
 This is a single-user, local-scale app. The browser and API evaluate the full listing dataset in memory for consistent rich filtering. It is suitable for a personal catalog, not an unbounded nationwide multi-user warehouse. For that workload, migrate Prisma to PostgreSQL, move filter predicates/pagination to database queries, and add a persistent job queue. The included SQLite database is not a drop-in PostgreSQL migration.
 
-Duplicate grouping is conservative and incomplete: the repository first selects at most 100 other-source candidates with identical normalized make/model/year, then checks a shared vessel identifier or original photo URL plus seller/core specifications. Same-source reposts and records with conflicting parsed identity can remain duplicated. The delivered 1,538-ad snapshot has no assigned groups. Perceptual image hashing, manual merge/unmerge, comprehensive pagination for arbitrary marketplaces, exhaustive prose extraction, real-time push subscriptions, and multi-user login are not implemented. Supported source pagination does work; adapter fixtures alone do not prove live access or completeness for other sites.
+Automatic grouping requires matching structurally valid modern HINs, independent of model spelling and source. Conflicting valid HINs and reviewed “different boat” decisions block even transitive merges. Same-source reposts and matching specifications/photos become review suggestions. Decisions are reversible; original ads, source links, price histories, notes and favorites remain intact. Run `npm run duplicates:review -- --dry-run` before an explicit `--apply` reindex.
 
-Blocked sites, unresolved cross-posts, location/length uncertainty, missing snapshot automation, and further verified limits are documented with proposed fixes in [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md). This inventory is not a census of all available boats.
+The current 1,538-ad dataset has 144 usable HINs and **163 suggested duplicate pairs**, but no repeated valid HINs. Thus no automatic groups were assigned. These are review candidates, not 163 proven duplicate boats. Perceptual image matching, arbitrary-marketplace exhaustive pagination, verified driving times and multi-user login remain open. Blocked sources, uncertainty and remaining engineering work are recorded in [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md).
 
-Back up `data/boatscout.db` while the local processes are stopped, plus your `.env` and source config separately. Docker data lives in its named volume, not the host `data/` folder. Treat a published snapshot as public. Sessions expire after 12 hours and are invalidated when the API restarts. The static website has no analytics/tracking code; loading external source photos, map tiles or geocoding still contacts their providers.
+Use `npm run backup` for a consistent SQLite copy, integrity check, configuration/evidence files and a hash manifest under ignored `data/backups/`. Keep `.env` separately in secure storage; backups intentionally exclude secrets. See the tested recovery procedure in [OPERATIONS.md](OPERATIONS.md). Docker data lives in its named volume, not the host `data/` folder. Treat a published snapshot as public. Sessions expire after 12 hours and are invalidated when the API restarts. The static website has no analytics/tracking code; loading external source photos, map tiles or geocoding still contacts their providers.

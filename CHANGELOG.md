@@ -1,5 +1,17 @@
 # BoatScout delivery history
 
+## 2026-09-08 — Reliability, review and buying tools
+
+- Added HIN indexing, reversible same/different/undo duplicate review and conflict protection; retained 163 suggested pairs in the current real inventory without speculative automatic merges.
+- Added protected full refresh, honest CLI/API outcomes, durable reports, collector heartbeat/cancellation/fencing, stale-run recovery and meaningful-change/cache/page/detail metrics.
+- Preserved detail enrichment on failures and used observation timestamps for summary/detail price and availability conflicts.
+- Added database/worker health, structured dated source-gap ledger, source dashboard, city/ZIP/suburb ambiguity handling and reviewed city-center correction.
+- Added full-dataset chunked import, failure/retry manifests, scoped browser storage, deliberate legacy migration, previewed workspace restore and safe preset initialization.
+- Added consistent private backups, integrity/hash verification and documented restore; comparison packets include printable inspection checklists.
+- Completed all-platform bundled-package inventory and CycloneDX schema validation without adding application dependencies.
+- Updated README, handoff, operations, source/data notes, SBOM, decisions, validation and remaining roadmap. Tests use isolated databases/fixtures; dated blocked-source observations remain identified as such.
+
+
 This is a record of delivered work and decisions, not a Git commit history. The supplied workspace had no Git repository. Dates below use America/Chicago; UTC timestamps can fall on September 8 for work done during the September 7 evening.
 
 ## September 7, 2026 — Initial application

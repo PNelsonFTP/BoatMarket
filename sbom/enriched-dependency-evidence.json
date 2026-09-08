@@ -1,0 +1,6067 @@
+{
+  "generatedAt": "2026-09-08T03:09:13.131Z",
+  "sourceLockSha256": "5d6e0f50e5225c83f1880b49e99d1b27d30cd75c870915b41ea96a1139d8c842",
+  "bundledEvidence": "sbom/bundled-package-evidence.json",
+  "packages": 441,
+  "bundledPhysicalPackages": 6,
+  "declaredEdges": [
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "@fastify/cors",
+      "requested": "^11.1.0",
+      "to": "node_modules/@fastify/cors",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "@fastify/rate-limit",
+      "requested": "^10.3.0",
+      "to": "node_modules/@fastify/rate-limit",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "@fastify/static",
+      "requested": "^10.1.3",
+      "to": "node_modules/@fastify/static",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "@prisma/client",
+      "requested": "^6.19.0",
+      "to": "node_modules/@prisma/client",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-dialog",
+      "requested": "^1.1.0",
+      "to": "node_modules/@radix-ui/react-dialog",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-tooltip",
+      "requested": "^1.2.0",
+      "to": "node_modules/@radix-ui/react-tooltip",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "cheerio",
+      "requested": "^1.1.0",
+      "to": "node_modules/cheerio",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "clsx",
+      "requested": "^2.1.1",
+      "to": "node_modules/clsx",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "dotenv",
+      "requested": "^17.2.0",
+      "to": "node_modules/dotenv",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "fastify",
+      "requested": "^5.6.0",
+      "to": "node_modules/fastify",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "ipaddr.js",
+      "requested": "^2.2.0",
+      "to": "node_modules/ipaddr.js",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "leaflet",
+      "requested": "^1.9.4",
+      "to": "node_modules/leaflet",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "leaflet.markercluster",
+      "requested": "^1.5.3",
+      "to": "node_modules/leaflet.markercluster",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "lucide-react",
+      "requested": "^0.468.0",
+      "to": "node_modules/lucide-react",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "next",
+      "requested": "15.5.25",
+      "to": "node_modules/next",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "nodemailer",
+      "requested": "^10.0.1",
+      "to": "node_modules/nodemailer",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "pino",
+      "requested": "^9.9.0",
+      "to": "node_modules/pino",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "react",
+      "requested": "^19.1.0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "react-dom",
+      "requested": "^19.1.0",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "recharts",
+      "requested": "^3.1.0",
+      "to": "node_modules/recharts",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "robots-parser",
+      "requested": "^3.0.1",
+      "to": "node_modules/robots-parser",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "tailwind-merge",
+      "requested": "^3.3.0",
+      "to": "node_modules/tailwind-merge",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "tsx",
+      "requested": "^4.20.0",
+      "to": "node_modules/tsx",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "dependencies",
+      "name": "zod",
+      "requested": "^3.25.0",
+      "to": "node_modules/zod",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@playwright/test",
+      "requested": "^1.55.0",
+      "to": "node_modules/@playwright/test",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@tailwindcss/postcss",
+      "requested": "^4.1.0",
+      "to": "node_modules/@tailwindcss/postcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@types/leaflet",
+      "requested": "^1.9.0",
+      "to": "node_modules/@types/leaflet",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@types/leaflet.markercluster",
+      "requested": "^1.5.0",
+      "to": "node_modules/@types/leaflet.markercluster",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@types/node",
+      "requested": "^22.18.0",
+      "to": "node_modules/@types/node",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@types/nodemailer",
+      "requested": "^7.0.0",
+      "to": "node_modules/@types/nodemailer",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@types/react",
+      "requested": "^19.1.0",
+      "to": "node_modules/@types/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "@types/react-dom",
+      "requested": "^19.1.0",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "concurrently",
+      "requested": "^9.2.0",
+      "to": "node_modules/concurrently",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "prettier",
+      "requested": "^3.9.6",
+      "to": "node_modules/prettier",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "prisma",
+      "requested": "^6.19.0",
+      "to": "node_modules/prisma",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "tailwindcss",
+      "requested": "^4.1.0",
+      "to": "node_modules/tailwindcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "typescript",
+      "requested": "^5.9.0",
+      "to": "node_modules/typescript",
+      "optionalPeer": false
+    },
+    {
+      "from": "",
+      "kind": "devDependencies",
+      "name": "vitest",
+      "requested": "^3.2.0",
+      "to": "node_modules/vitest",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@emnapi/runtime",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.4.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/ajv-compiler",
+      "kind": "dependencies",
+      "name": "ajv",
+      "requested": "^8.12.0",
+      "to": "node_modules/ajv",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/ajv-compiler",
+      "kind": "dependencies",
+      "name": "ajv-formats",
+      "requested": "^3.0.1",
+      "to": "node_modules/ajv-formats",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/ajv-compiler",
+      "kind": "dependencies",
+      "name": "fast-uri",
+      "requested": "^4.0.0",
+      "to": "node_modules/fast-uri",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/cors",
+      "kind": "dependencies",
+      "name": "fastify-plugin",
+      "requested": "^6.0.0",
+      "to": "node_modules/fastify-plugin",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/cors",
+      "kind": "dependencies",
+      "name": "toad-cache",
+      "requested": "^3.7.0",
+      "to": "node_modules/toad-cache",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/fast-json-stringify-compiler",
+      "kind": "dependencies",
+      "name": "fast-json-stringify",
+      "requested": "^7.0.0",
+      "to": "node_modules/fast-json-stringify",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/merge-json-schemas",
+      "kind": "dependencies",
+      "name": "dequal",
+      "requested": "^2.0.3",
+      "to": "node_modules/dequal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/proxy-addr",
+      "kind": "dependencies",
+      "name": "@fastify/forwarded",
+      "requested": "^3.0.0",
+      "to": "node_modules/@fastify/forwarded",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/proxy-addr",
+      "kind": "dependencies",
+      "name": "ipaddr.js",
+      "requested": "^2.1.0",
+      "to": "node_modules/ipaddr.js",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/rate-limit",
+      "kind": "dependencies",
+      "name": "@lukeed/ms",
+      "requested": "^2.0.2",
+      "to": "node_modules/@lukeed/ms",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/rate-limit",
+      "kind": "dependencies",
+      "name": "fastify-plugin",
+      "requested": "^5.0.0",
+      "to": "node_modules/@fastify/rate-limit/node_modules/fastify-plugin",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/rate-limit",
+      "kind": "dependencies",
+      "name": "toad-cache",
+      "requested": "^3.7.0",
+      "to": "node_modules/toad-cache",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/send",
+      "kind": "dependencies",
+      "name": "@lukeed/ms",
+      "requested": "^2.0.2",
+      "to": "node_modules/@lukeed/ms",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/send",
+      "kind": "dependencies",
+      "name": "escape-html",
+      "requested": "~1.0.3",
+      "to": "node_modules/escape-html",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/send",
+      "kind": "dependencies",
+      "name": "fast-decode-uri-component",
+      "requested": "^1.0.1",
+      "to": "node_modules/fast-decode-uri-component",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/send",
+      "kind": "dependencies",
+      "name": "http-errors",
+      "requested": "^2.0.0",
+      "to": "node_modules/http-errors",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/send",
+      "kind": "dependencies",
+      "name": "mime",
+      "requested": "^3",
+      "to": "node_modules/mime",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "@fastify/accept-negotiator",
+      "requested": "^2.0.0",
+      "to": "node_modules/@fastify/accept-negotiator",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "@fastify/error",
+      "requested": "^4.0.0",
+      "to": "node_modules/@fastify/error",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "@fastify/send",
+      "requested": "^4.0.0",
+      "to": "node_modules/@fastify/send",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "content-disposition",
+      "requested": "^2.0.1",
+      "to": "node_modules/content-disposition",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "fastify-plugin",
+      "requested": "^6.0.0",
+      "to": "node_modules/fastify-plugin",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "fastq",
+      "requested": "^1.17.1",
+      "to": "node_modules/fastq",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@fastify/static",
+      "kind": "dependencies",
+      "name": "glob",
+      "requested": "^13.0.0",
+      "to": "node_modules/glob",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@floating-ui/core",
+      "kind": "dependencies",
+      "name": "@floating-ui/utils",
+      "requested": "^0.2.12",
+      "to": "node_modules/@floating-ui/utils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@floating-ui/dom",
+      "kind": "dependencies",
+      "name": "@floating-ui/core",
+      "requested": "^1.8.0",
+      "to": "node_modules/@floating-ui/core",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@floating-ui/dom",
+      "kind": "dependencies",
+      "name": "@floating-ui/utils",
+      "requested": "^0.2.12",
+      "to": "node_modules/@floating-ui/utils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@floating-ui/react-dom",
+      "kind": "dependencies",
+      "name": "@floating-ui/dom",
+      "requested": "^1.8.0",
+      "to": "node_modules/@floating-ui/dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@floating-ui/react-dom",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": ">=16.8.0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@floating-ui/react-dom",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": ">=16.8.0",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-darwin-arm64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-darwin-arm64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-darwin-x64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-darwin-x64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-freebsd-wasm32",
+      "kind": "dependencies",
+      "name": "@img/sharp-wasm32",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-wasm32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linux-arm",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-arm",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-arm",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linux-arm64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-arm64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linux-ppc64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-ppc64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-ppc64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linux-riscv64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-riscv64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-riscv64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linux-s390x",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-s390x",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-s390x",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linux-x64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-x64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linuxmusl-arm64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linuxmusl-arm64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linuxmusl-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-linuxmusl-x64",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linuxmusl-x64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linuxmusl-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-wasm32",
+      "kind": "dependencies",
+      "name": "@emnapi/runtime",
+      "requested": "^1.11.3",
+      "to": "node_modules/@emnapi/runtime",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@img/sharp-webcontainers-wasm32",
+      "kind": "dependencies",
+      "name": "@img/sharp-wasm32",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-wasm32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@jridgewell/gen-mapping",
+      "kind": "dependencies",
+      "name": "@jridgewell/sourcemap-codec",
+      "requested": "^1.5.0",
+      "to": "node_modules/@jridgewell/sourcemap-codec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@jridgewell/gen-mapping",
+      "kind": "dependencies",
+      "name": "@jridgewell/trace-mapping",
+      "requested": "^0.3.24",
+      "to": "node_modules/@jridgewell/trace-mapping",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@jridgewell/remapping",
+      "kind": "dependencies",
+      "name": "@jridgewell/gen-mapping",
+      "requested": "^0.3.5",
+      "to": "node_modules/@jridgewell/gen-mapping",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@jridgewell/remapping",
+      "kind": "dependencies",
+      "name": "@jridgewell/trace-mapping",
+      "requested": "^0.3.24",
+      "to": "node_modules/@jridgewell/trace-mapping",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@jridgewell/trace-mapping",
+      "kind": "dependencies",
+      "name": "@jridgewell/resolve-uri",
+      "requested": "^3.1.0",
+      "to": "node_modules/@jridgewell/resolve-uri",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@jridgewell/trace-mapping",
+      "kind": "dependencies",
+      "name": "@jridgewell/sourcemap-codec",
+      "requested": "^1.4.14",
+      "to": "node_modules/@jridgewell/sourcemap-codec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@playwright/test",
+      "kind": "dependencies",
+      "name": "playwright",
+      "requested": "1.63.0",
+      "to": "node_modules/playwright",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/client",
+      "kind": "peerDependencies",
+      "name": "prisma",
+      "requested": "*",
+      "to": "node_modules/prisma",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@prisma/client",
+      "kind": "peerDependencies",
+      "name": "typescript",
+      "requested": ">=5.1.0",
+      "to": "node_modules/typescript",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@prisma/config",
+      "kind": "dependencies",
+      "name": "c12",
+      "requested": "3.1.0",
+      "to": "node_modules/c12",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/config",
+      "kind": "dependencies",
+      "name": "deepmerge-ts",
+      "requested": "7.1.5",
+      "to": "node_modules/deepmerge-ts",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/config",
+      "kind": "dependencies",
+      "name": "effect",
+      "requested": "3.21.0",
+      "to": "node_modules/effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/config",
+      "kind": "dependencies",
+      "name": "empathic",
+      "requested": "2.0.0",
+      "to": "node_modules/empathic",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/engines",
+      "kind": "dependencies",
+      "name": "@prisma/debug",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/debug",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/engines",
+      "kind": "dependencies",
+      "name": "@prisma/engines-version",
+      "requested": "7.1.1-3.c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
+      "to": "node_modules/@prisma/engines-version",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/engines",
+      "kind": "dependencies",
+      "name": "@prisma/fetch-engine",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/fetch-engine",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/engines",
+      "kind": "dependencies",
+      "name": "@prisma/get-platform",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/get-platform",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/fetch-engine",
+      "kind": "dependencies",
+      "name": "@prisma/debug",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/debug",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/fetch-engine",
+      "kind": "dependencies",
+      "name": "@prisma/engines-version",
+      "requested": "7.1.1-3.c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
+      "to": "node_modules/@prisma/engines-version",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/fetch-engine",
+      "kind": "dependencies",
+      "name": "@prisma/get-platform",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/get-platform",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@prisma/get-platform",
+      "kind": "dependencies",
+      "name": "@prisma/debug",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/debug",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-arrow",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-arrow",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-arrow",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-arrow",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-arrow",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-compose-refs",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-compose-refs",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-context",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-context",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/primitive",
+      "requested": "1.1.7",
+      "to": "node_modules/@radix-ui/primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-compose-refs",
+      "requested": "1.1.5",
+      "to": "node_modules/@radix-ui/react-compose-refs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-context",
+      "requested": "1.2.2",
+      "to": "node_modules/@radix-ui/react-context",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-dismissable-layer",
+      "requested": "1.1.19",
+      "to": "node_modules/@radix-ui/react-dismissable-layer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-focus-guards",
+      "requested": "1.1.6",
+      "to": "node_modules/@radix-ui/react-focus-guards",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-focus-scope",
+      "requested": "1.1.16",
+      "to": "node_modules/@radix-ui/react-focus-scope",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-id",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-id",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-portal",
+      "requested": "1.1.17",
+      "to": "node_modules/@radix-ui/react-portal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-presence",
+      "requested": "1.1.10",
+      "to": "node_modules/@radix-ui/react-presence",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-slot",
+      "requested": "1.3.3",
+      "to": "node_modules/@radix-ui/react-slot",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-controllable-state",
+      "requested": "1.2.6",
+      "to": "node_modules/@radix-ui/react-use-controllable-state",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "aria-hidden",
+      "requested": "^1.2.4",
+      "to": "node_modules/aria-hidden",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "dependencies",
+      "name": "react-remove-scroll",
+      "requested": "^2.7.2",
+      "to": "node_modules/react-remove-scroll",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dialog",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "dependencies",
+      "name": "@radix-ui/primitive",
+      "requested": "1.1.7",
+      "to": "node_modules/@radix-ui/primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-compose-refs",
+      "requested": "1.1.5",
+      "to": "node_modules/@radix-ui/react-compose-refs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-callback-ref",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-callback-ref",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-effect-event",
+      "requested": "0.0.5",
+      "to": "node_modules/@radix-ui/react-use-effect-event",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-dismissable-layer",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-guards",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-guards",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-compose-refs",
+      "requested": "1.1.5",
+      "to": "node_modules/@radix-ui/react-compose-refs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-callback-ref",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-callback-ref",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-focus-scope",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-id",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-id",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-id",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@floating-ui/react-dom",
+      "requested": "^2.0.0",
+      "to": "node_modules/@floating-ui/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-arrow",
+      "requested": "1.1.15",
+      "to": "node_modules/@radix-ui/react-arrow",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-compose-refs",
+      "requested": "1.1.5",
+      "to": "node_modules/@radix-ui/react-compose-refs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-context",
+      "requested": "1.2.2",
+      "to": "node_modules/@radix-ui/react-context",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-callback-ref",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-callback-ref",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-rect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-rect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-size",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-size",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "dependencies",
+      "name": "@radix-ui/rect",
+      "requested": "1.1.3",
+      "to": "node_modules/@radix-ui/rect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-popper",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-portal",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-portal",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-portal",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-portal",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-portal",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-portal",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-presence",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-presence",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-presence",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-presence",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-presence",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-primitive",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-slot",
+      "requested": "1.3.3",
+      "to": "node_modules/@radix-ui/react-slot",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-primitive",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-primitive",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-primitive",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-primitive",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-slot",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-compose-refs",
+      "requested": "1.1.5",
+      "to": "node_modules/@radix-ui/react-compose-refs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-slot",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-slot",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/primitive",
+      "requested": "1.1.7",
+      "to": "node_modules/@radix-ui/primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-compose-refs",
+      "requested": "1.1.5",
+      "to": "node_modules/@radix-ui/react-compose-refs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-context",
+      "requested": "1.2.2",
+      "to": "node_modules/@radix-ui/react-context",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-dismissable-layer",
+      "requested": "1.1.19",
+      "to": "node_modules/@radix-ui/react-dismissable-layer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-id",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-id",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-popper",
+      "requested": "1.3.7",
+      "to": "node_modules/@radix-ui/react-popper",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-portal",
+      "requested": "1.1.17",
+      "to": "node_modules/@radix-ui/react-portal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-presence",
+      "requested": "1.1.10",
+      "to": "node_modules/@radix-ui/react-presence",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-slot",
+      "requested": "1.3.3",
+      "to": "node_modules/@radix-ui/react-slot",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-controllable-state",
+      "requested": "1.2.6",
+      "to": "node_modules/@radix-ui/react-use-controllable-state",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-visually-hidden",
+      "requested": "1.2.11",
+      "to": "node_modules/@radix-ui/react-visually-hidden",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-tooltip",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-callback-ref",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-callback-ref",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-controllable-state",
+      "kind": "dependencies",
+      "name": "@radix-ui/primitive",
+      "requested": "1.1.7",
+      "to": "node_modules/@radix-ui/primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-controllable-state",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-effect-event",
+      "requested": "0.0.5",
+      "to": "node_modules/@radix-ui/react-use-effect-event",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-controllable-state",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-controllable-state",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-controllable-state",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-effect-event",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-effect-event",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-effect-event",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-layout-effect",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-layout-effect",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-rect",
+      "kind": "dependencies",
+      "name": "@radix-ui/rect",
+      "requested": "1.1.3",
+      "to": "node_modules/@radix-ui/rect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-rect",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-rect",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-size",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-use-layout-effect",
+      "requested": "1.1.4",
+      "to": "node_modules/@radix-ui/react-use-layout-effect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-size",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-use-size",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-visually-hidden",
+      "kind": "dependencies",
+      "name": "@radix-ui/react-primitive",
+      "requested": "2.1.10",
+      "to": "node_modules/@radix-ui/react-primitive",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-visually-hidden",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-visually-hidden",
+      "kind": "peerDependencies",
+      "name": "@types/react-dom",
+      "requested": "*",
+      "to": "node_modules/@types/react-dom",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@radix-ui/react-visually-hidden",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@radix-ui/react-visually-hidden",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "dependencies",
+      "name": "@standard-schema/spec",
+      "requested": "^1.0.0",
+      "to": "node_modules/@standard-schema/spec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "dependencies",
+      "name": "@standard-schema/utils",
+      "requested": "^0.3.0",
+      "to": "node_modules/@standard-schema/utils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "dependencies",
+      "name": "immer",
+      "requested": "^11.0.0",
+      "to": "node_modules/immer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "dependencies",
+      "name": "redux",
+      "requested": "^5.0.1",
+      "to": "node_modules/redux",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "dependencies",
+      "name": "redux-thunk",
+      "requested": "^3.1.0",
+      "to": "node_modules/redux-thunk",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "dependencies",
+      "name": "reselect",
+      "requested": "^5.1.0",
+      "to": "node_modules/reselect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.9.0 || ^17.0.0 || ^18 || ^19",
+      "to": "node_modules/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@reduxjs/toolkit",
+      "kind": "peerDependencies",
+      "name": "react-redux",
+      "requested": "^7.2.1 || ^8.1.3 || ^9.0.0",
+      "to": "node_modules/react-redux",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@swc/helpers",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.8.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "@jridgewell/remapping",
+      "requested": "^2.3.5",
+      "to": "node_modules/@jridgewell/remapping",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "enhanced-resolve",
+      "requested": "^5.24.1",
+      "to": "node_modules/enhanced-resolve",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "jiti",
+      "requested": "^2.7.0",
+      "to": "node_modules/jiti",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "lightningcss",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "magic-string",
+      "requested": "^0.30.21",
+      "to": "node_modules/magic-string",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "source-map-js",
+      "requested": "^1.2.1",
+      "to": "node_modules/source-map-js",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/node",
+      "kind": "dependencies",
+      "name": "tailwindcss",
+      "requested": "4.3.3",
+      "to": "node_modules/tailwindcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-android-arm64",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-android-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-darwin-arm64",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-darwin-x64",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-freebsd-x64",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-freebsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-linux-arm-gnueabihf",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-linux-arm-gnueabihf",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-linux-arm64-gnu",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-linux-arm64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-linux-arm64-musl",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-linux-arm64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-linux-x64-gnu",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-linux-x64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-linux-x64-musl",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-linux-x64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-wasm32-wasi",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-win32-arm64-msvc",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-win32-arm64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide",
+      "kind": "optionalDependencies",
+      "name": "@tailwindcss/oxide-win32-x64-msvc",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide-win32-x64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "kind": "dependencies",
+      "name": "@emnapi/core",
+      "requested": "^1.11.1",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "kind": "dependencies",
+      "name": "@emnapi/runtime",
+      "requested": "^1.11.1",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "kind": "dependencies",
+      "name": "@emnapi/wasi-threads",
+      "requested": "^1.2.2",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "kind": "dependencies",
+      "name": "@napi-rs/wasm-runtime",
+      "requested": "^1.1.4",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "kind": "dependencies",
+      "name": "@tybys/wasm-util",
+      "requested": "^0.10.2",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.8.1",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/postcss",
+      "kind": "dependencies",
+      "name": "@alloc/quick-lru",
+      "requested": "^5.2.0",
+      "to": "node_modules/@alloc/quick-lru",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/postcss",
+      "kind": "dependencies",
+      "name": "@tailwindcss/node",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/node",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/postcss",
+      "kind": "dependencies",
+      "name": "@tailwindcss/oxide",
+      "requested": "4.3.3",
+      "to": "node_modules/@tailwindcss/oxide",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/postcss",
+      "kind": "dependencies",
+      "name": "postcss",
+      "requested": "^8.5.16",
+      "to": "node_modules/postcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/postcss",
+      "kind": "dependencies",
+      "name": "tailwindcss",
+      "requested": "4.3.3",
+      "to": "node_modules/tailwindcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/chai",
+      "kind": "dependencies",
+      "name": "@types/deep-eql",
+      "requested": "*",
+      "to": "node_modules/@types/deep-eql",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/chai",
+      "kind": "dependencies",
+      "name": "assertion-error",
+      "requested": "^2.0.1",
+      "to": "node_modules/assertion-error",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/d3-interpolate",
+      "kind": "dependencies",
+      "name": "@types/d3-color",
+      "requested": "*",
+      "to": "node_modules/@types/d3-color",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/d3-scale",
+      "kind": "dependencies",
+      "name": "@types/d3-time",
+      "requested": "*",
+      "to": "node_modules/@types/d3-time",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/d3-shape",
+      "kind": "dependencies",
+      "name": "@types/d3-path",
+      "requested": "*",
+      "to": "node_modules/@types/d3-path",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/leaflet",
+      "kind": "dependencies",
+      "name": "@types/geojson",
+      "requested": "*",
+      "to": "node_modules/@types/geojson",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/leaflet.markercluster",
+      "kind": "dependencies",
+      "name": "@types/leaflet",
+      "requested": "^1.9",
+      "to": "node_modules/@types/leaflet",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/node",
+      "kind": "dependencies",
+      "name": "undici-types",
+      "requested": "~6.21.0",
+      "to": "node_modules/undici-types",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/nodemailer",
+      "kind": "dependencies",
+      "name": "@types/node",
+      "requested": "*",
+      "to": "node_modules/@types/node",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/react",
+      "kind": "dependencies",
+      "name": "csstype",
+      "requested": "^3.2.2",
+      "to": "node_modules/csstype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@types/react-dom",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "^19.2.0",
+      "to": "node_modules/@types/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/expect",
+      "kind": "dependencies",
+      "name": "@types/chai",
+      "requested": "^5.2.2",
+      "to": "node_modules/@types/chai",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/expect",
+      "kind": "dependencies",
+      "name": "@vitest/spy",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/spy",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/expect",
+      "kind": "dependencies",
+      "name": "@vitest/utils",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/utils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/expect",
+      "kind": "dependencies",
+      "name": "chai",
+      "requested": "^5.2.0",
+      "to": "node_modules/chai",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/expect",
+      "kind": "dependencies",
+      "name": "tinyrainbow",
+      "requested": "^2.0.0",
+      "to": "node_modules/tinyrainbow",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/mocker",
+      "kind": "dependencies",
+      "name": "@vitest/spy",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/spy",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/mocker",
+      "kind": "dependencies",
+      "name": "estree-walker",
+      "requested": "^3.0.3",
+      "to": "node_modules/estree-walker",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/mocker",
+      "kind": "dependencies",
+      "name": "magic-string",
+      "requested": "^0.30.17",
+      "to": "node_modules/magic-string",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/mocker",
+      "kind": "peerDependencies",
+      "name": "msw",
+      "requested": "^2.4.9",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@vitest/mocker",
+      "kind": "peerDependencies",
+      "name": "vite",
+      "requested": "^5.0.0 || ^6.0.0 || ^7.0.0-0",
+      "to": "node_modules/vite",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/@vitest/pretty-format",
+      "kind": "dependencies",
+      "name": "tinyrainbow",
+      "requested": "^2.0.0",
+      "to": "node_modules/tinyrainbow",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/runner",
+      "kind": "dependencies",
+      "name": "@vitest/utils",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/utils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/runner",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/runner",
+      "kind": "dependencies",
+      "name": "strip-literal",
+      "requested": "^3.0.0",
+      "to": "node_modules/strip-literal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/snapshot",
+      "kind": "dependencies",
+      "name": "@vitest/pretty-format",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/pretty-format",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/snapshot",
+      "kind": "dependencies",
+      "name": "magic-string",
+      "requested": "^0.30.17",
+      "to": "node_modules/magic-string",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/snapshot",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/spy",
+      "kind": "dependencies",
+      "name": "tinyspy",
+      "requested": "^4.0.3",
+      "to": "node_modules/tinyspy",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/utils",
+      "kind": "dependencies",
+      "name": "@vitest/pretty-format",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/pretty-format",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/utils",
+      "kind": "dependencies",
+      "name": "loupe",
+      "requested": "^3.1.4",
+      "to": "node_modules/loupe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@vitest/utils",
+      "kind": "dependencies",
+      "name": "tinyrainbow",
+      "requested": "^2.0.0",
+      "to": "node_modules/tinyrainbow",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/ajv",
+      "kind": "dependencies",
+      "name": "fast-deep-equal",
+      "requested": "^3.1.3",
+      "to": "node_modules/fast-deep-equal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/ajv",
+      "kind": "dependencies",
+      "name": "fast-uri",
+      "requested": "^3.0.1",
+      "to": "node_modules/ajv/node_modules/fast-uri",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/ajv",
+      "kind": "dependencies",
+      "name": "json-schema-traverse",
+      "requested": "^1.0.0",
+      "to": "node_modules/json-schema-traverse",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/ajv",
+      "kind": "dependencies",
+      "name": "require-from-string",
+      "requested": "^2.0.2",
+      "to": "node_modules/require-from-string",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/ajv-formats",
+      "kind": "dependencies",
+      "name": "ajv",
+      "requested": "^8.0.0",
+      "to": "node_modules/ajv",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/ajv-formats",
+      "kind": "peerDependencies",
+      "name": "ajv",
+      "requested": "^8.0.0",
+      "to": "node_modules/ajv",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/ansi-styles",
+      "kind": "dependencies",
+      "name": "color-convert",
+      "requested": "^2.0.1",
+      "to": "node_modules/color-convert",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/aria-hidden",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.0.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/avvio",
+      "kind": "dependencies",
+      "name": "@fastify/error",
+      "requested": "^4.0.0",
+      "to": "node_modules/@fastify/error",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/avvio",
+      "kind": "dependencies",
+      "name": "fastq",
+      "requested": "^1.17.1",
+      "to": "node_modules/fastq",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/brace-expansion",
+      "kind": "dependencies",
+      "name": "balanced-match",
+      "requested": "^4.0.2",
+      "to": "node_modules/balanced-match",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "chokidar",
+      "requested": "^4.0.3",
+      "to": "node_modules/chokidar",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "confbox",
+      "requested": "^0.2.2",
+      "to": "node_modules/confbox",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "defu",
+      "requested": "^6.1.4",
+      "to": "node_modules/defu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "dotenv",
+      "requested": "^16.6.1",
+      "to": "node_modules/c12/node_modules/dotenv",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "exsolve",
+      "requested": "^1.0.7",
+      "to": "node_modules/exsolve",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "giget",
+      "requested": "^2.0.0",
+      "to": "node_modules/giget",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "jiti",
+      "requested": "^2.4.2",
+      "to": "node_modules/jiti",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "ohash",
+      "requested": "^2.0.11",
+      "to": "node_modules/ohash",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "perfect-debounce",
+      "requested": "^1.0.0",
+      "to": "node_modules/perfect-debounce",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "pkg-types",
+      "requested": "^2.2.0",
+      "to": "node_modules/pkg-types",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "dependencies",
+      "name": "rc9",
+      "requested": "^2.1.2",
+      "to": "node_modules/rc9",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "peerDependencies",
+      "name": "magicast",
+      "requested": "^0.3.5",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/chai",
+      "kind": "dependencies",
+      "name": "assertion-error",
+      "requested": "^2.0.1",
+      "to": "node_modules/assertion-error",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chai",
+      "kind": "dependencies",
+      "name": "check-error",
+      "requested": "^2.1.1",
+      "to": "node_modules/check-error",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chai",
+      "kind": "dependencies",
+      "name": "deep-eql",
+      "requested": "^5.0.1",
+      "to": "node_modules/deep-eql",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chai",
+      "kind": "dependencies",
+      "name": "loupe",
+      "requested": "^3.1.0",
+      "to": "node_modules/loupe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chai",
+      "kind": "dependencies",
+      "name": "pathval",
+      "requested": "^2.0.0",
+      "to": "node_modules/pathval",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chalk",
+      "kind": "dependencies",
+      "name": "ansi-styles",
+      "requested": "^4.1.0",
+      "to": "node_modules/ansi-styles",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chalk",
+      "kind": "dependencies",
+      "name": "supports-color",
+      "requested": "^7.1.0",
+      "to": "node_modules/chalk/node_modules/supports-color",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chalk/node_modules/supports-color",
+      "kind": "dependencies",
+      "name": "has-flag",
+      "requested": "^4.0.0",
+      "to": "node_modules/has-flag",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "cheerio-select",
+      "requested": "^2.1.0",
+      "to": "node_modules/cheerio-select",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "dom-serializer",
+      "requested": "^2.0.0",
+      "to": "node_modules/dom-serializer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.3",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "domutils",
+      "requested": "^3.2.2",
+      "to": "node_modules/domutils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "encoding-sniffer",
+      "requested": "^0.2.1",
+      "to": "node_modules/encoding-sniffer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "htmlparser2",
+      "requested": "^10.1.0",
+      "to": "node_modules/htmlparser2",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "parse5",
+      "requested": "^7.3.0",
+      "to": "node_modules/parse5",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "parse5-htmlparser2-tree-adapter",
+      "requested": "^7.1.0",
+      "to": "node_modules/parse5-htmlparser2-tree-adapter",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "parse5-parser-stream",
+      "requested": "^7.1.2",
+      "to": "node_modules/parse5-parser-stream",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "undici",
+      "requested": "^7.19.0",
+      "to": "node_modules/undici",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio",
+      "kind": "dependencies",
+      "name": "whatwg-mimetype",
+      "requested": "^4.0.0",
+      "to": "node_modules/whatwg-mimetype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio-select",
+      "kind": "dependencies",
+      "name": "boolbase",
+      "requested": "^1.0.0",
+      "to": "node_modules/boolbase",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio-select",
+      "kind": "dependencies",
+      "name": "css-select",
+      "requested": "^5.1.0",
+      "to": "node_modules/css-select",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio-select",
+      "kind": "dependencies",
+      "name": "css-what",
+      "requested": "^6.1.0",
+      "to": "node_modules/css-what",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio-select",
+      "kind": "dependencies",
+      "name": "domelementtype",
+      "requested": "^2.3.0",
+      "to": "node_modules/domelementtype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio-select",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.3",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cheerio-select",
+      "kind": "dependencies",
+      "name": "domutils",
+      "requested": "^3.0.1",
+      "to": "node_modules/domutils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/chokidar",
+      "kind": "dependencies",
+      "name": "readdirp",
+      "requested": "^4.0.1",
+      "to": "node_modules/readdirp",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/citty",
+      "kind": "dependencies",
+      "name": "consola",
+      "requested": "^3.2.3",
+      "to": "node_modules/consola",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cliui",
+      "kind": "dependencies",
+      "name": "string-width",
+      "requested": "^4.2.0",
+      "to": "node_modules/string-width",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cliui",
+      "kind": "dependencies",
+      "name": "strip-ansi",
+      "requested": "^6.0.1",
+      "to": "node_modules/strip-ansi",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/cliui",
+      "kind": "dependencies",
+      "name": "wrap-ansi",
+      "requested": "^7.0.0",
+      "to": "node_modules/wrap-ansi",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/color-convert",
+      "kind": "dependencies",
+      "name": "color-name",
+      "requested": "~1.1.4",
+      "to": "node_modules/color-name",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/concurrently",
+      "kind": "dependencies",
+      "name": "chalk",
+      "requested": "4.1.2",
+      "to": "node_modules/chalk",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/concurrently",
+      "kind": "dependencies",
+      "name": "rxjs",
+      "requested": "7.8.2",
+      "to": "node_modules/rxjs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/concurrently",
+      "kind": "dependencies",
+      "name": "shell-quote",
+      "requested": "1.9.0",
+      "to": "node_modules/shell-quote",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/concurrently",
+      "kind": "dependencies",
+      "name": "supports-color",
+      "requested": "8.1.1",
+      "to": "node_modules/supports-color",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/concurrently",
+      "kind": "dependencies",
+      "name": "tree-kill",
+      "requested": "1.2.2",
+      "to": "node_modules/tree-kill",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/concurrently",
+      "kind": "dependencies",
+      "name": "yargs",
+      "requested": "17.7.2",
+      "to": "node_modules/yargs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/css-select",
+      "kind": "dependencies",
+      "name": "boolbase",
+      "requested": "^1.0.0",
+      "to": "node_modules/boolbase",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/css-select",
+      "kind": "dependencies",
+      "name": "css-what",
+      "requested": "^6.1.0",
+      "to": "node_modules/css-what",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/css-select",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.2",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/css-select",
+      "kind": "dependencies",
+      "name": "domutils",
+      "requested": "^3.0.1",
+      "to": "node_modules/domutils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/css-select",
+      "kind": "dependencies",
+      "name": "nth-check",
+      "requested": "^2.0.1",
+      "to": "node_modules/nth-check",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-array",
+      "kind": "dependencies",
+      "name": "internmap",
+      "requested": "1 - 2",
+      "to": "node_modules/internmap",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-interpolate",
+      "kind": "dependencies",
+      "name": "d3-color",
+      "requested": "1 - 3",
+      "to": "node_modules/d3-color",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-scale",
+      "kind": "dependencies",
+      "name": "d3-array",
+      "requested": "2.10.0 - 3",
+      "to": "node_modules/d3-array",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-scale",
+      "kind": "dependencies",
+      "name": "d3-format",
+      "requested": "1 - 3",
+      "to": "node_modules/d3-format",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-scale",
+      "kind": "dependencies",
+      "name": "d3-interpolate",
+      "requested": "1.2.0 - 3",
+      "to": "node_modules/d3-interpolate",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-scale",
+      "kind": "dependencies",
+      "name": "d3-time",
+      "requested": "2.1.1 - 3",
+      "to": "node_modules/d3-time",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-scale",
+      "kind": "dependencies",
+      "name": "d3-time-format",
+      "requested": "2 - 4",
+      "to": "node_modules/d3-time-format",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-shape",
+      "kind": "dependencies",
+      "name": "d3-path",
+      "requested": "^3.1.0",
+      "to": "node_modules/d3-path",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-time",
+      "kind": "dependencies",
+      "name": "d3-array",
+      "requested": "2 - 3",
+      "to": "node_modules/d3-array",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/d3-time-format",
+      "kind": "dependencies",
+      "name": "d3-time",
+      "requested": "1 - 3",
+      "to": "node_modules/d3-time",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/debug",
+      "kind": "dependencies",
+      "name": "ms",
+      "requested": "^2.1.3",
+      "to": "node_modules/ms",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/dom-serializer",
+      "kind": "dependencies",
+      "name": "domelementtype",
+      "requested": "^2.3.0",
+      "to": "node_modules/domelementtype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/dom-serializer",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.2",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/dom-serializer",
+      "kind": "dependencies",
+      "name": "entities",
+      "requested": "^4.2.0",
+      "to": "node_modules/entities",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/domhandler",
+      "kind": "dependencies",
+      "name": "domelementtype",
+      "requested": "^2.3.0",
+      "to": "node_modules/domelementtype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/domutils",
+      "kind": "dependencies",
+      "name": "dom-serializer",
+      "requested": "^2.0.0",
+      "to": "node_modules/dom-serializer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/domutils",
+      "kind": "dependencies",
+      "name": "domelementtype",
+      "requested": "^2.3.0",
+      "to": "node_modules/domelementtype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/domutils",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.3",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/effect",
+      "kind": "dependencies",
+      "name": "@standard-schema/spec",
+      "requested": "^1.0.0",
+      "to": "node_modules/@standard-schema/spec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/effect",
+      "kind": "dependencies",
+      "name": "fast-check",
+      "requested": "^3.23.1",
+      "to": "node_modules/fast-check",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/encoding-sniffer",
+      "kind": "dependencies",
+      "name": "iconv-lite",
+      "requested": "^0.6.3",
+      "to": "node_modules/iconv-lite",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/encoding-sniffer",
+      "kind": "dependencies",
+      "name": "whatwg-encoding",
+      "requested": "^3.1.1",
+      "to": "node_modules/whatwg-encoding",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/enhanced-resolve",
+      "kind": "dependencies",
+      "name": "graceful-fs",
+      "requested": "^4.2.4",
+      "to": "node_modules/graceful-fs",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/enhanced-resolve",
+      "kind": "dependencies",
+      "name": "tapable",
+      "requested": "^2.3.3",
+      "to": "node_modules/tapable",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/aix-ppc64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/aix-ppc64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/android-arm",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/android-arm",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/android-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/android-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/android-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/android-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/darwin-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/darwin-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/freebsd-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/freebsd-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/freebsd-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/freebsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-arm",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-arm",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-ia32",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-ia32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-loong64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-loong64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-mips64el",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-mips64el",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-ppc64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-ppc64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-riscv64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-riscv64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-s390x",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-s390x",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/linux-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/linux-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/netbsd-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/netbsd-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/netbsd-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/netbsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/openbsd-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/openbsd-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/openbsd-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/openbsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/openharmony-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/openharmony-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/sunos-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/sunos-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/win32-arm64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/win32-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/win32-ia32",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/win32-ia32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/esbuild",
+      "kind": "optionalDependencies",
+      "name": "@esbuild/win32-x64",
+      "requested": "0.28.2",
+      "to": "node_modules/@esbuild/win32-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/estree-walker",
+      "kind": "dependencies",
+      "name": "@types/estree",
+      "requested": "^1.0.0",
+      "to": "node_modules/@types/estree",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-check",
+      "kind": "dependencies",
+      "name": "pure-rand",
+      "requested": "^6.1.0",
+      "to": "node_modules/pure-rand",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-json-stringify",
+      "kind": "dependencies",
+      "name": "@fastify/merge-json-schemas",
+      "requested": "^0.2.0",
+      "to": "node_modules/@fastify/merge-json-schemas",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-json-stringify",
+      "kind": "dependencies",
+      "name": "ajv",
+      "requested": "^8.12.0",
+      "to": "node_modules/ajv",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-json-stringify",
+      "kind": "dependencies",
+      "name": "ajv-formats",
+      "requested": "^3.0.1",
+      "to": "node_modules/ajv-formats",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-json-stringify",
+      "kind": "dependencies",
+      "name": "fast-uri",
+      "requested": "^4.0.0",
+      "to": "node_modules/fast-uri",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-json-stringify",
+      "kind": "dependencies",
+      "name": "json-schema-ref-resolver",
+      "requested": "^3.0.0",
+      "to": "node_modules/json-schema-ref-resolver",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-json-stringify",
+      "kind": "dependencies",
+      "name": "rfdc",
+      "requested": "^1.2.0",
+      "to": "node_modules/rfdc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fast-querystring",
+      "kind": "dependencies",
+      "name": "fast-decode-uri-component",
+      "requested": "^1.0.1",
+      "to": "node_modules/fast-decode-uri-component",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "@fastify/ajv-compiler",
+      "requested": "^4.0.5",
+      "to": "node_modules/@fastify/ajv-compiler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "@fastify/error",
+      "requested": "^4.0.0",
+      "to": "node_modules/@fastify/error",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "@fastify/fast-json-stringify-compiler",
+      "requested": "^5.0.0",
+      "to": "node_modules/@fastify/fast-json-stringify-compiler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "@fastify/proxy-addr",
+      "requested": "^5.0.0",
+      "to": "node_modules/@fastify/proxy-addr",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "abstract-logging",
+      "requested": "^2.0.1",
+      "to": "node_modules/abstract-logging",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "avvio",
+      "requested": "^9.0.0",
+      "to": "node_modules/avvio",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "fast-json-stringify",
+      "requested": "^7.0.0",
+      "to": "node_modules/fast-json-stringify",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "find-my-way",
+      "requested": "^9.6.0",
+      "to": "node_modules/find-my-way",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "light-my-request",
+      "requested": "^6.0.0",
+      "to": "node_modules/light-my-request",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "pino",
+      "requested": "^9.14.0 || ^10.1.0",
+      "to": "node_modules/pino",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "process-warning",
+      "requested": "^5.1.0",
+      "to": "node_modules/process-warning",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "rfdc",
+      "requested": "^1.3.1",
+      "to": "node_modules/rfdc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "secure-json-parse",
+      "requested": "^4.0.0",
+      "to": "node_modules/secure-json-parse",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "semver",
+      "requested": "^7.6.0",
+      "to": "node_modules/semver",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastify",
+      "kind": "dependencies",
+      "name": "toad-cache",
+      "requested": "^3.7.0",
+      "to": "node_modules/toad-cache",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fastq",
+      "kind": "dependencies",
+      "name": "reusify",
+      "requested": "^1.0.4",
+      "to": "node_modules/reusify",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/fdir",
+      "kind": "peerDependencies",
+      "name": "picomatch",
+      "requested": "^3 || ^4",
+      "to": "node_modules/picomatch",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/find-my-way",
+      "kind": "dependencies",
+      "name": "fast-deep-equal",
+      "requested": "^3.1.3",
+      "to": "node_modules/fast-deep-equal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/find-my-way",
+      "kind": "dependencies",
+      "name": "fast-querystring",
+      "requested": "^1.0.0",
+      "to": "node_modules/fast-querystring",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/find-my-way",
+      "kind": "dependencies",
+      "name": "safe-regex2",
+      "requested": "^5.0.0",
+      "to": "node_modules/safe-regex2",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/giget",
+      "kind": "dependencies",
+      "name": "citty",
+      "requested": "^0.1.6",
+      "to": "node_modules/citty",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/giget",
+      "kind": "dependencies",
+      "name": "consola",
+      "requested": "^3.4.0",
+      "to": "node_modules/consola",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/giget",
+      "kind": "dependencies",
+      "name": "defu",
+      "requested": "^6.1.4",
+      "to": "node_modules/defu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/giget",
+      "kind": "dependencies",
+      "name": "node-fetch-native",
+      "requested": "^1.6.6",
+      "to": "node_modules/node-fetch-native",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/giget",
+      "kind": "dependencies",
+      "name": "nypm",
+      "requested": "^0.6.0",
+      "to": "node_modules/nypm",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/giget",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/glob",
+      "kind": "dependencies",
+      "name": "minimatch",
+      "requested": "^10.2.2",
+      "to": "node_modules/minimatch",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/glob",
+      "kind": "dependencies",
+      "name": "minipass",
+      "requested": "^7.1.3",
+      "to": "node_modules/minipass",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/glob",
+      "kind": "dependencies",
+      "name": "path-scurry",
+      "requested": "^2.0.2",
+      "to": "node_modules/path-scurry",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/htmlparser2",
+      "kind": "dependencies",
+      "name": "domelementtype",
+      "requested": "^2.3.0",
+      "to": "node_modules/domelementtype",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/htmlparser2",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.3",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/htmlparser2",
+      "kind": "dependencies",
+      "name": "domutils",
+      "requested": "^3.2.2",
+      "to": "node_modules/domutils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/htmlparser2",
+      "kind": "dependencies",
+      "name": "entities",
+      "requested": "^7.0.1",
+      "to": "node_modules/htmlparser2/node_modules/entities",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/http-errors",
+      "kind": "dependencies",
+      "name": "depd",
+      "requested": "~2.0.0",
+      "to": "node_modules/depd",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/http-errors",
+      "kind": "dependencies",
+      "name": "inherits",
+      "requested": "~2.0.4",
+      "to": "node_modules/inherits",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/http-errors",
+      "kind": "dependencies",
+      "name": "setprototypeof",
+      "requested": "~1.2.0",
+      "to": "node_modules/setprototypeof",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/http-errors",
+      "kind": "dependencies",
+      "name": "statuses",
+      "requested": "~2.0.2",
+      "to": "node_modules/statuses",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/http-errors",
+      "kind": "dependencies",
+      "name": "toidentifier",
+      "requested": "~1.0.1",
+      "to": "node_modules/toidentifier",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/iconv-lite",
+      "kind": "dependencies",
+      "name": "safer-buffer",
+      "requested": ">= 2.1.2 < 3.0.0",
+      "to": "node_modules/safer-buffer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/json-schema-ref-resolver",
+      "kind": "dependencies",
+      "name": "dequal",
+      "requested": "^2.0.3",
+      "to": "node_modules/dequal",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/leaflet.markercluster",
+      "kind": "peerDependencies",
+      "name": "leaflet",
+      "requested": "^1.3.1",
+      "to": "node_modules/leaflet",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/light-my-request",
+      "kind": "dependencies",
+      "name": "cookie",
+      "requested": "^1.0.1",
+      "to": "node_modules/cookie",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/light-my-request",
+      "kind": "dependencies",
+      "name": "process-warning",
+      "requested": "^4.0.0",
+      "to": "node_modules/light-my-request/node_modules/process-warning",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/light-my-request",
+      "kind": "dependencies",
+      "name": "set-cookie-parser",
+      "requested": "^2.6.0",
+      "to": "node_modules/set-cookie-parser",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "dependencies",
+      "name": "detect-libc",
+      "requested": "^2.0.3",
+      "to": "node_modules/detect-libc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-android-arm64",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-android-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-darwin-arm64",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-darwin-x64",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-freebsd-x64",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-freebsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-linux-arm-gnueabihf",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-linux-arm-gnueabihf",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-linux-arm64-gnu",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-linux-arm64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-linux-arm64-musl",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-linux-arm64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-linux-x64-gnu",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-linux-x64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-linux-x64-musl",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-linux-x64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-win32-arm64-msvc",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-win32-arm64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lightningcss",
+      "kind": "optionalDependencies",
+      "name": "lightningcss-win32-x64-msvc",
+      "requested": "1.32.0",
+      "to": "node_modules/lightningcss-win32-x64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/lucide-react",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/magic-string",
+      "kind": "dependencies",
+      "name": "@jridgewell/sourcemap-codec",
+      "requested": "^1.5.5",
+      "to": "node_modules/@jridgewell/sourcemap-codec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/minimatch",
+      "kind": "dependencies",
+      "name": "brace-expansion",
+      "requested": "^5.0.8",
+      "to": "node_modules/brace-expansion",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "dependencies",
+      "name": "@next/env",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/env",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "dependencies",
+      "name": "@swc/helpers",
+      "requested": "0.5.15",
+      "to": "node_modules/@swc/helpers",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "dependencies",
+      "name": "caniuse-lite",
+      "requested": "^1.0.30001579",
+      "to": "node_modules/caniuse-lite",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "dependencies",
+      "name": "postcss",
+      "requested": "8.4.31",
+      "to": "node_modules/postcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "dependencies",
+      "name": "styled-jsx",
+      "requested": "5.1.6",
+      "to": "node_modules/styled-jsx",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-darwin-arm64",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-darwin-x64",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-linux-arm64-gnu",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-linux-arm64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-linux-arm64-musl",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-linux-arm64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-linux-x64-gnu",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-linux-x64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-linux-x64-musl",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-linux-x64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-win32-arm64-msvc",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-win32-arm64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "@next/swc-win32-x64-msvc",
+      "requested": "15.5.25",
+      "to": "node_modules/@next/swc-win32-x64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "optionalDependencies",
+      "name": "sharp",
+      "requested": "^0.34.3 || ^0.35.4",
+      "to": "node_modules/sharp",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "@opentelemetry/api",
+      "requested": "^1.1.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "@playwright/test",
+      "requested": "^1.51.1",
+      "to": "node_modules/@playwright/test",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "babel-plugin-react-compiler",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "sass",
+      "requested": "^1.3.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/nth-check",
+      "kind": "dependencies",
+      "name": "boolbase",
+      "requested": "^1.0.0",
+      "to": "node_modules/boolbase",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/nypm",
+      "kind": "dependencies",
+      "name": "citty",
+      "requested": "^0.2.2",
+      "to": "node_modules/nypm/node_modules/citty",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/nypm",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/nypm",
+      "kind": "dependencies",
+      "name": "tinyexec",
+      "requested": "^1.2.4",
+      "to": "node_modules/tinyexec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/parse5",
+      "kind": "dependencies",
+      "name": "entities",
+      "requested": "^6.0.0",
+      "to": "node_modules/parse5/node_modules/entities",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/parse5-htmlparser2-tree-adapter",
+      "kind": "dependencies",
+      "name": "domhandler",
+      "requested": "^5.0.3",
+      "to": "node_modules/domhandler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/parse5-htmlparser2-tree-adapter",
+      "kind": "dependencies",
+      "name": "parse5",
+      "requested": "^7.0.0",
+      "to": "node_modules/parse5",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/parse5-parser-stream",
+      "kind": "dependencies",
+      "name": "parse5",
+      "requested": "^7.0.0",
+      "to": "node_modules/parse5",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/path-scurry",
+      "kind": "dependencies",
+      "name": "lru-cache",
+      "requested": "^11.0.0",
+      "to": "node_modules/lru-cache",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/path-scurry",
+      "kind": "dependencies",
+      "name": "minipass",
+      "requested": "^7.1.2",
+      "to": "node_modules/minipass",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "@pinojs/redact",
+      "requested": "^0.4.0",
+      "to": "node_modules/@pinojs/redact",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "atomic-sleep",
+      "requested": "^1.0.0",
+      "to": "node_modules/atomic-sleep",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "on-exit-leak-free",
+      "requested": "^2.1.0",
+      "to": "node_modules/on-exit-leak-free",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "pino-abstract-transport",
+      "requested": "^2.0.0",
+      "to": "node_modules/pino-abstract-transport",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "pino-std-serializers",
+      "requested": "^7.0.0",
+      "to": "node_modules/pino-std-serializers",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "process-warning",
+      "requested": "^5.0.0",
+      "to": "node_modules/process-warning",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "quick-format-unescaped",
+      "requested": "^4.0.3",
+      "to": "node_modules/quick-format-unescaped",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "real-require",
+      "requested": "^0.2.0",
+      "to": "node_modules/real-require",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "safe-stable-stringify",
+      "requested": "^2.3.1",
+      "to": "node_modules/safe-stable-stringify",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "sonic-boom",
+      "requested": "^4.0.1",
+      "to": "node_modules/sonic-boom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino",
+      "kind": "dependencies",
+      "name": "thread-stream",
+      "requested": "^3.0.0",
+      "to": "node_modules/thread-stream",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pino-abstract-transport",
+      "kind": "dependencies",
+      "name": "split2",
+      "requested": "^4.0.0",
+      "to": "node_modules/split2",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pkg-types",
+      "kind": "dependencies",
+      "name": "confbox",
+      "requested": "^0.3.1",
+      "to": "node_modules/pkg-types/node_modules/confbox",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pkg-types",
+      "kind": "dependencies",
+      "name": "exsolve",
+      "requested": "^1.1.1",
+      "to": "node_modules/exsolve",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/pkg-types",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/playwright",
+      "kind": "dependencies",
+      "name": "playwright-core",
+      "requested": "1.63.0",
+      "to": "node_modules/playwright-core",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/postcss",
+      "kind": "dependencies",
+      "name": "nanoid",
+      "requested": "^3.3.18",
+      "to": "node_modules/nanoid",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/postcss",
+      "kind": "dependencies",
+      "name": "picocolors",
+      "requested": "^1.1.1",
+      "to": "node_modules/picocolors",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/postcss",
+      "kind": "dependencies",
+      "name": "source-map-js",
+      "requested": "^1.2.1",
+      "to": "node_modules/source-map-js",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/prisma",
+      "kind": "dependencies",
+      "name": "@prisma/config",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/config",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/prisma",
+      "kind": "dependencies",
+      "name": "@prisma/engines",
+      "requested": "6.19.3",
+      "to": "node_modules/@prisma/engines",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/prisma",
+      "kind": "peerDependencies",
+      "name": "typescript",
+      "requested": ">=5.1.0",
+      "to": "node_modules/typescript",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/rc9",
+      "kind": "dependencies",
+      "name": "defu",
+      "requested": "^6.1.4",
+      "to": "node_modules/defu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rc9",
+      "kind": "dependencies",
+      "name": "destr",
+      "requested": "^2.0.3",
+      "to": "node_modules/destr",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-dom",
+      "kind": "dependencies",
+      "name": "scheduler",
+      "requested": "^0.27.0",
+      "to": "node_modules/scheduler",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-dom",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^19.2.8",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-redux",
+      "kind": "dependencies",
+      "name": "@types/use-sync-external-store",
+      "requested": "^0.0.6",
+      "to": "node_modules/@types/use-sync-external-store",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-redux",
+      "kind": "dependencies",
+      "name": "use-sync-external-store",
+      "requested": "^1.4.0",
+      "to": "node_modules/use-sync-external-store",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-redux",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "^18.2.25 || ^19",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/react-redux",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^18.0 || ^19",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-redux",
+      "kind": "peerDependencies",
+      "name": "redux",
+      "requested": "^5.0.0",
+      "to": "node_modules/redux",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "dependencies",
+      "name": "react-remove-scroll-bar",
+      "requested": "^2.3.7",
+      "to": "node_modules/react-remove-scroll-bar",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "dependencies",
+      "name": "react-style-singleton",
+      "requested": "^2.2.3",
+      "to": "node_modules/react-style-singleton",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.1.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "dependencies",
+      "name": "use-callback-ref",
+      "requested": "^1.3.3",
+      "to": "node_modules/use-callback-ref",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "dependencies",
+      "name": "use-sidecar",
+      "requested": "^1.1.3",
+      "to": "node_modules/use-sidecar",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/react-remove-scroll",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll-bar",
+      "kind": "dependencies",
+      "name": "react-style-singleton",
+      "requested": "^2.2.2",
+      "to": "node_modules/react-style-singleton",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll-bar",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.0.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-remove-scroll-bar",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/react-remove-scroll-bar",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-style-singleton",
+      "kind": "dependencies",
+      "name": "get-nonce",
+      "requested": "^1.0.0",
+      "to": "node_modules/get-nonce",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-style-singleton",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.0.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/react-style-singleton",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/react-style-singleton",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "@reduxjs/toolkit",
+      "requested": "^1.9.0 || 2.x.x",
+      "to": "node_modules/@reduxjs/toolkit",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "clsx",
+      "requested": "^2.1.1",
+      "to": "node_modules/clsx",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "decimal.js-light",
+      "requested": "^2.5.1",
+      "to": "node_modules/decimal.js-light",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "es-toolkit",
+      "requested": "^1.39.3",
+      "to": "node_modules/es-toolkit",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "eventemitter3",
+      "requested": "^5.0.1",
+      "to": "node_modules/eventemitter3",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "immer",
+      "requested": "^11.1.8",
+      "to": "node_modules/immer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "react-redux",
+      "requested": "8.x.x || 9.x.x",
+      "to": "node_modules/react-redux",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "reselect",
+      "requested": "5.2.0",
+      "to": "node_modules/reselect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "tiny-invariant",
+      "requested": "^1.3.3",
+      "to": "node_modules/tiny-invariant",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "use-sync-external-store",
+      "requested": "^1.2.2",
+      "to": "node_modules/use-sync-external-store",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "dependencies",
+      "name": "victory-vendor",
+      "requested": "^37.0.2",
+      "to": "node_modules/victory-vendor",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "peerDependencies",
+      "name": "react-dom",
+      "requested": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "to": "node_modules/react-dom",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/recharts",
+      "kind": "peerDependencies",
+      "name": "react-is",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "to": "node_modules/react-is",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/redux-thunk",
+      "kind": "peerDependencies",
+      "name": "redux",
+      "requested": "^5.0.0",
+      "to": "node_modules/redux",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "dependencies",
+      "name": "@types/estree",
+      "requested": "1.0.9",
+      "to": "node_modules/@types/estree",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@napi-rs/lzma-linux-x64-gnu",
+      "requested": "1.5.1",
+      "to": "node_modules/@napi-rs/lzma-linux-x64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-android-arm-eabi",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-android-arm-eabi",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-android-arm64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-android-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-darwin-arm64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-darwin-x64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-freebsd-arm64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-freebsd-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-freebsd-x64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-freebsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-arm-gnueabihf",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-arm-gnueabihf",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-arm-musleabihf",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-arm-musleabihf",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-arm64-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-arm64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-arm64-musl",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-arm64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-loong64-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-loong64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-loong64-musl",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-loong64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-ppc64-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-ppc64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-ppc64-musl",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-ppc64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-riscv64-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-riscv64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-riscv64-musl",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-riscv64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-s390x-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-s390x-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-x64-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-x64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-linux-x64-musl",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-linux-x64-musl",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-openbsd-x64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-openbsd-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-openharmony-arm64",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-openharmony-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-win32-arm64-msvc",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-win32-arm64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-win32-ia32-msvc",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-win32-ia32-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-win32-x64-gnu",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-win32-x64-gnu",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "@rollup/rollup-win32-x64-msvc",
+      "requested": "4.63.1",
+      "to": "node_modules/@rollup/rollup-win32-x64-msvc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rollup",
+      "kind": "optionalDependencies",
+      "name": "fsevents",
+      "requested": "~2.3.2",
+      "to": "node_modules/fsevents",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/rxjs",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.1.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/safe-regex2",
+      "kind": "dependencies",
+      "name": "ret",
+      "requested": "~0.5.0",
+      "to": "node_modules/ret",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "dependencies",
+      "name": "@img/colour",
+      "requested": "^1.1.0",
+      "to": "node_modules/@img/colour",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "dependencies",
+      "name": "detect-libc",
+      "requested": "^2.1.2",
+      "to": "node_modules/detect-libc",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "dependencies",
+      "name": "semver",
+      "requested": "^7.8.5",
+      "to": "node_modules/semver",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-darwin-arm64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-darwin-x64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-freebsd-wasm32",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-freebsd-wasm32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-darwin-arm64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-darwin-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-darwin-x64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-darwin-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-arm",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-arm",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-arm64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-ppc64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-ppc64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-riscv64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-riscv64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-s390x",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-s390x",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linux-x64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linux-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linuxmusl-arm64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linuxmusl-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-libvips-linuxmusl-x64",
+      "requested": "1.3.3",
+      "to": "node_modules/@img/sharp-libvips-linuxmusl-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linux-arm",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linux-arm",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linux-arm64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linux-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linux-ppc64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linux-ppc64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linux-riscv64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linux-riscv64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linux-s390x",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linux-s390x",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linux-x64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linux-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linuxmusl-arm64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linuxmusl-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-linuxmusl-x64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-linuxmusl-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-webcontainers-wasm32",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-webcontainers-wasm32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-win32-arm64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-win32-arm64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-win32-ia32",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-win32-ia32",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sharp",
+      "kind": "optionalDependencies",
+      "name": "@img/sharp-win32-x64",
+      "requested": "0.35.4",
+      "to": "node_modules/@img/sharp-win32-x64",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/sonic-boom",
+      "kind": "dependencies",
+      "name": "atomic-sleep",
+      "requested": "^1.0.0",
+      "to": "node_modules/atomic-sleep",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/string-width",
+      "kind": "dependencies",
+      "name": "emoji-regex",
+      "requested": "^8.0.0",
+      "to": "node_modules/emoji-regex",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/string-width",
+      "kind": "dependencies",
+      "name": "is-fullwidth-code-point",
+      "requested": "^3.0.0",
+      "to": "node_modules/is-fullwidth-code-point",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/string-width",
+      "kind": "dependencies",
+      "name": "strip-ansi",
+      "requested": "^6.0.1",
+      "to": "node_modules/strip-ansi",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/strip-ansi",
+      "kind": "dependencies",
+      "name": "ansi-regex",
+      "requested": "^5.0.1",
+      "to": "node_modules/ansi-regex",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/strip-literal",
+      "kind": "dependencies",
+      "name": "js-tokens",
+      "requested": "^9.0.1",
+      "to": "node_modules/js-tokens",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/styled-jsx",
+      "kind": "dependencies",
+      "name": "client-only",
+      "requested": "0.0.1",
+      "to": "node_modules/client-only",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/styled-jsx",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": ">= 16.8.0 || 17.x.x || ^18.0.0-0 || ^19.0.0-0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/supports-color",
+      "kind": "dependencies",
+      "name": "has-flag",
+      "requested": "^4.0.0",
+      "to": "node_modules/has-flag",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/thread-stream",
+      "kind": "dependencies",
+      "name": "real-require",
+      "requested": "^0.2.0",
+      "to": "node_modules/real-require",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/tinyglobby",
+      "kind": "dependencies",
+      "name": "fdir",
+      "requested": "^6.5.0",
+      "to": "node_modules/fdir",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/tinyglobby",
+      "kind": "dependencies",
+      "name": "picomatch",
+      "requested": "^4.0.4",
+      "to": "node_modules/picomatch",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/tsx",
+      "kind": "dependencies",
+      "name": "esbuild",
+      "requested": "~0.28.0",
+      "to": "node_modules/esbuild",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/tsx",
+      "kind": "optionalDependencies",
+      "name": "fsevents",
+      "requested": "~2.3.3",
+      "to": "node_modules/fsevents",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/use-callback-ref",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.0.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/use-callback-ref",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/use-callback-ref",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/use-sidecar",
+      "kind": "dependencies",
+      "name": "detect-node-es",
+      "requested": "^1.1.0",
+      "to": "node_modules/detect-node-es",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/use-sidecar",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.0.0",
+      "to": "node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/use-sidecar",
+      "kind": "peerDependencies",
+      "name": "@types/react",
+      "requested": "*",
+      "to": "node_modules/@types/react",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/use-sidecar",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/use-sync-external-store",
+      "kind": "peerDependencies",
+      "name": "react",
+      "requested": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "to": "node_modules/react",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-array",
+      "requested": "^3.0.3",
+      "to": "node_modules/@types/d3-array",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-ease",
+      "requested": "^3.0.0",
+      "to": "node_modules/@types/d3-ease",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-interpolate",
+      "requested": "^3.0.1",
+      "to": "node_modules/@types/d3-interpolate",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-scale",
+      "requested": "^4.0.2",
+      "to": "node_modules/@types/d3-scale",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-shape",
+      "requested": "^3.1.0",
+      "to": "node_modules/@types/d3-shape",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-time",
+      "requested": "^3.0.0",
+      "to": "node_modules/@types/d3-time",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "@types/d3-timer",
+      "requested": "^3.0.0",
+      "to": "node_modules/@types/d3-timer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-array",
+      "requested": "^3.1.6",
+      "to": "node_modules/d3-array",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-ease",
+      "requested": "^3.0.1",
+      "to": "node_modules/d3-ease",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-interpolate",
+      "requested": "^3.0.1",
+      "to": "node_modules/d3-interpolate",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-scale",
+      "requested": "^4.0.2",
+      "to": "node_modules/d3-scale",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-shape",
+      "requested": "^3.1.0",
+      "to": "node_modules/d3-shape",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-time",
+      "requested": "^3.0.0",
+      "to": "node_modules/d3-time",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/victory-vendor",
+      "kind": "dependencies",
+      "name": "d3-timer",
+      "requested": "^3.0.1",
+      "to": "node_modules/d3-timer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "dependencies",
+      "name": "esbuild",
+      "requested": "^0.27.0 || ^0.28.0",
+      "to": "node_modules/esbuild",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "dependencies",
+      "name": "fdir",
+      "requested": "^6.5.0",
+      "to": "node_modules/fdir",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "dependencies",
+      "name": "picomatch",
+      "requested": "^4.0.3",
+      "to": "node_modules/picomatch",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "dependencies",
+      "name": "postcss",
+      "requested": "^8.5.6",
+      "to": "node_modules/postcss",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "dependencies",
+      "name": "rollup",
+      "requested": "^4.43.0",
+      "to": "node_modules/rollup",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "dependencies",
+      "name": "tinyglobby",
+      "requested": "^0.2.15",
+      "to": "node_modules/tinyglobby",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "optionalDependencies",
+      "name": "fsevents",
+      "requested": "~2.3.3",
+      "to": "node_modules/fsevents",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "@types/node",
+      "requested": "^20.19.0 || >=22.12.0",
+      "to": "node_modules/@types/node",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "jiti",
+      "requested": ">=1.21.0",
+      "to": "node_modules/jiti",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "less",
+      "requested": "^4.0.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "lightningcss",
+      "requested": "^1.21.0",
+      "to": "node_modules/lightningcss",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "sass",
+      "requested": "^1.70.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "sass-embedded",
+      "requested": "^1.70.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "stylus",
+      "requested": ">=0.54.8",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "sugarss",
+      "requested": "^5.0.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "terser",
+      "requested": "^5.16.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "tsx",
+      "requested": "^4.8.1",
+      "to": "node_modules/tsx",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "yaml",
+      "requested": "^2.4.2",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite-node",
+      "kind": "dependencies",
+      "name": "cac",
+      "requested": "^6.7.14",
+      "to": "node_modules/cac",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite-node",
+      "kind": "dependencies",
+      "name": "debug",
+      "requested": "^4.4.1",
+      "to": "node_modules/debug",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite-node",
+      "kind": "dependencies",
+      "name": "es-module-lexer",
+      "requested": "^1.7.0",
+      "to": "node_modules/es-module-lexer",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite-node",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vite-node",
+      "kind": "dependencies",
+      "name": "vite",
+      "requested": "^5.0.0 || ^6.0.0 || ^7.0.0-0",
+      "to": "node_modules/vite",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@types/chai",
+      "requested": "^5.2.2",
+      "to": "node_modules/@types/chai",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/expect",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/expect",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/mocker",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/mocker",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/pretty-format",
+      "requested": "^3.2.7",
+      "to": "node_modules/@vitest/pretty-format",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/runner",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/runner",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/snapshot",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/snapshot",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/spy",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/spy",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "@vitest/utils",
+      "requested": "3.2.7",
+      "to": "node_modules/@vitest/utils",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "chai",
+      "requested": "^5.2.0",
+      "to": "node_modules/chai",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "debug",
+      "requested": "^4.4.1",
+      "to": "node_modules/debug",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "expect-type",
+      "requested": "^1.2.1",
+      "to": "node_modules/expect-type",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "magic-string",
+      "requested": "^0.30.17",
+      "to": "node_modules/magic-string",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "pathe",
+      "requested": "^2.0.3",
+      "to": "node_modules/pathe",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "picomatch",
+      "requested": "^4.0.2",
+      "to": "node_modules/picomatch",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "std-env",
+      "requested": "^3.9.0",
+      "to": "node_modules/std-env",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "tinybench",
+      "requested": "^2.9.0",
+      "to": "node_modules/tinybench",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "tinyexec",
+      "requested": "^0.3.2",
+      "to": "node_modules/vitest/node_modules/tinyexec",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "tinyglobby",
+      "requested": "^0.2.14",
+      "to": "node_modules/tinyglobby",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "tinypool",
+      "requested": "^1.1.1",
+      "to": "node_modules/tinypool",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "tinyrainbow",
+      "requested": "^2.0.0",
+      "to": "node_modules/tinyrainbow",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "vite",
+      "requested": "^5.0.0 || ^6.0.0 || ^7.0.0-0",
+      "to": "node_modules/vite",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "vite-node",
+      "requested": "3.2.4",
+      "to": "node_modules/vite-node",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "dependencies",
+      "name": "why-is-node-running",
+      "requested": "^2.3.0",
+      "to": "node_modules/why-is-node-running",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@edge-runtime/vm",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@types/debug",
+      "requested": "^4.1.12",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@types/node",
+      "requested": "^18.0.0 || ^20.0.0 || >=22.0.0",
+      "to": "node_modules/@types/node",
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@vitest/browser",
+      "requested": "3.2.7",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@vitest/ui",
+      "requested": "3.2.7",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "happy-dom",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "jsdom",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/whatwg-encoding",
+      "kind": "dependencies",
+      "name": "iconv-lite",
+      "requested": "0.6.3",
+      "to": "node_modules/iconv-lite",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/why-is-node-running",
+      "kind": "dependencies",
+      "name": "siginfo",
+      "requested": "^2.0.0",
+      "to": "node_modules/siginfo",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/why-is-node-running",
+      "kind": "dependencies",
+      "name": "stackback",
+      "requested": "0.0.2",
+      "to": "node_modules/stackback",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/wrap-ansi",
+      "kind": "dependencies",
+      "name": "ansi-styles",
+      "requested": "^4.0.0",
+      "to": "node_modules/ansi-styles",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/wrap-ansi",
+      "kind": "dependencies",
+      "name": "string-width",
+      "requested": "^4.1.0",
+      "to": "node_modules/string-width",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/wrap-ansi",
+      "kind": "dependencies",
+      "name": "strip-ansi",
+      "requested": "^6.0.0",
+      "to": "node_modules/strip-ansi",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "cliui",
+      "requested": "^8.0.1",
+      "to": "node_modules/cliui",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "escalade",
+      "requested": "^3.1.1",
+      "to": "node_modules/escalade",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "get-caller-file",
+      "requested": "^2.0.5",
+      "to": "node_modules/get-caller-file",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "require-directory",
+      "requested": "^2.1.1",
+      "to": "node_modules/require-directory",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "string-width",
+      "requested": "^4.2.3",
+      "to": "node_modules/string-width",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "y18n",
+      "requested": "^5.0.5",
+      "to": "node_modules/y18n",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/yargs",
+      "kind": "dependencies",
+      "name": "yargs-parser",
+      "requested": "^21.1.1",
+      "to": "node_modules/yargs-parser",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core",
+      "kind": "dependencies",
+      "name": "@emnapi/wasi-threads",
+      "requested": "1.2.2",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.4.0",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.4.0",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.4.0",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime",
+      "kind": "dependencies",
+      "name": "@tybys/wasm-util",
+      "requested": "^0.10.1",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime",
+      "kind": "peerDependencies",
+      "name": "@emnapi/core",
+      "requested": "^1.7.1",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime",
+      "kind": "peerDependencies",
+      "name": "@emnapi/runtime",
+      "requested": "^1.7.1",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime",
+      "optionalPeer": false
+    },
+    {
+      "from": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util",
+      "kind": "dependencies",
+      "name": "tslib",
+      "requested": "^2.4.0",
+      "to": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib",
+      "optionalPeer": false
+    }
+  ],
+  "unresolvedOptionalPeers": [
+    {
+      "from": "node_modules/@vitest/mocker",
+      "kind": "peerDependencies",
+      "name": "msw",
+      "requested": "^2.4.9",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/c12",
+      "kind": "peerDependencies",
+      "name": "magicast",
+      "requested": "^0.3.5",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "@opentelemetry/api",
+      "requested": "^1.1.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "babel-plugin-react-compiler",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/next",
+      "kind": "peerDependencies",
+      "name": "sass",
+      "requested": "^1.3.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "less",
+      "requested": "^4.0.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "sass",
+      "requested": "^1.70.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "sass-embedded",
+      "requested": "^1.70.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "stylus",
+      "requested": ">=0.54.8",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "sugarss",
+      "requested": "^5.0.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "terser",
+      "requested": "^5.16.0",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vite",
+      "kind": "peerDependencies",
+      "name": "yaml",
+      "requested": "^2.4.2",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@edge-runtime/vm",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@types/debug",
+      "requested": "^4.1.12",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@vitest/browser",
+      "requested": "3.2.7",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "@vitest/ui",
+      "requested": "3.2.7",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "happy-dom",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    },
+    {
+      "from": "node_modules/vitest",
+      "kind": "peerDependencies",
+      "name": "jsdom",
+      "requested": "*",
+      "to": null,
+      "optionalPeer": true
+    }
+  ]
+}

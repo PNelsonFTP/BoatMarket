@@ -78,3 +78,7 @@ Run `npm run geocode:listings` explicitly when new listing cities need coordinat
 Inspect per-source run errors before exporting; the one-shot collector can exit zero despite partial failures. Full manual/scheduled refresh procedures, cache behavior, and daily/weekly options are in [OPERATIONS.md](OPERATIONS.md). No new fixed daily/weekly automation was created during this work.
 
 Maps and city coordinates: [© OpenStreetMap contributors](https://www.openstreetmap.org/copyright). Actual listing photos load from the original sources; sample-image credits apply only to fictional demo records.
+
+## September 8 improvement pass
+
+The published 1,538-ad snapshot remains the dated September 7 collection baseline. The engineering pass added a review queue containing 163 suggested pairs; these are not confirmed duplicate counts. A backed-up database reindex populated 144 valid-format HIN identities but found no repeated HINs, leaving zero automatic groups. Original ads, favorites, notes and asking-price histories are preserved. Source access gaps were not re-tested during this implementation pass. Current pipeline verification and any cached re-collection outcomes are recorded in [VALIDATION.md](VALIDATION.md); a recent report/export timestamp must not be mistaken for a new source observation.

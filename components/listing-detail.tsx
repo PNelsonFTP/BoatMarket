@@ -99,6 +99,13 @@ function DetailContent({
   const [flag, setFlag] = useState("");
   const [flagging, setFlagging] = useState(false);
   const [allSpecs, setAllSpecs] = useState(false);
+  const otherAdNotes = boat.sourceLinks.filter(
+    (source, index, links) =>
+      source.id !== boat.id &&
+      links.findIndex((link) => link.id === source.id) === index &&
+      Object.hasOwn(workspace.notes, source.id) &&
+      workspace.notes[source.id].trim().length > 0,
+  );
   return (
     <DialogContent className="detail-modal">
       <div className="detail-gallery">
@@ -426,6 +433,11 @@ function DetailContent({
         </section>
         <section className="detail-section">
           <h3>Your notes</h3>
+          {boat.sourceLinks.length > 1 && (
+            <p className="small muted">
+              This note belongs to the {boat.source} advertisement shown above.
+            </p>
+          )}
           <label className="sr-only" htmlFor="boat-note">
             Notes for {boat.title}
           </label>
@@ -489,6 +501,28 @@ function DetailContent({
             </div>
           )}
         </section>
+        {otherAdNotes.length > 0 && (
+          <section
+            className="detail-section"
+            aria-label="Notes from other advertisements"
+          >
+            <h3>Other advertisement notes</h3>
+            <p className="small muted">
+              Notes remain attached to their original advertisements and are
+              private to this workspace.
+            </p>
+            {otherAdNotes.map((source) => (
+              <article key={source.id}>
+                <a href={source.url} target="_blank" rel="noopener noreferrer">
+                  {source.source} · view original advertisement
+                </a>
+                <p style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+                  {workspace.notes[source.id]}
+                </p>
+              </article>
+            ))}
+          </section>
+        )}
         {similar.length > 0 && (
           <section className="detail-section">
             <h3>Similar boats</h3>

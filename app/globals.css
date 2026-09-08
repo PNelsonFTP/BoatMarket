@@ -2250,3 +2250,114 @@ small {
   color: var(--muted);
   font-weight: 500;
 }
+
+/* Review tools retain every source ad and distinguish evidence from decisions. */
+.duplicate-review {
+  grid-column: 1 / -1;
+}
+.duplicate-pair,
+.coverage-gap {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 12px 0;
+}
+.duplicate-pair-ads {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.duplicate-ad,
+.duplicate-group-member {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.duplicate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.duplicate-conflict {
+  color: var(--danger, #b42318);
+}
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+  margin: 12px 0;
+}
+.review-list .button {
+  justify-content: flex-start;
+  white-space: normal;
+  text-align: left;
+}
+.review-evidence {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 320px;
+  overflow-y: auto;
+  font-size: 12px;
+}
+.settings-card table small {
+  display: block;
+}
+.settings-card .form-grid {
+  margin-top: 16px;
+}
+@media (max-width: 640px) {
+  .duplicate-pair-ads {
+    grid-template-columns: 1fr;
+  }
+}
+
+.source-health-table {
+  min-width: 650px;
+}
+.source-health-table td {
+  vertical-align: top;
+}
+.source-health-table small {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 3px;
+}
+.duplicate-review p {
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.duplicate-review h4 {
+  font-size: 14px;
+  font-weight: 650;
+  margin-top: 18px;
+}
+.duplicate-review small {
+  color: var(--muted);
+}
+.duplicate-ad a {
+  font-weight: 600;
+}
+
+.settings-card .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.settings-card .form-grid > h4,
+.settings-card .form-grid > div,
+.settings-card .form-grid > details {
+  grid-column: 1 / -1;
+}
+.settings-card .form-grid > label {
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
+}
+@media (max-width: 640px) {
+  .settings-card .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

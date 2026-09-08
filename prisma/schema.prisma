@@ -39,6 +39,7 @@ model Listing {
   model String?
   year Int?
   price Float?
+  identityHin String?
   length Float?
   horsepower Float?
   lat Float?
@@ -60,10 +61,24 @@ model Listing {
   prices PriceHistory[]
   favorites Favorite[]
   notes Note[]
+  duplicateDecisionsLeft DuplicateDecision[] @relation("DuplicateDecisionLeft")
+  duplicateDecisionsRight DuplicateDecision[] @relation("DuplicateDecisionRight")
   @@unique([source,sourceListingId])
   @@index([status,price])
   @@index([source,lastSeenAt])
   @@index([make,model,year])
+  @@index([identityHin])
+}
+model DuplicateDecision {
+  id String @id @default(cuid())
+  leftId String
+  rightId String
+  decision String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  left Listing @relation("DuplicateDecisionLeft",fields:[leftId],references:[id],onDelete:Cascade)
+  right Listing @relation("DuplicateDecisionRight",fields:[rightId],references:[id],onDelete:Cascade)
+  @@unique([leftId,rightId])
 }
 model Engine {
   id String @id @default(cuid())

@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
-import { X, Ship } from "lucide-react";
+import { X, Ship, Download } from "lucide-react";
 import { FIELDS } from "@/lib/catalog";
 import { type BoatResult, DEFAULT_FILTERS } from "@/lib/types";
 import { fieldValue } from "@/lib/search";
 import { asset, money } from "@/lib/utils";
+import { downloadComparisonPacket } from "@/lib/comparison-export";
 export function Compare({
   boats,
   onRemove,
@@ -15,6 +16,7 @@ export function Compare({
   onOpen: (b: BoatResult) => void;
 }) {
   const [differences, setDifferences] = useState(false);
+  const [exportMessage, setExportMessage] = useState("");
   if (!boats.length)
     return (
       <div className="empty-state">
@@ -32,6 +34,24 @@ export function Compare({
     <>
       <div className="results-toolbar">
         <strong>{boats.length} boats side by side</strong>
+        <button
+          type="button"
+          className="button"
+          onClick={() => {
+            try {
+              downloadComparisonPacket(boats);
+              setExportMessage(
+                "Comparison packet downloaded. Open it to print or save as PDF; saved workspace notes are omitted.",
+              );
+            } catch {
+              setExportMessage(
+                "The browser could not download the comparison packet. Please try again.",
+              );
+            }
+          }}
+        >
+          <Download size={16} /> Download comparison packet
+        </button>
         <label className="check-label">
           <input
             type="checkbox"
@@ -41,6 +61,7 @@ export function Compare({
           Differences only
         </label>
       </div>
+      {exportMessage && <p role="status">{exportMessage}</p>}
       <div className="compare-scroll">
         <table className="compare-table">
           <thead>

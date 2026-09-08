@@ -1,0 +1,619 @@
+{
+  "format": "boatscout-verified-bundle-evidence",
+  "version": 1,
+  "verifiedAt": "2026-09-08T03:06:59.137Z",
+  "verification": "Published tarball SHA-512 matched package-lock integrity before in-memory metadata inspection. No install, lifecycle script, or package code was executed.",
+  "parent": {
+    "path": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+    "name": "@tailwindcss/oxide-wasm32-wasi",
+    "version": "4.3.3",
+    "url": "https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/oxide-wasm32-wasi-4.3.3.tgz",
+    "integrity": "sha512-jx1+rPhY/5Ympkktd656HBWEBLxP7dH06losBLjjf5vgCODXvi9KhtftWcMIwTFIDqBr7cRnQkdLnAG+IOlGvQ==",
+    "archiveSha256": "d5b61fbe10d237f7565032a74b03b5be6c83b309037ee407e2b5b46f24738823",
+    "archiveBytes": 1829808
+  },
+  "packages": [
+    {
+      "archivePath": "package/node_modules/@emnapi/core/package.json",
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core",
+      "name": "@emnapi/core",
+      "version": "1.11.1",
+      "license": "MIT",
+      "manifestText": "{\n  \"name\": \"@emnapi/core\",\n  \"version\": \"1.11.1\",\n  \"description\": \"emnapi core\",\n  \"main\": \"index.js\",\n  \"module\": \"./dist/emnapi-core.esm-bundler.js\",\n  \"types\": \"./dist/emnapi-core.d.ts\",\n  \"sideEffects\": false,\n  \"exports\": {\n    \".\": {\n      \"types\": {\n        \"module\": \"./dist/emnapi-core.d.ts\",\n        \"import\": \"./dist/emnapi-core.d.mts\",\n        \"default\": \"./dist/emnapi-core.d.ts\"\n      },\n      \"module\": \"./dist/emnapi-core.esm-bundler.js\",\n      \"import\": \"./dist/emnapi-core.mjs\",\n      \"default\": \"./index.js\"\n    },\n    \"./dist/emnapi-core.cjs.min\": {\n      \"types\": \"./dist/emnapi-core.d.ts\",\n      \"default\": \"./dist/emnapi-core.cjs.min.js\"\n    },\n    \"./dist/emnapi-core.min.mjs\": {\n      \"types\": \"./dist/emnapi-core.d.mts\",\n      \"default\": \"./dist/emnapi-core.min.mjs\"\n    }\n  },\n  \"dependencies\": {\n    \"@emnapi/wasi-threads\": \"1.2.2\",\n    \"tslib\": \"^2.4.0\"\n  },\n  \"scripts\": {\n    \"build\": \"node ./script/build.js\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/toyobayashi/emnapi.git\"\n  },\n  \"author\": \"toyobayashi\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/toyobayashi/emnapi/issues\"\n  },\n  \"homepage\": \"https://github.com/toyobayashi/emnapi#readme\",\n  \"publishConfig\": {\n    \"access\": \"public\"\n  }\n}\n",
+      "manifestSha256": "ef9b64c17a928e8197624b57df118a8f095cabbebb66e134daebc9d487541266",
+      "fileInventory": [
+        {
+          "path": "dist/emnapi-core.cjs.js",
+          "sha256": "602bd45ed32d569b923eb58c7f1ccf54a12655e944150a45fc72140a8c05ebe2",
+          "bytes": 342801
+        },
+        {
+          "path": "dist/emnapi-core.cjs.min.d.ts",
+          "sha256": "ee22b703b81ca43603d2de25f93d2efea6d83dda0d1d29de1ac36d232f8d4b08",
+          "bytes": 13617
+        },
+        {
+          "path": "dist/emnapi-core.cjs.min.js",
+          "sha256": "50be219df3c3348bd003235a4778746dc644342b325c1c36af8325696d26d98b",
+          "bytes": 123356
+        },
+        {
+          "path": "dist/emnapi-core.d.mts",
+          "sha256": "ee22b703b81ca43603d2de25f93d2efea6d83dda0d1d29de1ac36d232f8d4b08",
+          "bytes": 13617
+        },
+        {
+          "path": "dist/emnapi-core.d.ts",
+          "sha256": "e16cfaccfe2d24babc9c81be47bdd15c5c0eb30dd2217938372713ec23e696e7",
+          "bytes": 13650
+        },
+        {
+          "path": "dist/emnapi-core.esm-bundler.js",
+          "sha256": "c465c49d65e0ef9af99685c117d70d26704b1f867b3b5285657dfbc335cea8ba",
+          "bytes": 416080
+        },
+        {
+          "path": "dist/emnapi-core.js",
+          "sha256": "689eb398508750617f8f29bac2a4a98cf6d8465b2525dffdea1feba834f3a01c",
+          "bytes": 491743
+        },
+        {
+          "path": "dist/emnapi-core.min.d.mts",
+          "sha256": "ee22b703b81ca43603d2de25f93d2efea6d83dda0d1d29de1ac36d232f8d4b08",
+          "bytes": 13617
+        },
+        {
+          "path": "dist/emnapi-core.min.js",
+          "sha256": "49c5ea2fee5a101d48056466652dfaa2fb768ee32dd9391a115fac7bc6433a3d",
+          "bytes": 138866
+        },
+        {
+          "path": "dist/emnapi-core.min.mjs",
+          "sha256": "ec5cff8a37360fd94cdd3aba8482be0ce714dae24e123320de011839da83baea",
+          "bytes": 123218
+        },
+        {
+          "path": "dist/emnapi-core.mjs",
+          "sha256": "d1427cd8a8285cde3d04535b54ab938e436f90a1298dddf46ce4eb83b5fafd5c",
+          "bytes": 342400
+        },
+        {
+          "path": "index.js",
+          "sha256": "e0e198695b0a24a9716fb28179b55583dd9fda8e761c06990c345835cc34b366",
+          "bytes": 206
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "2088f55c6731498410b20c95ebd345ed4a4a800bf74c0fba4d282fd2a021daaa",
+          "bytes": 1076
+        },
+        {
+          "path": "package.json",
+          "sha256": "ef9b64c17a928e8197624b57df118a8f095cabbebb66e134daebc9d487541266",
+          "bytes": 1283
+        },
+        {
+          "path": "README.md",
+          "sha256": "71bc9106276d4da0dcf03fa870e9557b8f20e9dbd66b4957d51107a3fd3b5aad",
+          "bytes": 83
+        }
+      ],
+      "contentInventorySha256": "ff58facc129823090a0fdc1fdd699830ae5d26bef4b7e310c065cb398c921663"
+    },
+    {
+      "archivePath": "package/node_modules/@emnapi/runtime/package.json",
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime",
+      "name": "@emnapi/runtime",
+      "version": "1.11.1",
+      "license": "MIT",
+      "manifestText": "{\n  \"name\": \"@emnapi/runtime\",\n  \"version\": \"1.11.1\",\n  \"description\": \"emnapi runtime\",\n  \"main\": \"index.js\",\n  \"module\": \"./dist/emnapi.esm-bundler.js\",\n  \"types\": \"./dist/emnapi.d.ts\",\n  \"sideEffects\": false,\n  \"exports\": {\n    \".\": {\n      \"types\": {\n        \"module\": \"./dist/emnapi.d.ts\",\n        \"import\": \"./dist/emnapi.d.mts\",\n        \"default\": \"./dist/emnapi.d.ts\"\n      },\n      \"module\": \"./dist/emnapi.esm-bundler.js\",\n      \"import\": \"./dist/emnapi.mjs\",\n      \"default\": \"./index.js\"\n    },\n    \"./dist/emnapi.cjs.min\": {\n      \"types\": \"./dist/emnapi.d.ts\",\n      \"default\": \"./dist/emnapi.cjs.min.js\"\n    },\n    \"./dist/emnapi.min.mjs\": {\n      \"types\": \"./dist/emnapi.d.mts\",\n      \"default\": \"./dist/emnapi.min.mjs\"\n    }\n  },\n  \"dependencies\": {\n    \"tslib\": \"^2.4.0\"\n  },\n  \"scripts\": {\n    \"build\": \"node ./script/build.js\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/toyobayashi/emnapi.git\"\n  },\n  \"author\": \"toyobayashi\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/toyobayashi/emnapi/issues\"\n  },\n  \"homepage\": \"https://github.com/toyobayashi/emnapi#readme\",\n  \"publishConfig\": {\n    \"access\": \"public\"\n  }\n}\n",
+      "manifestSha256": "d67a7be4cce81ade30e27261b34a65af3e72ff69d35b313d14a16c8ba4247d8e",
+      "fileInventory": [
+        {
+          "path": "dist/emnapi.cjs.js",
+          "sha256": "628b1c303a6945cba81e4fae6701058c4fd08c5c86a5d7beef1a1a14463c50f7",
+          "bytes": 43125
+        },
+        {
+          "path": "dist/emnapi.cjs.min.d.ts",
+          "sha256": "e96bea5084eb4551db33bef06b1fb86e0dddc03905eb3940311b15b9f8385e09",
+          "bytes": 21740
+        },
+        {
+          "path": "dist/emnapi.cjs.min.js",
+          "sha256": "1ef21744d809479c5483b8ba5a625e340e9b82d857832d473de5dabde766b0c9",
+          "bytes": 21319
+        },
+        {
+          "path": "dist/emnapi.d.mts",
+          "sha256": "e96bea5084eb4551db33bef06b1fb86e0dddc03905eb3940311b15b9f8385e09",
+          "bytes": 21740
+        },
+        {
+          "path": "dist/emnapi.d.ts",
+          "sha256": "f58fd4f3bdc560cde4841e56865139f79f0a5cdd6478a44d0b6d46d3886c8a12",
+          "bytes": 21769
+        },
+        {
+          "path": "dist/emnapi.esm-bundler.js",
+          "sha256": "72293cebe0d86a7da47ec4b2991e87e32352a897dcfc16b69c3aac8772cb7882",
+          "bytes": 52702
+        },
+        {
+          "path": "dist/emnapi.iife.d.ts",
+          "sha256": "e9438bbc015428314b5b69a31ca862098fec7aa3f0e3926286cdb0779813b1d3",
+          "bytes": 14650
+        },
+        {
+          "path": "dist/emnapi.iife.js",
+          "sha256": "4eeb435c3f3d296cb3c934e8a654e2f5afe3339b13d40f6bdd86d95933c8e364",
+          "bytes": 61228
+        },
+        {
+          "path": "dist/emnapi.js",
+          "sha256": "6875ee9d6ab7a30bacf72e203d16586c7b84adb634bc1d86368f26ad6d107283",
+          "bytes": 61504
+        },
+        {
+          "path": "dist/emnapi.min.d.mts",
+          "sha256": "e96bea5084eb4551db33bef06b1fb86e0dddc03905eb3940311b15b9f8385e09",
+          "bytes": 21740
+        },
+        {
+          "path": "dist/emnapi.min.js",
+          "sha256": "8e903b6b73c26c3358a1cb00afa7a8b0c74f46b1aa88917edd7a9b5ecc3c0482",
+          "bytes": 25989
+        },
+        {
+          "path": "dist/emnapi.min.mjs",
+          "sha256": "ab604a10ad877fe4517d2a2a0c9fe90e43bd3a920b901cb75ee59031cd160e69",
+          "bytes": 21114
+        },
+        {
+          "path": "dist/emnapi.mjs",
+          "sha256": "579290b3fa044ddc98bf3bcbe7032e0893fad7a3c6f2c2a62ba4beff0073fc28",
+          "bytes": 42327
+        },
+        {
+          "path": "index.js",
+          "sha256": "c406ece13dc7dcd5aec8b02c2d3d11c87acbfb01dee17f30483bec071c20a0c5",
+          "bytes": 196
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "2088f55c6731498410b20c95ebd345ed4a4a800bf74c0fba4d282fd2a021daaa",
+          "bytes": 1076
+        },
+        {
+          "path": "package.json",
+          "sha256": "d67a7be4cce81ade30e27261b34a65af3e72ff69d35b313d14a16c8ba4247d8e",
+          "bytes": 1187
+        },
+        {
+          "path": "README.md",
+          "sha256": "71bc9106276d4da0dcf03fa870e9557b8f20e9dbd66b4957d51107a3fd3b5aad",
+          "bytes": 83
+        }
+      ],
+      "contentInventorySha256": "00cdb1d84f365c9aebdc456f9cd428be70a53c63635442dca1c471c57206668b"
+    },
+    {
+      "archivePath": "package/node_modules/@emnapi/wasi-threads/package.json",
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads",
+      "name": "@emnapi/wasi-threads",
+      "version": "1.2.2",
+      "license": "MIT",
+      "manifestText": "{\n  \"name\": \"@emnapi/wasi-threads\",\n  \"version\": \"1.2.2\",\n  \"description\": \"WASI threads proposal implementation in JavaScript\",\n  \"main\": \"index.js\",\n  \"module\": \"./dist/wasi-threads.esm-bundler.js\",\n  \"types\": \"./dist/wasi-threads.d.ts\",\n  \"sideEffects\": false,\n  \"exports\": {\n    \".\": {\n      \"types\": {\n        \"module\": \"./dist/wasi-threads.d.ts\",\n        \"import\": \"./dist/wasi-threads.d.mts\",\n        \"default\": \"./dist/wasi-threads.d.ts\"\n      },\n      \"module\": \"./dist/wasi-threads.esm-bundler.js\",\n      \"import\": \"./dist/wasi-threads.mjs\",\n      \"default\": \"./index.js\"\n    },\n    \"./dist/wasi-threads.cjs.min\": {\n      \"types\": \"./dist/wasi-threads.d.ts\",\n      \"default\": \"./dist/wasi-threads.cjs.min.js\"\n    },\n    \"./dist/wasi-threads.min.mjs\": {\n      \"types\": \"./dist/wasi-threads.d.mts\",\n      \"default\": \"./dist/wasi-threads.min.mjs\"\n    }\n  },\n  \"dependencies\": {\n    \"tslib\": \"^2.4.0\"\n  },\n  \"scripts\": {\n    \"build\": \"node ./script/build.js\",\n    \"build:test\": \"node ./test/build.js\",\n    \"test\": \"node ./test/index.js\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/toyobayashi/emnapi.git\"\n  },\n  \"author\": \"toyobayashi\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/toyobayashi/emnapi/issues\"\n  },\n  \"homepage\": \"https://github.com/toyobayashi/emnapi#readme\",\n  \"publishConfig\": {\n    \"access\": \"public\"\n  }\n}\n",
+      "manifestSha256": "d0e6e4255490f8eb9c916a8061c21ef645c6104edf7b88d927b930a588b9a659",
+      "fileInventory": [
+        {
+          "path": "dist/wasi-threads.cjs.js",
+          "sha256": "745bb1df157a321e2e0a104782e76476177eded88c696298c5664cd36a1b531b",
+          "bytes": 31816
+        },
+        {
+          "path": "dist/wasi-threads.cjs.min.d.ts",
+          "sha256": "4547bf8e47356343b8ff8df1c34362c5284038ced91a003e0e2b6cf1dbcb1aa1",
+          "bytes": 9014
+        },
+        {
+          "path": "dist/wasi-threads.cjs.min.js",
+          "sha256": "0c0280e7f9af4e50e29ea93cdb2f9706409d102bb303faecd59d4618b5a19d4b",
+          "bytes": 13852
+        },
+        {
+          "path": "dist/wasi-threads.d.mts",
+          "sha256": "4547bf8e47356343b8ff8df1c34362c5284038ced91a003e0e2b6cf1dbcb1aa1",
+          "bytes": 9014
+        },
+        {
+          "path": "dist/wasi-threads.d.ts",
+          "sha256": "39189a30e2a6142253c9aaf074829da9343090802337a3f0ce3e618391d4c98e",
+          "bytes": 9048
+        },
+        {
+          "path": "dist/wasi-threads.esm-bundler.js",
+          "sha256": "b90a6cc416b1ccab3d93faef7ea007278e77a29f4d9da02609182977c46f961d",
+          "bytes": 35057
+        },
+        {
+          "path": "dist/wasi-threads.js",
+          "sha256": "32a241b34e141643cafbc99295adb8be5e724dca94a49dce7a470eba97b6771a",
+          "bytes": 39280
+        },
+        {
+          "path": "dist/wasi-threads.min.d.mts",
+          "sha256": "4547bf8e47356343b8ff8df1c34362c5284038ced91a003e0e2b6cf1dbcb1aa1",
+          "bytes": 9014
+        },
+        {
+          "path": "dist/wasi-threads.min.js",
+          "sha256": "da84ce6f97a3db07a19242d618a1d18d58e2960d689ee11d95daeb0d1a87e775",
+          "bytes": 14909
+        },
+        {
+          "path": "dist/wasi-threads.min.mjs",
+          "sha256": "56534288677d81a8436675b585902c462e24a5e0252d50f84566e1573e134b29",
+          "bytes": 13836
+        },
+        {
+          "path": "dist/wasi-threads.mjs",
+          "sha256": "a709268dfea9aa60a0bc5d87d5c6cc7af17ef79851cb7eece844bcac0442c512",
+          "bytes": 31668
+        },
+        {
+          "path": "index.js",
+          "sha256": "361727fd102c97a1248b1a95f7508cd08b4774259323c65a101ea67c1c7d8d7d",
+          "bytes": 208
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "2088f55c6731498410b20c95ebd345ed4a4a800bf74c0fba4d282fd2a021daaa",
+          "bytes": 1076
+        },
+        {
+          "path": "package.json",
+          "sha256": "d0e6e4255490f8eb9c916a8061c21ef645c6104edf7b88d927b930a588b9a659",
+          "bytes": 1383
+        },
+        {
+          "path": "README.md",
+          "sha256": "4508eed20dcb00b1b39b38a89ee0c8f2d2b32cd9b65890b3d446bd2448397140",
+          "bytes": 5888
+        }
+      ],
+      "contentInventorySha256": "b32d9040490749ae4838731c64698e64854fd80c78a674bc3f5a9c9217a765ba"
+    },
+    {
+      "archivePath": "package/node_modules/@napi-rs/wasm-runtime/package.json",
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime",
+      "name": "@napi-rs/wasm-runtime",
+      "version": "1.1.4",
+      "license": "MIT",
+      "manifestText": "{\n  \"name\": \"@napi-rs/wasm-runtime\",\n  \"version\": \"1.1.4\",\n  \"type\": \"module\",\n  \"description\": \"Runtime and polyfill for wasm targets\",\n  \"homepage\": \"https://napi.rs/\",\n  \"author\": {\n    \"name\": \"LongYinan\",\n    \"url\": \"https://github.com/Brooooooklyn\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/napi-rs/napi-rs.git\",\n    \"directory\": \"wasm-runtime\"\n  },\n  \"license\": \"MIT\",\n  \"publishConfig\": {\n    \"registry\": \"https://registry.npmjs.org/\",\n    \"access\": \"public\"\n  },\n  \"files\": [\n    \"runtime.cjs\",\n    \"runtime.js\",\n    \"fs-proxy.js\",\n    \"dist/*.cjs\",\n    \"dist/*.js\"\n  ],\n  \"devDependencies\": {\n    \"@rollup/plugin-alias\": \"^6.0.0\",\n    \"@rollup/plugin-commonjs\": \"^29.0.0\",\n    \"@rollup/plugin-inject\": \"^5.0.5\",\n    \"@rollup/plugin-json\": \"^6.1.0\",\n    \"@rollup/plugin-node-resolve\": \"^16.0.3\",\n    \"@rollup/plugin-replace\": \"^6.0.3\",\n    \"buffer\": \"^6.0.3\",\n    \"events\": \"^3.3.0\",\n    \"memfs\": \"^4.50.0\",\n    \"node-inspect-extracted\": \"^3.2.2\",\n    \"path-browserify\": \"^1.0.1\",\n    \"process\": \"^0.11.10\",\n    \"readable-stream\": \"^4.7.0\",\n    \"rollup\": \"^4.53.1\",\n    \"rollup-plugin-polyfill-node\": \"^0.13.0\",\n    \"tslib\": \"^2.8.1\"\n  },\n  \"dependencies\": {\n    \"@tybys/wasm-util\": \"^0.10.1\"\n  },\n  \"peerDependencies\": {\n    \"@emnapi/core\": \"^1.7.1\",\n    \"@emnapi/runtime\": \"^1.7.1\"\n  },\n  \"scripts\": {\n    \"build\": \"rollup -c rollup.config.js\",\n    \"test\": \"node --test\"\n  },\n  \"funding\": {\n    \"type\": \"github\",\n    \"url\": \"https://github.com/sponsors/Brooooooklyn\"\n  },\n  \"exports\": {\n    \".\": {\n      \"import\": \"./runtime.js\",\n      \"require\": \"./runtime.cjs\"\n    },\n    \"./fs\": {\n      \"import\": \"./dist/fs.js\"\n    }\n  }\n}\n",
+      "manifestSha256": "5f9db850fde3b2adaf40343485598ad1606d5177748c4cdede5ddc8696940ab1",
+      "fileInventory": [
+        {
+          "path": "dist/fs-proxy.cjs",
+          "sha256": "34b5e94452c949053b7b10c8d8e20a059a0b85c3a96e5e4a4e38b37db58ddb99",
+          "bytes": 8057
+        },
+        {
+          "path": "dist/fs.js",
+          "sha256": "5ab202cca1a03aab46c9149d56bab64b951e459abc39a44169d655e318cfb71b",
+          "bytes": 6233609
+        },
+        {
+          "path": "fs-proxy.js",
+          "sha256": "1d67af6708b2d330ec3ef0b4cea6f7e72ae7a363c2323b743b19414158e6fc10",
+          "bytes": 7902
+        },
+        {
+          "path": "package.json",
+          "sha256": "5f9db850fde3b2adaf40343485598ad1606d5177748c4cdede5ddc8696940ab1",
+          "bytes": 1673
+        },
+        {
+          "path": "runtime.cjs",
+          "sha256": "2ae916da45dd36964bd7aaa6ca449c8f3c8f48fd80201c7e084ff2e654e74bca",
+          "bytes": 437
+        },
+        {
+          "path": "runtime.js",
+          "sha256": "c544893ea4481d7f3fccdabc72bfe55b88a1721257a33c1294a278811c8ec105",
+          "bytes": 251
+        }
+      ],
+      "contentInventorySha256": "01f29f08b25dcab7028c43a22f3c5ff8df92e620ef15fe72c3849814de1c23cb"
+    },
+    {
+      "archivePath": "package/node_modules/@tybys/wasm-util/package.json",
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util",
+      "name": "@tybys/wasm-util",
+      "version": "0.10.2",
+      "license": "MIT",
+      "manifestText": "{\n  \"name\": \"@tybys/wasm-util\",\n  \"version\": \"0.10.2\",\n  \"description\": \"WASI polyfill for browser and some wasm util\",\n  \"main\": \"./lib/cjs/index.js\",\n  \"module\": \"./dist/wasm-util.esm-bundler.js\",\n  \"types\": \"./dist/wasm-util.d.ts\",\n  \"exports\": {\n    \".\": {\n      \"module\": \"./dist/wasm-util.esm-bundler.js\",\n      \"import\": \"./lib/mjs/index.mjs\",\n      \"require\": \"./lib/cjs/index.js\",\n      \"types\": \"./dist/wasm-util.d.ts\"\n    }\n  },\n  \"scripts\": {\n    \"build\": \"tsgo build\",\n    \"watch\": \"tsgo watch\",\n    \"test\": \"jest\",\n    \"lint\": \"eslint ./src/**/*.{ts,js} --fix\",\n    \"prepare\": \"npm run build\"\n  },\n  \"publishConfig\": {\n    \"access\": \"public\"\n  },\n  \"keywords\": [\n    \"wasm\",\n    \"webassembly\",\n    \"wasi\",\n    \"polyfill\"\n  ],\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/toyobayashi/wasm-util.git\"\n  },\n  \"author\": \"toyobayashi\",\n  \"license\": \"MIT\",\n  \"dependencies\": {\n    \"tslib\": \"^2.4.0\"\n  },\n  \"devDependencies\": {\n    \"@tybys/ts-transform-module-specifier\": \"^0.0.2\",\n    \"@tybys/ts-transform-pure-class\": \"^0.1.1\",\n    \"@tybys/tsgo\": \"^1.1.0\",\n    \"@types/node\": \"^14.14.31\",\n    \"@typescript-eslint/eslint-plugin\": \"^5.40.1\",\n    \"@typescript-eslint/parser\": \"^5.40.1\",\n    \"eslint\": \"^8.25.0\",\n    \"eslint-config-standard-with-typescript\": \"^23.0.0\",\n    \"eslint-plugin-import\": \"^2.26.0\",\n    \"eslint-plugin-n\": \"^15.3.0\",\n    \"eslint-plugin-promise\": \"^6.1.0\",\n    \"memfs-browser\": \"^3.4.13000\",\n    \"mocha\": \"^10.1.0\",\n    \"ts-node\": \"^10.9.1\",\n    \"typescript\": \"~4.8.3\"\n  }\n}\n",
+      "manifestSha256": "a7b1718e6616ae2cd235a365d03b8d5b5e8c5d6a27e9f7604a3d51ed20ca9c29",
+      "fileInventory": [
+        {
+          "path": "dist/tsdoc-metadata.json",
+          "sha256": "3a00d8487ecf32be3981e77928e5e9a1626bd79a458f28b53d639bc1a437c095",
+          "bytes": 340
+        },
+        {
+          "path": "dist/wasm-util.d.ts",
+          "sha256": "b0168078bd3289e5daf7fcfb7c27e2d48739b07db1187a058954a0eabb384b78",
+          "bytes": 16062
+        },
+        {
+          "path": "dist/wasm-util.esm-bundler.js",
+          "sha256": "512e1646b3e44e4568521633fd600a543cf45932ae3141949b48a08d20e1b747",
+          "bytes": 129848
+        },
+        {
+          "path": "dist/wasm-util.esm.js",
+          "sha256": "2b78d742a4c702ab5234efa7d351752e9b2f38e967749128366e6c1d8cf1dfe4",
+          "bytes": 129778
+        },
+        {
+          "path": "dist/wasm-util.esm.min.js",
+          "sha256": "d14789fd7b2bbca96fc557d825ee75dd2450f6eee25018c7cb901a639440666e",
+          "bytes": 47834
+        },
+        {
+          "path": "dist/wasm-util.js",
+          "sha256": "b9d4fac7732107ba7cf2d8fc47c0f9e745b8a25b663591243bd35f0973f38434",
+          "bytes": 142152
+        },
+        {
+          "path": "dist/wasm-util.min.js",
+          "sha256": "8163a5826fe17000af1e8aa1814c310662381f1079937b129eca8719b420a3b0",
+          "bytes": 48087
+        },
+        {
+          "path": "lib/cjs/asyncify.js",
+          "sha256": "9bb8c84b52c19c5da62020d0b5ba2241e262c2b60db2c38a2c8778f73d732519",
+          "bytes": 6028
+        },
+        {
+          "path": "lib/cjs/index.js",
+          "sha256": "f8dbad4089e5ba855e43f5ee180f94aedca34b3fe59cd05bb97cc714e8f6a44a",
+          "bytes": 492
+        },
+        {
+          "path": "lib/cjs/jspi.js",
+          "sha256": "4e613b8d2a57db99cb92e227eeb15f7808ad36d8ef736301df0040bac2e3bffd",
+          "bytes": 1992
+        },
+        {
+          "path": "lib/cjs/load.js",
+          "sha256": "688278eedc042ee2d5049872002d8f3cdb97184078f5d10e8234d856ad107db3",
+          "bytes": 3934
+        },
+        {
+          "path": "lib/cjs/memory.js",
+          "sha256": "c94056b9cde367bfd8c1f9b7f6508e47c57233b713b9b899b8a5ae131f847729",
+          "bytes": 1512
+        },
+        {
+          "path": "lib/cjs/wasi/error.js",
+          "sha256": "314c94740f1fadfbe127b9ab17caa757bbf0eb879438c4039f46a55be05295dc",
+          "bytes": 6114
+        },
+        {
+          "path": "lib/cjs/wasi/fd.js",
+          "sha256": "5654c8c8dbfe50f4f36cdc1cc1b89b1bc8a97e73c6c74cf5d1ddf4bb4285d226",
+          "bytes": 10239
+        },
+        {
+          "path": "lib/cjs/wasi/fs.js",
+          "sha256": "a47020af5d0c7b7ca3a3cd64ec93436d5e25f58a58cb843ae3726419e59d620c",
+          "bytes": 107
+        },
+        {
+          "path": "lib/cjs/wasi/index.js",
+          "sha256": "f71240be65e2ed112413bfd02812a8cc2d928cfa270fd478632ba4265b4e2ded",
+          "bytes": 7613
+        },
+        {
+          "path": "lib/cjs/wasi/path.js",
+          "sha256": "32ad096cdc8efee0c5cfa7679c00cc0c4ee19287330923ad9dd49466c6dca157",
+          "bytes": 11917
+        },
+        {
+          "path": "lib/cjs/wasi/preview1.js",
+          "sha256": "6619e7b09b9e2337f02e0fc94f55e88a1ae466ccea8bf30b8d361afbfa4f735f",
+          "bytes": 78179
+        },
+        {
+          "path": "lib/cjs/wasi/rights.js",
+          "sha256": "20bd2d2e34db5c3df678d91a26251d4236c581cfbe08819a81dfca19bd8f8d3c",
+          "bytes": 6015
+        },
+        {
+          "path": "lib/cjs/wasi/types.js",
+          "sha256": "e1a68940e11ed66b7eb90e3bfd431289a318a518d3cae3e77d269a13f4e61f07",
+          "bytes": 11826
+        },
+        {
+          "path": "lib/cjs/wasi/util.js",
+          "sha256": "25226c760ad2b1352745dab7e3e076950bebe515ac25926995de461e8055f057",
+          "bytes": 4940
+        },
+        {
+          "path": "lib/cjs/webassembly.js",
+          "sha256": "7b15a2d16e2e357a884e6b244cdcf735f51c8309f903f0f7f21b72a0714bde41",
+          "bytes": 442
+        },
+        {
+          "path": "lib/mjs/asyncify.mjs",
+          "sha256": "e88681c2cbc13824351ace974158b22352dc62a1ddb174a5c9ec62337383cd3c",
+          "bytes": 5847
+        },
+        {
+          "path": "lib/mjs/index.mjs",
+          "sha256": "2416496124e90c829145443b52bb019445d3827d01518aa1973da62aaa830662",
+          "bytes": 216
+        },
+        {
+          "path": "lib/mjs/jspi.mjs",
+          "sha256": "5146843a4f313cc41937d7f4b593d7f9307cfd0ea0ccbfb6b7da5cffa3d58579",
+          "bytes": 1693
+        },
+        {
+          "path": "lib/mjs/load.mjs",
+          "sha256": "a2ba20046d419a899bfbf4036b91c493bb2dd62ad81b99f654471fa65a34e40d",
+          "bytes": 3484
+        },
+        {
+          "path": "lib/mjs/memory.mjs",
+          "sha256": "a4d5d55b4ffa514f42cc417cfc93f8ff581b4b6fec634e9052218e0d8ea2d008",
+          "bytes": 1226
+        },
+        {
+          "path": "lib/mjs/wasi/error.mjs",
+          "sha256": "83f14b24535486987c23b24aad0296ee5e2ceecf2bff428cb279fa23e5e55f8e",
+          "bytes": 5300
+        },
+        {
+          "path": "lib/mjs/wasi/fd.mjs",
+          "sha256": "feb7ed568ac13a9a4b375ff9db9eb0bcbb5bbf69c202bbeece767d7338e090da",
+          "bytes": 9389
+        },
+        {
+          "path": "lib/mjs/wasi/fs.mjs",
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "bytes": 11
+        },
+        {
+          "path": "lib/mjs/wasi/index.mjs",
+          "sha256": "daaeec31469c5c895f1e631ac52ee4a35fa113ccd45929aafe5eacc50d334fd1",
+          "bytes": 7300
+        },
+        {
+          "path": "lib/mjs/wasi/path.mjs",
+          "sha256": "13d2048be07ff7be2bbbb9f304b6bd7e4c57fd3db6761bce42bb1307303268c9",
+          "bytes": 11684
+        },
+        {
+          "path": "lib/mjs/wasi/preview1.mjs",
+          "sha256": "a2d9393aa1e94163a052105c7bb0beb1deb2bc42f1dcfd3592ef239b9a38cf96",
+          "bytes": 75035
+        },
+        {
+          "path": "lib/mjs/wasi/rights.mjs",
+          "sha256": "f70dba81c11077000d04a741de1edc759f0df47750a02f470531e5163a326cd7",
+          "bytes": 4740
+        },
+        {
+          "path": "lib/mjs/wasi/types.mjs",
+          "sha256": "c8c6eeed1eeff08504af69068416145e8237cd978fb3dae5fdb939944f226837",
+          "bytes": 11208
+        },
+        {
+          "path": "lib/mjs/wasi/util.mjs",
+          "sha256": "7db52c92ed46715c8b8567a117c2abb34375766986d32a78afc14d2bbfc7d077",
+          "bytes": 4134
+        },
+        {
+          "path": "lib/mjs/webassembly.mjs",
+          "sha256": "91325003629e1127c0e504fca01202478c7b86c240d06d26506e3a6f387152aa",
+          "bytes": 283
+        },
+        {
+          "path": "package.json",
+          "sha256": "a7b1718e6616ae2cd235a365d03b8d5b5e8c5d6a27e9f7604a3d51ed20ca9c29",
+          "bytes": 1527
+        },
+        {
+          "path": "README.md",
+          "sha256": "e7288a5d4a20e664a27134523f05ddb98c78cfe51b8283362c3b490cb9d12018",
+          "bytes": 4466
+        }
+      ],
+      "contentInventorySha256": "776878ce2a1c9976f5987e24faca02545c67526acfbeb01574961bf60f4ad79b"
+    },
+    {
+      "archivePath": "package/node_modules/tslib/package.json",
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib",
+      "name": "tslib",
+      "version": "2.8.1",
+      "license": "0BSD",
+      "manifestText": "{\n    \"name\": \"tslib\",\n    \"author\": \"Microsoft Corp.\",\n    \"homepage\": \"https://www.typescriptlang.org/\",\n    \"version\": \"2.8.1\",\n    \"license\": \"0BSD\",\n    \"description\": \"Runtime library for TypeScript helper functions\",\n    \"keywords\": [\n        \"TypeScript\",\n        \"Microsoft\",\n        \"compiler\",\n        \"language\",\n        \"javascript\",\n        \"tslib\",\n        \"runtime\"\n    ],\n    \"bugs\": {\n        \"url\": \"https://github.com/Microsoft/TypeScript/issues\"\n    },\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/Microsoft/tslib.git\"\n    },\n    \"main\": \"tslib.js\",\n    \"module\": \"tslib.es6.js\",\n    \"jsnext:main\": \"tslib.es6.js\",\n    \"typings\": \"tslib.d.ts\",\n    \"sideEffects\": false,\n    \"exports\": {\n        \".\": {\n            \"module\": {\n                \"types\": \"./modules/index.d.ts\",\n                \"default\": \"./tslib.es6.mjs\"\n            },\n            \"import\": {\n                \"node\": \"./modules/index.js\",\n                \"default\": {\n                    \"types\": \"./modules/index.d.ts\",\n                    \"default\": \"./tslib.es6.mjs\"\n                }\n            },\n            \"default\": \"./tslib.js\"\n        },\n        \"./*\": \"./*\",\n        \"./\": \"./\"\n    }\n}\n",
+      "manifestSha256": "f02b4851df316f29bdfcd404aa1eb41e4e216b5859015f81fcd3e91caf8be931",
+      "fileInventory": [
+        {
+          "path": "CopyrightNotice.txt",
+          "sha256": "da16ddb65f8ca390998fb99223d0112498b56b45784d00afd77ff8ce1ac4de8b",
+          "bytes": 822
+        },
+        {
+          "path": "LICENSE.txt",
+          "sha256": "210b19e543130388c68654b7497e967119ce17145f66ab7d85688fbd70f08751",
+          "bytes": 655
+        },
+        {
+          "path": "modules/index.d.ts",
+          "sha256": "b8f34dd1757f68e03262b1ca3ddfa668a855b872f8bdd5224d6f993a7b37dc2c",
+          "bytes": 801
+        },
+        {
+          "path": "modules/index.js",
+          "sha256": "b3a4765da2bc019c79f2c2c12b36f860e946119d976897f1ce945caf227d0468",
+          "bytes": 1416
+        },
+        {
+          "path": "modules/package.json",
+          "sha256": "f2a77d1fa2e7ee710b2835b2933d75d9c7f5dad4f1bab69e1679876e32b5e9eb",
+          "bytes": 26
+        },
+        {
+          "path": "package.json",
+          "sha256": "f02b4851df316f29bdfcd404aa1eb41e4e216b5859015f81fcd3e91caf8be931",
+          "bytes": 1219
+        },
+        {
+          "path": "README.md",
+          "sha256": "d2e199aa7eafd807ba6c3c31edaf06cc06712f30ef965687e22d315b9e8f0543",
+          "bytes": 4033
+        },
+        {
+          "path": "SECURITY.md",
+          "sha256": "89c4e4b9ba7ec705482e2de05135d0626d33bf8c2c66119c65d7a306dd83459c",
+          "bytes": 2757
+        },
+        {
+          "path": "tslib.d.ts",
+          "sha256": "a6a5253138c5432c68a1510c70fe78a644fe2e632111ba778e1978010d6edfec",
+          "bytes": 18317
+        },
+        {
+          "path": "tslib.es6.html",
+          "sha256": "759c26504a9ccbbfcd730269c9c5ef15512cf16ba617e61a92212365e57c9f5d",
+          "bytes": 36
+        },
+        {
+          "path": "tslib.es6.js",
+          "sha256": "480042d65f5abdacdcf9d9ade38f9d484455be82aa34bd472bf6ab87ea0e3620",
+          "bytes": 19215
+        },
+        {
+          "path": "tslib.es6.mjs",
+          "sha256": "0929993220938091ede542d688b0fdb87dad99a7e77678e1983c32d18a503339",
+          "bytes": 17648
+        },
+        {
+          "path": "tslib.html",
+          "sha256": "e14179f388a9690437165289d45ff7747f0f839538b5abec63d2dcfe21c2a5f4",
+          "bytes": 32
+        },
+        {
+          "path": "tslib.js",
+          "sha256": "8855865a058bc0a6df8f5db45347be041a2d6bbe1654216c51a805648c1b6e8a",
+          "bytes": 23382
+        }
+      ],
+      "contentInventorySha256": "321310c9efb4fdb94648f123e2ab46962da88ca14830a3a33994a17e72ccc5d3"
+    }
+  ]
+}

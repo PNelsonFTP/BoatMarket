@@ -26,7 +26,11 @@
     "sbom": "node scripts/generate-sbom.mjs",
     "sbom:audit": "node scripts/generate-sbom.mjs --audit",
     "format": "prettier --write app components lib server tests scripts *.ts *.json",
-    "geocode:listings": "node --import tsx scripts/geocode-collected.ts"
+    "geocode:listings": "node --import tsx scripts/geocode-collected.ts",
+    "refresh": "node --import tsx scripts/refresh.ts",
+    "backup": "node --import tsx scripts/backup.ts",
+    "duplicates:review": "node --import tsx scripts/review-duplicates.ts",
+    "configure:lake-holiday": "node --import tsx scripts/configure-lake-holiday.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.1.0",

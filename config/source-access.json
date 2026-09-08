@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "note": "Dated research observations, not fresh access probes or zero-inventory claims.",
+  "sources": [
+    {
+      "name": "Boat Trader",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "Water Werks",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "Hennepin Marine",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "Munson Ski & Marine",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "Lake Holiday Marina",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "Boats.com",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "Boatmart",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 403.",
+      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+    },
+    {
+      "name": "The Boat House",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Listing request returned HTTP 403.",
+      "nextAction": "Investigate a permitted inventory feed or manual import."
+    },
+    {
+      "name": "Huber’s Marine",
+      "status": "restricted",
+      "observedOn": "2026-09-07",
+      "observation": "Listing request returned HTTP 403.",
+      "nextAction": "Investigate a permitted inventory feed or manual import."
+    },
+    {
+      "name": "MarineSource",
+      "status": "throttled",
+      "observedOn": "2026-09-07",
+      "observation": "Robots request returned HTTP 429; collection stopped.",
+      "nextAction": "Respect throttling; obtain a feed or perform a limited dated later check."
+    },
+    {
+      "name": "SkipperBud’s",
+      "status": "integration-needed",
+      "observedOn": "2026-09-07",
+      "observation": "Public HTML accessible; useful JavaScript inventory needs another integration.",
+      "nextAction": "Build and fixture-test a permitted inventory integration."
+    },
+    {
+      "name": "Quest Watersports, Ottawa",
+      "status": "integration-needed",
+      "observedOn": "2026-09-07",
+      "observation": "HTML accessible; no boat records exposed by the tested page.",
+      "nextAction": "Locate a permitted inventory data source and add parser fixtures."
+    },
+    {
+      "name": "Boatzon / Hennepin Marine",
+      "status": "availability-gap",
+      "observedOn": "2026-09-07",
+      "observation": "Three indexed Lund ads were sold/removed in page data; dealer profile 404. Excluded from active inventory.",
+      "nextAction": "Require current availability evidence and stable inventory discovery."
+    },
+    {
+      "name": "Boat Works, Keyesport IL",
+      "status": "wider-region",
+      "observedOn": "2026-09-07",
+      "observation": "Inventory accessible; outside core area, not integrated.",
+      "nextAction": "Evaluate marginal useful boats when widening the search."
+    },
+    {
+      "name": "The Boat Center, Chippewa Falls WI / Minnesota",
+      "status": "wider-region",
+      "observedOn": "2026-09-07",
+      "observation": "Inventory accessible; outside core area, not integrated.",
+      "nextAction": "Evaluate marginal useful boats when widening the search."
+    },
+    {
+      "name": "Facebook Marketplace",
+      "status": "manual",
+      "observedOn": "2026-09-07",
+      "observation": "Canonical JSON import only; no automated session collection.",
+      "nextAction": "Use reviewed manual imports or an officially supported export."
+    },
+    {
+      "name": "eBay Motors",
+      "status": "unconfigured",
+      "observedOn": "2026-09-07",
+      "observation": "Unconfigured; adapter names do not establish live coverage.",
+      "nextAction": "Verify permitted access and representative fixtures before enabling."
+    },
+    {
+      "name": "iboats",
+      "status": "unconfigured",
+      "observedOn": "2026-09-07",
+      "observation": "Unconfigured; adapter names do not establish live coverage.",
+      "nextAction": "Verify permitted access and representative fixtures before enabling."
+    },
+    {
+      "name": "YachtWorld",
+      "status": "unconfigured",
+      "observedOn": "2026-09-07",
+      "observation": "Unconfigured; adapter names do not establish live coverage.",
+      "nextAction": "Verify permitted access and representative fixtures before enabling."
+    },
+    {
+      "name": "CPO sources",
+      "status": "unconfigured",
+      "observedOn": "2026-09-07",
+      "observation": "Unconfigured; adapter names do not establish live coverage.",
+      "nextAction": "Verify permitted access and representative fixtures before enabling."
+    },
+    {
+      "name": "Lake Holiday association portal",
+      "status": "verification-needed",
+      "observedOn": "2026-09-07",
+      "observation": "Current rulebook revision was not verified through automated access.",
+      "nextAction": "Obtain current association documentation through an allowed channel."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import { afterAll, beforeAll, describe, it, expect } from "vitest";
-import { writeFileSync, unlinkSync } from "node:fs";
+import { afterAll, beforeAll, describe, it, expect, vi } from "vitest";
+import { writeFileSync, unlinkSync, rmSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -7,6 +7,7 @@ import { makeSeed } from "../lib/seed";
 import { DEFAULT_FILTERS } from "../lib/types";
 const file = join(tmpdir(), `boatscout-test-${process.pid}.db`);
 process.env.DATABASE_URL = `file:${file}`;
+process.env.REFRESH_REPORT_DIR = file + ".reports";
 const { buildApp } = await import("../server/app");
 const { db } = await import("../server/db");
 const { upsertListing, allListings } = await import("../server/repository");
@@ -26,6 +27,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await app.close();
   await db.$disconnect();
+  rmSync(file + ".reports", { recursive: true, force: true });
   for (const suffix of ["", "-journal", "-wal", "-shm"])
     try {
       unlinkSync(file + suffix);
@@ -155,6 +157,165 @@ describe("authenticated API and persistence", () => {
     expect(await db.alert.count()).toBe(1);
     await evaluateAlerts();
     expect(await db.alert.count()).toBe(1);
+  });
+  it("reports persisted import IDs and stops a failed chunk without hiding partial success", async () => {
+    const headers = { authorization: `Bearer ${token}` };
+    const existing = (await allListings())[0];
+    const alias = await app.inject({
+      method: "POST",
+      url: "/api/import",
+      headers,
+      payload: { listings: [{ ...existing, id: "input-alias" }] },
+    });
+    expect(alias.json().acceptedIds).toEqual(["input-alias"]);
+    expect(alias.json().idMap["input-alias"]).toBe(existing.id);
+    const boat = {
+      ...existing,
+      id: "new-record",
+      sourceListingId: "new-record",
+    };
+    const collision = {
+      ...existing,
+      source: "Other source",
+      sourceListingId: "collision",
+    };
+    const later = {
+      ...boat,
+      id: "not-attempted",
+      sourceListingId: "not-attempted",
+    };
+    const r = await app.inject({
+      method: "POST",
+      url: "/api/import",
+      headers,
+      payload: { listings: [boat, collision, later] },
+    });
+    expect(r.statusCode).toBe(200);
+    expect(r.json().acceptedIds).toEqual(["new-record"]);
+    expect(r.json().failed[0].id).toBe(existing.id);
+    expect(r.json().unattemptedIds).toEqual(["not-attempted"]);
+    expect(
+      await db.listing.findUnique({ where: { id: "not-attempted" } }),
+    ).toBeNull();
+  });
+  it("prevalidates duplicate IDs before importing any records", async () => {
+    const boat = {
+      ...(await allListings())[0],
+      id: "invalid-chunk",
+      sourceListingId: "invalid-chunk",
+    };
+    const r = await app.inject({
+      method: "POST",
+      url: "/api/import",
+      headers: { authorization: `Bearer ${token}` },
+      payload: { listings: [boat, boat] },
+    });
+    expect(r.statusCode).toBe(400);
+    expect(
+      await db.listing.findUnique({ where: { id: "invalid-chunk" } }),
+    ).toBeNull();
+  });
+  it("reports database readiness, coverage gaps, and an existing collector instead of false acceptance", async () => {
+    const headers = { authorization: `Bearer ${token}` };
+    expect((await app.inject({ url: "/api/health" })).json().database).toBe(
+      "ready",
+    );
+    const health = await app.inject({
+      url: "/api/admin/source-health",
+      headers,
+    });
+    expect(health.statusCode).toBe(200);
+    expect(health.json().ledger.sources.length).toBeGreaterThan(15);
+    await db.jobLock.create({
+      data: {
+        key: "collector",
+        owner: "test-active-owner",
+        expiresAt: new Date(Date.now() + 60000),
+      },
+    });
+    for (const url of ["/api/admin/collect", "/api/admin/refresh"]) {
+      const r = await app.inject({ method: "POST", url, headers, payload: {} });
+      expect(r.statusCode).toBe(409);
+    }
+    await db.jobLock.delete({ where: { key: "collector" } });
+    expect(
+      (await app.inject({ url: "/api/admin/duplicates", headers })).statusCode,
+    ).toBe(404);
+    expect(
+      (await app.inject({ url: "/api/duplicates", headers })).statusCode,
+    ).toBe(200);
+  });
+  it("keeps a successful full-refresh report when subsequent alert evaluation fails", async () => {
+    const refreshModule = await import("../server/refresh");
+    const alertsModule = await import("../server/alerts");
+    const { atomicJson } = await import("../server/refresh-report");
+    const alertSpy = vi
+      .spyOn(alertsModule, "evaluateAlerts")
+      .mockRejectedValue(new Error("Fixture alert failure"));
+    const refreshSpy = vi
+      .spyOn(refreshModule, "runRefresh")
+      .mockImplementation(async (options) => {
+        const at = new Date().toISOString(),
+          runId = options?.runId!;
+        const result: Awaited<ReturnType<typeof refreshModule.runRefresh>> = {
+          version: 1,
+          runId,
+          status: "success",
+          stage: "complete",
+          startedAt: at,
+          completedAt: at,
+          allowPartial: false,
+          backupDirectory: "fixture-backup",
+          collection: null,
+          geocode: "not-requested",
+          snapshot: {
+            target: "fixture-snapshot",
+            listings: 1,
+            generatedAt: at,
+            observationRange: { oldest: null, newest: null },
+            backup: null,
+          },
+          errors: [],
+          reportPath: join(
+            process.env.REFRESH_REPORT_DIR!,
+            runId + "-refresh.json",
+          ),
+        };
+        await atomicJson(result.reportPath, result);
+        await atomicJson(
+          join(process.env.REFRESH_REPORT_DIR!, "latest-refresh.json"),
+          result,
+        );
+        return result;
+      });
+    try {
+      const headers = { authorization: `Bearer ${token}` };
+      const queued = await app.inject({
+        method: "POST",
+        url: "/api/admin/refresh",
+        headers,
+        payload: {},
+      });
+      expect(queued.statusCode).toBe(202);
+      await vi.waitFor(async () => {
+        const r = await app.inject({ url: queued.json().reportUrl, headers });
+        expect(r.json().alertEvaluation?.status).toBe("failed");
+        expect(r.json().status).toBe("success");
+        expect(r.json().stage).toBe("complete");
+        expect(r.json().snapshot.target).toBe("fixture-snapshot");
+      });
+      expect(
+        JSON.parse(
+          readFileSync(
+            join(process.env.REFRESH_REPORT_DIR!, "latest-refresh.json"),
+            "utf8",
+          ),
+        ).status,
+      ).toBe("success");
+    } finally {
+      refreshSpy.mockRestore();
+      alertSpy.mockRestore();
+    }
   });
   it("blocks unapproved browser origins and invalidates logout sessions", async () => {
     const headers = {

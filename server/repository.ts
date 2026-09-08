@@ -7,7 +7,8 @@ import {
   type Workspace,
   EMPTY_WORKSPACE,
 } from "../lib/types";
-import { findDuplicate } from "./dedup";
+import { normalizedHin } from "./dedup";
+import { reconcileListingDuplicates } from "./duplicates";
 const json = (v: unknown) =>
   JSON.parse(JSON.stringify(v)) as Prisma.InputJsonValue;
 export async function allListings(includeSamples = false) {
@@ -44,10 +45,16 @@ export async function allListings(includeSamples = false) {
 }
 export async function upsertListing(
   input: Listing,
-  options: { dedupe?: boolean } = {},
+  options: { dedupe?: boolean; collectorLease?: { owner: string } } = {},
 ) {
   const l = listingSchema.parse(input);
   return db.$transaction(async (tx) => {
+    if (options.collectorLease) {
+      const lease = await tx.jobLock.findFirst({
+        where: { key: "collector", owner: options.collectorLease.owner, expiresAt: { gt: new Date() } },
+      });
+      if (!lease) throw Object.assign(new Error("Collector lease lost; refusing stale write"), { code: "COLLECTOR_LEASE_LOST" });
+    }
     const old = await tx.listing.findUnique({
       where: {
         source_sourceListingId: {
@@ -65,43 +72,7 @@ export async function upsertListing(
         { statusCode: 409 },
       );
     }
-    let groupId = old?.groupId ?? null;
-    if (!groupId && options.dedupe && !l.isSample) {
-      const candidates = await tx.listing.findMany({
-        where: {
-          make: l.make,
-          model: l.model,
-          year: l.year,
-          isSample: false,
-          source: { not: l.source },
-        },
-        take: 100,
-      });
-      const candidate = findDuplicate(
-        l,
-        candidates.map((r) => ({
-          ...(r.data as Listing),
-          id: r.id,
-          groupId: r.groupId,
-        })),
-      );
-      if (candidate) {
-        groupId =
-          candidate.groupId ??
-          (
-            await tx.boatGroup.create({
-              data: {
-                reason:
-                  "Matching vessel identifier or seller + original photo + core specs",
-              },
-            })
-          ).id;
-        await tx.listing.update({
-          where: { id: candidate.id },
-          data: { groupId },
-        });
-      }
-    }
+    const groupId = old?.groupId ?? null;
     const seller = l.sellerName
       ? await tx.seller.upsert({
           where: {
@@ -150,6 +121,7 @@ export async function upsertListing(
       confidence: json(l.confidence),
       isSample: l.isSample,
       groupId,
+      identityHin: normalizedHin(l.specs.hin),
       sellerId: seller?.id ?? null,
     };
     await tx.listing.upsert({
@@ -191,6 +163,8 @@ export async function upsertListing(
             lastSeenAt: undefined,
             priceHistory: undefined,
           }));
+    if (!l.isSample && (options.dedupe || old?.groupId))
+      await reconcileListingDuplicates(tx, id);
     return { id, isNew: !old, updated: changed };
   });
 }

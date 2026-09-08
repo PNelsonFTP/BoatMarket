@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
   Cable,
   Download,
-  Upload,
   RefreshCw,
   Plus,
   Trash2,
@@ -29,6 +28,11 @@ import {
   DialogDescription,
 } from "./ui/dialog";
 import { asset } from "@/lib/utils";
+import { DuplicateReview } from "./duplicate-review";
+import { LocationReview } from "./location-review";
+import { SourceHealth } from "./source-health";
+import { WorkspaceTransfer } from "./workspace-transfer";
+import { type ImportChunkResult } from "@/lib/import-listings";
 type AdminData = {
   sources: {
     id: string;
@@ -74,7 +78,7 @@ export function Settings({
   onImport: (value: unknown) => void;
   onRefresh: () => Promise<void>;
   workspace: Workspace;
-  onChange: (f: (w: Workspace) => Workspace) => void;
+  onChange: (f: (w: Workspace) => Workspace) => void | Promise<boolean>;
   mode: string;
   listings: Listing[];
 }) {
@@ -232,8 +236,10 @@ export function Settings({
                 HTTPS address.
               </p>
               <p>
-                Sample-mode notes and searches stay in this browser. Connecting
-                opens the separate backend workspace.
+                Sample and snapshot notes stay in separate browser workspaces
+                for this website deployment. Connecting opens the separate
+                backend workspace. Earlier shared browser workspaces can be
+                reviewed under Your data.
               </p>
             </details>
           </form>
@@ -252,40 +258,6 @@ export function Settings({
             workspace.
           </p>
           <div className="button-row">
-            <label className="button">
-              <Upload size={15} />
-              Import listings
-              <input
-                type="file"
-                accept="application/json,.json"
-                className="sr-only"
-                onChange={async (e) => {
-                  const f = e.target.files?.[0];
-                  if (!f) return;
-                  await action(
-                    async () => {
-                      if (f.size > 12 * 1024 * 1024)
-                        throw new Error("File exceeds 12 MB");
-                      const data = JSON.parse(await f.text());
-                      if (connection) {
-                        await api(connection, "/import", {
-                          listings: Array.isArray(data) ? data : data.listings,
-                        });
-                        await onRefresh();
-                        await load();
-                      } else
-                        onImport(
-                          Array.isArray(data) ? { listings: data } : data,
-                        );
-                    },
-                    connection
-                      ? "Listings imported into your backend"
-                      : "Snapshot loaded for this session",
-                  );
-                  e.target.value = "";
-                }}
-              />
-            </label>
             <button className="button" onClick={() => setManual(true)}>
               <Plus size={15} />
               Add a boat
@@ -313,6 +285,18 @@ export function Settings({
               Export workspace
             </button>
           </div>
+          <WorkspaceTransfer
+            connection={connection}
+            listings={listings}
+            workspace={workspace}
+            mode={mode}
+            onImport={onImport}
+            onRefresh={async () => {
+              await onRefresh();
+              await load();
+            }}
+            onChange={onChange}
+          />
           <p className="small muted">
             Listings export excludes private notes and raw source payloads.
             Workspace export includes your private notes. Imported snapshots are
@@ -672,6 +656,13 @@ export function Settings({
           </>
         )}
       </section>
+      <SourceHealth connection={connection} />
+      {connection && (
+        <DuplicateReview connection={connection} onRefresh={onRefresh} />
+      )}
+      {connection && (
+        <LocationReview connection={connection} onRefresh={onRefresh} />
+      )}
       <footer className="settings-footer">
         BoatScout · Personal boat search workspace ·{" "}
         <a href={asset("/photo-credits.txt")} target="_blank" rel="noreferrer">
@@ -715,7 +706,19 @@ export function Settings({
           <ManualBoat
             onSave={async (l) => {
               if (connection) {
-                await api(connection, "/import", { listings: [l] });
+                const result = await api<ImportChunkResult>(
+                  connection,
+                  "/import",
+                  { listings: [l] },
+                );
+                if (
+                  result.failed?.length ||
+                  !result.acceptedIds?.includes(l.id)
+                )
+                  throw new Error(
+                    result.failed?.[0]?.error ||
+                      "The backend did not confirm this listing was imported. Refresh before retrying.",
+                  );
                 await onRefresh();
               } else
                 onImport({

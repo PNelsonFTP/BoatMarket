@@ -146,7 +146,12 @@ describe("fixture adapters", () => {
       photos: ["https://example.com/other.jpg"],
     };
     expect(findDuplicate(a, [b])).toBeUndefined();
-    expect(findDuplicate(a, [{ ...b, photos: a.photos }])?.id).toBe("b");
+    expect(findDuplicate(a, [{ ...b, photos: a.photos }])).toBeUndefined();
+    expect(
+      findDuplicate({ ...a, specs: { hin: "ABC12345A626" } }, [
+        { ...b, specs: { hin: "US-ABC12345A626" } },
+      ])?.id,
+    ).toBe("b");
   });
 });
 it("converts metric lengths, feet/inches and kilowatts without confusing units", async () => {

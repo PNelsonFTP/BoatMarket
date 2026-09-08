@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T02:40:29.540Z",
+  "generatedAt": "2026-09-08T03:09:13.131Z",
   "chicagoDate": "2026-09-07",
   "timezone": "America/Chicago",
   "nodeVersion": "v26.7.0",
@@ -12,8 +12,22 @@
     "lockfileVersion": 3
   },
   "transformations": [
-    "Normalized CycloneDX root display name to package-lock root name; no dependency components or graph edges changed."
+    "Normalized npm-generated CycloneDX root display name to package-lock root name; their dependency components and graph edges remain unchanged.",
+    "Built separate all-platforms CycloneDX from every locked physical package instance plus previously integrity-verified bundled manifests."
   ],
+  "schemaValidation": {
+    "implementation": "Ajv and ajv-formats already present in the lockfile",
+    "provenance": "sbom/schemas/provenance.json",
+    "commit": "c320fc0f0b46873864927d9d5684eea7ba439728",
+    "formatPolicy": "All schema constraints and formats evaluated. IRI-reference and IDN-email accept their ASCII URI/email subsets only; international forms fail closed pending a broader format validator."
+  },
+  "verifiedBundle": {
+    "file": "sbom/bundled-package-evidence.json",
+    "verifiedAt": "2026-09-08T03:06:59.137Z",
+    "packages": 6,
+    "archiveIntegrityMatchesCurrentLock": true,
+    "tarballFetchedThisRun": false
+  },
   "lockInventory": {
     "packages": 435,
     "uniqueNameVersionPairs": 435,
@@ -42,24 +56,49 @@
       "exitCode": 0,
       "result": "generated",
       "file": "sbom/boatscout-production.cdx.json"
+    },
+    {
+      "command": "BoatScout generator: lock inventory + verified bundled package manifests",
+      "result": "generated",
+      "file": "sbom/boatscout-all-platforms.cdx.json"
     }
   ],
   "artifacts": [
     {
       "file": "sbom/package-lock-inventory.json",
-      "sha256": "96fdf45edafb72af99aa5c940a03c12f157a7d2dfb8ccf32900de9eb84c43971"
+      "sha256": "65787adcadbefd65f4a8e38f50fd654ff7e99d8c7fdd8dff677b52930e7a29f3"
     },
     {
       "file": "sbom/full-sbom-generation-limitation.json",
-      "sha256": "1a0affa69728eac89e930573c962a6391c3df39d87fc0e7d8022f8a23b4f071e"
+      "sha256": "23afceaac14fb24f64c61e970650e9e170389f51b7b8dd286b2e36d94648cdac"
     },
     {
       "file": "sbom/boatscout-full-required.cdx.json",
-      "sha256": "bc27ffa1b3fcde20660e13c4868bd9ec4f5c285087257524dc3f264fe12b32ec"
+      "sha256": "ca74baeadece42960590bb4fc14bc0a22f8a045a3eaeed06862caf73e0fb5d5a"
     },
     {
       "file": "sbom/boatscout-production.cdx.json",
-      "sha256": "47b7d84b44d22bd3c0c1ce7248b7d14e716eb79494d82efc572ea97c356f8824"
+      "sha256": "42dffc2f444d49154ee320c94419595ea5ee489ab60aff90547874abe4e7a7cf"
+    },
+    {
+      "file": "sbom/boatscout-all-platforms.cdx.json",
+      "sha256": "6cc02780c4302ec5c32402dacb02d8ef1361f2a5ed163d31e7fdc3d4c232e1d4"
+    },
+    {
+      "file": "sbom/enriched-dependency-evidence.json",
+      "sha256": "06def09616fa692a06ab68c30d2574c3804aee0b1038240720a75fd0af482d10"
+    },
+    {
+      "file": "sbom/bundled-package-evidence.json",
+      "sha256": "572d0a555791d2feae444971ebeabf5ec4c5cc4d30f37ac33efa44f044066273"
+    },
+    {
+      "file": "sbom/npm-audit-full-2026-09-08T03-09-13Z.json",
+      "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82"
+    },
+    {
+      "file": "sbom/npm-audit-production-2026-09-08T03-09-13Z.json",
+      "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82"
     }
   ],
   "validation": [
@@ -74,7 +113,9 @@
       "referenceCompleteness": true,
       "exactVersionsCorrespondToLockfile": true,
       "emittedIntegrityHashesMatchLockfile": true,
-      "fullCycloneDxSchemaValidated": false
+      "fullCycloneDxSchemaValidated": true,
+      "schemaCommit": "c320fc0f0b46873864927d9d5684eea7ba439728",
+      "schemaFormatPolicy": "All schema constraints and formats evaluated. IRI-reference and IDN-email accept their ASCII URI/email subsets only; international forms fail closed pending a broader format validator."
     },
     {
       "file": "sbom/boatscout-production.cdx.json",
@@ -87,14 +128,33 @@
       "referenceCompleteness": true,
       "exactVersionsCorrespondToLockfile": true,
       "emittedIntegrityHashesMatchLockfile": true,
-      "fullCycloneDxSchemaValidated": false
+      "fullCycloneDxSchemaValidated": true,
+      "schemaCommit": "c320fc0f0b46873864927d9d5684eea7ba439728",
+      "schemaFormatPolicy": "All schema constraints and formats evaluated. IRI-reference and IDN-email accept their ASCII URI/email subsets only; international forms fail closed pending a broader format validator."
+    },
+    {
+      "file": "sbom/boatscout-all-platforms.cdx.json",
+      "componentCountExcludingRoot": 441,
+      "dependencyGraphNodes": 442,
+      "dependencyGraphEdges": 720,
+      "componentsWithIntegrityHashes": 435,
+      "componentsWithLicenseMetadata": 441,
+      "jsonParsed": true,
+      "referenceCompleteness": true,
+      "exactVersionsCorrespondToLockfile": false,
+      "exactVersionsCorrespondToLockfileOrVerifiedBundle": true,
+      "emittedIntegrityHashesMatchLockfile": true,
+      "fullCycloneDxSchemaValidated": true,
+      "schemaCommit": "c320fc0f0b46873864927d9d5684eea7ba439728",
+      "schemaFormatPolicy": "All schema constraints and formats evaluated. IRI-reference and IDN-email accept their ASCII URI/email subsets only; international forms fail closed pending a broader format validator."
     }
   ],
-  "auditReports": "Not refreshed by this run; --audit requests new read-only reports.",
+  "auditReports": "sbom/audit-provenance.json",
   "limitations": [
     "A source dependency SBOM, not an inventory of an installed deployment, bundled browser assets, container OS, Node binary, browser binaries, or separately downloaded Prisma engines.",
     "License identifiers and integrity digests are declared lock metadata; license texts and downloaded artifact contents were not independently reviewed.",
-    "Structural/reference/lock correspondence checks are performed, not complete CycloneDX JSON Schema validation.",
+    "Full vendored CycloneDX 1.5 JSON Schema validation is performed; international IRI/email forms fail closed because the generator currently accepts only their ASCII URI/email subsets.",
+    "All-platform bundled components are evidenced by a previously integrity-verified published archive. Ordinary generation checks committed evidence; --refresh-bundles downloads and re-verifies the current locked archive.",
     "Timestamp and serial UUID fields vary between regenerations. Use the same lockfile and npm version for comparable dependency content."
   ]
 }

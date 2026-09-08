@@ -1,48 +1,58 @@
 # Verification record
 
-Verified locally on September 7, 2026 (America/Chicago), using Node.js 26.7 on macOS and Node.js 22 inside Docker. Node.js 22 LTS is the recommended deployment runtime.
+Final improvement-pass checks: **September 7, 2026, America/Chicago** (September 8 UTC), using Node.js 26.7 and npm 11.19 on macOS. Node.js 22.12+ remains the supported minimum; GitHub Actions and Docker use Node 22. Earlier checks are identified separately below.
 
-## Passed
+## Current integrated results
 
-- TypeScript source type checking, independently of generated Next.js build files.
-- 45 Vitest unit/integration tests across 7 files.
-- 8 Playwright browser tests across desktop and mobile Chromium.
-- Filter types for every field in the catalog, unknown handling, multiple search areas, seller vs. boat locations, rules, sorting, grouping, price windows and unit conversions.
-- Fixture parsing for Boat Trader and Craigslist, generic dealer selectors, and shared structured-data parsing for the remaining supported adapters.
-- Fresh temporary database migrations; authentication and logout; invalid input; note/favorite/search persistence; version conflicts; first-seen preservation; idempotent price history; alert baselining and subsequent price-change alerts.
-- Browser search, shortlist, notes, reload persistence, comparison, saved searches, rule editing, maps, filter controls, empty states, and manual entry without losing saved boats.
-- Light/dark screenshot review, and mobile horizontal-overflow checks.
-- Live browser connection to the local API, with zero browser runtime errors during that check.
-- Production static exports at the site root and under the `/BoatMarket/` GitHub Pages repository path. The subpath export was browser-tested for search, images and public assets with no failed local asset requests.
-- Docker image build; Compose configuration validation; isolated container startup from an empty database; HTTP 200 for the API health endpoint and static website.
-- Expanded live inventory runs: 1,538 ads from all ten enabled sources, with no errors on the final validation pass. The last pass reused today’s cached observations. Unsupported and restricted sources are recorded in SOURCE_COVERAGE.md.
-- Dedicated regional/dealer parsing; same-origin pagination; stable ad identities; strict 21-ft exclusion and unknown-length review; installed engine units; quote-only prices; proximity ordering; actual source photos. Tests guard against interpreting an accessory dimension as hull length, engine displacement as power, and dealer JSON-LD catalogs as single boats.
-- Complete real-data snapshot and Lake Holiday preset checks in desktop and mobile Chromium; ten-source coverage table; broader nearby and unknown-length views; authenticated API connection; zero browser runtime errors.
-- Snapshot export excludes fictional sample records and raw payloads.
-- One public example.com request through the DNS-pinned network client.
-- `npm audit --omit=dev`: zero reported vulnerabilities after upgrading the static server and email dependencies and applying tested PostCSS / deepmerge-ts overrides.
+| Check | Result |
+|---|---|
+| TypeScript | `npm run typecheck` passed |
+| Unit/integration suite | **106 tests across 19 files passed** |
+| Desktop/mobile browser suite | **18 tests passed** in Chromium |
+| Root production export | `npm run build` passed; normal root build restored after the subpath check |
+| GitHub Pages path | `/BoatMarket/` production build and `scripts/verify-pages.mjs` passed: search/images/public assets, zero runtime errors or missing local assets |
+| Real review panels | `scripts/verify-review-tools.mjs` passed desktop 1440×1000 and mobile 390×844 against the local API: source health, 163 candidate pairs, city review, zero runtime errors/overflow |
+| Database migration/reindex | Pre-upgrade backup created; additive migration applied; dry-run then apply indexed HINs with zero changed group assignments |
+| Real-data full pipeline | Ten enabled sources succeeded; 1,538 ads; protected alternate-target export; public snapshot unchanged |
+| Backup verification | Actual full-pipeline backup passed five available-file hashes, SQLite integrity and readable table counts; temporary-database recovery/altered-file tests also passed |
+| SBOM | Three CycloneDX outputs schema/graph/evidence validated; all-platform inventory 441 package instances; no lockfile or dependency changes |
+| Advisory checks | Fresh full and production npm audits at 03:09 UTC reported zero advisories; see [SBOM.md](SBOM.md) for exact scope and bundle-only audit limits |
 
-## Documentation and SBOM handoff checks
+## What the tests cover
 
-The documentation pass checked the actual source configuration, worker/refresh behavior, API bounds, deduplication path, snapshot counts, and known source failures against the code and retained collection evidence. Repository-local Markdown links and fenced code blocks were checked, and the new SBOM generation script passed Node's syntax check.
+- Catalog filters, unknown-value semantics, areas/radii, rules, sorting, prices and sample separation.
+- Source normalization and pagination fixtures, engine/length ambiguity, quote-only prices, out-of-area/offsite handling and network restrictions.
+- Modern HIN validation across inconsistent model metadata and same-source ads, conflicting HINs, transitive different-boat decisions, reversible grouping, stable ad identity and preserved workspace/history.
+- Actual one-shot CLI exit codes against isolated migrated SQLite databases: success 0, failed 1, partial 2, busy 3 and explicit skip-busy behavior. Lease expiry/renewal/cancellation, stale-run recovery, protected snapshot replacement and retained detail evidence.
+- Older detail observations cannot overwrite fresher summary price/sold facts; newer details can record subsequent relisting. Source metrics remain tied to their correct run.
+- Queued API refresh outcomes survive later alert-evaluation failure; alert outcome is separately reported. Authentication, invalid input, per-row import failure manifests, source-ID mapping, whole-chunk prevalidation, persistence and stale workspace revisions.
+- City/state/ZIP/suburb ranking, ambiguous candidates, conflicting ZIP aggregation, exact coordinate preservation and offsite uncertainty.
+- Whole 1,538-ad JSON transfer in bounded chunks, UTF-8 byte limits, failure/uncertainty manifests, storage isolation, explicit legacy migration and reviewed merge/replace behavior.
+- Grouped advertisement notes stay visible when the representative changes after a price change; editing one ad does not overwrite another ad's notes.
+- Comparison HTML escapes listing content, permits only safe links and exports no scripts/private notes. A three-boat packet was visually inspected and printed to PDF in an ignored scratch directory.
+- Full CycloneDX schema validation, rejection of unsupported fields/invalid license IDs, exact bundle evidence and detection of stale/tampered evidence.
 
-The npm-generated CycloneDX files were checked for exact version/integrity correspondence to the unchanged lockfile, unique/complete dependency references, and output hashes. The supplementary inventory includes all 435 non-root lock entries. Scoped production and development/build inventories contain 222 and 319 components respectively; [SBOM.md](SBOM.md) explains optional/bundled exclusions. Full CycloneDX JSON Schema validation and container/binary inventory were not performed.
+Browser tests use fixtures/mocked endpoints for mutation scenarios, preserving the user's live notes and listings. The separate review-panel smoke check logs into the real API but performs no listing, duplicate-decision or workspace mutations. Screenshots are under `/tmp/boatscout-review-qa/`; they are not repository assets.
 
-Fresh read-only full and production npm audits completed September 7, 2026 at 9:35 PM CDT, both reporting zero known advisories. The timestamped reports and hashes are in [audit provenance](sbom/audit-provenance.json). This supplements the initial audit noted above; it does not certify application security.
+## Real-data pipeline evidence
 
-The lockfile and published 1,538-record snapshot remained unchanged during this documentation pass. Application behavior tests, live collection, Docker startup, and static builds were not rerun solely for documentation changes. The earlier results remain a dated baseline. Added npm commands only expose SBOM generation/auditing.
+Run `8b436711-57c5-4cbe-8569-e4311030cad7` completed at **2026-09-08T03:08:41Z**. All ten configured sources succeeded, processing **70 inventory pages and 216 eligible detail pages**, with **286 cache hits and zero newly fetched inventory/detail HTML pages**. No page/detail caps or source errors were reported. There were zero new ads, zero removals and zero price changes. Metrics recorded 36 content comparisons changed and 1,502 metadata-only updates during the new provenance/merge implementation.
 
-## Scope of verification
+The accepted source observation range was **01:06:08Z–02:15:18Z**, earlier than the pipeline timestamp. This was a successful cached validation, **not a new network research pass or seller-availability confirmation**. Blocked/unsupported sources were not retested or enabled. The alternate export went to ignored `data/validation/refreshed-snapshot.json`. The published `public/snapshot.json` retains its previous SHA-256:
 
-Live collection succeeded for the ten sources documented in [LIVE_DATA.md](LIVE_DATA.md). Restricted sites, unparsed inventories and marketplaces outside this collection are documented in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md). These are ad counts; remaining cross-posts and unreported sold status can inflate the count of available vessels. Other marketplace adapters remain fixture-only. No email/webhook destinations were configured; optional browser rendering and external alert delivery remain unverified.
+```text
+2b93db5c5010a17ab661637a7ce6c09bdf938ab7ff56bbb3e256f0960d392adc
+```
 
-Docker and initial API/network checks above were completed during the initial build. The expanded research pass reran TypeScript, unit tests, desktop/mobile browser tests, live-data checks and both static export modes. Dependency audits were also refreshed during the documentation pass as recorded above.
+The database still contains 1,538 real ads plus 52 separate fictional seed rows. The identity reindex found **144 usable modern-format HINs**, **zero automatic groups**, and **163 suggested review pairs**. No same/different decisions were invented for the user. Backup verification read the original user/search/history tables; it did not restore over the live database. The API and original 30-minute worker were restarted after validation; auto-export and auto-geocoding remain off unless configured by the operator.
 
-The supplied directory originally had no repository. It is now versioned in the private [PNelsonFTP/BoatMarket](https://github.com/PNelsonFTP/BoatMarket) repository. The validation workflow runs on pushes to main and pull requests; inspect [Actions](https://github.com/PNelsonFTP/BoatMarket/actions) for commit-specific results. Pages jobs require BOATSCOUT_ENABLE_PAGES=true and remain disabled. The static output and repository base path were verified locally; no Pages site has been published.
+## Historical checks retained from the initial build
 
-The optional feature-detected WebMCP filter tool is implemented. The test browser did not expose `document.modelContext`, so its native registration/execution was not verified. Ordinary browser workflows do not depend on it.
+The September 7 initial build passed 45 unit/integration tests, eight browser tests, root/subpath exports, live snapshot/profile/photo checks, a Docker image build, Compose configuration validation and isolated Docker startup with a fresh SQLite database. Initial GitHub validation of commit `f12ac90` also passed.
 
-The UI was inspected at desktop and mobile widths. Map tiles are external; their availability is not under BoatScout’s control.
+The **Docker image/startup was not rebuilt during this improvement pass**. Windows execution, rendered-source Chromium inside the shipped image, SMTP/webhook delivery, paid/authenticated marketplaces, nationwide routing, current Lake Holiday rules and exhaustive marketplace coverage are not verified by these tests. The optional WebMCP path was not executed because the test browser did not expose `document.modelContext`.
+
+GitHub Pages remains disabled. Local export validation is not a live Pages deployment. Check [GitHub Actions](https://github.com/PNelsonFTP/BoatMarket/actions) for commit-specific hosted CI results rather than treating this document as a permanent green status.
 
 ## Reproduce
 
@@ -53,12 +63,9 @@ npm test
 npx playwright install chromium
 npm run test:e2e
 npm run build
-docker build -t boatscout:local .
-docker compose config --quiet
+npm run sbom
 ```
 
-For the explicit Pages-path smoke test, run `NEXT_PUBLIC_BASE_PATH=/BoatMarket npm run build`, then `node scripts/verify-pages.mjs`. Rebuild without that environment variable to restore the root-address local export.
+For the Pages path, build with `NEXT_PUBLIC_BASE_PATH=/BoatMarket npm run build`, run `node scripts/verify-pages.mjs`, then rebuild without the environment variable to restore local root output.
 
-`scripts/verify-browser.mjs` requires the development website and API to be running. It reads the local `.env` password without printing it and writes temporary screenshots to `/tmp/boatscout-qa` (or `QA_OUTPUT`). It does not alter backend notes or listings.
-
-`scripts/verify-live-data.mjs` checks the current real snapshot, source coverage and broader views, both Lake Holiday category presets, listing-rule guidance, photo decoding, mobile overflow and authenticated local API connection. It does not modify backend listings or personal notes.
+With the local website and API running, `node scripts/verify-review-tools.mjs` uses the `.env` password without printing it, inspects the real panels and captures desktop/mobile screenshots. Existing `scripts/verify-browser.mjs` and `scripts/verify-live-data.mjs` cover the earlier general/live-data workflows. See [OPERATIONS.md](OPERATIONS.md) for safe full refresh, backup verification and manual restore. The live pipeline logs and reports are ignored private operational data, not checked-in test fixtures.

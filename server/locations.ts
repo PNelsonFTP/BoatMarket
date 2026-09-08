@@ -6,14 +6,21 @@ export type KnownLocation = {
   label: string;
   source: string;
   fetchedAt: string;
+  reviewed?: boolean;
 };
 export const locationKey = (city: string, state: string) =>
   `${city.trim()}, ${state.trim()}`.toLowerCase();
 export async function readLocations(): Promise<Record<string, KnownLocation>> {
   try {
-    return JSON.parse(await readFile("config/locations.json", "utf8"));
-  } catch {
-    return {};
+    return JSON.parse(
+      await readFile(
+        process.env.LOCATION_CONFIG || "config/locations.json",
+        "utf8",
+      ),
+    );
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
+    throw error;
   }
 }
 export function locateListing(
@@ -23,7 +30,9 @@ export function locateListing(
   if (
     listing.lat != null &&
     listing.lng != null &&
-    listing.specs.locationPrecision !== "Approximate city center"
+    !["Approximate city center", "Reviewed approximate city center"].includes(
+      String(listing.specs.locationPrecision),
+    )
   )
     return listing;
   if (!listing.city || !listing.state) return listing;
@@ -43,7 +52,9 @@ export function locateListing(
     lng: point.lng,
     specs: {
       ...listing.specs,
-      locationPrecision: "Approximate city center",
+      locationPrecision: point.reviewed
+        ? "Reviewed approximate city center"
+        : "Approximate city center",
       locationSource: point.source,
     },
     confidence: { ...listing.confidence, lat: 0.65, lng: 0.65 },
