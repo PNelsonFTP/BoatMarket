@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08T16:34:20.149Z",
+  "sha256": "986bfdc7c0ef52278cc0e8db244ea14cb4f14d074a36d343e56cfc6f01a6fd27",
+  "provenance": {
+    "url": "https://4boatworks.net/inventory/",
+    "observedAt": "2026-09-08T16:28:45.891Z",
+    "originalSha256": "97de31ac96d07146df6b6bb5b4088dd7ac823de2889fb521a4d364884f3c2927",
+    "selection": "a.rmv_txt_drctn",
+    "omitted": "navigation, image carousels, scripts, forms; parser-relevant card facts retained",
+    "formatNormalization": "Leading indentation tabs expanded to spaces; trailing whitespace normalized for the reviewed repository fixture. originalSha256 still identifies the untouched source capture."
+  },
+  "redacted": true,
+  "reviewRequired": true
+}

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08T16:34:20.166Z",
+  "sha256": "68364996f7bd02deed8c4fe14a69500192179925d8d9b27e843a7c9c6433a95a",
+  "provenance": {
+    "url": "https://www.hubersmarine.com/inventory/1999-correct-craft-closed-bow-ski-nautique-efi-la-porte-in-46350-14570583i",
+    "observedAt": "2026-09-08T16:30:33.565Z",
+    "originalSha256": "a89ba9e40fc87d6ab52cae1b7dd2bdb118c842f74d849f0ada49867c8aa4e97e",
+    "selection": "title/pricing, overview facts, source description only",
+    "formatNormalization": "Leading indentation tabs expanded to spaces; trailing whitespace normalized for the reviewed repository fixture. originalSha256 still identifies the untouched source capture."
+  },
+  "redacted": true,
+  "reviewRequired": true
+}

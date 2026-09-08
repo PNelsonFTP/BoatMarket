@@ -20,6 +20,9 @@ model BoatGroup {
   reason String
   createdAt DateTime @default(now())
   listings Listing[]
+  anchorListingId String?
+  mergedIntoId String?
+  retiredAt DateTime?
 }
 model Seller {
   id String @id @default(cuid())
@@ -40,6 +43,7 @@ model Listing {
   year Int?
   price Float?
   identityHin String?
+  vesselId String?
   length Float?
   horsepower Float?
   lat Float?
@@ -68,12 +72,16 @@ model Listing {
   @@index([source,lastSeenAt])
   @@index([make,model,year])
   @@index([identityHin])
+  @@index([vesselId])
 }
 model DuplicateDecision {
   id String @id @default(cuid())
   leftId String
   rightId String
   decision String
+  leftFingerprint String?
+  rightFingerprint String?
+  evidence Json @default("{}")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   left Listing @relation("DuplicateDecisionLeft",fields:[leftId],references:[id],onDelete:Cascade)
@@ -113,6 +121,7 @@ model SavedSearch {
   cadence String @default("off")
   channels Json @default("[\"in-app\"]")
   digest Boolean @default(true)
+  eventTypes Json @default("[\"new-match\",\"price-change\",\"status-change\"]")
   lastCheckedAt DateTime?
   matchState Json @default("{}")
   createdAt DateTime @default(now())
@@ -156,6 +165,11 @@ model Alert {
   deliveredAt DateTime?
   deliveryError String?
   attempts Int @default(0)
+  nextAttemptAt DateTime?
+  lastAttemptAt DateTime?
+  deliveryHistory Json @default("[]")
+  eventDetails Json @default("[]")
+  @@index([deliveredAt,nextAttemptAt])
   @@index([userId,createdAt])
 }
 model IngestRun {
@@ -180,4 +194,40 @@ model JobLock {
   key String @id
   owner String
   expiresAt DateTime
+}
+
+model VesselEvent {
+  id String @id @default(cuid())
+  vesselId String
+  listingId String?
+  kind String
+  at DateTime @default(now())
+  data Json @default("{}")
+  @@index([vesselId,at])
+  @@index([listingId,at])
+}
+model LocationOverride {
+  listingId String @id
+  data Json
+  revision Int @default(0)
+  updatedAt DateTime @updatedAt
+}
+model LocationOverrideEvent {
+  id String @id @default(cuid())
+  listingId String
+  action String
+  data Json
+  createdAt DateTime @default(now())
+  @@index([listingId,createdAt])
+}
+model RouteCache {
+  key String @id
+  data Json
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  @@index([expiresAt])
+}
+model ProviderState {
+  key String @id
+  nextRequestAt DateTime
 }

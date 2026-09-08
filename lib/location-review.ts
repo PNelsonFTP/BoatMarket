@@ -119,6 +119,9 @@ export function rankLocationCandidates(query: CityQuery, raw: unknown) {
     const reasons = [
       "City name and state match",
       ...(zipMatch ? ["ZIP matches"] : []),
+      ...(query.zip && !a.postcode
+        ? ["Provider did not verify the requested ZIP"]
+        : []),
     ];
     candidates.push({
       lat: c.lat,
@@ -135,7 +138,9 @@ export function rankLocationCandidates(query: CityQuery, raw: unknown) {
     ).values(),
   ].sort((a, b) => b.score - a.score);
   const chosen =
-    unique.length && (unique.length === 1 || unique[0].score > unique[1].score)
+    unique.length &&
+    (!query.zip || unique[0].score === 100) &&
+    (unique.length === 1 || unique[0].score > unique[1].score)
       ? unique[0]
       : null;
   return {
@@ -147,4 +152,32 @@ export function rankLocationCandidates(query: CityQuery, raw: unknown) {
         ? "Ambiguous localities; review required"
         : "No matching locality; review required",
   };
+}
+/** ZIP is part of a geocode identity; missing ZIP evidence gets its own reviewable query. */
+export function groupPostalLocationQueries(
+  listings: {
+    city: string | null;
+    state: string | null;
+    specs: Record<string, unknown>;
+  }[],
+) {
+  const queries = new Map<string, CityQuery>();
+  for (const listing of listings) {
+    const zip =
+      String(listing.specs.postalCode || "").match(
+        /^(\d{5})(?:-\d{4})?$/,
+      )?.[1] || "";
+    const parsed = cityQuerySchema.safeParse({
+      city: listing.city,
+      state: listing.state,
+      zip,
+    });
+    if (!parsed.success) continue;
+    const key =
+      `${parsed.data.city.trim()}, ${parsed.data.state}${zip ? ` ${zip}` : ""}`.toLowerCase();
+    queries.set(key, parsed.data);
+  }
+  return [...queries]
+    .map(([key, query]) => ({ key, query }))
+    .sort((a, b) => a.key.localeCompare(b.key));
 }

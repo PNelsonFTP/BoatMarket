@@ -6,11 +6,41 @@ import {
   type Listing,
   type Workspace,
   EMPTY_WORKSPACE,
+  DEFAULT_ALERT_EVENTS,
 } from "../lib/types";
 import { normalizedHin } from "./dedup";
 import { reconcileListingDuplicates } from "./duplicates";
+import {
+  ensureListingVessel,
+  recordVesselObservation,
+} from "./vessel-identity";
+import { applyListingLocationOverride } from "../lib/boat-location";
+import { recordFieldProvenance } from "../lib/provenance";
 const json = (v: unknown) =>
   JSON.parse(JSON.stringify(v)) as Prisma.InputJsonValue;
+export function sourceRecordFingerprint(
+  row: {
+    id: string;
+    data: unknown;
+    price: number | null;
+    status: string;
+    lastSeenAt: Date;
+  } | null,
+) {
+  return row
+    ? createHash("sha256")
+        .update(
+          JSON.stringify({
+            id: row.id,
+            data: row.data,
+            price: row.price,
+            status: row.status,
+            lastSeenAt: row.lastSeenAt.toISOString(),
+          }),
+        )
+        .digest("hex")
+    : null;
+}
 export async function allListings(includeSamples = false) {
   const rows = await db.listing.findMany({
     where: includeSamples ? {} : { isSample: false },
@@ -24,6 +54,7 @@ export async function allListings(includeSamples = false) {
       price: r.price,
       status: r.status,
       groupId: r.groupId,
+      vesselId: r.vesselId,
       firstSeenAt: r.firstSeenAt.toISOString(),
       lastSeenAt: r.lastSeenAt.toISOString(),
       removedAt: r.removedAt?.toISOString() ?? null,
@@ -45,15 +76,27 @@ export async function allListings(includeSamples = false) {
 }
 export async function upsertListing(
   input: Listing,
-  options: { dedupe?: boolean; collectorLease?: { owner: string } } = {},
+  options: {
+    dedupe?: boolean;
+    collectorLease?: { owner: string };
+    expectedFingerprint?: string | null;
+  } = {},
 ) {
-  const l = listingSchema.parse(input);
+  let l = listingSchema.parse(input);
   return db.$transaction(async (tx) => {
     if (options.collectorLease) {
       const lease = await tx.jobLock.findFirst({
-        where: { key: "collector", owner: options.collectorLease.owner, expiresAt: { gt: new Date() } },
+        where: {
+          key: "collector",
+          owner: options.collectorLease.owner,
+          expiresAt: { gt: new Date() },
+        },
       });
-      if (!lease) throw Object.assign(new Error("Collector lease lost; refusing stale write"), { code: "COLLECTOR_LEASE_LOST" });
+      if (!lease)
+        throw Object.assign(
+          new Error("Collector lease lost; refusing stale write"),
+          { code: "COLLECTOR_LEASE_LOST" },
+        );
     }
     const old = await tx.listing.findUnique({
       where: {
@@ -63,6 +106,16 @@ export async function upsertListing(
         },
       },
     });
+    if (
+      options.expectedFingerprint !== undefined &&
+      sourceRecordFingerprint(old) !== options.expectedFingerprint
+    )
+      throw Object.assign(
+        new Error(
+          "Source record changed after review. Refresh the preview before applying.",
+        ),
+        { statusCode: 409 },
+      );
     const id = old?.id ?? l.id;
     if (!old && (await tx.listing.findUnique({ where: { id } }))) {
       throw Object.assign(
@@ -72,6 +125,25 @@ export async function upsertListing(
         { statusCode: 409 },
       );
     }
+    const previous = old ? listingSchema.parse(old.data) : null;
+    l = recordFieldProvenance(l, previous, {
+      method: "import",
+      observe: !l.fieldProvenance,
+    });
+    l = applyListingLocationOverride(
+      l,
+      (await tx.locationOverride.findUnique({ where: { listingId: id } }))
+        ?.data,
+    );
+    const previousRoute = previous?.routeEstimate;
+    if (
+      previousRoute &&
+      ((previousRoute.destination.lat === l.lat &&
+        previousRoute.destination.lng === l.lng) ||
+        (previousRoute.destination.lat === l.sellerLat &&
+          previousRoute.destination.lng === l.sellerLng))
+    )
+      l.routeEstimate = previousRoute;
     const groupId = old?.groupId ?? null;
     const seller = l.sellerName
       ? await tx.seller.upsert({
@@ -99,6 +171,7 @@ export async function upsertListing(
     clean.id = id;
     clean.firstSeenAt = old?.firstSeenAt.toISOString() ?? l.firstSeenAt;
     clean.groupId = groupId;
+    clean.vesselId = old?.vesselId ?? null;
     const data = {
       source: l.source,
       sourceListingId: l.sourceListingId,
@@ -121,6 +194,7 @@ export async function upsertListing(
       confidence: json(l.confidence),
       isSample: l.isSample,
       groupId,
+      vesselId: old?.vesselId ?? null,
       identityHin: normalizedHin(l.specs.hin),
       sellerId: seller?.id ?? null,
     };
@@ -153,18 +227,32 @@ export async function upsertListing(
           ...(old.data as object),
           firstSeenAt: undefined,
           groupId: undefined,
+          vesselId: undefined,
           lastSeenAt: undefined,
           priceHistory: undefined,
+          fieldProvenance: undefined,
+          sourceLocation: previous?.sourceLocation
+            ? { ...previous.sourceLocation, observedAt: undefined }
+            : undefined,
         }) !==
           JSON.stringify({
             ...clean,
             firstSeenAt: undefined,
             groupId: undefined,
+            vesselId: undefined,
             lastSeenAt: undefined,
             priceHistory: undefined,
+            fieldProvenance: undefined,
+            sourceLocation: clean.sourceLocation
+              ? { ...clean.sourceLocation, observedAt: undefined }
+              : undefined,
           }));
-    if (!l.isSample && (options.dedupe || old?.groupId))
-      await reconcileListingDuplicates(tx, id);
+    if (!l.isSample) {
+      await ensureListingVessel(tx, id);
+      if (options.dedupe || old?.groupId)
+        await reconcileListingDuplicates(tx, id);
+      await recordVesselObservation(tx, id, old, l);
+    }
     return { id, isNew: !old, updated: changed };
   });
 }
@@ -203,6 +291,7 @@ export async function getWorkspace() {
         cadence: s.cadence,
         channels: s.channels,
         digest: s.digest,
+        eventTypes: s.eventTypes,
       })),
       rules: user.rules.map((r) => r.config),
       referencePoints: user.referencePoints,
@@ -254,7 +343,10 @@ export async function putWorkspace(w: Workspace, revision: number) {
     for (const s of w.savedSearches) {
       const old = await tx.savedSearch.findUnique({ where: { id: s.id } });
       const reset =
-        old && JSON.stringify(old.filters) !== JSON.stringify(json(s.filters));
+        old &&
+        (JSON.stringify(old.filters) !== JSON.stringify(json(s.filters)) ||
+          JSON.stringify(old.eventTypes) !==
+            JSON.stringify(s.eventTypes ?? DEFAULT_ALERT_EVENTS));
       await tx.savedSearch.upsert({
         where: { id: s.id },
         create: {
@@ -262,11 +354,13 @@ export async function putWorkspace(w: Workspace, revision: number) {
           userId: "local",
           filters: json(s.filters),
           channels: json(s.channels),
+          eventTypes: json(s.eventTypes ?? DEFAULT_ALERT_EVENTS),
         },
         update: {
           ...s,
           filters: json(s.filters),
           channels: json(s.channels),
+          eventTypes: json(s.eventTypes ?? DEFAULT_ALERT_EVENTS),
           ...(reset ? { lastCheckedAt: null, matchState: {} } : {}),
         },
       });

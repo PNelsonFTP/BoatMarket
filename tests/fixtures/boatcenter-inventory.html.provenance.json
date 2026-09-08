@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08T16:34:20.161Z",
+  "sha256": "874730b36f7f85715a3c61313acb5a42e43c2c47c05b869ad30e52d96671f335",
+  "provenance": {
+    "url": "https://theboatcenter.com/inventory/",
+    "observedAt": "2026-09-08T16:28:48.972Z",
+    "originalSha256": "635ee9f6ee4171e76daeb5d5a452b23eda85de1952e7d4c0917fb5a0ac6443a6",
+    "selection": "a.rmv_txt_drctn",
+    "omitted": "navigation, image carousels, scripts, forms; parser-relevant card facts retained",
+    "formatNormalization": "Leading indentation tabs expanded to spaces; trailing whitespace normalized for the reviewed repository fixture. originalSha256 still identifies the untouched source capture."
+  },
+  "redacted": true,
+  "reviewRequired": true
+}

@@ -50,7 +50,7 @@ export function SourceCoverage({
       </summary>
       <p>
         The shortlist applies your preferred makes, motor preferences, a
-        150-mile radius and a reported length from 18 ft to below 21 ft. The
+        150-mile radius and a reported length from 18 ft through 21 ft. The
         larger inventory includes boats outside those preferences. Distances are
         approximate straight-line miles; ads can be cross-posted, pending or no
         longer available.
@@ -88,12 +88,13 @@ export function SourceCoverage({
       <p>
         Coverage is growing and is not a complete census. Facebook Marketplace
         needs manual import. Boat Trader, Water Werks, Hennepin Marine, The Boat
-        House, Huber’s Marine, Munson and Lake Holiday Marina did not allow
-        automated collection. SkipperBud’s inventory needs a separate
-        integration. Craigslist covers public owner and dealer ads across nearby
-        regional result pages; only preferred makes receive detail enrichment.
-        Dealer catalogs, accessories and clearly unrelated ads are excluded
-        where identifiable.
+        House, Munson and Lake Holiday Marina remain access gaps in the dated
+        source ledger. Huber’s Marine and Quest Watersports now have permitted
+        inventory integrations. SkipperBud’s inventory data remains restricted.
+        Craigslist covers public owner and dealer ads across nearby regional
+        result pages; only preferred makes receive detail enrichment. Dealer
+        catalogs, accessories and clearly unrelated ads are excluded where
+        identifiable.
       </p>
     </details>
   );

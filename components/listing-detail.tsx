@@ -30,6 +30,10 @@ import { FIELDS } from "@/lib/catalog";
 import { type BoatResult, type Workspace, DEFAULT_FILTERS } from "@/lib/types";
 import { asset, money } from "@/lib/utils";
 import { distanceMiles, fieldValue } from "@/lib/search";
+import { FieldEvidence, FieldProvenance } from "./field-evidence";
+import { RouteEvidence } from "./routing";
+import { VesselTimeline } from "./vessel-timeline";
+import type { Connection } from "@/lib/client";
 export function ListingDetail({
   boat,
   onClose,
@@ -40,6 +44,7 @@ export function ListingDetail({
   compared,
   similar,
   onOpen,
+  connection = null,
 }: {
   boat: BoatResult | null;
   onClose: () => void;
@@ -50,6 +55,7 @@ export function ListingDetail({
   compared: boolean;
   similar: BoatResult[];
   onOpen: (b: BoatResult) => void;
+  connection?: Connection | null;
 }) {
   return (
     <Dialog
@@ -69,6 +75,7 @@ export function ListingDetail({
           compared={compared}
           similar={similar}
           onOpen={onOpen}
+          connection={connection}
         />
       )}
     </Dialog>
@@ -83,6 +90,7 @@ function DetailContent({
   compared,
   similar,
   onOpen,
+  connection,
 }: {
   boat: BoatResult;
   workspace: Workspace;
@@ -92,6 +100,7 @@ function DetailContent({
   compared: boolean;
   similar: BoatResult[];
   onOpen: (b: BoatResult) => void;
+  connection: Connection | null;
 }) {
   const [photo, setPhoto] = useState(0);
   const [note, setNote] = useState(workspace.notes[boat.id] || "");
@@ -202,6 +211,19 @@ function DetailContent({
             <div key={label}>
               <small>{label}</small>
               <strong>{value}</strong>
+              {!boat.isSample &&
+                ["Length", "Power", "Hours"].includes(String(label)) && (
+                  <FieldEvidence
+                    listing={boat}
+                    field={
+                      label === "Length"
+                        ? "length"
+                        : label === "Power"
+                          ? "horsepower"
+                          : "engineHours"
+                    }
+                  />
+                )}
             </div>
           ))}
         </div>
@@ -327,6 +349,7 @@ function DetailContent({
               </div>
             ))}
           </div>
+          <RouteEvidence listing={boat} />
         </section>
         {!boat.isSample && (
           <section className="detail-section">
@@ -358,9 +381,18 @@ function DetailContent({
               target="_blank"
               rel="noreferrer"
             >
-              Review the 2024 association rulebook ↗
+              Review the December 2025 association rulebook ↗
             </a>
           </section>
+        )}
+        {!boat.isSample && (
+          <>
+            <FieldProvenance listing={boat} />
+            <VesselTimeline
+              connection={connection}
+              id={boat.vesselId ?? boat.id}
+            />
+          </>
         )}
         <section className="detail-section">
           <div className="section-heading">

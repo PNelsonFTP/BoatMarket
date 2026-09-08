@@ -1,40 +1,42 @@
 # Source research and coverage
 
-Research pass: September 7, 2026. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel.
+Research passes: September 7–8, 2026. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report.
 
 ## Sources included in automatic collection
 
 | Source | Geographic coverage | Collection method |
 |---|---|---|
 | Bedford Sales & Outdoors | Morris, IL | Full inventory and details |
-| OnlyInboards | IL, WI, IN, IA, MI | All state result pages; details for reported lengths below 21 ft or missing length |
+| OnlyInboards | IL, WI, IN, IA, MI | All state result pages; details for reported lengths through 21 ft or missing length |
 | Miller’s Sport Center | Lanark, IL | Both inventory pages and details |
-| Fox Lake Harbor | Fox Lake, IL | All inventory pages; preferred-make details below 21 ft or missing length |
+| Fox Lake Harbor | Fox Lake, IL | All inventory pages; preferred-make details through 21 ft or missing length |
 | Lake County Watersports | Wauconda, IL | All inventory pages; excludes standalone motors; preferred-make detail enrichment |
 | Ted’s Boatarama | Rock Island, IL | All inventory pages; excludes non-boats; preferred-make detail enrichment |
 | Gordy’s Marine | Northern IL / southern WI | Both pages of the dealer’s inventory with published specifications |
 | Bass Boat Central | Ads located in IL, WI, IN, IA, MI | Every page for the configured brand sections and alphabetical sections; national ads outside these states excluded |
-| Craigslist | 17 nearby regions | Public owner and dealer result pages, joined to their metadata; preferred-make details below 21 ft or missing length |
+| Craigslist | 17 nearby regions | Public owner and dealer result pages, joined to their metadata; preferred-make details through 21 ft or missing length |
 | Starved Rock Marina | Ottawa, IL | All three used-inventory pages, including advertised prices and lengths |
+| Huber’s Marine | La Porte, IN | Two current inventory pages; boat/pontoon types only; rotating detail enrichment for reported hull length, installed motor, HIN and price |
+| Quest Watersports | Ottawa, IL | The public inventory response used by the dealer’s own page; 24-item pagination; lift and paired PWC listings excluded |
 
 Craigslist regions: Chicago, La Salle County, Rockford, Peoria, Quad Cities, Milwaukee, Madison, South Bend, Bloomington–Normal, Champaign–Urbana, Springfield IL, Decatur IL, Janesville, Kenosha–Racine, Dubuque, southwest Michigan and Kalamazoo. Out-of-area dealer ads may still appear on these boards; the app uses each ad’s location, not the board’s location, to calculate distance. Cross-posts with different ad IDs may remain separate until reviewed. Connected Settings now shows ranked duplicate pairs and reversible identity decisions.
 
-OnlyInboards, Dealer Spike sites, Gordy’s, Bass Boat Central and Starved Rock now support automatic pagination. Collection has page and detail limits, and inventory and requested-detail limits produce a partial outcome with coverage metrics. Source URLs and limits are editable in `config/sources.json`. Craigslist result pages expose public static results but no total-page census, so their coverage should not be assumed exhaustive.
+OnlyInboards, Dealer Spike sites, Gordy’s, Bass Boat Central, Starved Rock, Huber’s and Quest support automatic pagination. Collection has explicit page limits and durable rotating detail budgets. Planned rotation reports deferred detail work and continues it on later refreshes; incomplete inventory discovery or failed requested details remain visible. Source URLs, quality thresholds and limits are editable in `config/sources.json`. Craigslist result pages expose public static results but no total-page census, so their coverage should not be assumed exhaustive.
 
 ## Remaining gaps and other sources examined
 
 | Source | Observed result |
 |---|---|
-| Boat Trader, Water Werks, Hennepin Marine | Robots requests returned HTTP 403 |
-| The Boat House, Huber’s Marine | Listing requests returned HTTP 403 |
-| Munson Ski & Marine, Lake Holiday Marina | Robots requests returned HTTP 403 |
-| Boats.com, Boatmart | Robots requests returned HTTP 403 |
-| MarineSource | Robots request returned HTTP 429; collection stopped |
-| SkipperBud’s | Public HTML accessible, but its JavaScript inventory needs another integration |
-| Quest Watersports, Ottawa | Inventory page accessible; no boat records exposed in the HTML tested |
+| Boat Trader, Water Werks, Hennepin Marine | September 8 robots retest again returned HTTP 403; no inventory request made |
+| The Boat House | September 8 robots HTTP 200 permitted the URL; page returned HTTP 403; collection stopped |
+| Munson Ski & Marine, Lake Holiday Marina | September 8 robots retest again returned HTTP 403 |
+| Boats.com, Boatmart | September 8 robots retest again returned HTTP 403 |
+| Huber’s Marine — one detail page | The full scan accepted all 31 inventory ads, but the 2026 Harris Cruiser 190 SL detail (13466402i) returned HTTP 403. Summary retained; partial detail coverage recorded; no bypass |
+| MarineSource | September 8 robots retest again returned HTTP 429; collection stopped |
+| SkipperBud’s | September 8 inventory HTML HTTP 200 contains Vue templates without actual boat records. Its linked inventory bundle returned HTTP 406; inspection stopped. A permitted feed/integration is still needed; OnlyInboards may already represent some of its stock |
 | Boatzon / Hennepin Marine | Three promising indexed Lund ads checked: removed/sold in current page data; dealer profile returned 404. Excluded from active inventory |
-| Boat Works, Keyesport IL | Inventory accessible; outside the core 150-mile area, not integrated in this pass |
-| The Boat Center, Chippewa Falls WI / Minnesota | Inventory accessible; outside the core area, not integrated in this pass |
+| [Boat Works, Keyesport IL](https://4boatworks.net/inventory/) | September 8 inventory/detail HTTP 200. Tested adapter and disabled wider-region profile ready: 18 boats from 33 items after rejecting motors, other equipment and tractor/PWC; 9 report <=21 ft and >=200 hp. Boat location and dimensions still need confirmation |
+| The Boat Center, Chippewa Falls WI / Ramsey MN | September 8 first two pages HTTP 200: 20 stock ads sampled; pagination exposes 14 pages. Tested adapter and disabled wider-region profile; keeps branch state and incoming status. Summary lengths remain unknown, so it adds little to strict length screening without detail enrichment |
 | Facebook Marketplace | Manual import; no automated session collection |
 | eBay, iboats and other unconfigured marketplaces | Not represented in the collected data |
 
@@ -44,7 +46,7 @@ The access results above are dated research observations, not fresh probes on ev
 
 ## Why the visible shortlist is smaller
 
-The main nearby preset selects the preferred fishing and ski makes, active ads within 150 straight-line miles, reported lengths from 18 ft to strictly below 21 ft, and at least 200 hp when power is reported. The dedicated fishing preset requires a known 200+ hp. The ski preset allows unreported power. Missing lengths are excluded from strict presets.
+The main nearby preset selects the preferred fishing and ski makes, active ads within 150 straight-line miles, reported lengths from 18 ft through 21 ft, and at least 200 hp when power is reported. The dedicated fishing preset requires a known 200+ hp. The ski preset allows unreported power. Missing lengths are excluded from strict presets. The inclusive 21-ft screen follows the verified December 2, 2025 association rulebook; manufacturer length including molded platforms, capacity limits and final registration approval still need confirmation.
 
 Use **Include unknown lengths · verify first** for potential candidates whose dimensions need confirmation. Use **All nearby ads · no lake screen** to inspect the broader local inventory without the make, power or lake-length filters. These views are explicit about their wider scope.
 
@@ -52,6 +54,14 @@ The collector does not infer hull length from a model number, trolling motor sha
 
 ## September 8 engineering follow-up
 
-The source roster and dated access observations above remain unchanged; this pass did not re-probe blocked sites. [config/source-access.json](config/source-access.json) now stores all 21 source/service gaps for the Settings health panel. Full refresh reports show configured/discovered/attempted inventory pages, detail eligibility/success/failure/caps, cache hits, successful fetched HTML pages and observation dates. These measures expose bounded collection; they do not prove complete inventory. Existing successful source summaries can still be useful when detail caps make the overall result partial.
+The fresh September 8 access audit, captured URLs, timestamps and SHA-256 hashes are retained privately under `data/research/access-2026-09-08T16-28-39-046Z`, `access-2026-09-08T16-28-52-615Z`, `access-2026-09-08T16-29-05-272Z`, `access-2026-09-08T16-30-05-918Z`, and `access-2026-09-08T16-30-33-563Z`. The machine-readable ledger at [config/source-access.json](config/source-access.json) retains each source’s own date, including untested older entries. `node --import tsx scripts/probe-source-access.ts URL...` performs a bounded fresh robots-first audit without importing listings; it never follows access challenges or cross-origin redirects.
 
-Duplicate review now includes same-source reposts; 163 candidate pairs were identified in the existing 1,538 ads. The HIN reindex found 144 structurally usable HINs but no repeated valid HINs, so no automatic groups were created. City enrichment ranks state/ZIP evidence and suburbs, retains ambiguous lookups, and supports reviewed approximate-city corrections. Actual offsite boat locations remain unknown.
+The staged quality report is `data/research/additional-source-quality-2026-09-08.json`: Huber’s has 31 boat/pontoon ads across both pages, 74% known asking prices and 100% named city/state/make/model; its summaries omit hull length and installed power, which detail enrichment supplies when published. Quest has 7 boats with 86% known prices and complete reported length/power/city/state. Its nearby 2005 Monterey 190 LS Montura BR is advertised at $12,995, 19 ft and 220 hp, about 21 straight-line miles away. This is research evidence, not seller confirmation or lake approval. Huber’s sampled 1999 Ski Nautique detail reports $10,995, 20 ft and 290 hp. Huber’s La Porte city ranking point was independently verified from the [U.S. Census TIGERweb ACS25 municipality table](https://tigerweb.geo.census.gov/tigerwebmain/Files/acs26/tigerweb_acs26_incplace_2025_acs25_in.html): 41.6103189, -86.7149537, approximately 101 straight-line miles from Lake Holiday. This reviewed city centroid is neither a confirmed boat storage address nor a road travel estimate. Evidence is recorded in `data/p1p2/la-porte-city-evidence.json`.
+
+Per-source quality thresholds run across staged full inventory before listing writes. An individual page can fail the full-source price threshold even when its complete inventory passes; the Huber’s second-page preview illustrates this. Do not lower a quality gate merely to force a partial-page import. The collector combines its inventory pages first. Redacted, reduced source fixtures and provenance sidecars live under `tests/fixtures/{hubers,quest,boatworks,boatcenter}-*.html*`; public source captures remain private. Trailing whitespace was normalized in the reduced repository fixtures; sidecar hashes were updated while retaining each original capture hash, and the adapter tests passed again. The Huber parser specifically favors the visible sale price over an obsolete MSRP retained in the printable brochure.
+
+Full refresh reports show configured/discovered/attempted inventory pages, detail eligibility/success/failure/deferred budgets, cache hits, successful fetched pages and observation dates. These measures expose bounded collection; they do not prove complete inventory. The optional wider-region profiles remain disabled to preserve the nearby daily search.
+
+Duplicate review includes same-source reposts, descriptive text and published-contact evidence, bounded canonical image identities, and optional audited local image hashes. Only matching supported HINs group automatically; image similarity is supporting review evidence. The named Butler Crestliner reposts and Fenton Skeeter cross-list were reviewed using captured photo/text/location corroboration; distinct Wauconda Alumacraft stock HINs remain separated. Permanent vessel identities and alias/history events preserve ad-level notes, favorites and source history through merge/split/undo. Queue counts change with filters and collection; the former 163-pair baseline is historical.
+
+City enrichment ranks state/ZIP evidence and suburbs, retains ambiguous lookups, and supports reviewed approximate-city corrections. Boat storage location is distinct from seller/dealer location. No seller was contacted and no login/challenge was bypassed in this research pass.

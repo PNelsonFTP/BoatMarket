@@ -12,3 +12,6 @@ playwright-report
 .DS_Store
 .next-dev
 next-env.d.ts
+sbom/runtime
+.codex
+.agents

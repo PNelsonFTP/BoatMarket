@@ -146,6 +146,10 @@ test("connected import handles the full export in chunks and reports a failed sa
         "/api/admin/source-health",
         "/api/admin/locations",
         "/api/duplicates",
+        "/api/admin/alerts",
+        "/api/admin/operations",
+        "/api/admin/routing",
+        "/api/admin/locations/listings",
       ].includes(path)
     ) {
       await route.fulfill({

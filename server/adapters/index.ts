@@ -3,6 +3,7 @@ import type { Adapter, SourceConfig } from "./types";
 import type { Listing } from "../../lib/types";
 import { normalizeListing } from "./normalize";
 import { regionalListings } from "./regional";
+import { additionalListings } from "./additional";
 const isProduct = (value: unknown) =>
   [value]
     .flat()
@@ -187,6 +188,8 @@ export const adapters: Record<SourceConfig["adapter"], Adapter> =
         id,
         parse(html: string, url: string, c: SourceConfig) {
           const host = new URL(url).hostname;
+          const additional = additionalListings(html, url, c);
+          if (additional !== null) return additional;
           if (host === "www.gordysboats.com") return gordys(html, url, c);
           if (host === "bassboatcentral.com")
             return bassBoatCentral(html, url, c);

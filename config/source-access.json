@@ -1,90 +1,90 @@
 {
   "version": 1,
-  "note": "Dated research observations, not fresh access probes or zero-inventory claims.",
+  "note": "Latest dated access checks are September 8, 2026 where stated; remaining entries retain their own observation dates. Restricted and untested sources are not zero-inventory claims.",
   "sources": [
     {
       "name": "Boat Trader",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "Water Werks",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "Hennepin Marine",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "Munson Ski & Marine",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "Lake Holiday Marina",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "Boats.com",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "Boatmart",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 403.",
-      "nextAction": "Use a permitted feed or manual canonical JSON import; record a dated access retest."
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 403; no inventory request made.",
+      "nextAction": "Use the supported manual/feed import workflow or obtain permitted source access; do not interpret restriction as zero boats."
     },
     {
       "name": "The Boat House",
       "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Listing request returned HTTP 403.",
+      "observedOn": "2026-09-08",
+      "observation": "Robots HTTP 200 permits the URL; public homepage/inventory access returned HTTP 403. Stopped.",
       "nextAction": "Investigate a permitted inventory feed or manual import."
     },
     {
       "name": "Huber’s Marine",
-      "status": "restricted",
-      "observedOn": "2026-09-07",
-      "observation": "Listing request returned HTTP 403.",
-      "nextAction": "Investigate a permitted inventory feed or manual import."
+      "status": "integrated-partial",
+      "observedOn": "2026-09-08",
+      "observation": "Robots and inventory pages are accessible. The September 8 full scan accepted 31 boats/pontoons after staged quality checks, excluding lifts/motors. One requested detail, 2026 Harris Cruiser 190 SL (stock URL ending 13466402i), returned HTTP 403; its inventory summary was retained and the denial was not bypassed.",
+      "nextAction": "Keep the dated partial-detail warning and unknown specifications for that ad. Use a permitted dealer feed or reviewed manual evidence for the missing detail; do not bypass the 403. La Porte city centroid is Census-reviewed, while exact boat storage and seller availability remain unverified."
     },
     {
       "name": "MarineSource",
       "status": "throttled",
-      "observedOn": "2026-09-07",
-      "observation": "Robots request returned HTTP 429; collection stopped.",
+      "observedOn": "2026-09-08",
+      "observation": "Dated robots-first retest again returned HTTP 429; no inventory request made.",
       "nextAction": "Respect throttling; obtain a feed or perform a limited dated later check."
     },
     {
       "name": "SkipperBud’s",
       "status": "integration-needed",
-      "observedOn": "2026-09-07",
-      "observation": "Public HTML accessible; useful JavaScript inventory needs another integration.",
-      "nextAction": "Build and fixture-test a permitted inventory integration."
+      "observedOn": "2026-09-08",
+      "observation": "Robots allows MasterCraft inventory HTML (HTTP 200), which contains Vue templates without boat records. The linked inventory JavaScript bundle returned HTTP 406; inspection stopped.",
+      "nextAction": "Obtain a permitted inventory feed or compatible public integration. Some dealer listings may already appear through OnlyInboards; do not bypass the 406 restriction."
     },
     {
       "name": "Quest Watersports, Ottawa",
-      "status": "integration-needed",
-      "observedOn": "2026-09-07",
-      "observation": "HTML accessible; no boat records exposed by the tested page.",
-      "nextAction": "Locate a permitted inventory data source and add parser fixtures."
+      "status": "integrated",
+      "observedOn": "2026-09-08",
+      "observation": "Dealer page and its public inventory script/response pass robots and HTTP 200. Response has 9 items: 7 boats after excluding a boat lift and paired PWCs. Actual-response adapter, fixtures and quality gate pass.",
+      "nextAction": "Enabled via the same public inventory endpoint used by dealer HTML; paginate in 24-item increments if inventory grows. Source availability and lake eligibility still require confirmation."
     },
     {
       "name": "Boatzon / Hennepin Marine",
@@ -96,16 +96,16 @@
     {
       "name": "Boat Works, Keyesport IL",
       "status": "wider-region",
-      "observedOn": "2026-09-07",
-      "observation": "Inventory accessible; outside core area, not integrated.",
-      "nextAction": "Evaluate marginal useful boats when widening the search."
+      "observedOn": "2026-09-08",
+      "observation": "Robots, inventory and detail HTTP 200. Fixture-tested adapter parses 18 boats from 33 items; 9 report length <=21 ft and >=200 hp, including Phoenix, Nitro, Ranger and Skeeter. Location outside core area; city cache pending.",
+      "nextAction": "Disabled wider-region profile is ready to enable deliberately; use listing-specific length/engine verification before travelling."
     },
     {
       "name": "The Boat Center, Chippewa Falls WI / Minnesota",
       "status": "wider-region",
-      "observedOn": "2026-09-07",
-      "observation": "Inventory accessible; outside core area, not integrated.",
-      "nextAction": "Evaluate marginal useful boats when widening the search."
+      "observedOn": "2026-09-08",
+      "observation": "Robots and first 2 inventory pages HTTP 200. Fixture-tested adapter parses 20 stock ads in this sample; page links expose 14 pages. Known engine power and branch state retained; summary lengths mostly unknown; incoming stock labeled.",
+      "nextAction": "Disabled wider-region profile supports bounded linked pagination; enable only for wider search. Detail-length enrichment and current onsite availability remain source gaps."
     },
     {
       "name": "Facebook Marketplace",

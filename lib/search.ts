@@ -1,4 +1,5 @@
 import { FIELD_MAP } from "./catalog";
+import { matchesDrivingFilter } from "./routing";
 import {
   type Listing,
   type Filters,
@@ -114,6 +115,7 @@ function check(
   return true;
 }
 export function matches(l: Listing, f: Filters, now = Date.now()) {
+  if (!matchesDrivingFilter(l, f, now)) return false;
   if (
     f.q &&
     !`${l.title} ${l.description} ${l.make ?? ""} ${l.model ?? ""} ${l.city ?? ""}`

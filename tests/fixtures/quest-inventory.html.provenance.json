@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08T16:34:20.128Z",
+  "sha256": "34c778fc9b9b637031d6235526b4d9b166ceca5bb7938d56c7c0039871c0a8c5",
+  "provenance": {
+    "url": "https://www.questwatersports.com/isapi_xml.php?module=inventory&pageID=6587&main=&limit=24&orderby=make,model%20&offset=0",
+    "observedAt": "2026-09-08T16:30:05.919Z",
+    "originalSha256": "2681ba127cc96b6707f38f8a458aa8ffcf32932ffdb6dba74f9787bf50c83f77",
+    "selection": ".inventory-card",
+    "omitted": "navigation, image carousels, scripts, forms; parser-relevant card facts retained",
+    "formatNormalization": "Leading indentation tabs expanded to spaces; trailing whitespace normalized for the reviewed repository fixture. originalSha256 still identifies the untouched source capture."
+  },
+  "redacted": true,
+  "reviewRequired": true
+}

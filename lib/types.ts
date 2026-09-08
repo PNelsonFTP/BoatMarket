@@ -4,6 +4,64 @@ export const pointSchema = z.object({
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
 });
+export const fieldObservationSchema = z.object({
+  value: z.union([z.string(), z.number().finite(), z.boolean(), z.null()]),
+  sourceUrl: z
+    .string()
+    .url()
+    .max(2000)
+    .refine((value) => /^https?:\/\//.test(value)),
+  source: z.string().max(100),
+  observedAt: z.string().datetime(),
+  method: z.enum(["source", "detail", "import", "review"]),
+  evidence: z.string().max(4000).optional(),
+});
+export const locationOverrideSchema = pointSchema.extend({
+  label: z.string().min(1).max(500),
+  evidence: z.string().min(1).max(4000),
+  sourceUrl: z
+    .string()
+    .url()
+    .max(2000)
+    .refine((value) => /^https?:\/\//.test(value))
+    .optional(),
+  reviewedAt: z.string().datetime(),
+  revision: z.number().int().nonnegative(),
+});
+export const sourceLocationSchema = z.object({
+  lat: z.number().min(-90).max(90).nullable(),
+  lng: z.number().min(-180).max(180).nullable(),
+  sellerLat: z.number().min(-90).max(90).nullable(),
+  sellerLng: z.number().min(-180).max(180).nullable(),
+  city: z.string().nullable(),
+  state: z.string().nullable(),
+  precision: z.string().optional(),
+  observedAt: z.string().datetime(),
+});
+export const routeEstimateSchema = z.object({
+  status: z.enum(["ready", "failed", "unconfigured"]),
+  provider: z.string().max(100),
+  providerUrl: z.string().max(2000),
+  origin: pointSchema,
+  destination: pointSchema,
+  durationMinutes: z.number().nonnegative().optional(),
+  distanceMiles: z.number().nonnegative().optional(),
+  computedAt: z.string().datetime(),
+  expiresAt: z.string().datetime(),
+  error: z.string().max(2000).optional(),
+});
+export const alertEventSchema = z.enum([
+  "new-match",
+  "price-drop",
+  "price-change",
+  "status-change",
+  "no-longer-matches",
+]);
+export const DEFAULT_ALERT_EVENTS = [
+  "new-match",
+  "price-change",
+  "status-change",
+] as const;
 export const areaSchema = z
   .object({
     id: z.string().max(100),
@@ -62,6 +120,23 @@ export const ruleSchema = z.object({
   allowedPropulsion: z.array(z.string()).optional(),
   excludedCategories: z.array(z.string()).optional(),
   excludeUnknown: z.boolean().default(false),
+  verification: z
+    .object({
+      status: z.enum([
+        "unverified",
+        "public-document-reviewed",
+        "association-confirmed",
+      ]),
+      sourceUrl: z
+        .string()
+        .url()
+        .refine((value) => /^https?:\/\//.test(value)),
+      documentDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      reviewedAt: z.string().datetime(),
+      summary: z.string().max(2000),
+      screeningFingerprint: z.string().max(2000),
+    })
+    .optional(),
 });
 export type RuleSet = z.infer<typeof ruleSchema>;
 export const filtersSchema = z.object({
@@ -76,6 +151,12 @@ export const filtersSchema = z.object({
   areas: z.array(areaSchema).max(20).default([]),
   reference: pointSchema
     .extend({ name: z.string().max(100).optional() })
+    .optional(),
+  driving: z
+    .object({
+      maxMinutes: z.number().positive().max(10080),
+      excludeUnknown: z.boolean().default(true),
+    })
     .optional(),
   locationTarget: z.enum(["boat", "seller"]).default("boat"),
   excludeUnknownLocation: z.boolean().default(false),
@@ -165,6 +246,11 @@ export const listingSchema = z.object({
     .default([]),
   confidence: z.record(z.number().min(0).max(1)).default({}),
   groupId: z.string().nullable().default(null),
+  vesselId: z.string().nullable().default(null),
+  fieldProvenance: z.record(z.array(fieldObservationSchema).max(30)).optional(),
+  locationOverride: locationOverrideSchema.optional(),
+  sourceLocation: sourceLocationSchema.optional(),
+  routeEstimate: routeEstimateSchema.optional(),
   rawPayload: z.unknown().optional(),
   isSample: z.boolean().default(false),
 });
@@ -185,6 +271,7 @@ export const savedSearchSchema = z.object({
   cadence: z.enum(["off", "hourly", "daily", "weekly"]).default("off"),
   channels: z.array(z.enum(["in-app", "email", "webhook"])).default(["in-app"]),
   digest: z.boolean().default(true),
+  eventTypes: z.array(alertEventSchema).max(5).optional(),
 });
 export type SavedSearch = z.infer<typeof savedSearchSchema>;
 export type Alert = {

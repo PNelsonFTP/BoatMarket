@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08T16:34:20.124Z",
+  "sha256": "b452280d4767a7931fe699d62c552d4114dd1f16edb4f46e9767882552c30f02",
+  "provenance": {
+    "url": "https://www.hubersmarine.com/search/inventory/availability/In%20Stock/page/2",
+    "observedAt": "2026-09-08T16:30:08.968Z",
+    "originalSha256": "9186a97fa5edbfd01b295a74b5863fe9c323cb1613657a50aa15c2f2e1b187e5",
+    "selection": ".search-result-grid",
+    "omitted": "navigation, image carousels, scripts, forms; parser-relevant card facts retained",
+    "formatNormalization": "Leading indentation tabs expanded to spaces; trailing whitespace normalized for the reviewed repository fixture. originalSha256 still identifies the untouched source capture."
+  },
+  "redacted": true,
+  "reviewRequired": true
+}

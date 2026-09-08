@@ -1,3 +1,4 @@
+import { sourceQualityPolicySchema } from "../../lib/source-quality";
 import { z } from "zod";
 import type { Listing } from "../../lib/types";
 export const sourceConfigSchema = z.object({
@@ -33,6 +34,8 @@ export const sourceConfigSchema = z.object({
   autoPaginate: z.boolean().default(false),
   maxInventoryPages: z.number().int().min(1).max(100).default(40),
   followDetails: z.boolean().default(false),
+  detailPolicy: z.enum(["complete", "rotating", "summary-only"]).optional(),
+  quality: sourceQualityPolicySchema.optional(),
   detailMaxLength: z.number().positive().optional(),
   detailMakes: z.array(z.string().min(1).max(80)).max(50).optional(),
   maxDetailPages: z.number().int().min(1).max(150).default(80),

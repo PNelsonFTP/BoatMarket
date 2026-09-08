@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-08T03:09:13.131Z",
-  "chicagoDate": "2026-09-07",
+  "generatedAt": "2026-09-08T17:01:48.335Z",
+  "chicagoDate": "2026-09-08",
   "timezone": "America/Chicago",
-  "sourceLockSha256": "5d6e0f50e5225c83f1880b49e99d1b27d30cd75c870915b41ea96a1139d8c842",
+  "sourceLockSha256": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "audits": [
     {
       "scope": "full",
-      "checkedAt": "2026-09-08T03:09:13.848Z",
+      "checkedAt": "2026-09-08T17:01:49.066Z",
       "command": "npm audit --package-lock-only --json --ignore-scripts --registry=https://registry.npmjs.org --include=dev --include=optional --include=peer",
       "exitCode": 0,
-      "file": "sbom/npm-audit-full-2026-09-08T03-09-13Z.json",
+      "file": "sbom/npm-audit-full-2026-09-08T17-01-48Z.json",
       "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82",
       "vulnerabilities": {
         "info": 0,
@@ -23,10 +23,10 @@
     },
     {
       "scope": "production",
-      "checkedAt": "2026-09-08T03:09:14.256Z",
+      "checkedAt": "2026-09-08T17:01:49.465Z",
       "command": "npm audit --package-lock-only --json --ignore-scripts --registry=https://registry.npmjs.org --omit=dev --include=optional --include=peer",
       "exitCode": 0,
-      "file": "sbom/npm-audit-production-2026-09-08T03-09-13Z.json",
+      "file": "sbom/npm-audit-production-2026-09-08T17-01-48Z.json",
       "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82",
       "vulnerabilities": {
         "info": 0,

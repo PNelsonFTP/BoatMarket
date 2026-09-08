@@ -3,6 +3,11 @@ import { Bookmark, Search, Trash2, Bell } from "lucide-react";
 import type { Filters, Workspace, SavedSearch } from "@/lib/types";
 import { searchListings } from "@/lib/search";
 import type { Listing } from "@/lib/types";
+import {
+  ALERT_EVENT_TYPES,
+  ALERT_EVENT_LABELS,
+  DEFAULT_ALERT_EVENTS,
+} from "@/lib/alert-events";
 export function SavedSearches({
   workspace,
   listings,
@@ -117,6 +122,35 @@ export function SavedSearches({
                 />
                 Combine changes into a digest
               </label>
+              <fieldset className="field-label">
+                <legend>Notify me about</legend>
+                {ALERT_EVENT_TYPES.map((kind) => (
+                  <label className="check-label" key={kind}>
+                    <input
+                      type="checkbox"
+                      disabled={!live}
+                      checked={(s.eventTypes ?? DEFAULT_ALERT_EVENTS).includes(
+                        kind,
+                      )}
+                      onChange={(event) =>
+                        update(s.id, {
+                          eventTypes: event.target.checked
+                            ? [...(s.eventTypes ?? DEFAULT_ALERT_EVENTS), kind]
+                            : (s.eventTypes ?? DEFAULT_ALERT_EVENTS).filter(
+                                (item) => item !== kind,
+                              ),
+                        })
+                      }
+                    />
+                    {ALERT_EVENT_LABELS[kind]}
+                  </label>
+                ))}
+                <small>
+                  Status changes also cover a previously matching boat becoming
+                  sold or removed. Changing events or filters starts a new
+                  baseline.
+                </small>
+              </fieldset>
               <button
                 className="button primary full"
                 onClick={() => onApply(s.filters)}

@@ -8,23 +8,54 @@ permissions:
   contents: read
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
-      - run: npx prisma generate
-      - run: npm run typecheck && npm test
+      - run: npm ci --no-audit --no-fund
+      - run: npm run db:generate
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run sbom
+      - name: Validate generated CycloneDX inventory
+        run: node --input-type=module -e "import {schemaValidator} from './scripts/sbom-schema.mjs'; import {readFileSync} from 'node:fs'; const validator=schemaValidator(process.cwd()); for(const name of ['boatscout-all-platforms.cdx.json','boatscout-production.cdx.json']) validator.validate(JSON.parse(readFileSync('sbom/'+name,'utf8')),name);"
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: 1
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: failure()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.os }}
           path: playwright-report
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [runtime, rendered]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build immutable runtime
+        run: docker build --target ${{ matrix.target }} --tag boatscout:ci .
+      - name: Smoke-test and inventory exact runtime image
+        run: npm run sbom:runtime -- boatscout:ci ${{ matrix.target == 'rendered' && '--rendered' || '' }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: runtime-sbom-${{ matrix.target }}
+          path: sbom/runtime

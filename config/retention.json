@@ -1,0 +1,11 @@
+{
+  "cacheDays": 30,
+  "evidenceDays": 90,
+  "reportDays": 90,
+  "backupDays": 30,
+  "rotatedLogDays": 30,
+  "minimumVerifiedBackups": 2,
+  "maximumManagedBytes": 10737418240,
+  "priceHistoryDays": null,
+  "maximumPlanAgeHours": 24
+}

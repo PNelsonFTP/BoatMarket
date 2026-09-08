@@ -1,5 +1,11 @@
 import { createHash } from "node:crypto";
 import type { Listing } from "../lib/types";
+import { distanceMiles } from "../lib/search";
+import {
+  canonicalImageIdentity,
+  imageEvidenceMatch,
+  type AuditedImageEvidence,
+} from "../lib/image-identity";
 import type {
   DuplicateEvidence,
   DuplicatePairDecision,
@@ -19,6 +25,7 @@ export function normalizedHin(value: unknown): string | null {
   let hin = value.trim().toUpperCase();
   if (/^US[-\s]/.test(hin)) hin = hin.replace(/^US[-\s]+/, "");
   hin = hin.replace(/[\s-]/g, "");
+  if (hin.length === 14 && hin.startsWith("US")) hin = hin.slice(2);
   return /^[A-Z]{3}[A-HJ-NPR-Z0-9]{5}[A-L][0-9]{3}$/.test(hin) ? hin : null;
 }
 
@@ -33,9 +40,78 @@ function meaningfulPhoto(photo: string) {
   );
 }
 
+const identityDescription = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+export function descriptionSimilarity(a: string, b: string) {
+  const tokens = (s: string) =>
+    new Set(
+      identityDescription(s)
+        .split(" ")
+        .filter(
+          (t) =>
+            t.length >= 3 &&
+            !/^(?:the|and|for|with|this|that|boat|sale|used|new|very|good|condition|call|more|please|from|our|you|your|have|has|all)$/.test(
+              t,
+            ),
+        )
+        .slice(0, 1000),
+    );
+  const left = tokens(a),
+    right = tokens(b);
+  const shared = [...left].filter((t) => right.has(t));
+  return {
+    overlap: shared.length / Math.max(1, new Set([...left, ...right]).size),
+    shared: shared.length,
+    specific: shared.filter((t) => /\d/.test(t)).length,
+  };
+}
+export function publishedContacts(listing: Listing) {
+  const source = `${listing.description} ${listing.specs.sellerPhone ?? ""} ${listing.specs.sellerEmail ?? ""}`;
+  const phones = [
+    ...source.matchAll(
+      /(?<!\d)(?:\+?1[ .-])?\(?([2-9]\d{2})\)?[ .-]([2-9]\d{2})[ .-](\d{4})(?!\d)/g,
+    ),
+  ].map((m) => m.slice(1).join(""));
+  const emails =
+    source
+      .match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g)
+      ?.map((v) => v.toLowerCase()) ?? [];
+  return new Set([...phones, ...emails]);
+}
+
+/** Meaningful observed identity/status/price changes, not merely cache timestamps. */
+export function duplicateFingerprint(listing: Listing) {
+  const content = {
+    title: listing.title,
+    description: identityDescription(listing.description),
+    source: listing.source,
+    make: listing.make,
+    model: listing.model,
+    year: listing.year,
+    price: listing.price,
+    status: listing.status,
+    length: listing.length,
+    horsepower: listing.horsepower,
+    city: listing.city,
+    state: listing.state,
+    lat: listing.lat,
+    lng: listing.lng,
+    seller: listing.sellerName,
+    hin: normalizedHin(listing.specs.hin) ?? listing.specs.hin ?? null,
+    photos: [
+      ...new Set(listing.photos.map(canonicalImageIdentity).filter(Boolean)),
+    ].sort(),
+  };
+  return createHash("sha256").update(JSON.stringify(content)).digest("hex");
+}
+
 export function duplicateEvidence(
   a: Listing,
   b: Listing,
+  auditedImages: AuditedImageEvidence[] = [],
 ): DuplicateEvidence | null {
   if (a.id === b.id || a.isSample || b.isSample) return null;
   const hinA = normalizedHin(a.specs.hin),
@@ -69,6 +145,46 @@ export function duplicateEvidence(
   const photo = a.photos.some(
     (p) => meaningfulPhoto(p) && b.photos.includes(p),
   );
+  const aPhotos = new Set(a.photos.map(canonicalImageIdentity).filter(Boolean));
+  const sharedImages = [
+    ...new Set(
+      b.photos
+        .map(canonicalImageIdentity)
+        .filter((key) => key && aPhotos.has(key)),
+    ),
+  ];
+  const canonicalPhoto = sharedImages.length > 0;
+  const leftAudits = auditedImages.filter(
+    (i) => i.listingId === a.id && a.photos.includes(i.url),
+  );
+  const rightAudits = auditedImages.filter(
+    (i) => i.listingId === b.id && b.photos.includes(i.url),
+  );
+  const auditMatches = leftAudits.flatMap((left) =>
+    rightAudits.flatMap((right) => {
+      const match = imageEvidenceMatch(left, right);
+      return match
+        ? [
+            {
+              ...match,
+              leftUrl: left.url,
+              rightUrl: right.url,
+              method: left.method,
+              auditedAt: [left.auditedAt, right.auditedAt].sort()[0],
+              provenance: [left.provenance, right.provenance],
+            },
+          ]
+        : [];
+    }),
+  );
+  const descriptions = descriptionSimilarity(a.description, b.description);
+  const descriptive =
+    descriptions.shared >= 10 &&
+    (descriptions.overlap >= 0.6 ||
+      (descriptions.overlap >= 0.35 && descriptions.specific >= 2));
+  const contactsA = publishedContacts(a),
+    contactsB = publishedContacts(b);
+  const contact = [...contactsA].some((value) => contactsB.has(value));
   const seller =
     !!a.sellerName &&
     normalizedIdentity(a.sellerName).length >= 4 &&
@@ -94,6 +210,33 @@ export function duplicateEvidence(
   if (photo) {
     score += 30;
     reasons.push("Exact shared photo URL; could be stock photography");
+  } else if (canonicalPhoto) {
+    score += 25;
+    reasons.push(
+      "Shared original image identity across supported resize variants; could be stock photography",
+    );
+  }
+  if (sharedImages.length > 1) {
+    score += Math.min(10, sharedImages.length * 2);
+    reasons.push(`${sharedImages.length} distinct shared image identities`);
+  }
+  if (auditMatches.length) {
+    score += 12;
+    reasons.push(
+      `Locally audited ${auditMatches.some((m) => m.kind === "identical-file") ? "identical image bytes" : "perceptually similar image"}; evidence only, not vessel proof`,
+    );
+  }
+  if (descriptive) {
+    score += 18;
+    reasons.push(
+      `Similar descriptive text (${Math.round(descriptions.overlap * 100)}% token overlap); check for boilerplate`,
+    );
+  }
+  if (contact) {
+    score += 20;
+    reasons.push(
+      "Matching published seller contact; sellers can advertise multiple boats",
+    );
   }
   if (seller) {
     score += 15;
@@ -102,6 +245,18 @@ export function duplicateEvidence(
   if (city) {
     score += 10;
     reasons.push("Same reported city and state");
+  }
+  if (
+    a.lat != null &&
+    a.lng != null &&
+    b.lat != null &&
+    b.lng != null &&
+    distanceMiles({ lat: a.lat, lng: a.lng }, { lat: b.lat, lng: b.lng }) <= 1
+  ) {
+    score += 5;
+    reasons.push(
+      "Advertised coordinates within one mile; city-center pins may be shared",
+    );
   }
   if (price) {
     score += 8;
@@ -133,8 +288,9 @@ export function duplicateEvidence(
   // Title/price alone never creates a suggestion, much less an automatic group.
   const plausible =
     hinMatch ||
-    (photo && (make || title)) ||
+    ((canonicalPhoto || auditMatches.length > 0) && (make || title)) ||
     (make && model && year && (city || seller)) ||
+    (make && descriptive && (city || contact)) ||
     (title && city && price);
   if (!plausible || score < 45) return null;
   return {
@@ -144,6 +300,9 @@ export function duplicateEvidence(
     automatic: hinMatch && !conflicts.includes("Different modern-format HINs"),
     hinA,
     hinB,
+    sharedImageIdentities: sharedImages as string[],
+    imageAudits: auditMatches,
+    descriptionOverlap: descriptions.overlap,
   };
 }
 

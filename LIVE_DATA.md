@@ -1,84 +1,102 @@
-# Live collection — September 7, 2026
+# Live inventory — September 8, 2026
 
-The website now opens the collected-data snapshot. The SQLite database contains the same real listings; its original fictional seed records are retained separately and excluded from the normal API and publication export. Current data is a set of advertisements, not guaranteed availability or distinct physical vessels.
+The local review website at **http://127.0.0.1:4310** contains **1,593 real advertisements**. The reviewed snapshot was activated locally after inspecting the bounded partial result. The full configured-source scan completed at **2026-09-08T17:50:23.512Z**, with status **partial**. The owner reviewed the local website and authorized the final commit/push. The final repository and deployment outcome is recorded in VALIDATION.md.
 
-## Expanded collection coverage
+These are observed advertisements, not guaranteed seller availability or certified distinct boats. The database retains prior records/history and 52 separate fictional samples; samples are excluded from the normal API and publication snapshot. The original September 7 baseline was 1,538 real ads. This run added **55 newly indexed records**, which does not mean the sellers first advertised them today.
 
-This research pass increased the pool from **257 to 1,538 ads**, adding seven sources and more regional pages. Of these, **1,522 are active**, **16 are marked sold**, and **1,419 active ads have an asking price**. Active means the collected page did not report removal or sale; seller availability is not independently confirmed.
+The scan's automatic export correctly preserved the previous snapshot after one Huber detail returned HTTP 403. After reviewing all twelve passed inventory quality gates, a separate backed-up export activated the accepted dataset at 17:51:33 UTC with `partial: true` and the original run ID. No denied detail was retried or bypassed. Three OnlyInboards details remain intentionally deferred to a later rotating cycle. The historical pipeline report and separate reviewed-export record are both preserved.
 
-| Source | Collected ads | Active within 150 mi |
+GitHub Pages setup was attempted after review, but GitHub returned HTTP 422: the current plan does not support Pages for this private repository. The repository remains private; the local website is the available deployment.
+
+## Current inventory
+
+There are **1,577 active**, **16 sold** and **0 other-status** ads. **1,464 active ads** have an asking price. **1,162 active ads** have a reported location within 150 straight-line miles of Lake Holiday; **19 active ads** have no usable coordinates and are excluded from nearby presets.
+
+| Source | Retained ads | Active ads | Active within 150 mi |
+|---|---:|---:|---:|
+| Craigslist | 875 | 875 | 767 |
+| OnlyInboards | 387 | 387 | 128 |
+| Ted’s Boatarama | 62 | 62 | 62 |
+| Bass Boat Central | 60 | 60 | 20 |
+| Fox Lake Harbor | 44 | 44 | 44 |
+| Huber’s Marine | 31 | 31 | 31 |
+| Gordy’s Marine | 31 | 31 | 24 |
+| Starved Rock Marina | 30 | 19 | 19 |
+| Lake County Watersports | 27 | 27 | 27 |
+| Miller’s Sport Center | 22 | 17 | 17 |
+| Bedford Sales & Outdoors | 17 | 17 | 16 |
+| Quest Watersports | 7 | 7 | 7 |
+| **Total** | **1,593** | **1,577** | **1,162** |
+
+Retained counts include records observed before this run. Ads absent from one inventory pass are not automatically proof of sale. Cross-posts and older source records can therefore appear alongside newly observed stock.
+
+## Lake Holiday searches
+
+Home is the reservoir reference **41.6180404, -88.6682705**. The default nearby screen targets preferred premium fishing and ski makes, reported length from 18 through 21 ft, and at least 200 hp when power is known. The dedicated fishing preset requires reported 200+ hp. The ski preset includes MasterCraft, Nautique, Malibu and peers. Category presets overlap and their counts must not be added together.
+
+| Quick search | Matching ads | Grouped research records |
 |---|---:|---:|
-| Craigslist — 17 regional boards | 859 | 752 |
-| OnlyInboards — IL, WI, IN, IA, MI | 386 | 127 |
-| Ted’s Boatarama — Rock Island | 62 | 62 |
-| Bass Boat Central — five-state ads | 60 | 20 |
-| Fox Lake Harbor — Fox Lake | 44 | 44 |
-| Gordy’s Marine — northern IL / southern WI | 31 | 24 |
-| Starved Rock Marina — Ottawa | 30 | 19 |
-| Lake County Watersports — Wauconda | 27 | 27 |
-| Miller’s Sport Center — Lanark | 22 | 17 |
-| Bedford Sales & Outdoors — Morris | 17 | 16 |
-| **Total** | **1,538** | **1,108** |
+| Lake Holiday · nearby picks | 76 | 75 |
+| Fishing · 200+ hp · nearby | 16 | 16 |
+| MasterCraft & peers · up to 21 ft | 54 | 53 |
+| Wider search · within 250 mi | 112 | 111 |
+| Include unknown lengths · verify first | 94 | 93 |
+| All nearby ads · no lake screen | 1,162 | 1,157 |
 
-All ten enabled sources completed successfully. Dealer and marketplace pagination is now followed for supported sources. Craigslist includes public owner and dealer ads across 17 boards. Source URLs, methods, limits and unsuccessful prospects are documented in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md); configuration is in `config/sources.json`.
+Distances use advertised boat/dealer city coordinates and are **straight-line miles**, not towing distance or a four-hour driving guarantee. Across-lake journeys can be much longer by road. Configured road routing is available but no external routing provider was enabled. Actual-boat location review, city-center review and route estimates are distinct, dated workflows.
 
-This is broader coverage, not every boat for sale. Several nearby dealers and Boat Trader restrict collection; Facebook Marketplace remains manual-import only. Search-indexed Boatzon/Lund ads that proved sold or removed were excluded. Cross-posts with different IDs or separately hosted photos may remain separate, including some dealer boats on OnlyInboards and repeated regional classifieds.
+The identity review currently reports **3 multi-ad groups containing 9 ads**, yielding **1,587 grouped/ungrouped research records** across the complete retained pool. There are **131 active, nearby, unreviewed candidate pairs** at this checkpoint. Candidates are suggestions, not proven duplicates. Market separates ad counts from grouped records but does not yet classify reviewed versus HIN-only grouping. Original ads, source links and histories remain inspectable.
 
-Listing URLs, photographs, observations and raw evidence are retained locally. Public snapshots omit raw payloads and personal workspace data. OnlyInboards did not honor the requested decimal length filter, so the app applies its own length screen to the collected regional pool.
+## Newly indexed shortlist candidates
 
-## Your searches
+- [1987 Supra Sunsport Skier - For Sale](https://www.craigslist.org/view/d/south-elgin-1987-supra-sunsport-skier/nLkeF9sCy1sdcY6VGsxDFM) — $2,000; 19 ft; South Elgin, IL, about 30 straight-line miles. Source: Craigslist.
+- [1999 Correct Craft Closed Bow Ski Nautique EFI](https://www.hubersmarine.com/inventory/1999-correct-craft-closed-bow-ski-nautique-efi-la-porte-in-46350-14570584i) — $10,995; 20 ft, 290 hp; La Porte, IN, about 101 straight-line miles. Source: Huber’s Marine.
 
-Lake Holiday reservoir center is the reference: **41.6180404, -88.6682705**. Boat distances are **approximate straight-line miles**, using the advertised location or dealer city, not route mileage or driving time. In particular, locations across Lake Michigan can take much longer to reach by road. The local city cache contains 115 resolved locations; 19 active ads still have no usable location and stay outside the nearby presets. These include ambiguous Green Bay, Clay, Lake Country and Chicagoland locations, plus an explicitly off-site Bedford boat.
+Specifications and prices above are source claims at observation time. Confirm current availability, manufacturer hull/platform dimensions, installed power and capacity-plate rating before relying on the preliminary lake screen. Unknown or conflicting values remain unknown.
 
-| Quick search | First pass | Current matches |
-|---|---:|---:|
-| Nearby picks, within 150 mi | 27 | 51 |
-| Fishing, reported 200+ hp, within 150 mi | 8 | 15 |
-| MasterCraft and comparable ski makes, within 150 mi | 19 | 29 |
-| Expanded search, within 250 mi | 38 | 67 |
-| Include unknown lengths — verify first | — | 69 |
-| All nearby ads — no lake screen | — | 1,108 |
+## Full-scan evidence
 
-Counts use the app’s grouping rules; unresolved cross-posts can still count twice. The category searches overlap with the main shortlist and should not be added together. The main preset now also requires a reported length of at least 18 ft, so its comparison is not an identical-filter comparison.
+Run **`33a33a91-bbd8-4642-86ee-a50c33581938`** used `npm run refresh -- --cache-hours=1`, starting at **2026-09-08T17:12:55.717Z**. Sources retain their crawl delays and robots restrictions. Captures less than one hour old may be reused; a recent pipeline timestamp does not make a cached observation new.
 
-Strict searches require a reported length below 21 ft. Nearby picks target preferred fishing/ski makes and categories, lengths from 18 ft to below 21 ft, and at least 200 hp when power is reported. Unknown power remains eligible for review. The dedicated fishing preset requires reported 200+ hp; the ski preset permits unknown power. Prices are unrestricted.
+| Source | Outcome | Ads found this run | Newly indexed |
+|---|---|---:|---:|
+| Craigslist | success | 855 | 16 |
+| Bedford Sales & Outdoors | success | 17 | 0 |
+| OnlyInboards | success | 386 | 1 |
+| Miller’s Sport Center | success | 22 | 0 |
+| Huber’s Marine | error | 31 | 31 |
+| Fox Lake Harbor | success | 44 | 0 |
+| Lake County Watersports | success | 26 | 0 |
+| Ted’s Boatarama | success | 62 | 0 |
+| Gordy’s Marine | success | 31 | 0 |
+| Bass Boat Central | success | 60 | 0 |
+| Starved Rock Marina | success | 30 | 0 |
+| Quest Watersports | success | 7 | 7 |
 
-The website’s **View coverage** panel explains why the shortlist is smaller than the collected pool and shows counts by source. **Include unknown lengths · verify first** adds 18 potential candidates to the main shortlist. **All nearby ads · no lake screen** removes the make, motor and lake-length restrictions, making the broader local inventory visible. A boat in these broader views has not passed the strict lake screen.
+The report records **76 successful inventory pages**, **291 successful detail pages**, **352 newly fetched pages** and **15 cache hits**. It reports **3 planned detail deferrals**, **0 detail requests under backoff**, **1 failed detail requests**, **10 asking-price changes** and **0 removals**. Exact observation ranges and per-source quality/page limits remain in the private run report and connected Source health panel.
 
-Some additional nearby finds:
+The activated snapshot has SHA-256 **`ca199c0c04d49f276d6cfbb97ea3c6aebead493a6b8fe948876c615f1a21516c`**, 6,072,911 bytes, and was generated at **2026-09-08T17:51:33.332Z**. Its recorded observation range is **2026-09-08T01:17:51.923Z–2026-09-08T17:50:23.401Z**. Field-level retained evidence can be older and remains dated. Snapshot, database and source-found totals measure different things; historical records are retained deliberately.
 
-- **2007 MasterCraft X1**, nominal 20 ft, Channahon (~28 mi), **$26,500**: [classified ad](https://www.craigslist.org/view/d/channahon-2007-mastercraft-x1/1pM7uKsT2rvU68m6z891De).
-- **Crestliner 2050 Sportfish**, advertised 225 hp and nominal 20 ft, McHenry (~53 mi), **$24,500**: [classified ad](https://www.craigslist.org/view/d/mchenry-crestliner-2050-sportfish/qtM7LXzdPEVBPnyrL7SvTe).
-- **2026 Lund 2075 Pro-V Sport**, advertised 300 hp and nominal 20 ft, Fox Lake (~59 mi), **price on request**: [dealer listing](https://www.foxlakeharbor.com/NEW-Inventory-2026-Lund-Boat-2075-Pro-V-Sport-Fox-Lake-Harbor-18623194?ref=list).
-- **2027 Lund 1875 Tyee SS**, advertised 200 hp and nominal 18 ft, Fox Lake (~59 mi), **$86,995**: [dealer listing](https://www.foxlakeharbor.com/NEW-Inventory-2027-Lund-Boat-1875-Tyee-SS-Fox-Lake-Harbor-19116454?ref=list).
-- **2019 Ranger 518L**, advertised 200 hp and nominal 18 ft, Milton (~82 mi), **$44,900**: [classified ad](https://www.craigslist.org/view/d/milton-2019-ranger-518l/7r67E2eayu5u2aATdJqBv4).
+Huber's Marine and Quest Watersports are enabled nearby additions. Wider-region Boat Works/The Boat Center profiles remain disabled. Boat Trader and listed dealers/marketplaces with robots/page denials, MarineSource throttling and SkipperBud's restricted inventory response remain coverage gaps. Facebook and other unsupported marketplaces need authorized exports or reviewed manual imports. See [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md); no scan establishes exhaustive regional inventory.
 
-These are reported specifications, often rounded. Check actual hull/platform measurements and installed motor ratings. Unknown prices display as price on request. Conflicting power and implausible dimensions remain unknown with warnings. Engine displacement is not substituted for horsepower, and accessory dimensions are not treated as hull length. First seen by BoatScout does not mean newly listed by the seller.
+## Lake rules
 
-## Lake Holiday requirements
+The association's publicly linked [December 2, 2025 rulebook](https://engage.goenumerate.com/s/lakeholiday/files/4219/dyn139681/Rules%20and%20Reg%2012_2_2025%20revised.pdf) was reviewed September 8, 2026. Section 4.15 permits hulled boats **up to 21.0 ft inclusive**, using manufacturer US specifications and counting molded platforms. Bolt-on platforms are accessories; pontoons have a separate 28-ft limit. Installed power cannot exceed the capacity plate. Wake-enhancer use and wakesurfing remain prohibited.
 
-The association-authored [public rulebook dated 2024](https://swansonrealestate.net/wp-content/uploads/2025/06/Rules-Regs-2024-Lake-Holiday.pdf), section 4.15, restricts non-pontoons to **less than 21 ft**, counting molded swim platforms; bolted platforms are treated as accessories. Pontoons have a separate 28-ft limit. Engines must not exceed the boat’s rating. Sections 4.27–4.29 prohibit use of wake-enhancing devices and wakesurfing.
+The document hash, reviewed sections/date and verification scope are recorded in `lib/lake-verification.ts`. This supersedes the earlier 2024 under-21 reference used in the initial build. Advertised rounded lengths, molded platforms and association registration still require confirmation. Source listings do not establish lake approval.
 
-The preset is a preliminary length screen. Nominal listing lengths can be rounded or exclude molded platforms, and installed surf equipment does not imply that it can be used on this lake. Confirm the current association rules, actual measured hull/platform length, capacity plate and registration eligibility before purchasing. The official association portal did not permit automated access, so a current 2026 revision could not be verified.
+## Refresh and review
 
-## Refresh
-
-Run from Cursor’s terminal or another terminal in this folder:
+From Cursor or another terminal in this folder:
 
 ```bash
-npm run collect
-npm run export:snapshot
+npm run refresh -- --cache-hours=1
 npm run build
+npm start
 ```
 
-The connected website reads the database when refreshed. The standalone development site reads the updated snapshot after reloading. For GitHub Pages, commit and push the changed snapshot and `public/data-mode.json`; the deployment workflow builds the site. Collection itself runs on your local backend. The collector respects source crawl delays and a 24-hour HTML cache; cached passes retain the source observation time rather than claiming a new live check.
+A successful full pipeline backs up, collects, checks results and activates a validated local snapshot. Partial/failed results preserve the old snapshot unless the operator explicitly reviews and permits a partial export. Read Source health and the run report before choosing that option. Reload the connected workspace for database updates; the standalone website needs the rebuilt snapshot. See [OPERATIONS.md](OPERATIONS.md) for exact commands, restore, retention and scheduling.
 
-Run `npm run geocode:listings` explicitly when new listing cities need coordinates; known cities use `config/locations.json`. The worker does not automatically geocode new cities or export snapshots. Check ambiguous results before relying on their distances. To recreate these preferences in a fresh database, run `node --import tsx scripts/configure-lake-holiday.ts`; this replaces the six named presets and resets their cadence to off, so it is not part of routine refreshes.
+No new recurring service or notification destination was enabled. `WORKER_INTERVAL_MINUTES=1440` means daily and `10080` weekly while the worker/machine runs; existing default remains 30 minutes. `WORKER_AUTO_EXPORT=true` enables automatic local snapshot export, while builds and deployment remain separate. Public geocoder use requires explicit policy opt-in; cached city coordinates work without it. Factory lake-profile reconciliation preserves customized settings and replaces the earlier destructive preset reset procedure for existing workspaces.
 
-Inspect per-source run errors before exporting; the one-shot collector can exit zero despite partial failures. Full manual/scheduled refresh procedures, cache behavior, and daily/weekly options are in [OPERATIONS.md](OPERATIONS.md). No new fixed daily/weekly automation was created during this work.
-
-Maps and city coordinates: [© OpenStreetMap contributors](https://www.openstreetmap.org/copyright). Actual listing photos load from the original sources; sample-image credits apply only to fictional demo records.
-
-## September 8 improvement pass
-
-The published 1,538-ad snapshot remains the dated September 7 collection baseline. The engineering pass added a review queue containing 163 suggested pairs; these are not confirmed duplicate counts. A backed-up database reindex populated 144 valid-format HIN identities but found no repeated HINs, leaving zero automatic groups. Original ads, favorites, notes and asking-price histories are preserved. Source access gaps were not re-tested during this implementation pass. Current pipeline verification and any cached re-collection outcomes are recorded in [VALIDATION.md](VALIDATION.md); a recent report/export timestamp must not be mistaken for a new source observation.
+The owner requested **local review first, commit and GitHub Pages afterward**, and has now authorized the final commit/push. Public deployment requires the documented exact-hash release review and manual workflow. Maps/city data include [OpenStreetMap attribution](https://www.openstreetmap.org/copyright); listing photos remain hosted by their source sites. Sample-photo credits apply only to fictional examples.

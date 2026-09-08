@@ -6,6 +6,7 @@ import { allListings, acquireLock, releaseLock } from "./repository";
 import { db } from "./db";
 import { locationKey, locateListing, readLocations } from "./locations";
 import { atomicJson } from "./refresh-report";
+import { registerBoatLocationRoutes } from "./boat-location-review";
 export const reviewFile = () =>
   process.env.LOCATION_REVIEW_FILE || "data/location-review.json";
 export async function readLocationReview(): Promise<Record<string, unknown>> {
@@ -56,6 +57,7 @@ export async function applyCachedLocations(owner?: string) {
   return updated;
 }
 export function registerLocationRoutes(app: FastifyInstance) {
+  registerBoatLocationRoutes(app);
   app.get("/api/admin/locations", async () => {
     const [listings, locations, reviews] = await Promise.all([
       allListings(),
@@ -67,6 +69,7 @@ export function registerLocationRoutes(app: FastifyInstance) {
       {
         city: string;
         state: string;
+        zip: string;
         ads: number;
         unknown: number;
         offsite: number;
@@ -74,10 +77,14 @@ export function registerLocationRoutes(app: FastifyInstance) {
     >();
     for (const l of listings) {
       if (!l.city || !l.state) continue;
-      const key = locationKey(l.city, l.state);
+      const zip =
+        String(l.specs.postalCode || "").match(/^(\d{5})(?:-\d{4})?$/)?.[1] ||
+        "";
+      const key = locationKey(l.city, l.state, zip);
       const g = groups.get(key) || {
         city: l.city,
         state: l.state,
+        zip,
         ads: 0,
         unknown: 0,
         offsite: 0,
@@ -110,15 +117,13 @@ export function registerLocationRoutes(app: FastifyInstance) {
       .parse(req.body);
     const owner = await acquireLock("collector", 3600000);
     if (!owner)
-      return reply
-        .code(409)
-        .send({
-          error: "Collection or enrichment is running; retry after it finishes",
-        });
+      return reply.code(409).send({
+        error: "Collection or enrichment is running; retry after it finishes",
+      });
     try {
       const locations = await readLocations(),
         reviews = await readLocationReview(),
-        key = locationKey(input.city, input.state),
+        key = locationKey(input.city, input.state, input.zip),
         at = new Date().toISOString();
       const previous = locations[key] || null;
       locations[key] = {
@@ -128,6 +133,7 @@ export function registerLocationRoutes(app: FastifyInstance) {
         source: "User-reviewed city center",
         fetchedAt: at,
         reviewed: true,
+        ...(input.zip ? { zip: input.zip } : {}),
       };
       reviews[key] = {
         status: "reviewed",

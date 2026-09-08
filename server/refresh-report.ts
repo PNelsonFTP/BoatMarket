@@ -17,6 +17,14 @@ export type SourceMetrics = {
   detailPagesSucceeded: number;
   detailPagesFailed: number;
   detailPagesSkippedLimit: number;
+  detailPolicy?: "complete" | "rotating" | "summary-only";
+  detailPagesDeferred?: number;
+  detailPagesBackoff?: number;
+  quality?: {
+    status: "passed" | "failed";
+    issues: string[];
+    reportPath: string;
+  };
   duplicateAdsSkipped: number;
   contentChanged: number;
   metadataOnlyUpdated: number;

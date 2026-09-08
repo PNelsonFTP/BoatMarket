@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-09-08T16:59:31.851Z",
+  "imageId": "sha256:a0bdc9633bc35d948f484839735748dd26b72963bde8919ee0bc31275f9e820d",
+  "repositoryDigests": [
+    "boatscout@sha256:a0bdc9633bc35d948f484839735748dd26b72963bde8919ee0bc31275f9e820d"
+  ],
+  "platform": "linux/arm64",
+  "sbom": {
+    "file": "sbom/runtime/sha256-a0bdc9633bc35d948f484839735748dd26b72963bde8919ee0bc31275f9e820d.2026-09-08T16-59-31.851Z.cdx.json",
+    "sha256": "7473aba39c77ef4b60c2d3cad077dfc8b397f7daefc7a988185be86d4a271247",
+    "components": 5290,
+    "schema": "CycloneDX 1.5 full schema validation passed"
+  },
+  "smokeReport": "sbom/runtime/sha256-a0bdc9633bc35d948f484839735748dd26b72963bde8919ee0bc31275f9e820d.2026-09-08T16-59-31.851Z.smoke.json",
+  "scanner": {
+    "release": "https://github.com/anchore/syft/releases/tag/v1.51.1",
+    "version": {
+      "application": "syft",
+      "buildDate": "2026-08-27T16:55:02Z",
+      "compiler": "gc",
+      "gitCommit": "91a0032987d91b7411b52f6f5c185c5e7f775495",
+      "gitDescription": "v1.51.1",
+      "goVersion": "go1.26.3",
+      "platform": "darwin/arm64",
+      "schemaVersion": "16.1.10",
+      "version": "1.51.1"
+    },
+    "asset": {
+      "name": "syft_1.51.1_darwin_arm64.tar.gz",
+      "sha256": "ac063af3b9874769deb7ea1e6d76841e68f9e3bb50cd654226fc977de65532c1",
+      "url": "https://github.com/anchore/syft/releases/download/v1.51.1/syft_1.51.1_darwin_arm64.tar.gz"
+    },
+    "binarySha256": "47cd0bc89537c80eed48f34766743d54574e5830deff243cf54d99696a8e9ce0"
+  },
+  "licenseRepresentations": [
+    {
+      "component": "pkg:deb/debian/debianutils@5.7-0.5~deb12u1?arch=arm64&distro=debian-12.15&package-id=85cfca95d8d17efc",
+      "reportedIdentifier": "SMAIL-GPL",
+      "representation": "named license; original scanner identifier retained"
+    },
+    {
+      "component": "pkg:deb/debian/perl-base@5.36.0-7%2Bdeb12u3?arch=arm64&distro=debian-12.15&package-id=655a67f8452f234f&upstream=perl",
+      "reportedIdentifier": "Artistic-dist",
+      "representation": "named license; original scanner identifier retained"
+    }
+  ],
+  "originalImageCreated": "2026-09-08T16:58:28.287523338Z",
+  "limitation": "The immutable local Docker image ID identifies the scanned image. Repository digest metadata comes from the local daemon; no registry push is implied."
+}

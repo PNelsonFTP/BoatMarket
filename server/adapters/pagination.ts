@@ -9,6 +9,37 @@ export function inventoryPages(html: string, pageUrl: string): string[] {
     const u = new URL(value, base);
     if (u.origin === base.origin) pages.push(u.href);
   };
+  if (base.hostname === "www.hubersmarine.com") {
+    $('a[href*="/search/inventory/"]').each((_, el) => {
+      const href = $(el).attr("href")!;
+      if (/\/page\/\d+$/.test(href)) add(href);
+    });
+  }
+  if (base.hostname === "theboatcenter.com") {
+    $('a[href*="/inventory/page/"]').each((_, el) => add($(el).attr("href")!));
+  }
+  if (
+    base.hostname === "www.questwatersports.com" &&
+    base.pathname === "/isapi_xml.php"
+  ) {
+    const total = Number(html.split(/\r?\n/, 1)[0]),
+      limit = Number(base.searchParams.get("limit"));
+    if (
+      Number.isInteger(total) &&
+      total > 0 &&
+      Number.isInteger(limit) &&
+      limit > 0
+    )
+      for (
+        let offset = limit;
+        offset < Math.min(total, limit * 30);
+        offset += limit
+      ) {
+        const next = new URL(base);
+        next.searchParams.set("offset", String(offset));
+        add(next.href);
+      }
+  }
   if ($(".v7list-results").length) {
     $("a[href]").each((_, e) => {
       const href = $(e).attr("href")!;
@@ -64,6 +95,25 @@ export function inventoryPages(html: string, pageUrl: string): string[] {
 }
 
 export function verifiedEmptyRegionalPage(html: string, url: string) {
+  if (new URL(url).hostname === "www.hubersmarine.com") {
+    const $ = cheerio.load(html);
+    const types = $(".search-result-grid .datasource")
+      .map((_, el) => {
+        try {
+          return String(JSON.parse($(el).text()).itemType || "");
+        } catch {
+          return "";
+        }
+      })
+      .get();
+    return (
+      types.length > 0 &&
+      types.every(
+        (type) =>
+          type !== "" && !["Boats", "Pontoon", "Pontoons"].includes(type),
+      )
+    );
+  }
   if (new URL(url).hostname !== "bassboatcentral.com") return false;
   const $ = cheerio.load(html);
   // National ads outside our five-state region legitimately produce no records.

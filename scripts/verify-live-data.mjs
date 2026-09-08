@@ -1,7 +1,7 @@
 import { chromium, devices, expect } from "@playwright/test";
 import "dotenv/config";
 import { mkdir, readFile } from "node:fs/promises";
-const output = "/tmp/boatscout-live";
+const output = process.env.QA_OUTPUT || "/tmp/boatscout-live";
 await mkdir(output, { recursive: true });
 const snapshot = JSON.parse(await readFile("public/snapshot.json", "utf8"));
 const expected = snapshot.listings.length;
@@ -17,7 +17,7 @@ try {
     const page = await context.newPage(),
       errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    await page.goto("http://127.0.0.1:3000/");
+    await page.goto(process.env.QA_BASE_URL || "http://127.0.0.1:4310/");
     await page.getByText("Lake Holiday is home.", { exact: true }).waitFor();
     await page.locator(".boat-card").first().waitFor();
     await expect(page.locator(".mode-banner")).toContainText(
@@ -77,7 +77,7 @@ try {
     await page.locator(".source-coverage summary").click();
     await page
       .getByRole("button", {
-        name: "MasterCraft & peers · under 21 ft",
+        name: "MasterCraft & peers · up to 21 ft",
         exact: true,
       })
       .click();

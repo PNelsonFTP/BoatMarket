@@ -13,7 +13,19 @@ import {
 import type { BoatResult } from "@/lib/types";
 import { median, DAY } from "@/lib/search";
 import { money } from "@/lib/utils";
-export function Market({ boats }: { boats: BoatResult[] }) {
+export function Market({
+  boats,
+  matchingAdCount,
+}: {
+  boats: BoatResult[];
+  matchingAdCount: number;
+}) {
+  const linkedRecords = boats.filter(
+    (boat) => boat.sourceLinks.length > 1,
+  ).length;
+  const associatedAdCount = new Set(
+    boats.flatMap((boat) => boat.sourceLinks.map((link) => link.id)),
+  ).size;
   const prices = boats
     .map((b) => b.price)
     .filter((p): p is number => p != null);
@@ -77,12 +89,9 @@ export function Market({ boats }: { boats: BoatResult[] }) {
     <>
       <div className="market-stats">
         {[
-          ["Matching boats", boats.length],
+          ["Matching advertisements", matchingAdCount],
+          ["Research records after grouping", boats.length],
           ["Median asking price", money(mids)],
-          [
-            "Average time tracked",
-            avg == null ? "—" : `${Math.round(avg)} days`,
-          ],
           ["With a known price", `${prices.length} / ${boats.length}`],
         ].map(([label, value]) => (
           <div key={label}>
@@ -210,9 +219,16 @@ export function Market({ boats }: { boats: BoatResult[] }) {
         </div>
       )}
       <p className="market-note">
-        Based on the current filters and observed listings, with duplicates
-        grouped. These are asking prices, not completed sale values. Time
-        tracked starts when BoatScout first sees a listing.
+        {linkedRecords} records have linked advertisements;{" "}
+        {boats.length - linkedRecords} have one advertisement. The{" "}
+        {associatedAdCount} associated ads include any linked copies outside
+        these filters. These are research records, not a verified count of
+        distinct available boats; unresolved cross-posts can remain. This view
+        does not separate reviewed groups from HIN-only matches; inspect
+        Duplicate review for that evidence. Price statistics use the lowest
+        matching asking price per record, not completed sale values. Average
+        time tracked: {avg == null ? "unknown" : `${Math.round(avg)} days`}.
+        Tracking starts when BoatScout first sees the displayed ad.
       </p>
     </>
   );

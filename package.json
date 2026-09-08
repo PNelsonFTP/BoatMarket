@@ -30,7 +30,17 @@
     "refresh": "node --import tsx scripts/refresh.ts",
     "backup": "node --import tsx scripts/backup.ts",
     "duplicates:review": "node --import tsx scripts/review-duplicates.ts",
-    "configure:lake-holiday": "node --import tsx scripts/configure-lake-holiday.ts"
+    "configure:lake-holiday": "node --import tsx scripts/configure-lake-holiday.ts",
+    "operations": "node --import tsx scripts/operations.ts",
+    "service": "node --import tsx scripts/service.ts",
+    "images:audit": "node --import tsx scripts/audit-images.ts",
+    "reconcile:lake-policy": "node --import tsx scripts/reconcile-lake-policy.ts",
+    "source:tools": "node --import tsx scripts/source-tools.ts",
+    "release": "node --import tsx scripts/release.ts",
+    "docker:smoke": "node scripts/docker-smoke.mjs",
+    "sbom:runtime": "node scripts/runtime-sbom.mjs",
+    "retention": "node --import tsx scripts/retention.ts",
+    "restore": "node --import tsx scripts/restore.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.1.0",
@@ -56,7 +66,9 @@
     "robots-parser": "^3.0.1",
     "tailwind-merge": "^3.3.0",
     "tsx": "^4.20.0",
-    "zod": "^3.25.0"
+    "zod": "^3.25.0",
+    "prisma": "^6.19.0",
+    "playwright": "1.63.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
@@ -69,7 +81,6 @@
     "@types/react-dom": "^19.1.0",
     "concurrently": "^9.2.0",
     "prettier": "^3.9.6",
-    "prisma": "^6.19.0",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.9.0",
     "vitest": "^3.2.0"
@@ -77,5 +88,6 @@
   "overrides": {
     "postcss": "8.5.28",
     "deepmerge-ts": "8.0.2"
-  }
+  },
+  "license": "UNLICENSED"
 }

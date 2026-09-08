@@ -1,4 +1,11 @@
 import "dotenv/config";
+import { assertDiskSpace } from "../server/disk-space";
+import {
+  activateSnapshot,
+  withPublicationLease,
+  type PublicationLease,
+} from "../server/publication";
+import { restoreSourceLocation } from "../lib/boat-location";
 import {
   copyFile,
   mkdir,
@@ -8,14 +15,19 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
-import { dirname, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { allListings } from "../server/repository";
 import { db } from "../server/db";
 import { listingSchema } from "../lib/types";
 import type { CollectionStatus } from "../server/refresh-report";
 
-const publicListingSchema = listingSchema.omit({ rawPayload: true });
+const publicListingSchema = listingSchema.omit({
+  rawPayload: true,
+  locationOverride: true,
+  sourceLocation: true,
+  routeEstimate: true,
+});
 export type SnapshotProvenance = {
   runId: string;
   status: CollectionStatus;
@@ -34,7 +46,11 @@ export function prepareSnapshot(
 ) {
   // Whitelist canonical listing fields; private workspace records and raw captures cannot survive.
   const listings = input
-    .map((value) => publicListingSchema.parse(value))
+    .map((value) =>
+      publicListingSchema.parse(
+        restoreSourceLocation(listingSchema.parse(value)),
+      ),
+    )
     .filter((listing) => !listing.isSample);
   if (!listings.length && !options.allowEmpty)
     throw new Error(
@@ -53,6 +69,15 @@ export function prepareSnapshot(
           "Snapshot validation failed: listing URL contains credentials",
         );
     }
+    if (listing.fieldProvenance)
+      listing.fieldProvenance = Object.fromEntries(
+        Object.entries(listing.fieldProvenance).map(([field, observations]) => [
+          field,
+          observations
+            .filter((o) => o.method !== "review")
+            .map(({ evidence, ...observation }) => observation),
+        ]),
+      );
     listing.specs = Object.fromEntries(
       Object.entries(listing.specs).filter(
         ([key]) =>
@@ -87,6 +112,7 @@ export function prepareSnapshot(
 export async function exportSnapshot(
   options: {
     target?: string;
+    publicDirectory?: string;
     allowEmpty?: boolean;
     provenance?: SnapshotProvenance;
     loadListings?: () => Promise<unknown[]>;
@@ -96,53 +122,103 @@ export async function exportSnapshot(
     signal?: AbortSignal;
   } = {},
 ) {
-  const target = resolve(options.target ?? "public/snapshot.json");
+  const publicDirectory = resolve(options.publicDirectory || "public");
+  const target = resolve(
+    options.target ?? join(publicDirectory, "snapshot.json"),
+  );
   const snapshot = prepareSnapshot(
     await (options.loadListings ?? (() => allListings(false)))(),
     options,
   );
+  for (const listing of snapshot.listings)
+    for (const value of [
+      listing.sourceUrl,
+      ...listing.photos.filter((url) => /^https?:/.test(url)),
+      ...Object.values(listing.fieldProvenance || {})
+        .flat()
+        .map((entry) => entry.sourceUrl),
+    ]) {
+      const url = new URL(value);
+      if (
+        url.username ||
+        url.password ||
+        [...url.searchParams.keys()].some((key) =>
+          /^(?:token|api_?key|password|access_token|authorization)$/i.test(key),
+        )
+      )
+        throw new Error(
+          "Snapshot validation failed: public URL contains credentials or a possible secret parameter",
+        );
+    }
+  const body = JSON.stringify(snapshot, null, 2) + "\n";
+  await assertDiskSpace(target, { requiredBytes: Buffer.byteLength(body) * 3 });
   await mkdir(dirname(target), { recursive: true });
   const temporary = `${target}.${randomUUID()}.tmp`;
   let backup: string | null = null;
   try {
-    await writeFile(temporary, JSON.stringify(snapshot, null, 2) + "\n");
+    await writeFile(temporary, body);
     const written = JSON.parse(await readFile(temporary, "utf8"));
     prepareSnapshot(written.listings, { allowEmpty: options.allowEmpty });
-    if (options.backupDirectory) {
-      await mkdir(options.backupDirectory, { recursive: true });
-      const backupTarget = resolve(
-        options.backupDirectory,
-        `snapshot-${Date.now()}-${randomUUID()}.json`,
-      );
-      try {
-        await copyFile(target, backupTarget);
-        backup = backupTarget;
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    const commit = async (publicationLease?: PublicationLease) => {
+      if (options.backupDirectory) {
+        await mkdir(options.backupDirectory, { recursive: true });
+        const backupTarget = resolve(
+          options.backupDirectory,
+          `snapshot-${Date.now()}-${randomUUID()}.json`,
+        );
+        try {
+          await copyFile(target, backupTarget);
+          backup = backupTarget;
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+        }
       }
-    }
-    options.signal?.throwIfAborted();
-    await options.beforeCommit?.();
-    if (
-      options.updateMode !== false &&
-      target === resolve("public/snapshot.json")
-    ) {
-      const mode = resolve("public/data-mode.json");
-      const modeTemporary = `${mode}.${randomUUID()}.tmp`;
-      await writeFile(modeTemporary, JSON.stringify({ snapshot: true }) + "\n");
-      await rename(modeTemporary, mode);
-    }
-    options.signal?.throwIfAborted();
-    await rename(temporary, target);
-    return {
-      target,
-      listings: snapshot.listings.length,
-      generatedAt: snapshot.generatedAt,
-      observationRange: snapshot.observationRange,
-      backup,
+      options.signal?.throwIfAborted();
+      await options.beforeCommit?.();
+      options.signal?.throwIfAborted();
+      const activation = publicationLease
+        ? await activateSnapshot(body, {
+            publicDirectory,
+            runId: options.provenance?.runId,
+            listings: snapshot.listings.length,
+            beforeCommit: options.beforeCommit,
+            signal: options.signal,
+            publicationLease,
+          })
+        : null;
+      const warnings: string[] = activation?.auditError
+        ? [activation.auditError]
+        : [];
+      try {
+        await publicationLease?.checkpoint();
+        if (!activation) {
+          options.signal?.throwIfAborted();
+          await options.beforeCommit?.();
+          options.signal?.throwIfAborted();
+        }
+        await rename(temporary, target);
+      } catch (error) {
+        if (!activation) throw error;
+        warnings.push(
+          `Snapshot generation committed, but legacy snapshot alias could not be updated: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
+      return {
+        target,
+        listings: snapshot.listings.length,
+        generatedAt: snapshot.generatedAt,
+        observationRange: snapshot.observationRange,
+        backup,
+        ...(activation ? { activation } : {}),
+        ...(warnings.length ? { warnings } : {}),
+      };
     };
+    return options.updateMode !== false &&
+      target === join(publicDirectory, "snapshot.json")
+      ? await withPublicationLease(commit, { signal: options.signal })
+      : await commit();
   } finally {
-    await rm(temporary, { force: true });
+    await rm(temporary, { force: true }).catch(() => {});
   }
 }
 

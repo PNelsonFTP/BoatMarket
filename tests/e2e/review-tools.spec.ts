@@ -15,6 +15,18 @@ test("source health queues a refresh and location review saves explicit coordina
     const path = new URL(r.request().url()).pathname;
     let json: unknown = {};
     if (path === "/api/login") json = { token: "test-only" };
+    else if (path === "/api/admin/alerts")
+      json = {
+        destinations: { emailConfigured: false, webhookConfigured: false },
+        maximumAttempts: 5,
+        semantics: "At least once",
+        alerts: [],
+      };
+    else if (path === "/api/admin/operations")
+      json = { locks: [], worker: null, jobs: [] };
+    else if (path === "/api/admin/routing")
+      json = { configured: false, base: "", provider: "OSRM", cacheDays: 7 };
+    else if (path === "/api/admin/locations/listings") json = { listings: [] };
     else if (path === "/api/listings") json = { listings: [boat] };
     else if (path === "/api/workspace")
       json = { workspace: seedWorkspace(), revision: 0 };
@@ -109,8 +121,16 @@ test("source health queues a refresh and location review saves explicit coordina
   await page
     .getByRole("button", { name: "Allendale, MI · 1 ads · 1 unlocated" })
     .click();
-  await page.locator("form").filter({ hasText: "Correct Allendale" }).getByLabel("Latitude", { exact: true }).fill("42.97");
-  await page.locator("form").filter({ hasText: "Correct Allendale" }).getByLabel("Longitude", { exact: true }).fill("-85.95");
+  await page
+    .locator("form")
+    .filter({ hasText: "Correct Allendale" })
+    .getByLabel("Latitude", { exact: true })
+    .fill("42.97");
+  await page
+    .locator("form")
+    .filter({ hasText: "Correct Allendale" })
+    .getByLabel("Longitude", { exact: true })
+    .fill("-85.95");
   await page
     .getByLabel("Evidence for this correction")
     .fill("Checked city on map");

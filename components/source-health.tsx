@@ -108,11 +108,24 @@ export function SourceHealth({
               {e}
             </p>
           ))}
-          {health.alertEvaluation?.status === "failed" && (
-            <p className="notice error">
-              {health.alertEvaluation.error} Run {health.alertEvaluation.runId}.
+          {health.refresh?.snapshot?.warnings?.map((warning, index) => (
+            <p
+              key={`snapshot-warning-${index}`}
+              className="notice error"
+              role="alert"
+            >
+              Snapshot follow-up: {warning}
             </p>
-          )}
+          ))}
+          {health.alertEvaluation &&
+            ["failed", "partial", "cancelled"].includes(
+              health.alertEvaluation.status,
+            ) && (
+              <p className="notice error">
+                {health.alertEvaluation.error} Run{" "}
+                {health.alertEvaluation.runId}.
+              </p>
+            )}
           <div className="table-scroll">
             <table className="data-table source-health-table">
               <thead>
@@ -148,6 +161,21 @@ export function SourceHealth({
                       {s.metrics
                         ? `${s.metrics.detailPagesSucceeded}/${s.metrics.detailPagesEligible}${s.metrics.detailPagesSkippedLimit ? ` · ${s.metrics.detailPagesSkippedLimit} capped` : ""}`
                         : "—"}
+                      {s.metrics?.detailPolicy && (
+                        <small>
+                          {s.metrics.detailPolicy} ·{" "}
+                          {s.metrics.detailPagesDeferred || 0} planned later ·{" "}
+                          {s.metrics.detailPagesBackoff || 0} retry backoff
+                        </small>
+                      )}
+                      {s.metrics?.quality && (
+                        <small>
+                          Quality: {s.metrics.quality.status}
+                          {s.metrics.quality.issues.length
+                            ? ` · ${s.metrics.quality.issues.join("; ")}`
+                            : ""}
+                        </small>
+                      )}
                     </td>
                     <td>
                       {s.metrics

@@ -69,7 +69,13 @@
       "Axis"
     ],
     "detailMaxLength": 21,
-    "maxDetailPages": 150
+    "maxDetailPages": 150,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "facebook",
@@ -132,12 +138,16 @@
     "name": "Bedford Sales & Outdoors",
     "adapter": "dealer",
     "enabled": true,
-    "urls": [
-      "https://www.bedford-sales.com/inventory/"
-    ],
+    "urls": ["https://www.bedford-sales.com/inventory/"],
     "area": "Morris, IL",
     "followDetails": true,
-    "maxDetailPages": 80
+    "maxDetailPages": 80,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "onlyinboards",
@@ -145,28 +155,32 @@
     "adapter": "dealer",
     "enabled": true,
     "urls": [
-      "https://onlyinboards.com/locationwise?state=Illinois&toLength=20.99&pageSize=48&page=1",
-      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=20.99&pageSize=48&page=1",
-      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=20.99&pageSize=48&page=2",
-      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=20.99&pageSize=48&page=3",
-      "https://onlyinboards.com/locationwise?state=Indiana&toLength=20.99&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Illinois&toLength=21.0&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=21.0&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=21.0&pageSize=48&page=2",
+      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=21.0&pageSize=48&page=3",
+      "https://onlyinboards.com/locationwise?state=Indiana&toLength=21.0&pageSize=48&page=1",
       "https://onlyinboards.com/locationwise?state=Iowa&pageSize=48&page=1",
-      "https://onlyinboards.com/locationwise?state=Michigan&toLength=20.99&pageSize=48&page=1"
+      "https://onlyinboards.com/locationwise?state=Michigan&toLength=21.0&pageSize=48&page=1"
     ],
-    "area": "IL, WI, IN, IA, MI; every result page; detail enrichment under 21 ft",
+    "area": "IL, WI, IN, IA, MI; every result page; detail enrichment through 21 ft",
     "followDetails": true,
     "detailMaxLength": 21,
     "maxDetailPages": 100,
-    "autoPaginate": true
+    "autoPaginate": true,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "skipperbuds",
     "name": "SkipperBud’s",
     "adapter": "dealer",
     "enabled": false,
-    "urls": [
-      "https://www.skipperbuds.com/boats-for-sale/brands/MasterCraft"
-    ],
+    "urls": ["https://www.skipperbuds.com/boats-for-sale/brands/MasterCraft"],
     "area": "Regional MasterCraft inventory — access test"
   },
   {
@@ -174,9 +188,7 @@
     "name": "Water Werks",
     "adapter": "dealer",
     "enabled": false,
-    "urls": [
-      "https://www.waterwerks.com/"
-    ],
+    "urls": ["https://www.waterwerks.com/"],
     "area": "Country Club Hills, IL — access test"
   },
   {
@@ -184,9 +196,7 @@
     "name": "Hennepin Marine",
     "adapter": "dealer",
     "enabled": false,
-    "urls": [
-      "https://www.hennepinmarine.com/"
-    ],
+    "urls": ["https://www.hennepinmarine.com/"],
     "area": "Hennepin, IL — access test"
   },
   {
@@ -210,26 +220,43 @@
     ],
     "area": "Lanark, IL — all inventory pages",
     "followDetails": true,
-    "maxDetailPages": 80
+    "maxDetailPages": 80,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "hubers",
     "name": "Huber’s Marine",
     "adapter": "dealer",
-    "enabled": false,
+    "enabled": true,
     "urls": [
       "https://www.hubersmarine.com/search/inventory/availability/In%20Stock"
     ],
-    "area": "La Porte, IN — access test"
+    "area": "La Porte IN; all current public inventory pages, rotating detail enrichment",
+    "autoPaginate": true,
+    "maxInventoryPages": 5,
+    "followDetails": true,
+    "detailPolicy": "rotating",
+    "maxDetailPages": 40,
+    "quality": {
+      "minRecords": 1,
+      "minPriceCoverage": 0.5,
+      "minLocationCoverage": 0.95,
+      "minIdentityCoverage": 0.95,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "foxlake",
     "name": "Fox Lake Harbor",
     "adapter": "dealer",
     "enabled": true,
-    "urls": [
-      "https://www.foxlakeharbor.com/--inventory?category=boat"
-    ],
+    "urls": ["https://www.foxlakeharbor.com/--inventory?category=boat"],
     "area": "Fox Lake, IL",
     "autoPaginate": true,
     "followDetails": true,
@@ -259,16 +286,20 @@
       "Axis"
     ],
     "detailMaxLength": 21,
-    "maxDetailPages": 100
+    "maxDetailPages": 100,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "lakecounty",
     "name": "Lake County Watersports",
     "adapter": "dealer",
     "enabled": true,
-    "urls": [
-      "https://www.lakecountywatersports.com/--inventory"
-    ],
+    "urls": ["https://www.lakecountywatersports.com/--inventory"],
     "area": "Wauconda, IL",
     "autoPaginate": true,
     "followDetails": true,
@@ -298,16 +329,20 @@
       "Axis"
     ],
     "detailMaxLength": 21,
-    "maxDetailPages": 100
+    "maxDetailPages": 100,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "teds",
     "name": "Ted’s Boatarama",
     "adapter": "dealer",
     "enabled": true,
-    "urls": [
-      "https://www.tedsboatarama.com/--inventory"
-    ],
+    "urls": ["https://www.tedsboatarama.com/--inventory"],
     "area": "Rock Island, IL",
     "autoPaginate": true,
     "followDetails": true,
@@ -337,18 +372,28 @@
       "Axis"
     ],
     "detailMaxLength": 21,
-    "maxDetailPages": 100
+    "maxDetailPages": 100,
+    "detailPolicy": "rotating",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "gordys",
     "name": "Gordy’s Marine",
     "adapter": "dealer",
     "enabled": true,
-    "urls": [
-      "https://www.gordysboats.com/wisconsin-all-boat-inventory/"
-    ],
+    "urls": ["https://www.gordysboats.com/wisconsin-all-boat-inventory/"],
     "area": "Fox Lake IL, Fontana and Lake Country WI",
-    "autoPaginate": true
+    "autoPaginate": true,
+    "detailPolicy": "summary-only",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "bassboatcentral",
@@ -369,16 +414,20 @@
     ],
     "area": "Owner/dealer classifieds: IL, WI, IN, IA, MI",
     "autoPaginate": true,
-    "maxInventoryPages": 70
+    "maxInventoryPages": 70,
+    "detailPolicy": "summary-only",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   },
   {
     "id": "munson",
     "name": "Munson Ski & Marine",
     "adapter": "dealer",
     "enabled": false,
-    "urls": [
-      "https://www.munsonski.com/--inventory"
-    ],
+    "urls": ["https://www.munsonski.com/--inventory"],
     "area": "Round Lake IL; robots HTTP 403"
   },
   {
@@ -386,9 +435,7 @@
     "name": "Lake Holiday Marina",
     "adapter": "dealer",
     "enabled": false,
-    "urls": [
-      "https://www.lakeholidaymarina.com/"
-    ],
+    "urls": ["https://www.lakeholidaymarina.com/"],
     "area": "Somonauk IL; robots HTTP 403"
   },
   {
@@ -396,11 +443,76 @@
     "name": "Starved Rock Marina",
     "adapter": "dealer",
     "enabled": true,
-    "urls": [
-      "https://www.starvedrockmarina.com/category/used-boat-sales/"
-    ],
+    "urls": ["https://www.starvedrockmarina.com/category/used-boat-sales/"],
     "area": "Ottawa, IL; all public used-boat inventory pages",
     "autoPaginate": true,
-    "followDetails": false
+    "followDetails": false,
+    "detailPolicy": "summary-only",
+    "quality": {
+      "minRecords": 1,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
+  },
+  {
+    "id": "quest",
+    "name": "Quest Watersports",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.questwatersports.com/isapi_xml.php?module=inventory&pageID=6587&main=&limit=24&orderby=make,model%20&offset=0"
+    ],
+    "area": "Ottawa IL; public inventory response used by dealer page, excludes lift/PWC",
+    "autoPaginate": true,
+    "maxInventoryPages": 5,
+    "followDetails": false,
+    "detailPolicy": "summary-only",
+    "quality": {
+      "minRecords": 1,
+      "minPriceCoverage": 0.5,
+      "minLocationCoverage": 0.95,
+      "minIdentityCoverage": 0.95,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
+  },
+  {
+    "id": "boatworks",
+    "name": "Boat Works",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": ["https://4boatworks.net/inventory/"],
+    "area": "Keyesport IL; optional wider-region profile outside core 150 miles",
+    "autoPaginate": true,
+    "maxInventoryPages": 5,
+    "followDetails": false,
+    "detailPolicy": "summary-only",
+    "quality": {
+      "minRecords": 1,
+      "minPriceCoverage": 0.5,
+      "minLocationCoverage": 0.95,
+      "minIdentityCoverage": 0.8,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
+  },
+  {
+    "id": "boatcenter",
+    "name": "The Boat Center",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": ["https://theboatcenter.com/inventory/"],
+    "area": "Chippewa Falls WI / Ramsey MN; optional wider-region profile",
+    "autoPaginate": true,
+    "maxInventoryPages": 20,
+    "followDetails": false,
+    "detailPolicy": "summary-only",
+    "quality": {
+      "minRecords": 1,
+      "minLocationCoverage": 0.95,
+      "minIdentityCoverage": 0.95,
+      "maxRecordDropFraction": 0.5,
+      "maxFieldCoverageDrop": 0.5
+    }
   }
 ]

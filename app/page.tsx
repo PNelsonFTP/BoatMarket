@@ -32,7 +32,7 @@ import {
   type BoatResult,
   type Filters,
 } from "@/lib/types";
-import { isActive, searchListings } from "@/lib/search";
+import { isActive, matches, searchListings } from "@/lib/search";
 import { FIELD_MAP } from "@/lib/catalog";
 import { useBoatStore } from "@/lib/client";
 import { money } from "@/lib/utils";
@@ -225,6 +225,14 @@ export default function Page() {
         : filtered,
     [filtered, tab, favoriteOnly, store.workspace.favorites],
   );
+  const matchingAdCount = useMemo(() => {
+    const visibleIds = new Set(
+      results.flatMap((boat) => boat.sourceLinks.map((link) => link.id)),
+    );
+    return store.listings.filter(
+      (listing) => visibleIds.has(listing.id) && matches(listing, filters),
+    ).length;
+  }, [results, store.listings, filters]);
   const allBoats = useMemo(
     () => searchListings(store.listings, { ...DEFAULT_FILTERS, criteria: {} }),
     [store.listings],
@@ -244,7 +252,8 @@ export default function Page() {
   const countFilters =
     Object.values(filters.criteria).filter(isActive).length +
     filters.areas.length +
-    (filters.ruleSet ? 1 : 0);
+    (filters.ruleSet ? 1 : 0) +
+    (filters.driving ? 1 : 0);
   const showSearch = ["discover", "shortlist", "market"].includes(tab);
   function navigate(next: Tab) {
     setTab(next);
@@ -448,13 +457,13 @@ export default function Page() {
               ))}
             </div>
             <p>
-              The Lake Holiday shortlist screens for boats under 21 ft; molded
+              The Lake Holiday shortlist screens for boats up to 21 ft; molded
               platforms count. Broader views include unscreened boats. Published
               rules prohibit wakesurfing and use of wake-enhancing devices.
               Confirm current rules, hull measurement and rated motor capacity
               with the association before buying.{" "}
               <a href={LAKE_RULES_URL} target="_blank" rel="noreferrer">
-                2024 rulebook ↗
+                December 2025 rulebook ↗
               </a>
             </p>
             <SourceCoverage listings={store.listings} onSelect={setFilters} />
@@ -739,7 +748,7 @@ export default function Page() {
                 </div>
               ) : null}
               {tab === "market" ? (
-                <Market boats={results} />
+                <Market boats={results} matchingAdCount={matchingAdCount} />
               ) : view === "map" ? (
                 <BoatMap
                   key={draw ? "draw" : "map"}
@@ -875,6 +884,7 @@ export default function Page() {
         </div>
       )}
       <ListingDetail
+        connection={store.connection}
         boat={detail}
         onClose={() => setDetail(null)}
         workspace={store.workspace}

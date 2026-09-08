@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08T16:34:20.176Z",
+  "sha256": "2e78f851965667553846b6aee57279cd7be9c58c8dc7bf952ea7ad5656efa709",
+  "provenance": {
+    "url": "https://www.hubersmarine.com/inventory/2026-lund-1775-impact-xs-sport-la-porte-in-46350-13617661i",
+    "observedAt": "2026-09-08T16:30:36.941Z",
+    "originalSha256": "558e2562c52398a108c6ff0909287d635fd2ca1abd4c35bf9c3d751e6fb8ed37",
+    "selection": "title/pricing, overview facts, source description only",
+    "formatNormalization": "Leading indentation tabs expanded to spaces; trailing whitespace normalized for the reviewed repository fixture. originalSha256 still identifies the untouched source capture."
+  },
+  "redacted": true,
+  "reviewRequired": true
+}

@@ -7,20 +7,28 @@ import {
   type SavedSearch,
   type Listing,
 } from "./types";
+import { CURRENT_LAKE_RULES_URL, lakeVerification } from "./lake-verification";
 export const LAKE_HOLIDAY = {
   name: "Home · Lake Holiday, IL",
   lat: 41.6180404,
   lng: -88.6682705,
 };
-export const LAKE_RULES_URL =
-  "https://swansonrealestate.net/wp-content/uploads/2025/06/Rules-Regs-2024-Lake-Holiday.pdf";
+export const LAKE_RULES_URL = CURRENT_LAKE_RULES_URL;
 export const LAKE_HOLIDAY_RULE: RuleSet = {
   id: "lake-holiday-il-length",
-  name: "Lake Holiday IL · under 21 ft (screening)",
+  name: "Lake Holiday IL · up to 21 ft (screening)",
   maxLength: 21,
-  maxLengthExclusive: true,
+  maxLengthExclusive: false,
   excludeUnknown: true,
 };
+LAKE_HOLIDAY_RULE.verification = lakeVerification(LAKE_HOLIDAY_RULE);
+const reviewRule: RuleSet = {
+  ...LAKE_HOLIDAY_RULE,
+  id: "holiday-length-review",
+  name: "Up to 21 ft or length unreported · verify",
+  excludeUnknown: false,
+};
+reviewRule.verification = lakeVerification(reviewRule);
 export const FISHING_MAKES = [
   "Lund",
   "Ranger",
@@ -106,7 +114,7 @@ export const LAKE_SEARCHES: SavedSearch[] = [
   },
   {
     id: "holiday-ski",
-    name: "MasterCraft & peers · under 21 ft",
+    name: "MasterCraft & peers · up to 21 ft",
     filters: {
       ...LAKE_HOLIDAY_FILTERS,
       criteria: {
@@ -142,12 +150,7 @@ export const LAKE_SEARCHES: SavedSearch[] = [
     name: "Include unknown lengths · verify first",
     filters: {
       ...LAKE_HOLIDAY_FILTERS,
-      ruleSet: {
-        ...LAKE_HOLIDAY_RULE,
-        id: "holiday-length-review",
-        name: "Under 21 ft or length unreported · verify",
-        excludeUnknown: false,
-      },
+      ruleSet: reviewRule,
     },
     cadence: "off",
     channels: ["in-app"],
@@ -184,6 +187,6 @@ export function lakeHolidayWorkspace(): Workspace {
 }
 export function lakeLengthStatus(boat: Listing) {
   if (boat.length == null) return "Length unknown · verify with seller";
-  if (boat.length >= 21) return "Outside the under-21-ft screen";
-  return "Under 21 ft as listed · confirm measurement";
+  if (boat.length > 21) return "Outside the up-to-21-ft hulled-boat screen";
+  return "Up to 21 ft as listed · confirm manufacturer specification and molded platform";
 }

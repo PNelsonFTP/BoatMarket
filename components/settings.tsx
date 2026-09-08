@@ -30,9 +30,14 @@ import {
 import { asset } from "@/lib/utils";
 import { DuplicateReview } from "./duplicate-review";
 import { LocationReview } from "./location-review";
+import { SourceMaintenance } from "./source-maintenance";
+import { OperationStatus } from "./operation-status";
+import { AlertOperations } from "./alert-operations";
 import { SourceHealth } from "./source-health";
 import { WorkspaceTransfer } from "./workspace-transfer";
 import { type ImportChunkResult } from "@/lib/import-listings";
+import { LakeRuleVerification } from "./lake-rule-verification";
+import { RoutingReview } from "./routing";
 type AdminData = {
   sources: {
     id: string;
@@ -366,6 +371,7 @@ export function Settings({
           ))}
         </section>
       </div>
+      <LakeRuleVerification workspace={workspace} onChange={onChange} />
       <section className="settings-card">
         <div className="section-heading">
           <h2>
@@ -657,11 +663,22 @@ export function Settings({
         )}
       </section>
       <SourceHealth connection={connection} />
+      <AlertOperations connection={connection} />
+      <OperationStatus connection={connection} />
+      <SourceMaintenance connection={connection} onRefresh={onRefresh} />
       {connection && (
         <DuplicateReview connection={connection} onRefresh={onRefresh} />
       )}
       {connection && (
         <LocationReview connection={connection} onRefresh={onRefresh} />
+      )}
+      {connection && (
+        <RoutingReview
+          connection={connection}
+          listings={listings}
+          workspace={workspace}
+          onRefresh={onRefresh}
+        />
       )}
       <footer className="settings-footer">
         BoatScout · Personal boat search workspace ·{" "}

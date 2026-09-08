@@ -29,7 +29,14 @@ vi.mock("../server/db", () => {
       updateMany: mocks.renew,
       findFirst: vi.fn(async () => ({ owner: "owner" })),
     },
-    listing: { findUnique: mocks.findListing, updateMany: mocks.stale },
+    listing: {
+      findUnique: mocks.findListing,
+      findMany: async () => {
+        const old = await mocks.findListing();
+        return old ? [{ sourceListingId: "one", ...old }] : [];
+      },
+      updateMany: mocks.stale,
+    },
     ingestRun: {
       updateMany: mocks.reconcile,
       create: mocks.createRun,
@@ -100,6 +107,8 @@ beforeEach(async () => {
   await mkdir(join(directory, "cache"));
   vi.stubEnv("COLLECTION_CACHE_DIR", join(directory, "cache"));
   vi.stubEnv("REFRESH_REPORT_DIR", join(directory, "reports"));
+  vi.stubEnv("EVIDENCE_ARCHIVE_DIR", join(directory, "evidence"));
+  vi.stubEnv("ENRICHMENT_STATE_DIR", join(directory, "enrichment"));
   mocks.acquire.mockResolvedValue("owner");
   mocks.release.mockResolvedValue(undefined);
   mocks.renew.mockResolvedValue({ count: 1 });
@@ -223,7 +232,7 @@ describe("collection outcome and detail provenance", () => {
       detailPagesSkippedLimit: 1,
     });
     expect(result.runs[0].errors).toContain(
-      "Detail page limit reached; 1 eligible ads were not enriched.",
+      "Detail page limit reached or retry deferred; 1 eligible ads were not enriched.",
     );
   });
   it("retains reported zero horsepower and does not retain stale asking prices", () => {
@@ -338,4 +347,95 @@ it("never replaces fresh summary prices or sold status with older cached details
     mergeDetailObservation(summary, { ...detail, price: null }, older, newer)
       .price,
   ).toBe(25000);
+});
+
+it("rotates a bounded detail budget across runs and distinguishes planned deferral from partial failure", async () => {
+  const secondUrl = "https://dealer.example/boat/two";
+  const first = boat(),
+    second = boat({ id: "two", sourceListingId: "two", sourceUrl: secondUrl });
+  await cache(inventoryUrl, "inventory");
+  await cache(detailUrl, "detail-one");
+  await cache(secondUrl, "detail-two");
+  mocks.parse.mockImplementation((html) =>
+    html === "inventory"
+      ? [first, second]
+      : html === "detail-one"
+        ? [first]
+        : [second],
+  );
+  const config = {
+    ...source,
+    maxDetailPages: 1,
+    detailPolicy: "rotating" as const,
+  };
+  const a = await collect([config]);
+  expect(a.status).toBe("success");
+  expect(a.metrics[0]).toMatchObject({
+    detailPagesAttempted: 1,
+    detailPagesDeferred: 1,
+    detailPagesSkippedLimit: 0,
+  });
+  const detailBefore = mocks.parse.mock.calls
+    .filter((call) => call[0] !== "inventory")
+    .map((call) => call[0]);
+  expect(detailBefore).toEqual(["detail-one"]);
+  const b = await collect([config]);
+  expect(b.status).toBe("success");
+  expect(
+    mocks.parse.mock.calls
+      .filter((call) => call[0] !== "inventory")
+      .map((call) => call[0]),
+  ).toEqual(["detail-one", "detail-two"]);
+});
+it("summary-only policy avoids detail requests and source quality gates reject all staged bad rows", async () => {
+  await cache(inventoryUrl, "summary");
+  mocks.parse.mockReturnValue([boat()]);
+  const result = await collect([
+    { ...source, detailPolicy: "summary-only", quality: { minRecords: 2 } },
+  ]);
+  expect(result.status).toBe("partial");
+  expect(result.metrics[0]).toMatchObject({
+    detailPagesAttempted: 0,
+    detailPagesDeferred: 1,
+    quality: { status: "failed" },
+  });
+  expect(mocks.upsert).not.toHaveBeenCalled();
+});
+it("honors an operator cancellation marker before any source request", async () => {
+  await mkdir(join(directory, "reports"), { recursive: true });
+  await writeFile(
+    join(directory, "reports", "cancel-test-cancel.json"),
+    JSON.stringify({ runId: "test-cancel" }),
+  );
+  const result = await collect([source], { runId: "test-cancel" });
+  expect(result.status).toBe("cancelled");
+  expect(mocks.parse).not.toHaveBeenCalled();
+});
+
+it("enriches exactly the configured maximum length and excludes boats above it", async () => {
+  await cache(inventoryUrl, "summary");
+  await cache(detailUrl, "detail");
+  mocks.parse.mockImplementation((html) =>
+    html === "summary"
+      ? [
+          boat({ length: 21 }),
+          boat({
+            id: "over",
+            sourceListingId: "over",
+            sourceUrl: "https://dealer.example/boat/over",
+            length: 21.1,
+          }),
+        ]
+      : [boat({ length: 21, horsepower: 350 })],
+  );
+  const result = await collect([{ ...source, detailMaxLength: 21 }]);
+  expect(result.status).toBe("success");
+  expect(result.metrics[0]).toMatchObject({
+    detailPagesEligible: 1,
+    detailPagesSucceeded: 1,
+  });
+  expect(
+    mocks.upsert.mock.calls.find(([listing]) => listing.id === "one")?.[0]
+      .horsepower,
+  ).toBe(350);
 });

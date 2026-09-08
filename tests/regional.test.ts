@@ -31,10 +31,11 @@ const boat = listingSchema.parse({
   lastSeenAt: new Date().toISOString(),
 });
 describe("real-source parsing and Lake Holiday screening", () => {
-  it("rejects the exact 21-foot boundary and unknown length in the strict lake screen", () => {
+  it("includes exactly 21 feet under the official December 2025 rule and excludes larger or unknown length", () => {
     const f = filtersSchema.parse({ ruleSet: LAKE_HOLIDAY_RULE });
     expect(matches({ ...boat, length: 20.999 }, f)).toBe(true);
-    expect(matches({ ...boat, length: 21 }, f)).toBe(false);
+    expect(matches({ ...boat, length: 21 }, f)).toBe(true);
+    expect(matches({ ...boat, length: 21.001 }, f)).toBe(false);
     expect(matches({ ...boat, length: null }, f)).toBe(false);
   });
   it("prioritizes nearby boats, excludes small fishing engines, and allows unreported ski horsepower", () => {

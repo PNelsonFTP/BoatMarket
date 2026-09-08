@@ -20,8 +20,9 @@ import {
   upsertListing,
 } from "./repository";
 import { collect, readSources, writeSources } from "./collector";
-import { evaluateAlerts } from "./alerts";
-import { requestPublic } from "./network";
+import { evaluateAlerts, registerAlertRoutes } from "./alerts";
+import { geocode } from "./geocoder";
+import { registerRoutingRoutes } from "./routing";
 import {
   filtersSchema,
   listingSchema,
@@ -33,6 +34,12 @@ import { searchListings } from "../lib/search";
 import { logger } from "./logger";
 import { registerDuplicateRoutes } from "./duplicates";
 import { registerLocationRoutes } from "./location-review";
+import {
+  readOperationStatus,
+  cancelOperation,
+  recoverOperations,
+} from "./operations";
+import { registerSourceToolsRoutes } from "./source-tools";
 import { registerSourceHealthRoutes } from "./source-health";
 import { readWorkerHeartbeat } from "./worker";
 import { runRefresh } from "./refresh";
@@ -149,7 +156,27 @@ export function buildApp(
   });
   registerDuplicateRoutes(app);
   registerLocationRoutes(app);
+  registerRoutingRoutes(app);
   registerSourceHealthRoutes(app);
+  registerAlertRoutes(app);
+  registerSourceToolsRoutes(app);
+  app.get("/api/admin/operations", async () => readOperationStatus());
+  app.post("/api/admin/operations/cancel", async (req) => {
+    const { runId } = z
+      .object({
+        runId: z
+          .string()
+          .regex(/^[a-zA-Z0-9-]{1,120}$/)
+          .optional(),
+      })
+      .parse(req.body);
+    return cancelOperation(runId);
+  });
+  app.post("/api/admin/operations/recover", async (req) =>
+    recoverOperations(
+      z.object({ apply: z.boolean().default(false) }).parse(req.body),
+    ),
+  );
   app.post(
     "/api/login",
     { config: { rateLimit: { max: 5, timeWindow: "1 minute" } } },
@@ -379,7 +406,21 @@ export function buildApp(
               error: null as string | null,
             };
             try {
-              await evaluateAlerts();
+              const result = await evaluateAlerts({
+                signal: controller.signal,
+              });
+              if (result) {
+                outcome.status = result.status;
+                outcome.error = result.errors.length
+                  ? result.errors.join("; ")
+                  : null;
+                Object.assign(outcome, {
+                  searchesChecked: result.searchesChecked,
+                  alertsCreated: result.alertsCreated,
+                  delivered: result.delivered,
+                  failed: result.failed,
+                });
+              }
             } catch (err) {
               logger.error(
                 { err, runId },
@@ -454,51 +495,23 @@ export function buildApp(
     await db.geocodeCache.deleteMany();
     return { ok: true };
   });
-  let lastGeocode = 0;
-  let geocoding = false;
   app.get("/api/geocode", async (req, reply) => {
     const { q } = z.object({ q: z.string().min(2).max(200) }).parse(req.query);
-    const key = q.trim().toLowerCase();
-    const cached = await db.geocodeCache.findUnique({ where: { query: key } });
-    if (cached) return { results: cached.results, cached: true };
-    if (geocoding || Date.now() - lastGeocode < 1100)
+    const result = await geocode(q);
+    if (result.status === "unconfigured")
+      return reply.code(503).send({ ...result, error: result.reason });
+    if (result.status === "failed")
       return reply
         .code(429)
-        .send({ error: "Please wait a moment between location searches" });
-    geocoding = true;
-    lastGeocode = Date.now();
-    try {
-      const r = await requestPublic(
-        `https://nominatim.openstreetmap.org/search?format=jsonv2&countrycodes=us&limit=5&q=${encodeURIComponent(q)}`,
-        { headers: { accept: "application/json" } },
-      );
-      if (r.status !== 200)
-        return reply
-          .code(502)
-          .send({ error: `Geocoder returned HTTP ${r.status}` });
-      const raw = z
-        .array(
-          z.object({
-            display_name: z.string(),
-            lat: z.string(),
-            lon: z.string(),
-          }),
+        .header(
+          "retry-after",
+          Math.max(
+            1,
+            Math.ceil((Date.parse(result.retryAt) - Date.now()) / 1000),
+          ),
         )
-        .parse(JSON.parse(r.body));
-      const results = raw.map((x) => ({
-        name: x.display_name,
-        lat: Number(x.lat),
-        lng: Number(x.lon),
-      }));
-      await db.geocodeCache.upsert({
-        where: { query: key },
-        create: { query: key, results },
-        update: { results },
-      });
-      return { results, cached: false };
-    } finally {
-      geocoding = false;
-    }
+        .send(result);
+    return { ...result, results: result.results || [] };
   });
   if (options.serveStatic !== false && existsSync(resolve("out/index.html"))) {
     app.register(fastifyStatic, { root: resolve("out"), prefix: "/" });

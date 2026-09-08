@@ -1,4 +1,18 @@
 import { readFile, writeFile, mkdir, stat, rename } from "node:fs/promises";
+import { join } from "node:path";
+import { assertDiskSpace } from "./disk-space";
+import { archiveEvidence, archiveExistingCache } from "./evidence";
+import { recordFieldProvenance } from "../lib/provenance";
+import { restoreSourceLocation } from "../lib/boat-location";
+import { inspectSourceQuality } from "../lib/source-quality";
+import {
+  readEnrichmentState,
+  saveEnrichmentState,
+  selectDetailWork,
+  recordDetailAttempt,
+} from "./enrichment-state";
+import { watchJobCancellation } from "./job-control";
+import { reconcileAbandonedReports } from "./operations";
 import { createHash, randomUUID } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
 import robotsParser from "robots-parser";
@@ -14,6 +28,8 @@ import { listingSchema, type Listing } from "../lib/types";
 import { startCollectorLease, isCollectionAbort } from "./lease";
 import {
   persistCollectionReport,
+  atomicJson,
+  reportDirectory,
   type CollectionReport,
   type SourceMetrics,
 } from "./refresh-report";
@@ -43,8 +59,14 @@ export async function writeSources(input: unknown) {
 const lastRequest = new Map<string, number>();
 const cacheFile = (url: string) =>
   `${process.env.COLLECTION_CACHE_DIR || "data/cache"}/${createHash("sha256").update(url).digest("hex")}.html`;
-async function observedAt(url: string) {
-  return (await stat(cacheFile(url))).mtime.toISOString();
+async function observedAt(url: string, rendered = false) {
+  return (
+    await stat(
+      rendered
+        ? cacheFile(url).replace(/\.html$/, ".rendered.html")
+        : cacheFile(url),
+    )
+  ).mtime.toISOString();
 }
 export function cacheAgeHours(
   value: unknown = process.env.COLLECTION_CACHE_HOURS ?? 24,
@@ -77,6 +99,7 @@ export async function politeFetch(url: string, options: FetchOptions = {}) {
   } catch {
     /* cache miss: verify robots rules before making a new page request */
   }
+  await assertDiskSpace(file);
   const origin = new URL(url).origin;
   const wait = Math.max(
     0,
@@ -123,7 +146,11 @@ export async function politeFetch(url: string, options: FetchOptions = {}) {
     response.body.length < 100000
   )
     throw new Error("Source returned an access challenge; use manual import");
-  await writeFile(file, response.body);
+  await archiveExistingCache(url, file);
+  await archiveEvidence(url, response.body, new Date().toISOString());
+  const temporary = `${file}.${randomUUID()}.tmp`;
+  await writeFile(temporary, response.body);
+  await rename(temporary, file);
   if (options.metrics) options.metrics.fetchedPages++;
   return response.body;
 }
@@ -144,7 +171,7 @@ async function renderAllowed(
   } catch {
     /* first render */
   }
-  const { chromium } = await import("@playwright/test");
+  const { chromium } = await import("playwright");
   const browser = await chromium.launch({ headless: true });
   const abortRender = () => {
     void browser.close().catch(() => {});
@@ -194,7 +221,11 @@ async function renderAllowed(
       .catch(() => {});
     const result = await page.content();
     options.signal?.throwIfAborted();
-    await writeFile(cachedFile, result);
+    await archiveExistingCache(url, cachedFile, "rendered");
+    await archiveEvidence(url, result, new Date().toISOString(), "rendered");
+    const temporary = `${cachedFile}.${randomUUID()}.tmp`;
+    await writeFile(temporary, result);
+    await rename(temporary, cachedFile);
     return result;
   } finally {
     options.signal?.removeEventListener("abort", abortRender);
@@ -325,6 +356,11 @@ export function listingContentFingerprint(listing: Listing) {
     firstSeenAt,
     lastSeenAt,
     groupId,
+    vesselId,
+    fieldProvenance,
+    locationOverride,
+    sourceLocation,
+    routeEstimate,
     priceHistory,
     confidence,
     ...content
@@ -377,8 +413,10 @@ export async function collect(
     report.completedAt = new Date().toISOString();
     return persistCollectionReport(report);
   };
+  const control = watchJobCancellation(report.runId, options.signal);
   const owner = await acquireLock("collector", 3600000);
   if (!owner) {
+    control.stop();
     report.busy = true;
     report.status = "busy";
     report.errors.push(
@@ -386,11 +424,16 @@ export async function collect(
     );
     return finish();
   }
-  const lease = startCollectorLease(owner, { signal: options.signal });
+  const lease = startCollectorLease(owner, { signal: control.signal });
   let currentRun: string | null = null;
   try {
+    await control.check();
     await lease.checkpoint();
-    // Only the new lease owner may reconcile runs left by a crashed predecessor.
+    await reconcileAbandonedReports({
+      key: "collector",
+      owner,
+      excludeRunId: report.runId,
+    });
     const abandoned = await db.ingestRun.updateMany({
       where: { status: "running", completedAt: null },
       data: {
@@ -414,8 +457,9 @@ export async function collect(
         data: { source: config.name, area: config.area },
       });
       currentRun = run.id;
-      const stats = { found: 0, new: 0, updated: 0, removed: 0 };
-      const errors: string[] = [];
+      const stats = { found: 0, new: 0, updated: 0, removed: 0 },
+        errors: string[] = [];
+      const policy = config.detailPolicy ?? "complete";
       const metrics: SourceMetrics = {
         sourceId: config.id,
         source: config.name,
@@ -429,6 +473,9 @@ export async function collect(
         detailPagesSucceeded: 0,
         detailPagesFailed: 0,
         detailPagesSkippedLimit: 0,
+        detailPolicy: policy,
+        detailPagesDeferred: 0,
+        detailPagesBackoff: 0,
         duplicateAdsSkipped: 0,
         contentChanged: 0,
         metadataOnlyUpdated: 0,
@@ -448,17 +495,39 @@ export async function collect(
         cacheMaxAgeHours: metrics.cacheMaxAgeHours,
         metrics,
       };
-      const detailed = new Set<string>();
-      const seenListings = new Set<string>();
       try {
         if (!config.urls.length)
           throw new Error("Add one or more inventory URLs");
+        const oldRows = await db.listing.findMany({
+          where: { source: config.name, isSample: false },
+        });
+        const previousBySourceId = new Map(
+          oldRows.map((row) => [
+            row.sourceListingId,
+            restoreSourceLocation(
+              listingSchema.parse({
+                ...(row.data as object),
+                status: row.status,
+                vesselId: row.vesselId,
+                groupId: row.groupId,
+              }),
+            ),
+          ]),
+        );
         const pages = [...new Set(config.urls)].slice(
           0,
           config.maxInventoryPages,
         );
         if (new Set(config.urls).size > pages.length)
           metrics.inventoryPageLimitReached = true;
+        const summaries: {
+            listing: Listing;
+            url: string;
+            observedAt: string;
+            evidenceHash: string;
+          }[] = [],
+          seen = new Set<string>();
+        // Discover the inventory before choosing detail work, so each run can resume where earlier runs stopped.
         for (const url of pages) {
           try {
             await lease.checkpoint();
@@ -467,7 +536,7 @@ export async function collect(
             if (config.render)
               html = await renderAllowed(url, html, fetchOptions);
             await lease.checkpoint();
-            if (config.autoPaginate) {
+            if (config.autoPaginate)
               for (const next of inventoryPages(html, url)) {
                 if (pages.includes(next)) continue;
                 if (pages.length >= config.maxInventoryPages) {
@@ -477,154 +546,32 @@ export async function collect(
                 pages.push(next);
                 metrics.inventoryPagesDiscovered++;
               }
-            }
             const parsed = adapters[config.adapter].parse(html, url, config);
             if (!parsed.length && !verifiedEmptyRegionalPage(html, url))
               throw new Error(
                 "No listing records parsed. Check source markup or selectors; existing records are preserved.",
               );
             metrics.inventoryPagesSucceeded++;
-            const listings = parsed.filter((listing) => {
-              if (seenListings.has(listing.sourceListingId)) {
+            const at = await observedAt(url, config.render);
+            recordObservation(metrics, at);
+            const evidence = await archiveEvidence(
+              url,
+              html,
+              at,
+              config.render ? "rendered" : "html",
+            );
+            for (const input of parsed) {
+              if (seen.has(input.sourceListingId)) {
                 metrics.duplicateAdsSkipped++;
-                return false;
+                continue;
               }
-              seenListings.add(listing.sourceListingId);
-              return true;
-            });
-            stats.found += listings.length;
-            const summaryObservedAt = await observedAt(url);
-            recordObservation(metrics, summaryObservedAt);
-            await lease.checkpoint();
-            await db.ingestRun.update({
-              where: { id: run.id },
-              data: { ...stats, errors },
-            });
-            for (let listing of listings) {
-              await lease.checkpoint();
-              let detailHtml: string | undefined;
-              let seenAt = summaryObservedAt;
-              listing = {
-                ...listing,
-                specs: {
-                  ...listing.specs,
-                  summaryCheckedAt: summaryObservedAt,
-                },
-              };
-              const old = await db.listing.findUnique({
-                where: {
-                  source_sourceListingId: {
-                    source: listing.source,
-                    sourceListingId: listing.sourceListingId,
-                  },
-                },
+              seen.add(input.sourceListingId);
+              summaries.push({
+                listing: input,
+                url,
+                observedAt: at,
+                evidenceHash: evidence.sha256,
               });
-              const previous = old ? listingSchema.parse(old.data) : null;
-              const eligible =
-                config.followDetails &&
-                listing.sourceUrl !== url &&
-                (!config.detailMakes?.length ||
-                  config.detailMakes.some(
-                    (m) => m.toLowerCase() === listing.make?.toLowerCase(),
-                  )) &&
-                (config.detailMaxLength == null ||
-                  listing.length == null ||
-                  listing.length < config.detailMaxLength) &&
-                !detailed.has(listing.sourceUrl);
-              if (eligible) metrics.detailPagesEligible++;
-              if (eligible && detailed.size < config.maxDetailPages) {
-                detailed.add(listing.sourceUrl);
-                metrics.detailPagesAttempted++;
-                const attemptedAt = new Date().toISOString();
-                try {
-                  if (new URL(listing.sourceUrl).origin !== new URL(url).origin)
-                    throw new Error(
-                      "Detail URL must stay on the inventory origin",
-                    );
-                  detailHtml = await politeFetch(
-                    listing.sourceUrl,
-                    fetchOptions,
-                  );
-                  await lease.checkpoint();
-                  const detail = adapters[config.adapter]
-                    .parse(detailHtml, listing.sourceUrl, config)
-                    .find((l) => l.sourceUrl === listing.sourceUrl);
-                  if (!detail)
-                    throw new Error("No matching detail record parsed");
-                  const detailObservedAt = await observedAt(listing.sourceUrl);
-                  recordObservation(metrics, detailObservedAt);
-                  seenAt =
-                    detailObservedAt > seenAt ? detailObservedAt : seenAt;
-                  listing = mergeDetailObservation(
-                    listing,
-                    detail,
-                    summaryObservedAt,
-                    detailObservedAt,
-                  );
-                  metrics.detailPagesSucceeded++;
-                } catch (error) {
-                  if (isCollectionAbort(error, lease.signal)) throw error;
-                  metrics.detailPagesFailed++;
-                  const message =
-                    error instanceof Error ? error.message : String(error);
-                  errors.push(`${listing.sourceUrl}: ${message}`);
-                  listing = preserveEnrichedDetail(
-                    listing,
-                    previous,
-                    "failed; previous detail fields retained when available",
-                    attemptedAt,
-                  );
-                  listing.specs.detailEnrichmentError = message;
-                }
-              } else {
-                if (eligible) metrics.detailPagesSkippedLimit++;
-                listing = preserveEnrichedDetail(
-                  listing,
-                  previous,
-                  eligible
-                    ? "not checked; detail page limit reached"
-                    : "not selected for detail enrichment",
-                );
-              }
-              listing = locateListing(
-                { ...listing, firstSeenAt: seenAt, lastSeenAt: seenAt },
-                locations,
-              );
-              await lease.checkpoint();
-              const result = await upsertListing(
-                {
-                  ...listing,
-                  rawPayload: {
-                    url,
-                    cachedPage: cacheFile(url),
-                    ...(detailHtml
-                      ? { detailPage: cacheFile(listing.sourceUrl) }
-                      : {}),
-                    normalized: listing.rawPayload,
-                  },
-                },
-                { dedupe: true, collectorLease: { owner } },
-              );
-              if (result.isNew) stats.new++;
-              else if (result.updated) {
-                stats.updated++;
-                if (
-                  !previous ||
-                  listingContentFingerprint(previous) !==
-                    listingContentFingerprint(listing)
-                )
-                  metrics.contentChanged++;
-                else metrics.metadataOnlyUpdated++;
-                if (
-                  previous?.price != null &&
-                  listing.price != null &&
-                  previous.price !== listing.price
-                ) {
-                  metrics.priceChanges++;
-                  if (listing.price < previous.price) metrics.priceDrops++;
-                }
-              }
-              if (listing.status === "removed") stats.removed++;
             }
           } catch (error) {
             if (isCollectionAbort(error, lease.signal)) throw error;
@@ -633,6 +580,189 @@ export async function collect(
             );
           }
         }
+        stats.found = summaries.length;
+        const eligible = (listing: Listing, url: string) =>
+          config.followDetails &&
+          listing.sourceUrl !== url &&
+          (!config.detailMakes?.length ||
+            config.detailMakes.some(
+              (m) => m.toLowerCase() === listing.make?.toLowerCase(),
+            )) &&
+          (config.detailMaxLength == null ||
+            listing.length == null ||
+            listing.length <= config.detailMaxLength);
+        const eligibleUrls = [
+          ...new Set(
+            summaries
+              .filter((s) => eligible(s.listing, s.url))
+              .map((s) => s.listing.sourceUrl),
+          ),
+        ];
+        metrics.detailPagesEligible = eligibleUrls.length;
+        const state = await readEnrichmentState(config.id);
+        const work = selectDetailWork(
+          eligibleUrls,
+          state,
+          policy === "summary-only" ? 0 : config.maxDetailPages,
+        );
+        metrics.detailPagesBackoff =
+          policy === "summary-only" ? 0 : work.backoff;
+        metrics.detailPagesDeferred =
+          policy === "summary-only" ? eligibleUrls.length : work.deferred;
+        if (policy === "complete")
+          metrics.detailPagesSkippedLimit = work.deferred + work.backoff;
+        const detailed = new Set<string>(),
+          staged: { listing: Listing; previous: Listing | null }[] = [];
+        for (const summary of summaries) {
+          await lease.checkpoint();
+          const { url, observedAt: summaryAt } = summary;
+          const previous =
+            previousBySourceId.get(summary.listing.sourceListingId) || null;
+          let listing = recordFieldProvenance(
+            {
+              ...summary.listing,
+              specs: { ...summary.listing.specs, summaryCheckedAt: summaryAt },
+            },
+            previous,
+            { method: "source", sourceUrl: url, observedAt: summaryAt },
+          );
+          let seenAt = summaryAt,
+            detailHash: string | undefined;
+          const selectedDetail =
+            policy !== "summary-only" &&
+            eligible(listing, url) &&
+            work.selected.has(listing.sourceUrl) &&
+            !detailed.has(listing.sourceUrl);
+          if (selectedDetail) {
+            detailed.add(listing.sourceUrl);
+            metrics.detailPagesAttempted++;
+            const attempted = new Date();
+            let success = false;
+            try {
+              if (new URL(listing.sourceUrl).origin !== new URL(url).origin)
+                throw new Error("Detail URL must stay on the inventory origin");
+              const html = await politeFetch(listing.sourceUrl, fetchOptions);
+              await lease.checkpoint();
+              const detail = adapters[config.adapter]
+                .parse(html, listing.sourceUrl, config)
+                .find((l) => l.sourceUrl === listing.sourceUrl);
+              if (!detail) throw new Error("No matching detail record parsed");
+              const at = await observedAt(listing.sourceUrl);
+              recordObservation(metrics, at);
+              seenAt = at > seenAt ? at : seenAt;
+              detailHash = (await archiveEvidence(listing.sourceUrl, html, at))
+                .sha256;
+              listing = mergeDetailObservation(
+                listing,
+                recordFieldProvenance(detail, listing, {
+                  method: "detail",
+                  sourceUrl: listing.sourceUrl,
+                  observedAt: at,
+                }),
+                summaryAt,
+                at,
+              );
+              metrics.detailPagesSucceeded++;
+              success = true;
+            } catch (error) {
+              if (isCollectionAbort(error, lease.signal)) throw error;
+              metrics.detailPagesFailed++;
+              const message =
+                error instanceof Error ? error.message : String(error);
+              errors.push(`${listing.sourceUrl}: ${message}`);
+              listing = preserveEnrichedDetail(
+                listing,
+                previous,
+                "failed; previous detail fields retained when available",
+                attempted.toISOString(),
+              );
+              listing.specs.detailEnrichmentError = message;
+            }
+            recordDetailAttempt(state, listing.sourceUrl, success, attempted);
+            await lease.checkpoint();
+            await saveEnrichmentState(state);
+          } else {
+            listing = preserveEnrichedDetail(
+              listing,
+              previous,
+              policy === "summary-only"
+                ? "summary-only policy; no detail refresh requested"
+                : eligible(listing, url)
+                  ? "deferred by detail budget or retry backoff"
+                  : "not selected for detail enrichment",
+            );
+          }
+          listing = recordFieldProvenance(listing, previous);
+          listing = locateListing(
+            { ...listing, firstSeenAt: seenAt, lastSeenAt: seenAt },
+            locations,
+          );
+          listing.rawPayload = {
+            url,
+            cachedPage: cacheFile(url),
+            summaryEvidenceHash: summary.evidenceHash,
+            ...(detailHash
+              ? {
+                  detailPage: cacheFile(listing.sourceUrl),
+                  detailEvidenceHash: detailHash,
+                }
+              : {}),
+            normalized: listing.rawPayload,
+          };
+          staged.push({ listing, previous });
+        }
+        const quality = inspectSourceQuality(
+          staged.map((s) => s.listing),
+          [...previousBySourceId.values()],
+          config.quality,
+        );
+        const qualityPath = join(
+          reportDirectory(),
+          `${report.runId}-${config.id}-quality.json`,
+        );
+        await atomicJson(qualityPath, {
+          ...quality,
+          sourceId: config.id,
+          runId: report.runId,
+          generatedAt: new Date().toISOString(),
+        });
+        metrics.quality = {
+          status: quality.status,
+          issues: quality.issues,
+          reportPath: qualityPath,
+        };
+        if (quality.status === "failed")
+          errors.push(
+            ...quality.issues.map((issue) => `Quality gate: ${issue}`),
+          );
+        else
+          for (const { listing, previous } of staged) {
+            await lease.checkpoint();
+            const result = await upsertListing(listing, {
+              dedupe: true,
+              collectorLease: { owner },
+            });
+            if (result.isNew) stats.new++;
+            else if (result.updated) {
+              stats.updated++;
+              if (
+                !previous ||
+                listingContentFingerprint(previous) !==
+                  listingContentFingerprint(listing)
+              )
+                metrics.contentChanged++;
+              else metrics.metadataOnlyUpdated++;
+              if (
+                previous?.price != null &&
+                listing.price != null &&
+                previous.price !== listing.price
+              ) {
+                metrics.priceChanges++;
+                if (listing.price < previous.price) metrics.priceDrops++;
+              }
+            }
+            if (listing.status === "removed") stats.removed++;
+          }
       } catch (error) {
         if (isCollectionAbort(error, lease.signal)) throw error;
         errors.push(error instanceof Error ? error.message : String(error));
@@ -643,7 +773,7 @@ export async function collect(
         );
       if (metrics.detailPagesSkippedLimit)
         errors.push(
-          `Detail page limit reached; ${metrics.detailPagesSkippedLimit} eligible ads were not enriched.`,
+          `Detail page limit reached or retry deferred; ${metrics.detailPagesSkippedLimit} eligible ads were not enriched.`,
         );
       await lease.checkpoint();
       const result = await db.ingestRun.update({
@@ -663,7 +793,6 @@ export async function collect(
       report.runs.push(result);
     }
     await lease.checkpoint();
-    // Fence the final bulk status update in the same transaction as its lease check.
     await db.$transaction(async (tx) => {
       const held = await tx.jobLock.findFirst({
         where: { key: "collector", owner, expiresAt: { gt: new Date() } },
@@ -684,25 +813,26 @@ export async function collect(
     });
     report.status = report.runs.every((run) => run.status === "success")
       ? "success"
-      : report.metrics.some((metrics) => metrics.inventoryPagesSucceeded > 0)
+      : report.metrics.some((m) => m.inventoryPagesSucceeded > 0)
         ? "partial"
         : "failed";
   } catch (error) {
-    report.status = options.signal?.aborted ? "cancelled" : "failed";
+    report.status = control.signal.aborted ? "cancelled" : "failed";
     report.errors.push(error instanceof Error ? error.message : String(error));
-    // A run left running after lease loss is reconciled by its successor, never touched by the old owner.
     if (currentRun && !isCollectionAbort(error, lease.signal)) {
-      const result = await db.ingestRun.update({
-        where: { id: currentRun },
-        data: {
-          status: "error",
-          completedAt: new Date(),
-          errors: report.errors,
-        },
-      });
-      report.runs.push(result);
+      report.runs.push(
+        await db.ingestRun.update({
+          where: { id: currentRun },
+          data: {
+            status: "error",
+            completedAt: new Date(),
+            errors: report.errors,
+          },
+        }),
+      );
     }
   } finally {
+    control.stop();
     await lease.stop();
     await releaseLock("collector", owner);
   }

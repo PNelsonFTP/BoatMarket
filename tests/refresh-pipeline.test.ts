@@ -105,10 +105,34 @@ it("runs backup, collection, optional geocode and validated export in order", as
         return collection("success");
       }),
       geocode: vi.fn(async (_signal, owner) => {
+        expect(
+          JSON.parse(
+            await readFile(
+              join(directory, "reports/latest-refresh.json"),
+              "utf8",
+            ),
+          ),
+        ).toMatchObject({
+          status: "running",
+          stage: "geocode",
+          completedAt: null,
+        });
         expect(owner).toBe("owner");
         stages.push("geocode");
       }),
       export: vi.fn(async (options) => {
+        expect(
+          JSON.parse(
+            await readFile(
+              join(directory, "reports/latest-refresh.json"),
+              "utf8",
+            ),
+          ),
+        ).toMatchObject({
+          status: "running",
+          stage: "export",
+          completedAt: null,
+        });
         stages.push("export");
         expect(options?.provenance?.partial).toBe(false);
         return {

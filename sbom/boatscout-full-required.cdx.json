@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:9d0faa23-6c1b-46ff-ac3d-ff13b7345c64",
+  "serialNumber": "urn:uuid:54c07ba2-6abb-49d6-b487-b5a338ba17b8",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-08T03:09:13.570Z",
+    "timestamp": "2026-09-08T17:01:48.761Z",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -826,7 +826,7 @@
       "type": "library",
       "name": "@prisma/config",
       "version": "6.19.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/%40prisma/config@6.19.3",
       "properties": [],
       "externalReferences": [
@@ -854,7 +854,7 @@
       "type": "library",
       "name": "@prisma/debug",
       "version": "6.19.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/%40prisma/debug@6.19.3",
       "properties": [],
       "externalReferences": [
@@ -882,7 +882,7 @@
       "type": "library",
       "name": "@prisma/engines",
       "version": "6.19.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/%40prisma/engines@6.19.3",
       "properties": [],
       "externalReferences": [
@@ -910,7 +910,7 @@
       "type": "library",
       "name": "@prisma/engines-version",
       "version": "7.1.1-3.c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/%40prisma/engines-version@7.1.1-3.c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
       "properties": [],
       "externalReferences": [
@@ -938,7 +938,7 @@
       "type": "library",
       "name": "@prisma/fetch-engine",
       "version": "6.19.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/%40prisma/fetch-engine@6.19.3",
       "properties": [],
       "externalReferences": [
@@ -966,7 +966,7 @@
       "type": "library",
       "name": "@prisma/get-platform",
       "version": "6.19.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/%40prisma/get-platform@6.19.3",
       "properties": [],
       "externalReferences": [
@@ -3059,7 +3059,7 @@
       "type": "library",
       "name": "c12",
       "version": "3.1.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/c12@3.1.0",
       "properties": [],
       "externalReferences": [
@@ -3087,7 +3087,7 @@
       "type": "library",
       "name": "dotenv",
       "version": "16.6.1",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/dotenv@16.6.1",
       "properties": [],
       "externalReferences": [
@@ -3364,7 +3364,7 @@
       "type": "library",
       "name": "chokidar",
       "version": "4.0.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/chokidar@4.0.3",
       "properties": [],
       "externalReferences": [
@@ -3392,7 +3392,7 @@
       "type": "library",
       "name": "citty",
       "version": "0.1.6",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/citty@0.1.6",
       "properties": [],
       "externalReferences": [
@@ -3608,7 +3608,7 @@
       "type": "library",
       "name": "confbox",
       "version": "0.2.4",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/confbox@0.2.4",
       "properties": [],
       "externalReferences": [
@@ -3636,7 +3636,7 @@
       "type": "library",
       "name": "consola",
       "version": "3.4.2",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/consola@3.4.2",
       "properties": [],
       "externalReferences": [
@@ -4206,7 +4206,7 @@
       "type": "library",
       "name": "deepmerge-ts",
       "version": "8.0.2",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/deepmerge-ts@8.0.2",
       "properties": [],
       "externalReferences": [
@@ -4234,7 +4234,7 @@
       "type": "library",
       "name": "defu",
       "version": "6.1.7",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/defu@6.1.7",
       "properties": [],
       "externalReferences": [
@@ -4318,7 +4318,7 @@
       "type": "library",
       "name": "destr",
       "version": "2.0.5",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/destr@2.0.5",
       "properties": [],
       "externalReferences": [
@@ -4514,7 +4514,7 @@
       "type": "library",
       "name": "effect",
       "version": "3.21.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/effect@3.21.0",
       "properties": [],
       "externalReferences": [
@@ -4575,7 +4575,7 @@
       "type": "library",
       "name": "empathic",
       "version": "2.0.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/empathic@2.0.0",
       "properties": [],
       "externalReferences": [
@@ -4936,7 +4936,7 @@
       "type": "library",
       "name": "exsolve",
       "version": "1.1.1",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/exsolve@1.1.1",
       "properties": [],
       "externalReferences": [
@@ -4964,7 +4964,7 @@
       "type": "library",
       "name": "fast-check",
       "version": "3.23.2",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/fast-check@3.23.2",
       "properties": [],
       "externalReferences": [
@@ -5338,7 +5338,7 @@
       "type": "library",
       "name": "giget",
       "version": "2.0.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/giget@2.0.0",
       "properties": [],
       "externalReferences": [
@@ -5717,7 +5717,7 @@
       "type": "library",
       "name": "jiti",
       "version": "2.7.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/jiti@2.7.0",
       "properties": [],
       "externalReferences": [
@@ -6274,7 +6274,7 @@
       "type": "library",
       "name": "node-fetch-native",
       "version": "1.6.7",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/node-fetch-native@1.6.7",
       "properties": [],
       "externalReferences": [
@@ -6358,7 +6358,7 @@
       "type": "library",
       "name": "nypm",
       "version": "0.6.9",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/nypm@0.6.9",
       "properties": [],
       "externalReferences": [
@@ -6386,7 +6386,7 @@
       "type": "library",
       "name": "citty",
       "version": "0.2.2",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/citty@0.2.2",
       "properties": [],
       "externalReferences": [
@@ -6414,7 +6414,7 @@
       "type": "library",
       "name": "ohash",
       "version": "2.0.12",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/ohash@2.0.12",
       "properties": [],
       "externalReferences": [
@@ -6610,7 +6610,7 @@
       "type": "library",
       "name": "pathe",
       "version": "2.0.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/pathe@2.0.3",
       "properties": [],
       "externalReferences": [
@@ -6671,7 +6671,7 @@
       "type": "library",
       "name": "perfect-debounce",
       "version": "1.0.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/perfect-debounce@1.0.0",
       "properties": [],
       "externalReferences": [
@@ -6844,7 +6844,7 @@
       "type": "library",
       "name": "pkg-types",
       "version": "2.3.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/pkg-types@2.3.3",
       "properties": [],
       "externalReferences": [
@@ -6872,7 +6872,7 @@
       "type": "library",
       "name": "confbox",
       "version": "0.3.1",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/confbox@0.3.1",
       "properties": [],
       "externalReferences": [
@@ -6900,7 +6900,7 @@
       "type": "library",
       "name": "playwright",
       "version": "1.63.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/playwright@1.63.0",
       "properties": [],
       "externalReferences": [
@@ -6928,7 +6928,7 @@
       "type": "library",
       "name": "playwright-core",
       "version": "1.63.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/playwright-core@1.63.0",
       "properties": [],
       "externalReferences": [
@@ -7017,7 +7017,7 @@
       "type": "library",
       "name": "prisma",
       "version": "6.19.3",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/prisma@6.19.3",
       "properties": [],
       "externalReferences": [
@@ -7073,7 +7073,7 @@
       "type": "library",
       "name": "pure-rand",
       "version": "6.1.0",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/pure-rand@6.1.0",
       "properties": [],
       "externalReferences": [
@@ -7129,7 +7129,7 @@
       "type": "library",
       "name": "rc9",
       "version": "2.1.2",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/rc9@2.1.2",
       "properties": [],
       "externalReferences": [
@@ -7353,7 +7353,7 @@
       "type": "library",
       "name": "readdirp",
       "version": "4.1.2",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/readdirp@4.1.2",
       "properties": [],
       "externalReferences": [
@@ -8543,7 +8543,7 @@
       "type": "library",
       "name": "tinyexec",
       "version": "1.3.1",
-      "scope": "optional",
+      "scope": "required",
       "purl": "pkg:npm/tinyexec@1.3.1",
       "properties": [],
       "externalReferences": [
@@ -9424,6 +9424,8 @@
         "tailwind-merge@3.6.0",
         "tsx@4.23.13",
         "zod@3.25.76",
+        "prisma@6.19.3",
+        "playwright@1.63.0",
         "@playwright/test@1.63.0",
         "@tailwindcss/postcss@4.3.3",
         "@types/leaflet@1.9.22",
@@ -9434,7 +9436,6 @@
         "@types/react-dom@19.2.7",
         "concurrently@9.2.4",
         "prettier@3.9.6",
-        "prisma@6.19.3",
         "tailwindcss@4.3.3",
         "typescript@5.9.3",
         "vitest@3.2.7"

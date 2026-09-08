@@ -1,58 +1,72 @@
 # Verification record
 
-Final improvement-pass checks: **September 7, 2026, America/Chicago** (September 8 UTC), using Node.js 26.7 and npm 11.19 on macOS. Node.js 22.12+ remains the supported minimum; GitHub Actions and Docker use Node 22. Earlier checks are identified separately below.
+September 8, 2026, America/Chicago. Local checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
-## Current integrated results
+The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. Final repository/deployment status is recorded below after completion. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
+
+## Integrated results
 
 | Check | Result |
 |---|---|
 | TypeScript | `npm run typecheck` passed |
-| Unit/integration suite | **106 tests across 19 files passed** |
-| Desktop/mobile browser suite | **18 tests passed** in Chromium |
-| Root production export | `npm run build` passed; normal root build restored after the subpath check |
-| GitHub Pages path | `/BoatMarket/` production build and `scripts/verify-pages.mjs` passed: search/images/public assets, zero runtime errors or missing local assets |
-| Real review panels | `scripts/verify-review-tools.mjs` passed desktop 1440×1000 and mobile 390×844 against the local API: source health, 163 candidate pairs, city review, zero runtime errors/overflow |
-| Database migration/reindex | Pre-upgrade backup created; additive migration applied; dry-run then apply indexed HINs with zero changed group assignments |
-| Real-data full pipeline | Ten enabled sources succeeded; 1,538 ads; protected alternate-target export; public snapshot unchanged |
-| Backup verification | Actual full-pipeline backup passed five available-file hashes, SQLite integrity and readable table counts; temporary-database recovery/altered-file tests also passed |
-| SBOM | Three CycloneDX outputs schema/graph/evidence validated; all-platform inventory 441 package instances; no lockfile or dependency changes |
-| Advisory checks | Fresh full and production npm audits at 03:09 UTC reported zero advisories; see [SBOM.md](SBOM.md) for exact scope and bundle-only audit limits |
+| Unit/integration suite | **198 tests across 34 files passed**, including four explicit database-safety regressions |
+| Desktop/mobile browser suite | **20 tests passed** in Chromium, including advertisement/grouped-record counts |
+| Root production export | `npm run build` passed; root output restored for the local website |
+| GitHub Pages subpath | `/BoatMarket/` build and browser verification passed: search, images and public assets; zero runtime errors or missing local assets |
+| Actual review panels | Desktop 1440×1000 and mobile 390×844 passed against the local authenticated API; duplicate queue loaded; zero runtime errors or horizontal overflow |
+| Final live snapshot | Desktop/mobile verified 1,593 ads across twelve sources, 75 shortlist results, 1,157 grouped nearby results and 93 results when unknown lengths are included; real API login passed; zero page errors |
+| Visual inspection | Actual desktop duplicate queue and mobile parser-maintenance screenshots inspected; fields, evidence, HIN conflicts and controls readable |
+| Migration and data preservation | Verified pre-change backup; additive identity/location/alert migration applied; six reviewed identity decisions and six factory lake-profile corrections applied |
+| Backup/recovery | SQLite integrity, file hashes and isolated restore tests passed; source/workspace/history records preserved |
+| npm SBOM | Three CycloneDX 1.5 schema/graph/evidence checks passed; 255 production, 319 required full-tree and 441 all-platform package instances |
+| npm advisory checks | Full and production registry audits at 17:01:49 UTC reported zero advisories; exact scope/limitations in [SBOM.md](SBOM.md) |
+| Actual Docker targets | Both captured Linux ARM64 images passed non-root startup, migration, authentication, listing queries and native-dependency checks; rendered target also passed a JavaScript browser fixture |
+| Docker snapshot permissions | An isolated copy/read probe reproduced `EACCES` for a root-owned `0600` pointer and passed after copying ownership to UID1000. The existing captured runtime also passed the expanded website/pointer/selected-snapshot HTTP smoke |
+| Runtime image inventories | Exact-image CycloneDX records cover 3,955 default-runtime and 5,290 rendered-image components; images/scopes overlap and counts must not be added |
+| Cleanup | Changed TypeScript/TSX/JavaScript files pass Prettier; `git diff --check` passes; scratch reports/backups remain under ignored `data/` |
+| Exact release/build | Review `66e2ce047c9d3ec3671f5f0b37a415da1900cf762aa090654e26eac5f55b9ef6` verified against the final root build, snapshot hash and three current SBOMs |
 
-## What the tests cover
+Tests use fixture responses and temporary databases for mutations. The actual review-panel check logs into the local API but makes no listing, duplicate-decision or workspace changes. Screenshots and detailed logs are under ignored `data/p1p2/`.
 
-- Catalog filters, unknown-value semantics, areas/radii, rules, sorting, prices and sample separation.
-- Source normalization and pagination fixtures, engine/length ambiguity, quote-only prices, out-of-area/offsite handling and network restrictions.
-- Modern HIN validation across inconsistent model metadata and same-source ads, conflicting HINs, transitive different-boat decisions, reversible grouping, stable ad identity and preserved workspace/history.
-- Actual one-shot CLI exit codes against isolated migrated SQLite databases: success 0, failed 1, partial 2, busy 3 and explicit skip-busy behavior. Lease expiry/renewal/cancellation, stale-run recovery, protected snapshot replacement and retained detail evidence.
-- Older detail observations cannot overwrite fresher summary price/sold facts; newer details can record subsequent relisting. Source metrics remain tied to their correct run.
-- Queued API refresh outcomes survive later alert-evaluation failure; alert outcome is separately reported. Authentication, invalid input, per-row import failure manifests, source-ID mapping, whole-chunk prevalidation, persistence and stale workspace revisions.
-- City/state/ZIP/suburb ranking, ambiguous candidates, conflicting ZIP aggregation, exact coordinate preservation and offsite uncertainty.
-- Whole 1,538-ad JSON transfer in bounded chunks, UTF-8 byte limits, failure/uncertainty manifests, storage isolation, explicit legacy migration and reviewed merge/replace behavior.
-- Grouped advertisement notes stay visible when the representative changes after a price change; editing one ad does not overwrite another ad's notes.
-- Comparison HTML escapes listing content, permits only safe links and exports no scripts/private notes. A three-boat packet was visually inspected and printed to PDF in an ignored scratch directory.
-- Full CycloneDX schema validation, rejection of unsupported fields/invalid license IDs, exact bundle evidence and detection of stale/tampered evidence.
+## Final inventory scan
 
-Browser tests use fixtures/mocked endpoints for mutation scenarios, preserving the user's live notes and listings. The separate review-panel smoke check logs into the real API but performs no listing, duplicate-decision or workspace mutations. Screenshots are under `/tmp/boatscout-review-qa/`; they are not repository assets.
+The final scan is run `33a33a91-bbd8-4642-86ee-a50c33581938`, started at `2026-09-08T17:12:55.717Z` with `npm run refresh -- --cache-hours=1`. This requests fresh older inventory/detail pages while allowing captures less than one hour old to be reused. Robots checks, source delays, page limits and rotating detail budgets remain enforced.
 
-## Real-data pipeline evidence
+Completed at **17:50:23.512 UTC**: all twelve inventories passed quality gates, with no inventory caps. Eleven sources completed fully; Huber supplied 31 accepted records but one detail returned HTTP 403. The run fetched **352 pages**, reused **15 recent captures**, completed **76 inventory pages and 291 detail pages**, and intentionally deferred three OnlyInboards details. It added **55 records**, recorded **10 asking-price changes**, and recorded zero removals. The 37-minute run ended partial and correctly preserved the prior snapshot.
 
-Run `8b436711-57c5-4cbe-8569-e4311030cad7` completed at **2026-09-08T03:08:41Z**. All ten configured sources succeeded, processing **70 inventory pages and 216 eligible detail pages**, with **286 cache hits and zero newly fetched inventory/detail HTML pages**. No page/detail caps or source errors were reported. There were zero new ads, zero removals and zero price changes. Metrics recorded 36 content comparisons changed and 1,502 metadata-only updates during the new provenance/merge implementation.
+After inspecting the bounded detail failure, a separately backed-up reviewed export activated **1,593 real ads** at **17:51:33 UTC**, preserving `partial: true` and the fresh scan ID. The denied endpoint was not retried. The new dataset has **1,577 active ads**, **1,162 active nearby ads**, and **75 grouped nearby shortlist results**. Three multi-ad groups contain nine ads; one newly matched HIN group complements the two reviewed groups. See [LIVE_DATA.md](LIVE_DATA.md) for exact source/preset counts and snapshot hash. The original pipeline report and separate `data/p1p2/reviewed-partial-export.json` remain truthful, distinct records.
 
-The accepted source observation range was **01:06:08Z–02:15:18Z**, earlier than the pipeline timestamp. This was a successful cached validation, **not a new network research pass or seller-availability confirmation**. Blocked/unsupported sources were not retested or enabled. The alternate export went to ignored `data/validation/refreshed-snapshot.json`. The published `public/snapshot.json` retains its previous SHA-256:
+## Test-isolation incident and correction
 
-```text
-2b93db5c5010a17ab661637a7ce6c09bdf938ab7ff56bbb3e256f0960d392adc
-```
+An earlier attempt, run `81951f9a-953e-45fe-9d57-1eb26bfec47b`, was interrupted around 17:02 UTC. A new publication test imported a database client before selecting its temporary database; its job-lock fixture cleanup removed the live collector lease. The collector detected the lost lease, stopped, and preserved the prior website snapshot.
 
-The database still contains 1,538 real ads plus 52 separate fictional seed rows. The identity reindex found **144 usable modern-format HINs**, **zero automatic groups**, and **163 suggested review pairs**. No same/different decisions were invented for the user. Backup verification read the original user/search/history tables; it did not restore over the live database. The API and original 30-minute worker were restarted after validation; auto-export and auto-geocoding remain off unless configured by the operator.
+Read-only comparisons with verified start/pre-refresh backups confirmed **1,590 listing rows (1,538 real and 52 samples), eight saved searches and 1,497 price-history rows** remained intact, with no notes/favorites lost. The six deliberately reviewed identity decisions remained. Only job-lock records were affected by that test. The successor scan reconciled the abandoned ingest run.
 
-## Historical checks retained from the initial build
+The fix now assigns isolated temporary databases before test modules import, captures the approved URL at client construction, and validates ORM and migration subprocess paths. Live/workspace paths and symlink escapes are rejected in test context. The new suites also assert the actual attached SQLite path. The full 198-test suite passed with this guard. The interrupted run is retained as failure evidence and is not counted as a successful inventory scan.
 
-The September 7 initial build passed 45 unit/integration tests, eight browser tests, root/subpath exports, live snapshot/profile/photo checks, a Docker image build, Compose configuration validation and isolated Docker startup with a fresh SQLite database. Initial GitHub validation of commit `f12ac90` also passed.
+## Coverage of the checks
 
-The **Docker image/startup was not rebuilt during this improvement pass**. Windows execution, rendered-source Chromium inside the shipped image, SMTP/webhook delivery, paid/authenticated marketplaces, nationwide routing, current Lake Holiday rules and exhaustive marketplace coverage are not verified by these tests. The optional WebMCP path was not executed because the test browser did not expose `document.modelContext`.
+- Filters, unknown values, radii, lake limits, active/sold semantics, prices and sample separation; inclusive 21-foot eligibility before detail collection and Huber's Nautique preset classification.
+- Source pagination, field ambiguity, sale versus MSRP, quote-only prices, offsite locations, robots/network limits, retained-detail observation precedence, staging quality gates and rotating/backoff state.
+- HIN normalization/conflicts, reviewed same/different decisions, stable vessel identity through merge/split/alias changes, preserved ad-level notes/history and local image evidence.
+- Field provenance, actual-boat override/undo and stale-write protection; route cache/expiry/provider restrictions; shared geocoder spacing/backoff and lake-rule evidence invalidation.
+- Worker singleton/heartbeat/fencing, cancellation, CLI exit codes, interrupted-report recovery, alert baselines/events/per-channel retry and API shutdown during delivery.
+- Reviewed parser captures/diffs and exact-hash apply; stale parser/config/database rejection and preserved apply manifests.
+- Retention hash/reference/symlink protections, protected backups/evidence, first/latest price preservation, free-space checks, and verified restore into a new directory.
+- Snapshot privacy whitelisting, immutable body/pointer integrity, renewable publication leases, committed-pointer recovery, legacy alias preservation, release approval/source/SBOM/build correspondence and rollback preconditions.
+- Browser-scoped workspaces, revision-aware merge/replace, chunked imports/failure manifests and escaped comparison exports.
 
-GitHub Pages remains disabled. Local export validation is not a live Pages deployment. Check [GitHub Actions](https://github.com/PNelsonFTP/BoatMarket/actions) for commit-specific hosted CI results rather than treating this document as a permanent green status.
+## Repository and deployment checkpoint
+
+The owner reviewed the local site and authorized committing/pushing. GitHub Pages creation was attempted with workflow builds in the existing private repository. GitHub returned **HTTP 422: “Your current plan does not support GitHub Pages for this repository.”** Repository visibility was preserved. The available website is **http://127.0.0.1:4310**; the approved exact-hash release is prepared for a later Pages-compatible account/repository decision. The final push/CI result is recorded below.
+
+## Practical limits and deferred execution
+
+Windows/Ubuntu hosted checks and AMD64 container workflows are configured but **had not run at the local-validation checkpoint**. The tested ARM64 image digests and source-lock hashes are recorded in [SBOM.md](SBOM.md); those image results do not claim that later application edits are present in an earlier captured image. Docker collection/connected database views work, but shared app/worker snapshot export is deferred; leave container automatic export off and rebuild from a host-generated snapshot for standalone data updates.
+
+No persistent OS service, public geocoder permission, external routing account, SMTP/webhook destination or public Pages release was enabled. Local/provider fixtures do not prove external delivery or machine-specific scheduler installation. The optional WebMCP path was not exercised because the test browser did not expose `document.modelContext`. No OS vulnerability scan is implied by an npm audit or component inventory.
+
+Source-published specifications, boat location, seller availability and Lake Holiday registration still require confirmation. The current rule screen references the association's publicly linked December 2, 2025 document; the PDF's reviewed hash and exact scope are retained. Blocked marketplaces and unresolved cross-listings remain in [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md) and [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md).
 
 ## Reproduce
 
@@ -66,6 +80,4 @@ npm run build
 npm run sbom
 ```
 
-For the Pages path, build with `NEXT_PUBLIC_BASE_PATH=/BoatMarket npm run build`, run `node scripts/verify-pages.mjs`, then rebuild without the environment variable to restore local root output.
-
-With the local website and API running, `node scripts/verify-review-tools.mjs` uses the `.env` password without printing it, inspects the real panels and captures desktop/mobile screenshots. Existing `scripts/verify-browser.mjs` and `scripts/verify-live-data.mjs` cover the earlier general/live-data workflows. See [OPERATIONS.md](OPERATIONS.md) for safe full refresh, backup verification and manual restore. The live pipeline logs and reports are ignored private operational data, not checked-in test fixtures.
+Use `NEXT_PUBLIC_BASE_PATH=/BoatMarket npm run build`, then `node scripts/verify-pages.mjs` for the Pages path. Rebuild without that environment variable afterward. With `npm start` serving port 4310, `node scripts/verify-review-tools.mjs` inspects actual review panels and `node scripts/verify-live-data.mjs` checks snapshot counts/presets. Both accept `QA_BASE_URL` and `QA_OUTPUT`; the review-panel backend remains local port 4310. These scripts read `.env` internally without printing the password. See [OPERATIONS.md](OPERATIONS.md) for refresh, backup, restore, Docker and release commands.

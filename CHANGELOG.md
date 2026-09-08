@@ -1,5 +1,20 @@
 # BoatScout delivery history
 
+## September 8, 2026 — P1/P2 implementation goal
+
+- Added permanent vessel identities/timelines, reviewed known duplicate examples, canonical/local perceptual image evidence and queue filters.
+- Added actual-location corrections with undo, field provenance, configured road routes/four-hour filtering and shared geocoder rate/backoff control.
+- Found and reviewed the official December 2, 2025 Lake Holiday rulebook; updated untouched factory screens to inclusive 21.0 ft while preserving custom searches.
+- Added renewable alert/worker supervision, cooperative cancellation, interrupted-job recovery, service tooling, configurable event types and channel retry diagnostics.
+- Added rotating detail checkpoints, immutable source evidence, staged quality gates, redacted fixture capture and reviewed parser repair.
+- Added reviewed retention, free-space checks and verified restore into a new directory.
+- Added immutable snapshot activation, privacy/source/SBOM/build release review and manual Pages deployment/rollback.
+- Pruned container runtime dependencies, added optional rendered image and OS/native/browser inventories, pinned actions/base image, and added Windows CI.
+- Clarified advertisement/grouped research counts, fixed inclusive 21-foot detail eligibility and Huber's Nautique category, and added suite-wide temporary-database isolation.
+- Wound down further feature work at the owner's request; the owner reviewed the local website and then authorized the final commit/push. Market grouping-basis classification remains explicitly deferred.
+- Fresh permitted source research and documentation are tracked in SOURCE_COVERAGE.md; all requirement mappings and verification are in P1_P2_IMPLEMENTATION.md and VALIDATION.md.
+
+
 ## 2026-09-08 — Reliability, review and buying tools
 
 - Added HIN indexing, reversible same/different/undo duplicate review and conflict protection; retained 163 suggested pairs in the current real inventory without speculative automatic merges.

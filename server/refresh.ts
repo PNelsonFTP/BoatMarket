@@ -1,12 +1,22 @@
-import { chmod, copyFile, mkdir, readFile } from "node:fs/promises";
+import {
+  chmod,
+  copyFile,
+  mkdir,
+  readFile,
+  readdir,
+  lstat,
+} from "node:fs/promises";
 import { createHash, randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
-import { join, resolve } from "node:path";
-import { PrismaClient } from "@prisma/client";
+import { dirname, join, resolve } from "node:path";
+import type { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import { hostname } from "node:os";
+import { watchJobCancellation } from "./job-control";
+import { reconcileAbandonedReports } from "./operations";
 import type { SourceConfig } from "./adapters/types";
 import { collect } from "./collector";
-import { db } from "./db";
+import { db, createDatabaseClient } from "./db";
 import { acquireLock, releaseLock } from "./repository";
 import { startCollectorLease } from "./lease";
 import {
@@ -16,6 +26,8 @@ import {
   type CollectionStatus,
 } from "./refresh-report";
 import { exportSnapshot } from "../scripts/export-snapshot";
+import { readSnapshotActivation } from "./publication";
+import { assertDiskSpace } from "./disk-space";
 
 export type RefreshOptions = {
   runId?: string;
@@ -40,6 +52,9 @@ export type RefreshReport = {
   snapshot: Awaited<ReturnType<typeof exportSnapshot>> | null;
   errors: string[];
   reportPath: string;
+  leaseOwner?: string;
+  host?: string;
+  pid?: number;
 };
 
 export async function readLatestRefreshReport(): Promise<RefreshReport | null> {
@@ -64,7 +79,10 @@ export function shouldExportCollection(
 export async function backupBeforeRefresh(
   directory: string,
   target: string,
-  options: { database?: Pick<PrismaClient, "$executeRawUnsafe"> } = {},
+  options: {
+    database?: Pick<PrismaClient, "$executeRawUnsafe" | "$queryRawUnsafe">;
+    publicDirectory?: string;
+  } = {},
 ) {
   for (const publicDirectory of ["public", "out", ".git"]) {
     const forbidden = resolve(publicDirectory);
@@ -76,6 +94,15 @@ export async function backupBeforeRefresh(
         "Backups contain private workspace data and must stay outside public/, out/ and .git/",
       );
   }
+  const database = options.database ?? db;
+  const [pageCount, pageSize] = await Promise.all([
+    database.$queryRawUnsafe<{ page_count: bigint }[]>("PRAGMA page_count"),
+    database.$queryRawUnsafe<{ page_size: bigint }[]>("PRAGMA page_size"),
+  ]);
+  await assertDiskSpace(directory, {
+    requiredBytes:
+      Number(pageCount[0].page_count) * Number(pageSize[0].page_size),
+  });
   await mkdir(directory, { recursive: true, mode: 0o700 });
   const backup = resolve(directory, "boatscout.db");
   // The destination is generated locally, with SQL quoting retained for spaces/apostrophes in cwd.
@@ -83,7 +110,7 @@ export async function backupBeforeRefresh(
     `VACUUM INTO '${backup.replaceAll("'", "''")}'`,
   );
   await chmod(backup, 0o600);
-  const restored = new PrismaClient({
+  const restored = createDatabaseClient({
     datasources: { db: { url: `file:${backup}` } },
   });
   try {
@@ -106,7 +133,14 @@ export async function backupBeforeRefresh(
       "location-review.json",
     ],
     ["config/source-access.json", "source-access.json"],
-    ["public/data-mode.json", "data-mode.json"],
+    [
+      join(options.publicDirectory || "public", "data-mode.json"),
+      "data-mode.json",
+    ],
+    [
+      process.env.IMAGE_EVIDENCE_FILE || "data/image-evidence.json",
+      "image-evidence.json",
+    ],
   ]) {
     try {
       await copyFile(source, join(directory, filename));
@@ -114,6 +148,52 @@ export async function backupBeforeRefresh(
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }
+  }
+  const enrichmentDirectory =
+    process.env.ENRICHMENT_STATE_DIR || "data/enrichment";
+  let enrichmentFiles: string[] = [];
+  try {
+    enrichmentFiles = await readdir(enrichmentDirectory);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  for (const filename of enrichmentFiles.filter((name) =>
+    /^[a-z0-9-]+\.json$/.test(name),
+  )) {
+    if (!(await lstat(join(enrichmentDirectory, filename))).isFile())
+      throw new Error("Enrichment backup refuses non-regular files");
+    const name = `enrichment/${filename}`;
+    await mkdir(dirname(join(directory, name)), { recursive: true });
+    await copyFile(join(enrichmentDirectory, filename), join(directory, name));
+    files.push(name);
+  }
+  const activation = await readSnapshotActivation(
+    undefined,
+    options.publicDirectory || "public",
+  );
+  if (activation) {
+    const name = `public/${activation.path}`;
+    await mkdir(dirname(join(directory, name)), { recursive: true });
+    await copyFile(
+      join(options.publicDirectory || "public", activation.path),
+      join(directory, name),
+    );
+    if (
+      createHash("sha256")
+        .update(await readFile(join(directory, name)))
+        .digest("hex") !== activation.sha256
+    )
+      throw new Error("Snapshot generation changed during backup");
+    const markerName = `publication/${activation.id}.json`;
+    await atomicJson(join(directory, markerName), activation);
+    await atomicJson(join(directory, "data-mode.json"), {
+      snapshot: true,
+      path: activation.path,
+      sha256: activation.sha256,
+      activationId: activation.id,
+    });
+    if (!files.includes("data-mode.json")) files.push("data-mode.json");
+    files.push(name, markerName);
   }
   const manifest = {
     version: 1,
@@ -140,19 +220,35 @@ export async function verifyBackup(directory: string) {
       files: z
         .array(
           z.object({
-            name: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9.-]*$/),
+            name: z
+              .string()
+              .regex(
+                /^(?:[a-zA-Z0-9][a-zA-Z0-9_-]*\/)*[a-zA-Z0-9][a-zA-Z0-9._-]*$/,
+              )
+              .refine((name) => !name.split("/").includes("..")),
             sha256: z.string().regex(/^[a-f0-9]{64}$/),
           }),
         )
         .min(1)
-        .max(30),
+        .max(10000),
     })
     .parse(
       JSON.parse(await readFile(join(directory, "manifest.json"), "utf8")),
     );
   if (!manifest.files.some((file) => file.name === "boatscout.db"))
     throw new Error("Backup manifest is missing boatscout.db");
+  if (
+    new Set(manifest.files.map((file) => file.name)).size !==
+    manifest.files.length
+  )
+    throw new Error("Duplicate backup manifest files");
   for (const file of manifest.files) {
+    let current = resolve(directory);
+    for (const part of file.name.split("/")) {
+      current = join(current, part);
+      if ((await lstat(current)).isSymbolicLink())
+        throw new Error("Backup verification refuses symlinks");
+    }
     if (
       createHash("sha256")
         .update(await readFile(join(directory, file.name)))
@@ -160,7 +256,7 @@ export async function verifyBackup(directory: string) {
     )
       throw new Error(`Backup hash mismatch: ${file.name}`);
   }
-  const restored = new PrismaClient({
+  const restored = createDatabaseClient({
     datasources: { db: { url: `file:${resolve(directory, "boatscout.db")}` } },
   });
   try {
@@ -252,13 +348,24 @@ export async function runRefresh(
     await save();
     return report;
   }
+  const cancellation = watchJobCancellation(runId, options.signal);
+  report.leaseOwner = owner;
+  report.host = hostname();
+  report.pid = process.pid;
   const lease = startCollectorLease(owner, {
     key: "refresh-pipeline",
-    signal: options.signal,
+    signal: cancellation.signal,
   });
   let exportOwner: string | null = null;
   let exportLease: ReturnType<typeof startCollectorLease> | null = null;
   try {
+    await cancellation.check();
+    await lease.checkpoint();
+    await reconcileAbandonedReports({
+      key: "refresh-pipeline",
+      owner,
+      excludeRunId: runId,
+    });
     await save();
     await lease.checkpoint();
     report.backupDirectory = join(
@@ -280,10 +387,10 @@ export async function runRefresh(
         runId,
       },
     );
-    report.status = report.collection.status;
     if (
       !shouldExportCollection(report.collection.status, options.allowPartial)
     ) {
+      report.status = report.collection.status;
       report.errors.push(
         `Collection ${report.collection.status}; existing website snapshot preserved${report.collection.status === "partial" ? ". Inspect source errors before using --allow-partial" : ""}`,
       );
@@ -331,10 +438,11 @@ export async function runRefresh(
         collectionCompletedAt: report.collection.completedAt,
       },
     });
+    report.status = report.collection.status;
     report.stage = "complete";
     return report;
   } catch (error) {
-    report.status = options.signal?.aborted ? "cancelled" : "failed";
+    report.status = cancellation.signal.aborted ? "cancelled" : "failed";
     report.errors.push(error instanceof Error ? error.message : String(error));
     return report;
   } finally {
@@ -342,6 +450,7 @@ export async function runRefresh(
     await exportLease?.stop();
     if (exportOwner) await releaseLock("collector", exportOwner);
     await lease.stop();
+    cancellation.stop();
     await releaseLock("refresh-pipeline", owner);
     await save();
   }

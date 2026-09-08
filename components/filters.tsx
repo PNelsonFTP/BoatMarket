@@ -25,6 +25,7 @@ import {
   DialogDescription,
 } from "./ui/dialog";
 import { api, type Connection } from "@/lib/client";
+import { DrivingFilter } from "./routing";
 export function FieldInput({
   field,
   value,
@@ -309,6 +310,7 @@ export function FilterRail({
           ))}
         </select>
       </div>
+      <DrivingFilter filters={filters} onChange={setFilters} />
       <div className="filter-section">
         <h3>Lake & towing rules</h3>
         <select

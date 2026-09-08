@@ -2,8 +2,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { api, type Connection } from "@/lib/client";
 import type { DuplicateAd, DuplicateReviewData } from "@/lib/duplicates";
+import { VesselTimeline } from "./vessel-timeline";
 
-function AdLink({ ad }: { ad: DuplicateAd }) {
+function AdLink({
+  ad,
+  onTimeline,
+}: {
+  ad: DuplicateAd;
+  onTimeline?: (id: string) => void;
+}) {
   return (
     <div className="duplicate-ad">
       <a href={ad.url} target="_blank" rel="noopener noreferrer">
@@ -15,6 +22,20 @@ function AdLink({ ad }: { ad: DuplicateAd }) {
         {ad.status}
       </p>
       <small>Reported HIN: {ad.hin || "Not supplied"}</small>
+      {ad.distance != null && (
+        <p className="small muted">
+          {Math.round(ad.distance)} straight-line miles from the queue reference
+        </p>
+      )}
+      {onTimeline && (
+        <button
+          className="text-button"
+          type="button"
+          onClick={() => onTimeline(ad.vesselId ?? ad.id)}
+        >
+          View vessel history
+        </button>
+      )}
     </div>
   );
 }
@@ -27,30 +48,42 @@ export function DuplicateReview({
   onRefresh: () => void | Promise<void>;
 }) {
   const [data, setData] = useState<DuplicateReviewData | null>(null);
+  const [activeOnly, setActiveOnly] = useState(true),
+    [nearbyOnly, setNearbyOnly] = useState(true),
+    [radius, setRadius] = useState(150),
+    [reviewState, setReviewState] = useState<"unreviewed" | "changed" | "all">(
+      "unreviewed",
+    ),
+    [timelineId, setTimelineId] = useState<string | null>(null),
+    [reviewNote, setReviewNote] = useState("");
   const [offset, setOffset] = useState(0),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
+  const query = new URLSearchParams({
+    offset: String(offset),
+    limit: "25",
+    activeOnly: String(activeOnly),
+    reviewState,
+    ...(nearbyOnly ? { radiusMiles: String(radius) } : {}),
+  }).toString();
   const load = useCallback(async () => {
     if (!connection) return;
     const result = await api<DuplicateReviewData>(
       connection,
-      `/duplicates?offset=${offset}&limit=25`,
+      `/duplicates?${query}`,
     );
     setData(result);
     if (offset > 0 && offset >= result.candidateTotal)
       setOffset(Math.floor(Math.max(0, result.candidateTotal - 1) / 25) * 25);
-  }, [connection, offset]);
+  }, [connection, offset, query]);
   useEffect(() => {
     if (!connection) {
       setData(null);
       return;
     }
     let cancelled = false;
-    api<DuplicateReviewData>(
-      connection,
-      `/duplicates?offset=${offset}&limit=25`,
-    )
+    api<DuplicateReviewData>(connection, `/duplicates?${query}`)
       .then((result) => {
         if (!cancelled) {
           setData(result);
@@ -67,7 +100,7 @@ export function DuplicateReview({
     return () => {
       cancelled = true;
     };
-  }, [connection, offset]);
+  }, [connection, offset, query]);
   async function decide(
     leftId: string,
     rightId: string,
@@ -82,7 +115,9 @@ export function DuplicateReview({
         leftId,
         rightId,
         decision,
+        note: reviewNote,
       });
+      setReviewNote("");
       setMessage(
         decision === "same"
           ? "Same-vessel review saved. All ads, prices, notes and favorites are preserved."
@@ -117,6 +152,74 @@ export function DuplicateReview({
         </p>
       ) : (
         <>
+          <div className="duplicate-actions">
+            <label className="check-label">
+              <input
+                type="checkbox"
+                checked={activeOnly}
+                onChange={(e) => {
+                  setActiveOnly(e.target.checked);
+                  setOffset(0);
+                }}
+              />
+              Both ads active
+            </label>
+            <label className="check-label">
+              <input
+                type="checkbox"
+                checked={nearbyOnly}
+                onChange={(e) => {
+                  setNearbyOnly(e.target.checked);
+                  setOffset(0);
+                }}
+              />
+              Near Lake Holiday
+            </label>
+            {nearbyOnly && (
+              <label>
+                Radius in straight-line miles
+                <input
+                  aria-label="Duplicate queue radius"
+                  type="number"
+                  min={1}
+                  max={12500}
+                  value={radius}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    if (value >= 1 && value <= 12500) {
+                      setRadius(value);
+                      setOffset(0);
+                    }
+                  }}
+                />
+              </label>
+            )}
+            <label>
+              Review state
+              <select
+                aria-label="Duplicate queue review state"
+                value={reviewState}
+                onChange={(e) => {
+                  setReviewState(e.target.value as typeof reviewState);
+                  setOffset(0);
+                }}
+              >
+                <option value="unreviewed">Not yet reviewed</option>
+                <option value="changed">Changed since review</option>
+                <option value="all">All evidence pairs</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Optional evidence note for the next decision
+            <textarea
+              aria-label="Duplicate review evidence note"
+              value={reviewNote}
+              maxLength={5000}
+              rows={2}
+              onChange={(e) => setReviewNote(e.target.value)}
+            />
+          </label>
           <button
             type="button"
             className="button"
@@ -145,7 +248,7 @@ export function DuplicateReview({
                 {data.counts.displayUnits.toLocaleString()} display units.
                 Ungrouped ads can still describe the same boat.
               </p>
-              <h4>Suggested pairs ({data.candidateTotal})</h4>
+              <h4>Review pairs ({data.candidateTotal})</h4>
               {data.candidates.length === 0 && (
                 <p>No unreviewed suggestions on this page.</p>
               )}
@@ -155,8 +258,8 @@ export function DuplicateReview({
                   key={`${pair.left.id}:${pair.right.id}`}
                 >
                   <div className="duplicate-pair-ads">
-                    <AdLink ad={pair.left} />
-                    <AdLink ad={pair.right} />
+                    <AdLink ad={pair.left} onTimeline={setTimelineId} />
+                    <AdLink ad={pair.right} onTimeline={setTimelineId} />
                   </div>
                   <p>
                     <strong>
@@ -166,6 +269,14 @@ export function DuplicateReview({
                     </strong>{" "}
                     · {pair.evidence.reasons.join(" · ")}
                   </p>
+                  {pair.reviewedDecision && (
+                    <p>
+                      Saved decision: {pair.reviewedDecision}
+                      {pair.changedSinceReview
+                        ? " · observed facts changed since that review"
+                        : " · unchanged since review"}
+                    </p>
+                  )}
                   {pair.evidence.conflicts.length > 0 && (
                     <p className="duplicate-conflict">
                       {pair.evidence.conflicts.join(" · ")}
@@ -236,7 +347,7 @@ export function DuplicateReview({
                     </p>
                     {group.members.map((member, index) => (
                       <div key={member.id} className="duplicate-group-member">
-                        <AdLink ad={member} />
+                        <AdLink ad={member} onTimeline={setTimelineId} />
                         {index > 0 && (
                           <button
                             type="button"
@@ -272,8 +383,8 @@ export function DuplicateReview({
                     key={`${d.leftId}:${d.rightId}`}
                   >
                     <div className="duplicate-pair-ads">
-                      <AdLink ad={d.left} />
-                      <AdLink ad={d.right} />
+                      <AdLink ad={d.left} onTimeline={setTimelineId} />
+                      <AdLink ad={d.right} onTimeline={setTimelineId} />
                     </div>
                     <p>
                       <strong>
@@ -284,6 +395,9 @@ export function DuplicateReview({
                       {d.updatedAt &&
                         ` · ${new Date(d.updatedAt).toLocaleString()}`}
                     </p>
+                    {d.changedSinceReview && (
+                      <p>Observed facts changed since this review.</p>
+                    )}
                     {d.conflict && (
                       <p role="status">
                         This same-vessel decision is currently blocked:{" "}
@@ -301,6 +415,14 @@ export function DuplicateReview({
                   </article>
                 ))}
               </details>
+              {timelineId && (
+                <VesselTimeline
+                  key={timelineId}
+                  connection={connection}
+                  id={timelineId}
+                  initiallyOpen
+                />
+              )}
             </>
           )}
         </>

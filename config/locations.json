@@ -804,5 +804,13 @@
     "label": "Belleville, Wayne County, Michigan, United States",
     "source": "https://www.openstreetmap.org/copyright",
     "fetchedAt": "2026-09-08T02:14:54.163Z"
+  },
+  "la porte, in": {
+    "lat": 41.6103189,
+    "lng": -86.7149537,
+    "label": "La Porte city, Indiana — U.S. Census city centroid (approximate)",
+    "source": "U.S. Census TIGERweb ACS25, data as of 2025-01-01, GEOID1842246, CENTLAT/CENTLON; https://tigerweb.geo.census.gov/tigerwebmain/Files/acs26/tigerweb_acs26_incplace_2025_acs25_in.html",
+    "fetchedAt": "2026-09-08T17:01:03.795Z",
+    "reviewed": true
   }
 }

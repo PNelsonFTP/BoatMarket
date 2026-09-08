@@ -57,6 +57,42 @@
         "isDefault": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "BoatScout: preview source parser commands",
+      "type": "shell",
+      "command": "npm run source:tools -- --help",
+      "problemMatcher": []
+    },
+    {
+      "label": "BoatScout: review interrupted jobs",
+      "type": "shell",
+      "command": "npm run operations -- status",
+      "problemMatcher": []
+    },
+    {
+      "label": "BoatScout: preview storage retention",
+      "type": "shell",
+      "command": "npm run retention",
+      "problemMatcher": []
+    },
+    {
+      "label": "BoatScout: generate background service template",
+      "type": "shell",
+      "command": "npm run service -- --help",
+      "problemMatcher": []
+    },
+    {
+      "label": "BoatScout: review Pages release",
+      "type": "shell",
+      "command": "npm run release -- prepare",
+      "problemMatcher": []
+    },
+    {
+      "label": "BoatScout: review current Lake Holiday rules",
+      "type": "shell",
+      "command": "npm run reconcile:lake-policy",
+      "problemMatcher": []
     }
   ]
 }

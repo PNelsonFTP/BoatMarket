@@ -141,13 +141,34 @@ export function useBoatStore() {
         updatedAt: null,
       };
       try {
-        const config: { snapshot?: boolean } = await fetch(
-          asset("/data-mode.json"),
-        ).then((r) => (r.ok ? r.json() : {}));
-        if (config.snapshot) {
-          const snapshot = parseListingImport(
-            await fetch(asset("/snapshot.json")).then((r) => r.json()),
+        const config: { snapshot?: boolean; path?: string; sha256?: string } =
+          await fetch(asset("/data-mode.json")).then((r) =>
+            r.ok ? r.json() : {},
           );
+        if (config.snapshot) {
+          if (
+            config.path &&
+            !/^snapshots\/[a-f0-9]{64}\.json$/.test(config.path)
+          )
+            throw new Error("Invalid snapshot activation path");
+          const response = await fetch(
+            asset(config.path ? `/${config.path}` : "/snapshot.json"),
+          );
+          if (!response.ok)
+            throw new Error("Snapshot generation could not be loaded");
+          const body = await response.text();
+          if (config.sha256) {
+            const digest = await crypto.subtle.digest(
+              "SHA-256",
+              new TextEncoder().encode(body),
+            );
+            const actual = Array.from(new Uint8Array(digest), (byte) =>
+              byte.toString(16).padStart(2, "0"),
+            ).join("");
+            if (actual !== config.sha256)
+              throw new Error("Snapshot generation failed its integrity check");
+          }
+          const snapshot = parseListingImport(JSON.parse(body));
           if (cancelled) return;
           setData(snapshot.listings, snapshot.generatedAt);
           setMode("snapshot");
