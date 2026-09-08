@@ -200,3 +200,82 @@ it("backs up and restores the active immutable generation, marker and private en
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+it("backs up and restores a cloned public generation without requiring or inventing a private journal", async () => {
+  const directory = await realpath(
+    await mkdtemp(join(tmpdir(), "boatscout-imported-backup-")),
+  );
+  const { readSnapshotActivation } = await import("../server/publication");
+  const { previewBackupRestore, restoreBackupToDirectory } =
+    await import("../server/backup-restore");
+  const database = new PrismaClient({
+    datasources: { db: { url: `file:${join(directory, "source.db")}` } },
+  });
+  try {
+    await database.$executeRawUnsafe(
+      "CREATE TABLE probe (id INTEGER PRIMARY KEY, value TEXT)",
+    );
+    await database.$executeRawUnsafe(
+      "INSERT INTO probe VALUES (1, 'cloned checkout')",
+    );
+    vi.stubEnv("PUBLICATION_DIR", join(directory, "missing-journal"));
+    const publicDirectory = join(directory, "public");
+    const body = '{"listings":[]}',
+      sha256 = createHash("sha256").update(body).digest("hex"),
+      path = `snapshots/${sha256}.json`;
+    const activationId = "5bb6f8fa-65df-46a9-9520-23188f02c53a";
+    await mkdir(join(publicDirectory, "snapshots"), { recursive: true });
+    await writeFile(join(publicDirectory, path), body);
+    await writeFile(join(publicDirectory, "snapshot.json"), body);
+    await writeFile(
+      join(publicDirectory, "data-mode.json"),
+      JSON.stringify({ snapshot: true, path, sha256, activationId }),
+    );
+    const backup = await backupBeforeRefresh(
+      join(directory, "backup"),
+      join(publicDirectory, "snapshot.json"),
+      { database, publicDirectory },
+    );
+    expect(backup.files.map((file) => file.name)).toEqual(
+      expect.arrayContaining(["data-mode.json", `public/${path}`]),
+    );
+    expect(
+      backup.files.some((file) => file.name.startsWith("publication/")),
+    ).toBe(false);
+    expect((await verifyBackup(backup.directory)).tables.probe).toBe(1);
+    expect(
+      JSON.parse(
+        await readFile(join(backup.directory, "data-mode.json"), "utf8"),
+      ),
+    ).toEqual({ snapshot: true, path, sha256, activationId });
+    const destination = join(directory, "restored"),
+      preview = await previewBackupRestore(backup.directory, destination);
+    await restoreBackupToDirectory(
+      backup.directory,
+      destination,
+      preview.manifestHash,
+    );
+    vi.stubEnv("PUBLICATION_DIR", join(destination, "data/publication"));
+    expect(
+      await readSnapshotActivation(undefined, join(destination, "public")),
+    ).toMatchObject({
+      state: "imported",
+      sha256,
+      runId: null,
+      committedAt: null,
+    });
+    expect(
+      await readSnapshotActivation(
+        "unproven-local-run",
+        join(destination, "public"),
+      ),
+    ).toBeNull();
+    await expect(
+      stat(join(destination, "data/publication")),
+    ).rejects.toMatchObject({ code: "ENOENT" });
+  } finally {
+    vi.unstubAllEnvs();
+    await database.$disconnect();
+    await rm(directory, { recursive: true, force: true });
+  }
+});

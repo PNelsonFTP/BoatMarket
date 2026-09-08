@@ -28,7 +28,9 @@ function canonicalPath(path: string): string {
     missing.unshift(basename(existing));
     existing = parent;
   }
-  return resolve(realpathSync(existing), ...missing);
+  // Native realpath expands Windows 8.3 aliases (RUNNER~1) consistently for
+  // both existing files and their ancestor directories before containment checks.
+  return resolve(realpathSync.native(existing), ...missing);
 }
 const within = (root: string, target: string) => {
   const part = relative(root, target);

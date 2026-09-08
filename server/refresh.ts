@@ -184,16 +184,20 @@ export async function backupBeforeRefresh(
         .digest("hex") !== activation.sha256
     )
       throw new Error("Snapshot generation changed during backup");
-    const markerName = `publication/${activation.id}.json`;
-    await atomicJson(join(directory, markerName), activation);
+    // A cloned public snapshot is backed up without inventing local activation evidence.
+    if (activation.state === "committed") {
+      const markerName = `publication/${activation.id}.json`;
+      await atomicJson(join(directory, markerName), activation);
+      files.push(markerName);
+    }
     await atomicJson(join(directory, "data-mode.json"), {
       snapshot: true,
       path: activation.path,
       sha256: activation.sha256,
-      activationId: activation.id,
+      ...(activation.id ? { activationId: activation.id } : {}),
     });
     if (!files.includes("data-mode.json")) files.push("data-mode.json");
-    files.push(name, markerName);
+    files.push(name);
   }
   const manifest = {
     version: 1,

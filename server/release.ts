@@ -48,7 +48,12 @@ async function codeFiles(path: string): Promise<string[]> {
   }
   return output;
 }
-export async function releaseSourceHash() {
+export function canonicalReleasePaths(paths: string[]) {
+  return paths.map((path) => path.replaceAll("\\", "/")).sort();
+}
+export async function releaseSourceHash(
+  options: { read?: typeof readFile } = {},
+) {
   const roots = [
     "app",
     "components",
@@ -63,19 +68,21 @@ export async function releaseSourceHash() {
     "tsconfig.json",
     "tsconfig.check.json",
     "Dockerfile",
+    ".github",
+    ".gitattributes",
+    ".dockerignore",
+    "compose.yaml",
+    "postcss.config.mjs",
   ];
-  const files = (await Promise.all(roots.map(codeFiles)))
-    .flat()
-    .filter((p) => !p.endsWith(".tmp") && !p.endsWith(".db"))
-    .sort();
+  const files = canonicalReleasePaths(
+    (await Promise.all(roots.map(codeFiles)))
+      .flat()
+      .filter((p) => !p.endsWith(".tmp") && !p.endsWith(".db")),
+  );
+  const read = options.read || readFile;
   return hash(
     JSON.stringify(
-      await Promise.all(
-        files.map(async (p) => [
-          p.replaceAll("\\", "/"),
-          hash(await readFile(p)),
-        ]),
-      ),
+      await Promise.all(files.map(async (p) => [p, hash(await read(p))])),
     ),
   );
 }

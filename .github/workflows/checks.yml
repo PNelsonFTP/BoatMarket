@@ -23,6 +23,8 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run db:generate
       - run: npm run typecheck
+      - name: Verify committed reviewed release before regenerating SBOMs
+        run: node --input-type=module -e "import {readFileSync} from 'node:fs'; import {spawnSync} from 'node:child_process'; const manifest=JSON.parse(readFileSync('public/release-manifest.json','utf8')); const result=spawnSync(process.execPath,['--import','tsx','scripts/release.ts','verify','--review='+manifest.approval.reviewHash],{stdio:'inherit'}); process.exit(result.status ?? 1);"
       - run: npm test
       - run: npm run sbom
       - name: Validate generated CycloneDX inventory

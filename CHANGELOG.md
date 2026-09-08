@@ -11,6 +11,7 @@
 - Added immutable snapshot activation, privacy/source/SBOM/build release review and manual Pages deployment/rollback.
 - Pruned container runtime dependencies, added optional rendered image and OS/native/browser inventories, pinned actions/base image, and added Windows CI.
 - Clarified advertisement/grouped research counts, fixed inclusive 21-foot detail eligibility and Huber's Nautique category, and added suite-wide temporary-database isolation.
+- Fixed fresh-clone snapshot/backup handling and Windows native path, generated service path and line-ending portability after the first hosted validation run exposed those gaps. Private publication journals remain private; imported generations retain integrity checks without claiming a local collection run.
 - Wound down further feature work at the owner's request; the owner reviewed the local website and then authorized the final commit/push. Market grouping-basis classification remains explicitly deferred.
 - Fresh permitted source research and documentation are tracked in SOURCE_COVERAGE.md; all requirement mappings and verification are in P1_P2_IMPLEMENTATION.md and VALIDATION.md.
 

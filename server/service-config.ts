@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { join, resolve, win32 } from "node:path";
+import { posix, win32 } from "node:path";
 export type ServicePlatform = "macos" | "linux" | "windows";
 export type ServiceConfig = {
   platform: ServicePlatform;
@@ -37,7 +37,7 @@ export function generateService(options: {
   ])
     if (/[\r\n\0]/.test(value))
       throw new Error("Service paths must not contain line breaks or NUL");
-  const paths = options.platform === "windows" ? win32 : { join, resolve };
+  const paths = options.platform === "windows" ? win32 : posix;
   const project = paths.resolve(options.projectDirectory),
     node = paths.resolve(options.nodePath);
   const id = createHash("sha256")
@@ -49,13 +49,13 @@ export function generateService(options: {
   if (options.platform === "macos") {
     const label = `local.${name}`,
       filename = `${label}.plist`,
-      installPath = join(
+      installPath = paths.join(
         options.homeDirectory,
         "Library",
         "LaunchAgents",
         filename,
       );
-    const content = `<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0"><dict>\n<key>Label</key><string>${label}</string>\n<key>ProgramArguments</key><array><string>${xml(node)}</string><string>--import</string><string>tsx</string><string>${xml(script)}</string></array>\n<key>WorkingDirectory</key><string>${xml(project)}</string>\n<key>RunAtLoad</key><true/><key>KeepAlive</key><dict><key>SuccessfulExit</key><false/></dict><key>ThrottleInterval</key><integer>30</integer>\n<key>StandardOutPath</key><string>${xml(join(project, "logs", "service-out.log"))}</string><key>StandardErrorPath</key><string>${xml(join(project, "logs", "service-error.log"))}</string>\n</dict></plist>\n`;
+    const content = `<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0"><dict>\n<key>Label</key><string>${label}</string>\n<key>ProgramArguments</key><array><string>${xml(node)}</string><string>--import</string><string>tsx</string><string>${xml(script)}</string></array>\n<key>WorkingDirectory</key><string>${xml(project)}</string>\n<key>RunAtLoad</key><true/><key>KeepAlive</key><dict><key>SuccessfulExit</key><false/></dict><key>ThrottleInterval</key><integer>30</integer>\n<key>StandardOutPath</key><string>${xml(paths.join(project, "logs", "service-out.log"))}</string><key>StandardErrorPath</key><string>${xml(paths.join(project, "logs", "service-error.log"))}</string>\n</dict></plist>\n`;
     const domain = `gui/${options.uid ?? 0}`;
     return {
       platform: options.platform,
@@ -70,7 +70,7 @@ export function generateService(options: {
   }
   if (options.platform === "linux") {
     const filename = `${name}.service`,
-      installPath = join(
+      installPath = paths.join(
         options.homeDirectory,
         ".config",
         "systemd",

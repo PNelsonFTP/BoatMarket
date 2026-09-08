@@ -37,7 +37,7 @@ Compose supports collection and connected database refresh. It serves the static
 
 Settings exposes source health, queued job IDs, collector outcome, operation leases/cancellation/recovery, duplicate review, locations/routes, parser preview and alert diagnostics. HTTP 202 means queued, not successful. Collection exit codes are success 0, partial 2, busy 3, cancelled 130, otherwise 1. Preserve the report and its backup path when investigating errors.
 
-`public/data-mode.json` activates an immutable `public/snapshots/<sha256>.json` generation. The browser checks its SHA-256 before loading. Legacy `public/snapshot.json` remains a compatibility/export file. `data/publication` records prepared/committed generations; recovery examines the pointer so a hard kill after activation does not invent a rollback. An export is local staging, not a GitHub deployment.
+`public/data-mode.json` activates an immutable `public/snapshots/<sha256>.json` generation. The browser checks its SHA-256 before loading. Legacy `public/snapshot.json` remains a compatibility/export file. `data/publication` records private prepared/committed generations; recovery examines the pointer so a hard kill after activation does not invent a rollback. A fresh clone can validate the public generation without this private journal: it is reported as imported, with no claimed local run or commit time. Backups retain its verified pointer and generation; a private marker is included only when it exists and matches. An export is local staging, not a GitHub deployment.
 
 ## Daily/weekly service operation
 

@@ -124,7 +124,7 @@ it("includes canonical schema/library changes in the reviewed parser fingerprint
   const actual = await parserHash();
   const changed = await parserHash({
     read: (async (path: unknown) =>
-      String(path) === "lib/types.ts"
+      String(path).replaceAll("\\", "/") === "lib/types.ts"
         ? Buffer.from("different canonical schema")
         : readFile(String(path))) as typeof readFile,
   });

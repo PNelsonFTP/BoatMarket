@@ -39,6 +39,7 @@ const { db } = await import("../server/db");
 const {
   activateSnapshot,
   readSnapshotActivation,
+  readPublicSnapshotGeneration,
   rollbackSnapshot,
   withPublicationLease,
 } = await import("../server/publication");
@@ -291,4 +292,79 @@ it("reports an already committed snapshot truthfully when its later audit write 
     reconciledFromPointer: true,
   });
   expect(await db.jobLock.count()).toBe(0);
+});
+
+it("recognizes an imported checkout without fabricating local activation evidence", async () => {
+  const original = await activateSnapshot('{"listings":[]}', {
+    publicDirectory: root,
+    listings: 0,
+    runId: "original-local-run",
+  });
+  await rm(join(root, "markers"), { recursive: true });
+  expect(await readPublicSnapshotGeneration(root)).toMatchObject({
+    path: original.path,
+    sha256: original.sha256,
+    activationId: original.id,
+  });
+  expect(await readSnapshotActivation(undefined, root)).toMatchObject({
+    state: "imported",
+    id: original.id,
+    runId: null,
+    committedAt: null,
+    createdAt: null,
+    reconciledFromPointer: false,
+  });
+  expect(await readSnapshotActivation("original-local-run", root)).toBeNull();
+  expect(await readSnapshotActivation("another-run", root)).toBeNull();
+  await expect(
+    readFile(join(root, "markers", `${original.id}.json`)),
+  ).rejects.toMatchObject({ code: "ENOENT" });
+  expect(await db.jobLock.count()).toBe(0);
+});
+
+it("verifies imported public bytes and rejects malformed or mismatched public pointers", async () => {
+  const original = await activateSnapshot("original public bytes", {
+    publicDirectory: root,
+    listings: 1,
+  });
+  await rm(join(root, "markers"), { recursive: true });
+  await writeFile(join(root, original.path), "tampered public bytes");
+  await expect(readSnapshotActivation(undefined, root)).rejects.toThrow(
+    "generation hash mismatch",
+  );
+  await expect(readSnapshotActivation("unrelated-run", root)).rejects.toThrow(
+    "generation hash mismatch",
+  );
+  await writeFile(
+    join(root, "data-mode.json"),
+    JSON.stringify({
+      snapshot: true,
+      path: "../private.json",
+      sha256: original.sha256,
+      activationId: original.id,
+    }),
+  );
+  await expect(readSnapshotActivation(undefined, root)).rejects.toThrow(
+    "Invalid public snapshot pointer",
+  );
+});
+
+it("never treats a corrupt existing private marker as an imported snapshot", async () => {
+  const original = await activateSnapshot("public bytes", {
+    publicDirectory: root,
+    listings: 1,
+    runId: "known-run",
+  });
+  const marker = join(root, "markers", `${original.id}.json`);
+  await writeFile(marker, "{broken JSON");
+  await expect(readSnapshotActivation(undefined, root)).rejects.toThrow();
+  await writeFile(
+    marker,
+    JSON.stringify({ ...original, sha256: "0".repeat(64) }),
+  );
+  await expect(readSnapshotActivation("unrelated-run", root)).rejects.toThrow(
+    "does not match",
+  );
+  await writeFile(marker, JSON.stringify({ ...original, state: "imported" }));
+  await expect(readSnapshotActivation(undefined, root)).rejects.toThrow();
 });

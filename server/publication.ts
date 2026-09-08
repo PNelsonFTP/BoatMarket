@@ -5,6 +5,7 @@ import { atomicJson } from "./refresh-report";
 import { acquireLock, releaseLock } from "./repository";
 import { startCollectorLease } from "./lease";
 import { assertDiskSpace } from "./disk-space";
+import { z } from "zod";
 
 export type PublicationLease = ReturnType<typeof startCollectorLease> & {
   owner: string;
@@ -53,6 +54,24 @@ export type SnapshotActivation = {
   previous: { snapshot?: boolean; path?: string; sha256?: string } | null;
   listings: number;
 };
+const activationSchema = z.object({
+  version: z.literal(1),
+  id: z.string().uuid(),
+  runId: z.string().nullable(),
+  state: z.enum(["prepared", "committed"]),
+  createdAt: z.string().datetime(),
+  committedAt: z.string().datetime().nullable(),
+  sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  path: z.string().regex(/^snapshots\/[a-f0-9]{64}\.json$/),
+  previous: z
+    .object({
+      snapshot: z.boolean().optional(),
+      path: z.string().optional(),
+      sha256: z.string().optional(),
+    })
+    .nullable(),
+  listings: z.number().int().nonnegative(),
+});
 /** A single atomic pointer switches readers only after an immutable, verified generation exists. */
 export async function activateSnapshot(
   body: string,
@@ -139,43 +158,94 @@ export async function activateSnapshot(
     };
   }
 }
-export async function readSnapshotActivation(
-  runId?: string,
-  publicDirectory = "public",
-) {
+/** A checkout can contain a valid public generation without any private local activation journal. */
+export async function readPublicSnapshotGeneration(publicDirectory = "public") {
   const modePath = join(resolve(publicDirectory), "data-mode.json");
-  let mode: { path?: string; sha256?: string; activationId?: string };
+  let mode: {
+    snapshot?: boolean;
+    path?: string;
+    sha256?: string;
+    activationId?: string;
+  };
   try {
     mode = JSON.parse(await readFile(modePath, "utf8"));
   } catch (e) {
     if ((e as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw e;
   }
-  if (
-    !mode.activationId ||
-    !/^[a-f0-9-]{36}$/.test(mode.activationId) ||
-    !/^snapshots\/[a-f0-9]{64}\.json$/.test(mode.path || "") ||
-    !/^([a-f0-9]{64})$/.test(mode.sha256 || "")
-  )
+  if (mode.snapshot === false) return null;
+  // Legacy snapshot.json mode has no immutable pointer to validate.
+  if (mode.path == null && mode.sha256 == null && mode.activationId == null)
     return null;
-  const record = JSON.parse(
-    await readFile(
-      join(publicationDirectory(), `${mode.activationId}.json`),
-      "utf8",
-    ),
-  ) as SnapshotActivation;
-  if (runId && record.runId !== runId) return null;
+  if (
+    mode.snapshot !== true ||
+    !/^snapshots\/[a-f0-9]{64}\.json$/.test(mode.path || "") ||
+    !/^[a-f0-9]{64}$/.test(mode.sha256 || "") ||
+    mode.path !== `snapshots/${mode.sha256}.json` ||
+    (mode.activationId != null &&
+      !z.string().uuid().safeParse(mode.activationId).success)
+  )
+    throw new Error("Invalid public snapshot pointer");
+  if (
+    snapshotHash(await readFile(join(publicDirectory, mode.path!))) !==
+    mode.sha256
+  )
+    throw new Error("Public snapshot generation hash mismatch");
+  return {
+    snapshot: true as const,
+    path: mode.path!,
+    sha256: mode.sha256!,
+    activationId: mode.activationId ?? null,
+  };
+}
+export async function readSnapshotActivation(
+  runId?: string,
+  publicDirectory = "public",
+) {
+  const mode = await readPublicSnapshotGeneration(publicDirectory);
+  if (!mode) return null;
+  let record: SnapshotActivation | null = null;
+  if (mode.activationId) {
+    try {
+      record = activationSchema.parse(
+        JSON.parse(
+          await readFile(
+            join(publicationDirectory(), `${mode.activationId}.json`),
+            "utf8",
+          ),
+        ),
+      );
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+  }
+  if (!record) {
+    // Public bytes prove integrity, not a local job's completion or its original commit time.
+    if (runId !== undefined) return null;
+    return {
+      version: 1 as const,
+      id: mode.activationId,
+      runId: null,
+      state: "imported" as const,
+      createdAt: null,
+      committedAt: null,
+      sha256: mode.sha256,
+      path: mode.path,
+      previous: null,
+      listings: null,
+      reconciledFromPointer: false,
+    };
+  }
   if (
     record.id !== mode.activationId ||
     record.version !== 1 ||
     record.sha256 !== mode.sha256 ||
-    record.path !== mode.path ||
-    snapshotHash(await readFile(join(publicDirectory, mode.path!))) !==
-      mode.sha256
+    record.path !== mode.path
   )
     throw new Error(
       "Snapshot activation evidence does not match its generation",
     );
+  if (runId !== undefined && record.runId !== runId) return null;
   return {
     ...record,
     state: "committed" as const,

@@ -21,6 +21,13 @@ it("generates a user launch agent with explicit argv and existing cadence intact
   ]);
   expect(config.content).not.toContain("WORKER_INTERVAL_MINUTES");
   expect(config.installPath).toContain("/Library/LaunchAgents/");
+  expect(config.content).toContain("<string>/opt/node/bin/node</string>");
+  expect(config.content).toContain(
+    "<string>/Users/test/Boat &amp; Market/server/worker.ts</string>",
+  );
+  expect(config.content).toContain(
+    "<string>/Users/test/Boat &amp; Market/logs/service-out.log</string>",
+  );
 });
 it("generates a systemd user unit with escaped paths and no shell command", () => {
   const config = generateService({
@@ -39,6 +46,12 @@ it("generates a systemd user unit with escaped paths and no shell command", () =
     config.filename,
   ]);
   expect(config.content).not.toContain("/bin/sh");
+  expect(config.installPath).toBe(
+    `/home/test/.config/systemd/user/${config.filename}`,
+  );
+  expect(config.content).toContain(
+    'ExecStart="/usr/bin/node" --import tsx "/home/test/boat %% market/server/worker.ts"',
+  );
 });
 it("generates a Windows interactive task with one instance, restart policy and no password", () => {
   const config = generateService({

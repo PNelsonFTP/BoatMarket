@@ -1,4 +1,4 @@
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, realpathSync } from "node:fs";
 import { join } from "node:path";
 import { vi } from "vitest";
 const root = process.env.BOATSCOUT_TEST_ROOT;
@@ -6,7 +6,7 @@ if (!root)
   throw new Error(
     "Vitest database safety setup is missing its dedicated temporary root",
   );
-const suite = mkdtempSync(join(root, "suite-"));
+const suite = realpathSync.native(mkdtempSync(join(root, "suite-")));
 // Always replace inherited .env/live settings before any test module's static imports.
 process.env.DATABASE_URL = `file:${join(suite, "fallback.db").replaceAll("\\", "/")}`;
 // Existing tests create their own fixtures with os.tmpdir(); keep all of them inside the guard.

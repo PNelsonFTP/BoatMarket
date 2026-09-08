@@ -3,7 +3,9 @@ import { fileURLToPath } from "node:url";
 import { mkdtempSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-const testRoot = realpathSync(mkdtempSync(join(tmpdir(), "boatscout-vitest-")));
+const testRoot = realpathSync.native(
+  mkdtempSync(join(tmpdir(), "boatscout-vitest-")),
+);
 export default defineConfig({
   test: {
     include: ["tests/**/*.test.ts"],

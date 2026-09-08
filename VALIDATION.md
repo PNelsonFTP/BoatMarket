@@ -9,7 +9,7 @@ The owner requested winding down enhancements, reviewed the local website, and t
 | Check | Result |
 |---|---|
 | TypeScript | `npm run typecheck` passed |
-| Unit/integration suite | **198 tests across 34 files passed**, including four explicit database-safety regressions |
+| Unit/integration suite | Final macOS run: **209 tests across 35 files passed**, with one Windows-only alias test skipped; includes fresh-clone backup/restore and release-fingerprint regressions |
 | Desktop/mobile browser suite | **20 tests passed** in Chromium, including advertisement/grouped-record counts |
 | Root production export | `npm run build` passed; root output restored for the local website |
 | GitHub Pages subpath | `/BoatMarket/` build and browser verification passed: search, images and public assets; zero runtime errors or missing local assets |
@@ -24,7 +24,7 @@ The owner requested winding down enhancements, reviewed the local website, and t
 | Docker snapshot permissions | An isolated copy/read probe reproduced `EACCES` for a root-owned `0600` pointer and passed after copying ownership to UID1000. The existing captured runtime also passed the expanded website/pointer/selected-snapshot HTTP smoke |
 | Runtime image inventories | Exact-image CycloneDX records cover 3,955 default-runtime and 5,290 rendered-image components; images/scopes overlap and counts must not be added |
 | Cleanup | Changed TypeScript/TSX/JavaScript files pass Prettier; `git diff --check` passes; scratch reports/backups remain under ignored `data/` |
-| Exact release/build | Review `66e2ce047c9d3ec3671f5f0b37a415da1900cf762aa090654e26eac5f55b9ef6` verified against the final root build, snapshot hash and three current SBOMs |
+| Exact release/build | Final portability release review `6a51e0596c6d96cc040be825ff201b498ad6a8cfbc7ca61b2c28ac24056af59d` verified against the final root build, unchanged reviewed snapshot and three current SBOMs |
 
 Tests use fixture responses and temporary databases for mutations. The actual review-panel check logs into the local API but makes no listing, duplicate-decision or workspace changes. Screenshots and detailed logs are under ignored `data/p1p2/`.
 
@@ -58,11 +58,15 @@ The fix now assigns isolated temporary databases before test modules import, cap
 
 ## Repository and deployment checkpoint
 
-The owner reviewed the local site and authorized committing/pushing. GitHub Pages creation was attempted with workflow builds in the existing private repository. GitHub returned **HTTP 422: “Your current plan does not support GitHub Pages for this repository.”** Repository visibility was preserved. The available website is **http://127.0.0.1:4310**; the approved exact-hash release is prepared for a later Pages-compatible account/repository decision. The final push/CI result is recorded below.
+The owner reviewed the local site and authorized committing/pushing. GitHub Pages creation was attempted with workflow builds in the existing private repository. GitHub returned **HTTP 422: “Your current plan does not support GitHub Pages for this repository.”** Repository visibility was preserved. The available website is **http://127.0.0.1:4310**; the approved exact-hash release is prepared for a later Pages-compatible account/repository decision.
+
+The main implementation was committed and pushed as `fa8a04c`. [Its first hosted validation run](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34260064907) passed both Linux AMD64 container builds, exact-image inventories and smoke checks, including rendered-browser execution. Application tests failed on Ubuntu and Windows: fresh checkouts correctly omit the private publication journal, which the snapshot reader had incorrectly required; Windows also exposed short-path canonicalization, line-ending hash and generated target-path errors.
+
+The final compatibility correction validates imported public generations independently, preserves their verified snapshot/pointer in backups, and never fabricates a local activation record. Corrupt present journals and changed generation bytes remain errors. Native Windows canonical paths retain strict temporary-database containment; service templates use their target platform's paths; Git preserves LF for hashed text. Release fingerprints now include deployment/build configuration and normalize paths before ordering. CI verifies the committed approved release before regenerating SBOMs. The follow-up run and final checks are recorded below when complete.
 
 ## Practical limits and deferred execution
 
-Windows/Ubuntu hosted checks and AMD64 container workflows are configured but **had not run at the local-validation checkpoint**. The tested ARM64 image digests and source-lock hashes are recorded in [SBOM.md](SBOM.md); those image results do not claim that later application edits are present in an earlier captured image. Docker collection/connected database views work, but shared app/worker snapshot export is deferred; leave container automatic export off and rebuild from a host-generated snapshot for standalone data updates.
+The tested ARM64 image digests and source-lock hashes are recorded in [SBOM.md](SBOM.md); those image results do not claim that later application edits are present in an earlier captured image. The hosted run above adds actual AMD64 evidence, with application portability failures and their follow-up results recorded separately. Docker collection/connected database views work, but shared app/worker snapshot export is deferred; leave container automatic export off and rebuild from a host-generated snapshot for standalone data updates.
 
 No persistent OS service, public geocoder permission, external routing account, SMTP/webhook destination or public Pages release was enabled. Local/provider fixtures do not prove external delivery or machine-specific scheduler installation. The optional WebMCP path was not exercised because the test browser did not expose `document.modelContext`. No OS vulnerability scan is implied by an npm audit or component inventory.
 
