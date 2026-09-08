@@ -10,7 +10,7 @@ import {
   realpath,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 const lifecycleDirectory = await mkdtemp(
@@ -37,6 +37,28 @@ beforeAll(async () => {
 afterAll(async () => {
   await db.$disconnect();
   await rm(lifecycleDirectory, { recursive: true, force: true });
+});
+it("rejects public, built-output and Git backup destinations before any SQL", async () => {
+  const query = vi.fn(() => {
+    throw new Error("SQL must not run for a forbidden backup destination");
+  });
+  const execute = vi.fn(() => {
+    throw new Error("SQL must not run for a forbidden backup destination");
+  });
+  const database = { $queryRawUnsafe: query, $executeRawUnsafe: execute };
+  for (const root of ["public", "out", ".git"])
+    for (const destination of [
+      root,
+      join(root, "private-backup"),
+      resolve(root, "nested", "private-backup"),
+    ])
+      await expect(
+        backupBeforeRefresh(destination, "unused-snapshot.json", {
+          database,
+        }),
+      ).rejects.toThrow("outside public/");
+  expect(query).not.toHaveBeenCalled();
+  expect(execute).not.toHaveBeenCalled();
 });
 it("restores a consistent SQLite backup with readable data and verified hashes", async () => {
   const directory = await mkdtemp(join(tmpdir(), "boatscout-backup-"));

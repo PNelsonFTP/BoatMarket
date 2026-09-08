@@ -9,7 +9,7 @@ The owner requested winding down enhancements, reviewed the local website, and t
 | Check | Result |
 |---|---|
 | TypeScript | `npm run typecheck` passed |
-| Unit/integration suite | Final macOS run: **209 tests across 35 files passed**, with one Windows-only alias test skipped; includes fresh-clone backup/restore and release-fingerprint regressions |
+| Unit/integration suite | Final macOS run: **210 tests across 35 files passed**, with one Windows-only alias test skipped; includes fresh-clone backup/restore, private-backup preflight and release-fingerprint regressions |
 | Desktop/mobile browser suite | **20 tests passed** in Chromium, including advertisement/grouped-record counts |
 | Root production export | `npm run build` passed; root output restored for the local website |
 | GitHub Pages subpath | `/BoatMarket/` build and browser verification passed: search, images and public assets; zero runtime errors or missing local assets |
@@ -24,7 +24,7 @@ The owner requested winding down enhancements, reviewed the local website, and t
 | Docker snapshot permissions | An isolated copy/read probe reproduced `EACCES` for a root-owned `0600` pointer and passed after copying ownership to UID1000. The existing captured runtime also passed the expanded website/pointer/selected-snapshot HTTP smoke |
 | Runtime image inventories | Exact-image CycloneDX records cover 3,955 default-runtime and 5,290 rendered-image components; images/scopes overlap and counts must not be added |
 | Cleanup | Changed TypeScript/TSX/JavaScript files pass Prettier; `git diff --check` passes; scratch reports/backups remain under ignored `data/` |
-| Exact release/build | Final portability release review `6a51e0596c6d96cc040be825ff201b498ad6a8cfbc7ca61b2c28ac24056af59d` verified against the final root build, unchanged reviewed snapshot and three current SBOMs |
+| Exact release/build | Final release review `b924a8e2b60e57090785dfa4c85e80f9a4ab2cb87ae33fd0baaf37b57d26962f` verified against the final root build, unchanged reviewed snapshot and three current SBOMs |
 
 Tests use fixture responses and temporary databases for mutations. The actual review-panel check logs into the local API but makes no listing, duplicate-decision or workspace changes. Screenshots and detailed logs are under ignored `data/p1p2/`.
 
@@ -62,7 +62,9 @@ The owner reviewed the local site and authorized committing/pushing. GitHub Page
 
 The main implementation was committed and pushed as `fa8a04c`. [Its first hosted validation run](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34260064907) passed both Linux AMD64 container builds, exact-image inventories and smoke checks, including rendered-browser execution. Application tests failed on Ubuntu and Windows: fresh checkouts correctly omit the private publication journal, which the snapshot reader had incorrectly required; Windows also exposed short-path canonicalization, line-ending hash and generated target-path errors.
 
-The final compatibility correction validates imported public generations independently, preserves their verified snapshot/pointer in backups, and never fabricates a local activation record. Corrupt present journals and changed generation bytes remain errors. Native Windows canonical paths retain strict temporary-database containment; service templates use their target platform's paths; Git preserves LF for hashed text. Release fingerprints now include deployment/build configuration and normalize paths before ordering. CI verifies the committed approved release before regenerating SBOMs. The follow-up run and final checks are recorded below when complete.
+The compatibility correction in `3ed053f` validates imported public generations independently, preserves their verified snapshot/pointer in backups, and never fabricates a local activation record. Corrupt present journals and changed generation bytes remain errors. Native Windows canonical paths retain strict temporary-database containment; service templates use their target platform's paths; Git preserves LF for hashed text. Release fingerprints now include deployment/build configuration and normalize paths before ordering. CI verifies the committed approved release before regenerating SBOMs.
+
+[The second hosted run](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261106388) passed Ubuntu's unit/SBOM/browser checks and both AMD64 container jobs. Windows passed 209 tests, including the native alias regression, but exposed one remaining backup destination preflight that compared native paths with a literal forward slash. The final correction uses native relative-path containment and tests all three forbidden roots and their descendants before any SQL executes. Final hosted results are recorded below when complete.
 
 ## Practical limits and deferred execution
 

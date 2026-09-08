@@ -8,7 +8,7 @@ import {
 } from "node:fs/promises";
 import { createHash, randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
-import { dirname, join, resolve } from "node:path";
+import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import type { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import { hostname } from "node:os";
@@ -86,9 +86,12 @@ export async function backupBeforeRefresh(
 ) {
   for (const publicDirectory of ["public", "out", ".git"]) {
     const forbidden = resolve(publicDirectory);
+    const fromForbidden = relative(forbidden, resolve(directory));
     if (
-      resolve(directory) === forbidden ||
-      resolve(directory).startsWith(forbidden + "/")
+      fromForbidden === "" ||
+      (!isAbsolute(fromForbidden) &&
+        fromForbidden !== ".." &&
+        !fromForbidden.startsWith(`..${sep}`))
     )
       throw new Error(
         "Backups contain private workspace data and must stay outside public/, out/ and .git/",
