@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id              String @id @default("local")
+  workspaceVersion Int @default(0)
+  referencePoints Json @default("[]")
+  favorites Favorite[]
+  notes Note[]
+  searches SavedSearch[]
+  rules RuleSet[]
+  alerts Alert[]
+}
+model BoatGroup {
+  id String @id @default(cuid())
+  reason String
+  createdAt DateTime @default(now())
+  listings Listing[]
+}
+model Seller {
+  id String @id @default(cuid())
+  key String @unique
+  name String
+  type String?
+  data Json @default("{}")
+  listings Listing[]
+}
+model Listing {
+  id String @id
+  source String
+  sourceListingId String
+  sourceUrl String
+  title String
+  make String?
+  model String?
+  year Int?
+  price Float?
+  length Float?
+  horsepower Float?
+  lat Float?
+  lng Float?
+  state String?
+  status String @default("active")
+  firstSeenAt DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  removedAt DateTime?
+  data Json
+  rawPayload Json?
+  confidence Json @default("{}")
+  isSample Boolean @default(false)
+  groupId String?
+  group BoatGroup? @relation(fields:[groupId],references:[id],onDelete:SetNull)
+  sellerId String?
+  seller Seller? @relation(fields:[sellerId],references:[id],onDelete:SetNull)
+  engines Engine[]
+  prices PriceHistory[]
+  favorites Favorite[]
+  notes Note[]
+  @@unique([source,sourceListingId])
+  @@index([status,price])
+  @@index([source,lastSeenAt])
+  @@index([make,model,year])
+}
+model Engine {
+  id String @id @default(cuid())
+  listingId String
+  listing Listing @relation(fields:[listingId],references:[id],onDelete:Cascade)
+  make String?
+  model String?
+  year Int?
+  hp Float?
+  hours Float?
+  @@index([listingId])
+}
+model PriceHistory {
+  id String @id @default(cuid())
+  listingId String
+  listing Listing @relation(fields:[listingId],references:[id],onDelete:Cascade)
+  price Float
+  at DateTime @default(now())
+  @@index([listingId,at])
+}
+model SearchArea {
+  id String @id
+  name String
+  config Json
+}
+model SavedSearch {
+  id String @id
+  userId String @default("local")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  name String
+  filters Json
+  cadence String @default("off")
+  channels Json @default("[\"in-app\"]")
+  digest Boolean @default(true)
+  lastCheckedAt DateTime?
+  matchState Json @default("{}")
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+model Favorite {
+  userId String
+  listingId String
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  listing Listing @relation(fields:[listingId],references:[id],onDelete:Cascade)
+  createdAt DateTime @default(now())
+  @@id([userId,listingId])
+}
+model Note {
+  userId String
+  listingId String
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  listing Listing @relation(fields:[listingId],references:[id],onDelete:Cascade)
+  text String
+  updatedAt DateTime @updatedAt
+  @@id([userId,listingId])
+}
+model RuleSet {
+  id String @id
+  userId String @default("local")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  name String
+  config Json
+  @@index([userId])
+}
+model Alert {
+  id String @id @default(cuid())
+  userId String @default("local")
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  title String
+  body String
+  listingIds Json
+  read Boolean @default(false)
+  createdAt DateTime @default(now())
+  deliveries Json @default("[]")
+  deliveredAt DateTime?
+  deliveryError String?
+  attempts Int @default(0)
+  @@index([userId,createdAt])
+}
+model IngestRun {
+  id String @id @default(cuid())
+  source String
+  area String
+  startedAt DateTime @default(now())
+  completedAt DateTime?
+  status String @default("running")
+  found Int @default(0)
+  new Int @default(0)
+  updated Int @default(0)
+  removed Int @default(0)
+  errors Json @default("[]")
+}
+model GeocodeCache {
+  query String @id
+  results Json
+  createdAt DateTime @default(now())
+}
+model JobLock {
+  key String @id
+  owner String
+  expiresAt DateTime
+}

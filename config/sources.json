@@ -1,0 +1,406 @@
+[
+  {
+    "id": "boattrader",
+    "name": "Boat Trader",
+    "adapter": "boattrader",
+    "enabled": false,
+    "urls": [
+      "https://www.boattrader.com/boats/dealer-water-werks-boat-sales-5493/"
+    ],
+    "area": "Country Club Hills, IL — access test"
+  },
+  {
+    "id": "yachtworld",
+    "name": "YachtWorld",
+    "adapter": "yachtworld",
+    "enabled": false,
+    "urls": [],
+    "area": "Configured search pages"
+  },
+  {
+    "id": "craigslist",
+    "name": "Craigslist",
+    "adapter": "craigslist",
+    "enabled": true,
+    "urls": [
+      "https://www.craigslist.org/search/area/chicago?cat=boo",
+      "https://www.craigslist.org/search/area/lasalle?cat=boo",
+      "https://www.craigslist.org/search/area/rockford?cat=boo",
+      "https://www.craigslist.org/search/area/peoria?cat=boo",
+      "https://www.craigslist.org/search/area/quadcities?cat=boo",
+      "https://www.craigslist.org/search/area/milwaukee?cat=boo",
+      "https://www.craigslist.org/search/area/madison?cat=boo",
+      "https://www.craigslist.org/search/area/southbend?cat=boo",
+      "https://www.craigslist.org/search/area/bn?cat=boo",
+      "https://www.craigslist.org/search/area/chambana?cat=boo",
+      "https://www.craigslist.org/search/area/springfieldil?cat=boo",
+      "https://www.craigslist.org/search/area/decatur?cat=boo",
+      "https://www.craigslist.org/search/area/janesville?cat=boo",
+      "https://www.craigslist.org/search/area/racine?cat=boo",
+      "https://www.craigslist.org/search/area/dubuque?cat=boo",
+      "https://www.craigslist.org/search/area/swmi?cat=boo",
+      "https://www.craigslist.org/search/area/kalamazoo?cat=boo"
+    ],
+    "area": "17 nearby regions; owner and dealer ads; preferred-make detail enrichment",
+    "followDetails": true,
+    "detailMakes": [
+      "Lund",
+      "Ranger",
+      "Bass Cat",
+      "BassCat",
+      "Skeeter",
+      "Phoenix",
+      "Falcon",
+      "Triton",
+      "Vexus",
+      "Caymas",
+      "Warrior",
+      "Crestliner",
+      "Alumacraft",
+      "Nitro",
+      "MasterCraft",
+      "Nautique",
+      "Malibu",
+      "Supra",
+      "Moomba",
+      "Tige",
+      "Centurion",
+      "Sanger",
+      "Axis"
+    ],
+    "detailMaxLength": 21,
+    "maxDetailPages": 150
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook Marketplace",
+    "adapter": "facebook",
+    "enabled": false,
+    "urls": [],
+    "area": "Manual JSON import only"
+  },
+  {
+    "id": "boats",
+    "name": "Boats.com",
+    "adapter": "boats",
+    "enabled": false,
+    "urls": [],
+    "area": "Configured search pages"
+  },
+  {
+    "id": "iboats",
+    "name": "iboats",
+    "adapter": "iboats",
+    "enabled": false,
+    "urls": [],
+    "area": "Configured search pages"
+  },
+  {
+    "id": "ebay",
+    "name": "eBay Motors",
+    "adapter": "ebay",
+    "enabled": false,
+    "urls": [],
+    "area": "Configured search pages"
+  },
+  {
+    "id": "dealer",
+    "name": "Dealer",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [],
+    "area": "Local dealer inventory",
+    "selectors": {
+      "item": ".inventory-item",
+      "title": ".title",
+      "link": "a",
+      "price": ".price",
+      "image": "img",
+      "location": ".location"
+    }
+  },
+  {
+    "id": "cpo",
+    "name": "Manufacturer CPO",
+    "adapter": "cpo",
+    "enabled": false,
+    "urls": [],
+    "area": "Configured certified inventory"
+  },
+  {
+    "id": "bedford",
+    "name": "Bedford Sales & Outdoors",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.bedford-sales.com/inventory/"
+    ],
+    "area": "Morris, IL",
+    "followDetails": true,
+    "maxDetailPages": 80
+  },
+  {
+    "id": "onlyinboards",
+    "name": "OnlyInboards",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://onlyinboards.com/locationwise?state=Illinois&toLength=20.99&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=20.99&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=20.99&pageSize=48&page=2",
+      "https://onlyinboards.com/locationwise?state=Wisconsin&toLength=20.99&pageSize=48&page=3",
+      "https://onlyinboards.com/locationwise?state=Indiana&toLength=20.99&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Iowa&pageSize=48&page=1",
+      "https://onlyinboards.com/locationwise?state=Michigan&toLength=20.99&pageSize=48&page=1"
+    ],
+    "area": "IL, WI, IN, IA, MI; every result page; detail enrichment under 21 ft",
+    "followDetails": true,
+    "detailMaxLength": 21,
+    "maxDetailPages": 100,
+    "autoPaginate": true
+  },
+  {
+    "id": "skipperbuds",
+    "name": "SkipperBud’s",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.skipperbuds.com/boats-for-sale/brands/MasterCraft"
+    ],
+    "area": "Regional MasterCraft inventory — access test"
+  },
+  {
+    "id": "waterwerks",
+    "name": "Water Werks",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.waterwerks.com/"
+    ],
+    "area": "Country Club Hills, IL — access test"
+  },
+  {
+    "id": "hennepin",
+    "name": "Hennepin Marine",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.hennepinmarine.com/"
+    ],
+    "area": "Hennepin, IL — access test"
+  },
+  {
+    "id": "boathouse",
+    "name": "The Boat House",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.boathouseh2o.com/used-boats-for-sale/mastercraft/2021-mastercraft-pro-star-hiseubvp/"
+    ],
+    "area": "Johnsburg, IL — access test"
+  },
+  {
+    "id": "millers",
+    "name": "Miller’s Sport Center",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.millerssport.com/new-and-pre-owned-inventory-c-62.html",
+      "https://www.millerssport.com/in-stock-inventory-c-62.html?cPath=62&page=2"
+    ],
+    "area": "Lanark, IL — all inventory pages",
+    "followDetails": true,
+    "maxDetailPages": 80
+  },
+  {
+    "id": "hubers",
+    "name": "Huber’s Marine",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.hubersmarine.com/search/inventory/availability/In%20Stock"
+    ],
+    "area": "La Porte, IN — access test"
+  },
+  {
+    "id": "foxlake",
+    "name": "Fox Lake Harbor",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.foxlakeharbor.com/--inventory?category=boat"
+    ],
+    "area": "Fox Lake, IL",
+    "autoPaginate": true,
+    "followDetails": true,
+    "detailMakes": [
+      "Lund",
+      "Ranger",
+      "Bass Cat",
+      "BassCat",
+      "Skeeter",
+      "Phoenix",
+      "Falcon",
+      "Triton",
+      "Vexus",
+      "Caymas",
+      "Warrior",
+      "Crestliner",
+      "Alumacraft",
+      "Nitro",
+      "MasterCraft",
+      "Nautique",
+      "Malibu",
+      "Supra",
+      "Moomba",
+      "Tige",
+      "Centurion",
+      "Sanger",
+      "Axis"
+    ],
+    "detailMaxLength": 21,
+    "maxDetailPages": 100
+  },
+  {
+    "id": "lakecounty",
+    "name": "Lake County Watersports",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.lakecountywatersports.com/--inventory"
+    ],
+    "area": "Wauconda, IL",
+    "autoPaginate": true,
+    "followDetails": true,
+    "detailMakes": [
+      "Lund",
+      "Ranger",
+      "Bass Cat",
+      "BassCat",
+      "Skeeter",
+      "Phoenix",
+      "Falcon",
+      "Triton",
+      "Vexus",
+      "Caymas",
+      "Warrior",
+      "Crestliner",
+      "Alumacraft",
+      "Nitro",
+      "MasterCraft",
+      "Nautique",
+      "Malibu",
+      "Supra",
+      "Moomba",
+      "Tige",
+      "Centurion",
+      "Sanger",
+      "Axis"
+    ],
+    "detailMaxLength": 21,
+    "maxDetailPages": 100
+  },
+  {
+    "id": "teds",
+    "name": "Ted’s Boatarama",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.tedsboatarama.com/--inventory"
+    ],
+    "area": "Rock Island, IL",
+    "autoPaginate": true,
+    "followDetails": true,
+    "detailMakes": [
+      "Lund",
+      "Ranger",
+      "Bass Cat",
+      "BassCat",
+      "Skeeter",
+      "Phoenix",
+      "Falcon",
+      "Triton",
+      "Vexus",
+      "Caymas",
+      "Warrior",
+      "Crestliner",
+      "Alumacraft",
+      "Nitro",
+      "MasterCraft",
+      "Nautique",
+      "Malibu",
+      "Supra",
+      "Moomba",
+      "Tige",
+      "Centurion",
+      "Sanger",
+      "Axis"
+    ],
+    "detailMaxLength": 21,
+    "maxDetailPages": 100
+  },
+  {
+    "id": "gordys",
+    "name": "Gordy’s Marine",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.gordysboats.com/wisconsin-all-boat-inventory/"
+    ],
+    "area": "Fox Lake IL, Fontana and Lake Country WI",
+    "autoPaginate": true
+  },
+  {
+    "id": "bassboatcentral",
+    "name": "Bass Boat Central",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://bassboatcentral.com/boats-for-sale/ranger/",
+      "https://bassboatcentral.com/boats-for-sale/skeeter/",
+      "https://bassboatcentral.com/boats-for-sale/phoenix/",
+      "https://bassboatcentral.com/boats-for-sale/bass-cat/",
+      "https://bassboatcentral.com/boats-for-sale/caymas/",
+      "https://bassboatcentral.com/boats-for-sale/nitro/",
+      "https://bassboatcentral.com/boats-for-sale/triton/",
+      "https://bassboatcentral.com/boats-for-sale/boats-for-sale-ci/",
+      "https://bassboatcentral.com/boats-for-sale/boats-for-sale-js/",
+      "https://bassboatcentral.com/boats-for-sale/boats-for-sale-tz/"
+    ],
+    "area": "Owner/dealer classifieds: IL, WI, IN, IA, MI",
+    "autoPaginate": true,
+    "maxInventoryPages": 70
+  },
+  {
+    "id": "munson",
+    "name": "Munson Ski & Marine",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.munsonski.com/--inventory"
+    ],
+    "area": "Round Lake IL; robots HTTP 403"
+  },
+  {
+    "id": "lakeholidaymarina",
+    "name": "Lake Holiday Marina",
+    "adapter": "dealer",
+    "enabled": false,
+    "urls": [
+      "https://www.lakeholidaymarina.com/"
+    ],
+    "area": "Somonauk IL; robots HTTP 403"
+  },
+  {
+    "id": "starvedrock",
+    "name": "Starved Rock Marina",
+    "adapter": "dealer",
+    "enabled": true,
+    "urls": [
+      "https://www.starvedrockmarina.com/category/used-boat-sales/"
+    ],
+    "area": "Ottawa, IL; all public used-boat inventory pages",
+    "autoPaginate": true,
+    "followDetails": false
+  }
+]

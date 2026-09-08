@@ -1,0 +1,100 @@
+{
+  "generatedAt": "2026-09-08T02:40:29.540Z",
+  "chicagoDate": "2026-09-07",
+  "timezone": "America/Chicago",
+  "nodeVersion": "v26.7.0",
+  "npmVersion": "11.19.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "source": {
+    "file": "package-lock.json",
+    "sha256": "5d6e0f50e5225c83f1880b49e99d1b27d30cd75c870915b41ea96a1139d8c842",
+    "lockfileVersion": 3
+  },
+  "transformations": [
+    "Normalized CycloneDX root display name to package-lock root name; no dependency components or graph edges changed."
+  ],
+  "lockInventory": {
+    "packages": 435,
+    "uniqueNameVersionPairs": 435,
+    "optionalFlaggedEntries": 113,
+    "entriesWithIntegrity": 435,
+    "entriesWithDeclaredLicense": 435,
+    "unresolvedDependencyDeclarations": 22,
+    "unresolvedBundledDeclarations": 4
+  },
+  "lockUnchangedAfterGeneration": true,
+  "commands": [
+    {
+      "command": "npm sbom --package-lock-only --sbom-format=cyclonedx --sbom-type=application --include=dev --include=optional --include=peer",
+      "exitCode": 1,
+      "result": "known limitation",
+      "evidence": "sbom/full-sbom-generation-limitation.json"
+    },
+    {
+      "command": "npm sbom --package-lock-only --sbom-format=cyclonedx --sbom-type=application --omit=optional --include=dev --include=peer",
+      "exitCode": 0,
+      "result": "generated",
+      "file": "sbom/boatscout-full-required.cdx.json"
+    },
+    {
+      "command": "npm sbom --package-lock-only --sbom-format=cyclonedx --sbom-type=application --omit=dev --include=optional --include=peer",
+      "exitCode": 0,
+      "result": "generated",
+      "file": "sbom/boatscout-production.cdx.json"
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "sbom/package-lock-inventory.json",
+      "sha256": "96fdf45edafb72af99aa5c940a03c12f157a7d2dfb8ccf32900de9eb84c43971"
+    },
+    {
+      "file": "sbom/full-sbom-generation-limitation.json",
+      "sha256": "1a0affa69728eac89e930573c962a6391c3df39d87fc0e7d8022f8a23b4f071e"
+    },
+    {
+      "file": "sbom/boatscout-full-required.cdx.json",
+      "sha256": "bc27ffa1b3fcde20660e13c4868bd9ec4f5c285087257524dc3f264fe12b32ec"
+    },
+    {
+      "file": "sbom/boatscout-production.cdx.json",
+      "sha256": "47b7d84b44d22bd3c0c1ce7248b7d14e716eb79494d82efc572ea97c356f8824"
+    }
+  ],
+  "validation": [
+    {
+      "file": "sbom/boatscout-full-required.cdx.json",
+      "componentCountExcludingRoot": 319,
+      "dependencyGraphNodes": 320,
+      "dependencyGraphEdges": 567,
+      "componentsWithIntegrityHashes": 319,
+      "componentsWithLicenseMetadata": 319,
+      "jsonParsed": true,
+      "referenceCompleteness": true,
+      "exactVersionsCorrespondToLockfile": true,
+      "emittedIntegrityHashesMatchLockfile": true,
+      "fullCycloneDxSchemaValidated": false
+    },
+    {
+      "file": "sbom/boatscout-production.cdx.json",
+      "componentCountExcludingRoot": 222,
+      "dependencyGraphNodes": 223,
+      "dependencyGraphEdges": 376,
+      "componentsWithIntegrityHashes": 222,
+      "componentsWithLicenseMetadata": 222,
+      "jsonParsed": true,
+      "referenceCompleteness": true,
+      "exactVersionsCorrespondToLockfile": true,
+      "emittedIntegrityHashesMatchLockfile": true,
+      "fullCycloneDxSchemaValidated": false
+    }
+  ],
+  "auditReports": "Not refreshed by this run; --audit requests new read-only reports.",
+  "limitations": [
+    "A source dependency SBOM, not an inventory of an installed deployment, bundled browser assets, container OS, Node binary, browser binaries, or separately downloaded Prisma engines.",
+    "License identifiers and integrity digests are declared lock metadata; license texts and downloaded artifact contents were not independently reviewed.",
+    "Structural/reference/lock correspondence checks are performed, not complete CycloneDX JSON Schema validation.",
+    "Timestamp and serial UUID fields vary between regenerations. Use the same lockfile and npm version for comparable dependency content."
+  ]
+}

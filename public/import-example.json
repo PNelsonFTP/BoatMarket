@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "listings": [
+    {
+      "id": "your-unique-id",
+      "source": "Manual",
+      "sourceListingId": "your-source-id",
+      "sourceUrl": "https://example.com/replace-with-real-listing",
+      "title": "2021 Lund 1875 Impact XS",
+      "description": "Replace with the actual listing description.",
+      "make": "Lund",
+      "model": "1875 Impact XS",
+      "year": 2021,
+      "price": 38900,
+      "currency": "USD",
+      "length": 18.9,
+      "horsepower": 150,
+      "engineHours": null,
+      "category": "Deep-V / multi-species",
+      "propulsion": "Outboard",
+      "city": "Wheaton",
+      "state": "IL",
+      "lat": 41.8661,
+      "lng": -88.107,
+      "sellerLat": 41.8761,
+      "sellerLng": -88.097,
+      "sellerName": "Great Lakes Marine (sample)",
+      "sellerType": "Dealer",
+      "photos": [],
+      "status": "active",
+      "firstSeenAt": "2026-09-07T17:33:48.117Z",
+      "lastSeenAt": "2026-09-08T00:45:48.117Z",
+      "removedAt": null,
+      "specs": {
+        "hullMaterial": "Aluminum",
+        "hullShape": "V",
+        "condition": "Certified pre-owned",
+        "freshwaterOnly": null,
+        "waterHistory": "Freshwater",
+        "engineMake": "Mercury",
+        "engineModel": "FourStroke",
+        "engineYear": 2021,
+        "engineCount": 1,
+        "hpPerEngine": 150,
+        "fuel": "Gas",
+        "stroke": "4-stroke",
+        "beam": 8.5,
+        "draft": 1.5,
+        "dryWeight": 2268,
+        "loadedWeight": null,
+        "passengers": 8,
+        "maxHpRating": 175,
+        "titleStatus": "Clean",
+        "trollingMotor": true,
+        "spotLock": true,
+        "sellerCity": "Wheaton",
+        "sellerState": "IL",
+        "sellerListingCount": 7,
+        "hasVideo": true,
+        "liveWells": 2,
+        "fuelCapacity": 40,
+        "equipment.trailer": true,
+        "equipment.cover": true,
+        "equipment.stereo": true,
+        "equipment.fish_finder_sonar": true,
+        "equipment.wakeboard_tower": false
+      },
+      "engines": [
+        {
+          "make": "Mercury",
+          "model": "FourStroke",
+          "year": 2021,
+          "hp": 150,
+          "hours": null
+        }
+      ],
+      "priceHistory": [
+        {
+          "price": 42400,
+          "at": "2026-09-07T17:33:48.117Z"
+        },
+        {
+          "price": 38900,
+          "at": "2026-09-07T21:09:48.117Z"
+        }
+      ],
+      "confidence": {
+        "make": 1,
+        "model": 1,
+        "year": 1,
+        "price": 1,
+        "loadedWeight": 0.5
+      },
+      "groupId": null,
+      "isSample": true
+    }
+  ]
+}

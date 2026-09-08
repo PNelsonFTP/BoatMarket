@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label":"BoatScout: setup","type":"shell","command":"npm run setup","problemMatcher":[]},
+    {"label":"BoatScout: start website, API & worker","type":"shell","command":"npm run dev","isBackground":true,"problemMatcher":[],"presentation":{"reveal":"always","panel":"dedicated"}},
+    {"label":"BoatScout: run collection once","type":"shell","command":"npm run collect","problemMatcher":[]},
+    {"label":"BoatScout: export Pages snapshot","type":"shell","command":"npm run export:snapshot","problemMatcher":[]},
+    {"label":"BoatScout: verify","type":"shell","command":"npm run check","group":{"kind":"test","isDefault":true},"problemMatcher":[]}
+  ]
+}

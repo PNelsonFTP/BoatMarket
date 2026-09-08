@@ -1,0 +1,8 @@
+{
+  "generatedAt": "2026-09-08T02:40:29.540Z",
+  "sourceLockSha256": "5d6e0f50e5225c83f1880b49e99d1b27d30cd75c870915b41ea96a1139d8c842",
+  "command": "npm sbom --package-lock-only --sbom-format=cyclonedx --sbom-type=application --include=dev --include=optional --include=peer",
+  "exitCode": 1,
+  "diagnostics": "npm error code ESBOMPROBLEMS\nnpm error missing: @emnapi/core@^1.11.1, required by @tailwindcss/oxide-wasm32-wasi@4.3.3\nnpm error missing: @emnapi/wasi-threads@^1.2.2, required by @tailwindcss/oxide-wasm32-wasi@4.3.3\nnpm error missing: @napi-rs/wasm-runtime@^1.1.4, required by @tailwindcss/oxide-wasm32-wasi@4.3.3\nnpm error missing: @tybys/wasm-util@^0.10.2, required by @tailwindcss/oxide-wasm32-wasi@4.3.3\nnpm error Log files were not written due to the config logs-max=0",
+  "explanation": "npm lock-only SBOM cannot resolve some bundled dependency versions of an optional WASM package. No synthetic versions or dependency fixes were added. See package-lock-inventory.json for every available locked package and unresolved declaration."
+}

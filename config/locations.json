@@ -1,0 +1,808 @@
+{
+  "morris, il": {
+    "lat": 41.3574135,
+    "lng": -88.4215234,
+    "label": "Morris, Grundy County, Illinois, 60450, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:23.923Z"
+  },
+  "sullivan, il": {
+    "lat": 39.599479,
+    "lng": -88.6078392,
+    "label": "Sullivan, Moultrie County, Illinois, 61951, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:25.614Z"
+  },
+  "farmer city, il": {
+    "lat": 40.2433676,
+    "lng": -88.6425668,
+    "label": "Farmer City, DeWitt County, Illinois, 61842, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:27.469Z"
+  },
+  "east dubuque, il": {
+    "lat": 42.4922253,
+    "lng": -90.6429054,
+    "label": "East Dubuque, Dunleith Township, Jo Daviess County, Illinois, 61025, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:28.996Z"
+  },
+  "antioch, il": {
+    "lat": 42.4767131,
+    "lng": -88.0950691,
+    "label": "Antioch, Lake County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:30.516Z"
+  },
+  "peru, il": {
+    "lat": 41.3272919,
+    "lng": -89.1287636,
+    "label": "Peru, LaSalle County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:32.073Z"
+  },
+  "roscoe, il": {
+    "lat": 42.4133505,
+    "lng": -89.0092742,
+    "label": "Roscoe, Roscoe Township, Winnebago County, Illinois, 61073, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:33.570Z"
+  },
+  "dahinda, il": {
+    "lat": 40.9251449,
+    "lng": -90.11045,
+    "label": "Dahinda, Knox County, Illinois, 61428, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:35.198Z"
+  },
+  "glen carbon, il": {
+    "lat": 38.7483814,
+    "lng": -89.983158,
+    "label": "Glen Carbon, Madison County, Illinois, 62034, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:36.831Z"
+  },
+  "wilmington, il": {
+    "lat": 41.3078989,
+    "lng": -88.1468343,
+    "label": "Wilmington, Will County, Illinois, 60481, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:15:45.047Z"
+  },
+  "fox lake, il": {
+    "lat": 42.3966874,
+    "lng": -88.1836965,
+    "label": "Fox Lake, Lake County, Illinois, 60020, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:39.948Z"
+  },
+  "rockford, il": {
+    "lat": 42.2713945,
+    "lng": -89.093966,
+    "label": "Rockford, Rockford Township, Winnebago County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:41.548Z"
+  },
+  "grayslake, il": {
+    "lat": 42.3433518,
+    "lng": -88.0412192,
+    "label": "Grayslake, Lake County, Illinois, 60030, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:42.904Z"
+  },
+  "fontana, wi": {
+    "lat": 42.5492107,
+    "lng": -88.5750725,
+    "label": "Fontana-on-Geneva Lake, Walworth County, Wisconsin, 53125, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:44.460Z"
+  },
+  "pewaukee, wi": {
+    "lat": 43.0846017,
+    "lng": -88.2139452,
+    "label": "City of Pewaukee, Waukesha County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:45.989Z"
+  },
+  "lake geneva, wi": {
+    "lat": 42.5918039,
+    "lng": -88.4345369,
+    "label": "Lake Geneva, Walworth County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:47.407Z"
+  },
+  "mauston, wi": {
+    "lat": 43.7968543,
+    "lng": -90.0756767,
+    "label": "Mauston, Juneau County, Wisconsin, 53948, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:49.002Z"
+  },
+  "clear lake, wi": {
+    "lat": 45.2514424,
+    "lng": -92.2702808,
+    "label": "Clear Lake, Polk County, Wisconsin, 54005, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:50.556Z"
+  },
+  "minocqua, wi": {
+    "lat": 45.871342,
+    "lng": -89.710981,
+    "label": "Town of Minocqua, Oneida County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:52.041Z"
+  },
+  "walworth, wi": {
+    "lat": 42.531099,
+    "lng": -88.5995382,
+    "label": "Walworth, Walworth County, Wisconsin, 53184, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:15:46.644Z"
+  },
+  "shawano, wi": {
+    "lat": 44.7822064,
+    "lng": -88.6089917,
+    "label": "Shawano, Shawano County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:15:48.318Z"
+  },
+  "oconomowoc, wi": {
+    "lat": 43.1116731,
+    "lng": -88.4992659,
+    "label": "Oconomowoc, Waukesha County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:56.775Z"
+  },
+  "balsam lake, wi": {
+    "lat": 45.4519151,
+    "lng": -92.4530074,
+    "label": "Balsam Lake, Polk County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:58.159Z"
+  },
+  "three lakes, wi": {
+    "lat": 45.7979776,
+    "lng": -89.1694962,
+    "label": "Town of Three Lakes, Oneida County, Wisconsin, 54562, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:13:59.871Z"
+  },
+  "oshkosh, wi": {
+    "lat": 44.0206919,
+    "lng": -88.5408574,
+    "label": "Oshkosh, Winnebago County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:01.243Z"
+  },
+  "madison, wi": {
+    "lat": 43.07469,
+    "lng": -89.3841663,
+    "label": "Madison, Dane County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:03.128Z"
+  },
+  "sturgeon bay, wi": {
+    "lat": 44.8341639,
+    "lng": -87.377042,
+    "label": "Sturgeon Bay, Door County, Wisconsin, 54235, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:04.620Z"
+  },
+  "atlanta, in": {
+    "lat": 40.216067,
+    "lng": -86.0264853,
+    "label": "Atlanta, Hamilton County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:06.264Z"
+  },
+  "indianapolis, in": {
+    "lat": 39.7683331,
+    "lng": -86.1583502,
+    "label": "Indianapolis, Center Township, Marion County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:07.770Z"
+  },
+  "leesburg, in": {
+    "lat": 41.3319904,
+    "lng": -85.8499921,
+    "label": "Leesburg, Kosciusko County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:09.268Z"
+  },
+  "angola, in": {
+    "lat": 41.634874,
+    "lng": -84.99928,
+    "label": "Angola, Steuben County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:10.913Z"
+  },
+  "trafalgar, in": {
+    "lat": 39.4161604,
+    "lng": -86.150823,
+    "label": "Trafalgar, Johnson County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:12.327Z"
+  },
+  "new albany, in": {
+    "lat": 38.2856247,
+    "lng": -85.8241312,
+    "label": "New Albany, Floyd County, Indiana, 47150, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:14.004Z"
+  },
+  "carmel, in": {
+    "lat": 39.9784186,
+    "lng": -86.1283681,
+    "label": "Carmel, Hamilton County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:14:15.751Z"
+  },
+  "lanark, il": {
+    "lat": 42.1020953,
+    "lng": -89.8329726,
+    "label": "Lanark, Carroll County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:46.395Z"
+  },
+  "darien, wi": {
+    "lat": 42.624567,
+    "lng": -88.7273663,
+    "label": "Town of Darien, Walworth County, Wisconsin, 53114, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:49.399Z"
+  },
+  "hartland, wi": {
+    "lat": 43.105008,
+    "lng": -88.3420398,
+    "label": "Hartland, Waukesha County, Wisconsin, 53029, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:50.788Z"
+  },
+  "whitewater, wi": {
+    "lat": 42.8339562,
+    "lng": -88.7306517,
+    "label": "Whitewater, Walworth County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:52.407Z"
+  },
+  "sayner, wi": {
+    "lat": 45.9860625,
+    "lng": -89.5326435,
+    "label": "Sayner, Town of Plum Lake, Vilas County, Wisconsin, 54560, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:53.886Z"
+  },
+  "sussex, wi": {
+    "lat": 43.1339001,
+    "lng": -88.2220372,
+    "label": "Sussex, Waukesha County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:55.526Z"
+  },
+  "bristol, wi": {
+    "lat": 42.558908,
+    "lng": -88.0492498,
+    "label": "Bristol, Kenosha County, Wisconsin, 53104, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:56.989Z"
+  },
+  "wausau, wi": {
+    "lat": 44.9597858,
+    "lng": -89.6272791,
+    "label": "Wausau, Marathon County, Wisconsin, 54401, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:20:58.575Z"
+  },
+  "weston, wi": {
+    "lat": 44.9055006,
+    "lng": -89.5725724,
+    "label": "Village of Weston, Marathon County, Wisconsin, 54476, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:21:00.193Z"
+  },
+  "appleton, wi": {
+    "lat": 44.2613967,
+    "lng": -88.4069744,
+    "label": "Appleton, Outagamie County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:21:01.575Z"
+  },
+  "suamico, wi": {
+    "lat": 44.632044,
+    "lng": -88.039342,
+    "label": "Suamico, Brown County, Wisconsin, 54173, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T01:21:03.176Z"
+  },
+  "okoboji, ia": {
+    "lat": 43.3858803,
+    "lng": -95.1487375,
+    "label": "Okoboji, Dickinson County, Iowa, 51355, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:29.847Z"
+  },
+  "arnolds park, ia": {
+    "lat": 43.3704506,
+    "lng": -95.1258882,
+    "label": "Arnolds Park, Dickinson County, Iowa, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:31.466Z"
+  },
+  "delhi, ia": {
+    "lat": 42.4297057,
+    "lng": -91.3309112,
+    "label": "Delhi, Delaware County, Iowa, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:33.074Z"
+  },
+  "onawa, ia": {
+    "lat": 42.0268269,
+    "lng": -96.0974618,
+    "label": "Onawa, Monona County, Iowa, 51040, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:34.511Z"
+  },
+  "spirit lake, ia": {
+    "lat": 43.4224868,
+    "lng": -95.1024729,
+    "label": "Spirit Lake, Dickinson County, Iowa, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:35.922Z"
+  },
+  "west bloomfield, mi": {
+    "lat": 42.5684073,
+    "lng": -83.3740333,
+    "label": "West Bloomfield Township, Oakland County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:39.211Z"
+  },
+  "walloon lake, mi": {
+    "lat": 45.2661206,
+    "lng": -84.9336597,
+    "label": "Walloon Lake, Melrose Township, Charlevoix County, Michigan, 49796, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:40.795Z"
+  },
+  "fenton, mi": {
+    "lat": 42.7978061,
+    "lng": -83.7049498,
+    "label": "Fenton, Genesee County, Michigan, 48430, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:42.254Z"
+  },
+  "highland, mi": {
+    "lat": 44.1455678,
+    "lng": -85.2664329,
+    "label": "Highland, Highland Township, Osceola County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:43.743Z"
+  },
+  "hudsonville, mi": {
+    "lat": 42.870889,
+    "lng": -85.865235,
+    "label": "Hudsonville, Ottawa County, Michigan, 49426, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:45.375Z"
+  },
+  "traverse city, mi": {
+    "lat": 44.7606481,
+    "lng": -85.6165976,
+    "label": "Traverse City, Grand Traverse County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:47.037Z"
+  },
+  "brighton, mi": {
+    "lat": 42.5316918,
+    "lng": -83.7846458,
+    "label": "Brighton, Livingston County, Michigan, 48116, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:48.689Z"
+  },
+  "waterford, mi": {
+    "lat": 42.7022527,
+    "lng": -83.402718,
+    "label": "Waterford, Waterford Township, Oakland County, Michigan, 48346, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:50.312Z"
+  },
+  "wauconda, il": {
+    "lat": 42.2589122,
+    "lng": -88.1392474,
+    "label": "Wauconda, Lake County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:51.895Z"
+  },
+  "rock island, il": {
+    "lat": 41.5111317,
+    "lng": -90.5745625,
+    "label": "Rock Island, Rock Island County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:53.485Z"
+  },
+  "ridgway, il": {
+    "lat": 37.7992131,
+    "lng": -88.2611509,
+    "label": "Ridgway, Gallatin County, Illinois, 62979, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:56.500Z"
+  },
+  "davenport, ia": {
+    "lat": 41.5224692,
+    "lng": -90.5756401,
+    "label": "Davenport, Scott County, Iowa, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:57.872Z"
+  },
+  "dewitt, mi": {
+    "lat": 42.8424784,
+    "lng": -84.5697965,
+    "label": "DeWitt, Clinton County, Michigan, 48820, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:02:59.453Z"
+  },
+  "algonac, mi": {
+    "lat": 42.620207,
+    "lng": -82.5345263,
+    "label": "Algonac, Saint Clair County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:03:01.062Z"
+  },
+  "west bend, wi": {
+    "lat": 43.4252776,
+    "lng": -88.1834277,
+    "label": "West Bend, Washington County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:03:02.434Z"
+  },
+  "terre haute, in": {
+    "lat": 39.4667025,
+    "lng": -87.4139119,
+    "label": "Terre Haute, Vigo County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:03:05.359Z"
+  },
+  "adel, ia": {
+    "lat": 41.6174123,
+    "lng": -94.0185176,
+    "label": "Adel, Adel Township, Dallas County, Iowa, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:03:06.931Z"
+  },
+  "georgetown, in": {
+    "lat": 38.2945488,
+    "lng": -85.975447,
+    "label": "Georgetown, Floyd County, Indiana, 47122, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:03:08.393Z"
+  },
+  "ottawa, il": {
+    "lat": 41.3516628,
+    "lng": -88.845436,
+    "label": "Ottawa, LaSalle County, Illinois, 61350, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:03:09.802Z"
+  },
+  "allendale, mi": {
+    "lat": 42.9722455,
+    "lng": -85.9536535,
+    "label": "Allendale, Allendale Charter Township, Ottawa County, Michigan, 49401, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:05:44.859Z",
+    "note": "Corrected from Clare County hamlet to the principal Allendale locality; owner ad lists a 616 contact number."
+  },
+  "de pere, wi": {
+    "lat": 44.4493584,
+    "lng": -88.0599986,
+    "label": "De Pere, Brown County, Wisconsin, 54344, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:43.582Z"
+  },
+  "macomb, il": {
+    "lat": 40.4588934,
+    "lng": -90.6713939,
+    "label": "Macomb, McDonough County, Illinois, 61455, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:45.180Z"
+  },
+  "hudson, wi": {
+    "lat": 44.9750953,
+    "lng": -92.7554671,
+    "label": "Hudson, Saint Croix County, Wisconsin, 54016, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:46.863Z"
+  },
+  "clinton, in": {
+    "lat": 39.6569817,
+    "lng": -87.3980741,
+    "label": "Clinton, Vermillion County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:48.274Z"
+  },
+  "mooresville, in": {
+    "lat": 39.6128243,
+    "lng": -86.37416,
+    "label": "Mooresville, Morgan County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:49.655Z"
+  },
+  "pinckney, mi": {
+    "lat": 42.4567013,
+    "lng": -83.9463359,
+    "label": "Pinckney, Livingston County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:51.063Z"
+  },
+  "alsip, il": {
+    "lat": 41.6689336,
+    "lng": -87.7387003,
+    "label": "Alsip, Worth Township, Cook County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:52.660Z"
+  },
+  "plainwell, mi": {
+    "lat": 42.4426144,
+    "lng": -85.6417645,
+    "label": "Plainwell, Allegan County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:54.250Z"
+  },
+  "galesville, wi": {
+    "lat": 44.0828396,
+    "lng": -91.3487354,
+    "label": "Galesville, Trempealeau County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:55.625Z"
+  },
+  "highland, il": {
+    "lat": 38.7395743,
+    "lng": -89.6714882,
+    "label": "Highland, Madison County, Illinois, 62249, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:57.197Z"
+  },
+  "milford, mi": {
+    "lat": 42.5917805,
+    "lng": -83.6000696,
+    "label": "Milford, Milford Charter Township, Oakland County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:13:58.888Z"
+  },
+  "chippewa falls, wi": {
+    "lat": 44.9371325,
+    "lng": -91.3932118,
+    "label": "Chippewa Falls, Chippewa County, Wisconsin, 54729, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:00.216Z"
+  },
+  "mukwonago, wi": {
+    "lat": 42.8666803,
+    "lng": -88.3334274,
+    "label": "Mukwonago, Waukesha County, Wisconsin, 53149, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:01.793Z"
+  },
+  "moro, il": {
+    "lat": 38.924769,
+    "lng": -90.0220491,
+    "label": "Moro, Madison County, Illinois, 62067, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:03.490Z"
+  },
+  "waukesha, wi": {
+    "lat": 43.0115598,
+    "lng": -88.2316352,
+    "label": "Waukesha, Waukesha County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:04.884Z"
+  },
+  "marion, il": {
+    "lat": 37.7306054,
+    "lng": -88.9331256,
+    "label": "Marion, Williamson County, Illinois, 62959, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:06.560Z"
+  },
+  "bartelso, il": {
+    "lat": 38.5364382,
+    "lng": -89.4664739,
+    "label": "Bartelso, Clinton County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:08.136Z"
+  },
+  "goodrich, mi": {
+    "lat": 42.91708,
+    "lng": -83.501656,
+    "label": "Goodrich, Genesee County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:09.756Z"
+  },
+  "joliet, il": {
+    "lat": 41.5263603,
+    "lng": -88.0840212,
+    "label": "Joliet, Will County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:11.345Z"
+  },
+  "edwardsburg, mi": {
+    "lat": 41.7956038,
+    "lng": -86.0808384,
+    "label": "Edwardsburg, Cass County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:13.013Z"
+  },
+  "kansasville, wi": {
+    "lat": 42.6825181,
+    "lng": -88.1103639,
+    "label": "Kansasville, Town of Dover, Racine County, Wisconsin, 53139, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:14.595Z"
+  },
+  "new london, wi": {
+    "lat": 44.3927581,
+    "lng": -88.7398255,
+    "label": "New London, Waupaca County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:16.289Z"
+  },
+  "versailles, in": {
+    "lat": 39.0720026,
+    "lng": -85.2519113,
+    "label": "Versailles, Ripley County, Indiana, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:17.658Z"
+  },
+  "stanton, mi": {
+    "lat": 43.292532,
+    "lng": -85.081407,
+    "label": "Stanton, Montcalm County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:19.144Z"
+  },
+  "marshfield, wi": {
+    "lat": 44.6662287,
+    "lng": -90.1740313,
+    "label": "Marshfield, Wood County, Wisconsin, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:20.603Z"
+  },
+  "crown point, in": {
+    "lat": 41.4169806,
+    "lng": -87.3653136,
+    "label": "Crown Point, Center Township, Lake County, Indiana, 46307, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:23.305Z"
+  },
+  "georgetown, il": {
+    "lat": 39.9753144,
+    "lng": -87.6358546,
+    "label": "Georgetown, Vermilion County, Illinois, 61846, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:24.937Z"
+  },
+  "danville, il": {
+    "lat": 40.125222,
+    "lng": -87.6304614,
+    "label": "Danville, Vermilion County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:26.566Z"
+  },
+  "clinton, ia": {
+    "lat": 41.8502821,
+    "lng": -90.1877485,
+    "label": "Clinton, Clinton County, Iowa, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:28.205Z"
+  },
+  "iron mountain, mi": {
+    "lat": 45.820233,
+    "lng": -88.06596,
+    "label": "Iron Mountain, Dickinson County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:29.725Z"
+  },
+  "howell, mi": {
+    "lat": 42.6072552,
+    "lng": -83.9293952,
+    "label": "Howell, Livingston County, Michigan, 48844, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:31.995Z"
+  },
+  "wayland, mi": {
+    "lat": 42.6745321,
+    "lng": -85.6457663,
+    "label": "Wayland, Allegan County, Michigan, 49438, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:33.598Z"
+  },
+  "gaylord, mi": {
+    "lat": 45.027513,
+    "lng": -84.674752,
+    "label": "Gaylord, Otsego County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:35.167Z"
+  },
+  "clinton township, mi": {
+    "lat": 42.5869782,
+    "lng": -82.9200047,
+    "label": "Clinton Township, Macomb County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:36.845Z"
+  },
+  "white lake, mi": {
+    "lat": 42.6555688,
+    "lng": -83.5007875,
+    "label": "White Lake Charter Township, Oakland County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:38.402Z"
+  },
+  "holly, mi": {
+    "lat": 42.7919727,
+    "lng": -83.6277255,
+    "label": "Holly, Oakland County, Michigan, 48442, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:39.939Z"
+  },
+  "brooklyn, mi": {
+    "lat": 42.105874,
+    "lng": -84.2482819,
+    "label": "Brooklyn, Jackson County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:41.442Z"
+  },
+  "coldwater, mi": {
+    "lat": 41.941091,
+    "lng": -85.0030617,
+    "label": "Coldwater, Branch County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:43.047Z"
+  },
+  "muskegon, mi": {
+    "lat": 43.2341813,
+    "lng": -86.2483921,
+    "label": "Muskegon, Muskegon County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:44.648Z"
+  },
+  "clarkston, mi": {
+    "lat": 42.735863,
+    "lng": -83.4188304,
+    "label": "Clarkston, Oakland County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:46.259Z"
+  },
+  "caledonia, mi": {
+    "lat": 42.7891193,
+    "lng": -85.5163391,
+    "label": "Caledonia, Kent County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:47.857Z"
+  },
+  "bruce crossing, mi": {
+    "lat": 46.5349435,
+    "lng": -89.1787536,
+    "label": "Bruce Crossing, Stannard Township, Ontonagon County, Michigan, 49912, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:49.512Z"
+  },
+  "normal, il": {
+    "lat": 40.5092961,
+    "lng": -88.9843937,
+    "label": "Normal, McLean County, Illinois, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:51.112Z"
+  },
+  "stoughton, wi": {
+    "lat": 42.9167389,
+    "lng": -89.2178997,
+    "label": "Stoughton, Dane County, Wisconsin, 53589, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:52.570Z"
+  },
+  "belleville, mi": {
+    "lat": 42.2048414,
+    "lng": -83.4852106,
+    "label": "Belleville, Wayne County, Michigan, United States",
+    "source": "https://www.openstreetmap.org/copyright",
+    "fetchedAt": "2026-09-08T02:14:54.163Z"
+  }
+}
