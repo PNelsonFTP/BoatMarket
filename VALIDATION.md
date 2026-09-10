@@ -1,8 +1,8 @@
 # Verification record
 
-September 8, 2026, America/Chicago. Local checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
+September 8, 2026 evidence, America/Chicago; final hosted CI completion was confirmed and this handoff record finalized on September 10. The inventory counts below remain the historical September 8 scan results. Local checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
-The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. Final repository/deployment status is recorded below after completion. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
+The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
 ## Integrated results
 
@@ -20,9 +20,9 @@ The owner requested winding down enhancements, reviewed the local website, and t
 | Backup/recovery | SQLite integrity, file hashes and isolated restore tests passed; source/workspace/history records preserved |
 | npm SBOM | Three CycloneDX 1.5 schema/graph/evidence checks passed; 255 production, 319 required full-tree and 441 all-platform package instances |
 | npm advisory checks | Full and production registry audits at 17:01:49 UTC reported zero advisories; exact scope/limitations in [SBOM.md](SBOM.md) |
-| Actual Docker targets | Both captured Linux ARM64 images passed non-root startup, migration, authentication, listing queries and native-dependency checks; rendered target also passed a JavaScript browser fixture |
+| Actual Docker targets | Both local ARM64 and final hosted AMD64 targets passed non-root startup, migration, authentication, listing queries and native-dependency checks; rendered targets also passed a JavaScript browser fixture |
 | Docker snapshot permissions | An isolated copy/read probe reproduced `EACCES` for a root-owned `0600` pointer and passed after copying ownership to UID1000. The existing captured runtime also passed the expanded website/pointer/selected-snapshot HTTP smoke |
-| Runtime image inventories | Exact-image CycloneDX records cover 3,955 default-runtime and 5,290 rendered-image components; images/scopes overlap and counts must not be added |
+| Runtime image inventories | Retained exact-image CycloneDX records cover 3,955/5,290 components for local ARM64 runtime/rendered and 3,956/5,269 for final hosted AMD64; hashes/schema validated and overlapping counts must not be added |
 | Cleanup | Changed TypeScript/TSX/JavaScript files pass Prettier; `git diff --check` passes; scratch reports/backups remain under ignored `data/` |
 | Exact release/build | Final release review `b924a8e2b60e57090785dfa4c85e80f9a4ab2cb87ae33fd0baaf37b57d26962f` verified against the final root build, unchanged reviewed snapshot and three current SBOMs |
 
@@ -64,11 +64,22 @@ The main implementation was committed and pushed as `fa8a04c`. [Its first hosted
 
 The compatibility correction in `3ed053f` validates imported public generations independently, preserves their verified snapshot/pointer in backups, and never fabricates a local activation record. Corrupt present journals and changed generation bytes remain errors. Native Windows canonical paths retain strict temporary-database containment; service templates use their target platform's paths; Git preserves LF for hashed text. Release fingerprints now include deployment/build configuration and normalize paths before ordering. CI verifies the committed approved release before regenerating SBOMs.
 
-[The second hosted run](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261106388) passed Ubuntu's unit/SBOM/browser checks and both AMD64 container jobs. Windows passed 209 tests, including the native alias regression, but exposed one remaining backup destination preflight that compared native paths with a literal forward slash. The final correction uses native relative-path containment and tests all three forbidden roots and their descendants before any SQL executes. Final hosted results are recorded below when complete.
+[The second hosted run](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261106388) passed Ubuntu's unit/SBOM/browser checks and both AMD64 container jobs. Windows passed 209 tests, including the native alias regression, but exposed one remaining backup destination preflight that compared native paths with a literal forward slash. The final correction uses native relative-path containment and tests all three forbidden roots and their descendants before any SQL executes.
+
+[Final hosted run 34261682769](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261682769), for commit `5b8c05c89de2a098405b05cf598a8cae307678f6`, completed **successfully across all four jobs on September 8 at 18:26:48 UTC**. Its completed job outcomes and logs were retrieved on September 10 to finish this interrupted handoff; these are September 8 execution results, not a new validation run.
+
+| Final hosted job | Confirmed result |
+|---|---|
+| Windows application, Node 22 | **211 unit/integration tests across 35 files passed; 20 Chromium browser tests passed.** Typecheck, SBOM generation/schema validation and production build passed |
+| Ubuntu application, Node 22 | **210 unit/integration tests across 35 files passed; one Windows-only alias test skipped; 20 Chromium browser tests passed.** Typecheck, SBOM generation/schema validation and production build passed |
+| Linux AMD64 runtime container | Build, non-root migration/authentication/static-snapshot/native smoke, exact-image inventory and artifact upload passed |
+| Linux AMD64 rendered container | Build, the same smoke checks plus the JavaScript browser fixture, exact-image inventory and artifact upload passed |
+
+The unchanged downloaded container artifacts and their workflow association are retained in [sbom/runtime/ci-2026-09-08.json](sbom/runtime/ci-2026-09-08.json); their exact image IDs, hashes and schema checks are documented in [SBOM.md](SBOM.md).
 
 ## Practical limits and deferred execution
 
-The tested ARM64 image digests and source-lock hashes are recorded in [SBOM.md](SBOM.md); those image results do not claim that later application edits are present in an earlier captured image. The hosted run above adds actual AMD64 evidence, with application portability failures and their follow-up results recorded separately. Docker collection/connected database views work, but shared app/worker snapshot export is deferred; leave container automatic export off and rebuild from a host-generated snapshot for standalone data updates.
+The tested ARM64 image digests and source-lock hashes are recorded in [SBOM.md](SBOM.md); those image results do not claim that later application edits are present in an earlier captured image. The final hosted run adds actual AMD64 evidence and successful Windows/Ubuntu application checks; the earlier portability failures and their corrections remain recorded above. Docker collection/connected database views work, but shared app/worker snapshot export is deferred; leave container automatic export off and rebuild from a host-generated snapshot for standalone data updates.
 
 No persistent OS service, public geocoder permission, external routing account, SMTP/webhook destination or public Pages release was enabled. Local/provider fixtures do not prove external delivery or machine-specific scheduler installation. The optional WebMCP path was not exercised because the test browser did not expose `document.modelContext`. No OS vulnerability scan is implied by an npm audit or component inventory.
 

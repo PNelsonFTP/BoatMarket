@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-09-08T18:14:44.575Z",
+  "imageId": "sha256:5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae",
+  "repositoryDigests": [],
+  "platform": "linux/amd64",
+  "sbom": {
+    "file": "sbom/runtime/sha256-5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae.2026-09-08T18-14-44.575Z.cdx.json",
+    "sha256": "76508b20304909ebce321cce6a188027a9a61f4302de64156fd108e2feefcfa3",
+    "components": 3956,
+    "schema": "CycloneDX 1.5 full schema validation passed"
+  },
+  "smokeReport": "sbom/runtime/sha256-5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae.2026-09-08T18-14-44.575Z.smoke.json",
+  "scanner": {
+    "release": "https://github.com/anchore/syft/releases/tag/v1.51.1",
+    "version": {
+      "application": "syft",
+      "buildDate": "2026-08-27T16:55:02Z",
+      "compiler": "gc",
+      "gitCommit": "91a0032987d91b7411b52f6f5c185c5e7f775495",
+      "gitDescription": "v1.51.1",
+      "goVersion": "go1.26.3",
+      "platform": "linux/amd64",
+      "schemaVersion": "16.1.10",
+      "version": "1.51.1"
+    },
+    "asset": {
+      "name": "syft_1.51.1_linux_amd64.tar.gz",
+      "sha256": "8fcb33017a0dc1058298c923c436d19dfa68ae93968e0b423248542e3afb9fc3",
+      "url": "https://github.com/anchore/syft/releases/download/v1.51.1/syft_1.51.1_linux_amd64.tar.gz"
+    },
+    "binarySha256": "abca2def61de9952fa06d3977bb1e064818facb9badfce502b450d3d6846a91f"
+  },
+  "licenseRepresentations": [
+    {
+      "component": "pkg:deb/debian/debianutils@5.7-0.5~deb12u1?arch=amd64&distro=debian-12.15&package-id=2587c3c4d8d21d21",
+      "reportedIdentifier": "SMAIL-GPL",
+      "representation": "named license; original scanner identifier retained"
+    },
+    {
+      "component": "pkg:deb/debian/perl-base@5.36.0-7%2Bdeb12u3?arch=amd64&distro=debian-12.15&package-id=e272b8e8d5eb9292&upstream=perl",
+      "reportedIdentifier": "Artistic-dist",
+      "representation": "named license; original scanner identifier retained"
+    }
+  ],
+  "originalImageCreated": "2026-09-08T18:14:33.288715293Z",
+  "limitation": "The immutable local Docker image ID identifies the scanned image. Repository digest metadata comes from the local daemon; no registry push is implied."
+}

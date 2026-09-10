@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "retrievedAt": "2026-09-08T18:18:05.467Z",
+  "workflowRunId": 34261682769,
+  "workflowUrl": "https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261682769",
+  "workflowCheckout": "5b8c05c89de2a098405b05cf598a8cae307678f6",
+  "images": [
+    {
+      "target": "runtime",
+      "imageId": "sha256:5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae",
+      "platform": "linux/amd64",
+      "generatedAt": "2026-09-08T18:14:44.575Z",
+      "components": 3956,
+      "node": "v22.23.2",
+      "rendering": {
+        "status": "not-installed",
+        "version": null
+      },
+      "files": [
+        {
+          "path": "sbom/runtime/sha256-5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae.2026-09-08T18-14-44.575Z.provenance.json",
+          "sha256": "88db791d1ceb7769ca76144ee317db630f5897855e0de09926b31fb3c4d2730b"
+        },
+        {
+          "path": "sbom/runtime/sha256-5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae.2026-09-08T18-14-44.575Z.cdx.json",
+          "sha256": "76508b20304909ebce321cce6a188027a9a61f4302de64156fd108e2feefcfa3"
+        },
+        {
+          "path": "sbom/runtime/sha256-5767564d4293f6e64a33e7c0a216e4c2a7a8dd76335999b93ca343a4073f4fae.2026-09-08T18-14-44.575Z.smoke.json",
+          "sha256": "3821249e0433318172d1df2074faa011a345716a408b5f60062dfb88ce65da2e"
+        }
+      ]
+    },
+    {
+      "target": "rendered",
+      "imageId": "sha256:904e86cdf2f8051653c1e0b722a3ed9560461d601f0e9886c2e8a0b9f4bc566c",
+      "platform": "linux/amd64",
+      "generatedAt": "2026-09-08T18:15:53.977Z",
+      "components": 5269,
+      "node": "v22.23.2",
+      "rendering": {
+        "status": "passed",
+        "version": "153.0.8010.12"
+      },
+      "files": [
+        {
+          "path": "sbom/runtime/sha256-904e86cdf2f8051653c1e0b722a3ed9560461d601f0e9886c2e8a0b9f4bc566c.2026-09-08T18-15-53.977Z.provenance.json",
+          "sha256": "f2093f109b54188e1b51e4618bbd24860642a1e5ffb44a5413f5167e78cfe438"
+        },
+        {
+          "path": "sbom/runtime/sha256-904e86cdf2f8051653c1e0b722a3ed9560461d601f0e9886c2e8a0b9f4bc566c.2026-09-08T18-15-53.977Z.cdx.json",
+          "sha256": "a816e91bc49261103bbe5df974dd9b918f96c17a3143e4eb8e27805330dc36eb"
+        },
+        {
+          "path": "sbom/runtime/sha256-904e86cdf2f8051653c1e0b722a3ed9560461d601f0e9886c2e8a0b9f4bc566c.2026-09-08T18-15-53.977Z.smoke.json",
+          "sha256": "acc303545b5474d42858460951dd5b095f79359a6b7a49b5ed48bbe259f804dc"
+        }
+      ]
+    }
+  ],
+  "scope": "Downloaded artifacts from completed successful container jobs; validated file hashes, CycloneDX schema, non-root static/native smoke and source lock/Dockerfile correspondence. This is build evidence, not a signed attestation or vulnerability scan."
+}
