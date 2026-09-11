@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-09-08T18:11:23.710Z",
-  "snapshotHash": "ca199c0c04d49f276d6cfbb97ea3c6aebead493a6b8fe948876c615f1a21516c",
-  "snapshotBytes": 6072911,
-  "listings": 1593,
-  "sourceHash": "e2ec7b525fdcdd416e0e8e34164188214673e4a9a57445f3080c5526b35a7e69",
-  "sourceCommit": "3ed053fa24752c59eb279f1cecbd8ee9f4e4e827",
+  "createdAt": "2026-09-11T00:31:57.456Z",
+  "snapshotHash": "c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781",
+  "snapshotBytes": 7007261,
+  "listings": 1636,
+  "sourceHash": "004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4",
+  "sourceCommit": "8df1000f5ee24b3a85761db0530d94648908c11a",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -25,9 +25,12 @@
     "issues": [],
     "warnings": [
       "Snapshot came from an explicitly partial collection",
-      "108 ads contain possible source-published contact details; review before publishing"
+      "111 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
+      "def1bb00a362899f9b61668f",
+      "fe0b78ca2838a4cd4aab2aa9",
+      "3496452c963d577ccdf171c2",
       "93c17e6a94b7744bcb223690",
       "a84f1457cecb4090775be6de",
       "7d1be63543e00ec25d745a85",
@@ -139,14 +142,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-09-08T17:50:23.401Z"
+      "newest": "2026-09-10T20:48:10.017Z"
     }
   },
   "approval": {
-    "reviewHash": "b924a8e2b60e57090785dfa4c85e80f9a4ab2cb87ae33fd0baaf37b57d26962f",
-    "reviewedAt": "2026-09-08T18:11:46.815Z",
+    "reviewHash": "abc34fe3d34418647bf9a0ba1981fb7ea96f2963224e0cead02b10c08775f001",
+    "reviewedAt": "2026-09-11T00:33:13.599Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/ca199c0c04d49f276d6cfbb97ea3c6aebead493a6b8fe948876c615f1a21516c.json"
+  "generation": "snapshots/c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781.json"
 }

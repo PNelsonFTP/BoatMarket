@@ -59,6 +59,8 @@ const makes = [
   "Grady-White",
   "Hobie",
 ];
+// Allow compact model names such as Tige21 without matching Tiger/TIGER.
+const tigeName = /(?<![a-z])tige(?![a-z])/i;
 export function normalizeListing(
   raw: Record<string, unknown>,
   source: string,
@@ -70,8 +72,11 @@ export function normalizeListing(
   const make =
     [...makes]
       .sort((a, b) => b.length - a.length)
-      .find((m) => title.toLowerCase().includes(m.toLowerCase())) ??
-    (typeof raw.make === "string" ? raw.make : null);
+      .find((m) =>
+        m === "Tige"
+          ? tigeName.test(title)
+          : title.toLowerCase().includes(m.toLowerCase()),
+      ) ?? (typeof raw.make === "string" ? raw.make : null);
   const year =
     parseNumber(raw.year) ??
     parseNumber(title.match(/\b(?:19|20)\d{2}\b/)?.[0]);
@@ -118,7 +123,9 @@ export function normalizeListing(
       (make
         ? title
             .replace(
-              new RegExp(make.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+              make.toLowerCase() === "tige"
+                ? tigeName
+                : new RegExp(make.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
               "",
             )
             .replace(/\b(?:19|20)\d{2}\b/, "")

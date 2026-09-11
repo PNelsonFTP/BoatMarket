@@ -1,5 +1,21 @@
 # BoatScout delivery history
 
+## September 10, 2026 — Public repository and Pages setup
+
+- Made PNelsonFTP/BoatMarket public at the owner's explicit request after inspecting committed history and pending files for private data.
+- Enabled GitHub Pages with Actions builds and HTTPS at https://pnelsonftp.github.io/BoatMarket/; retained the exact-hash manual release workflow.
+- Approved the refreshed 1,636-ad snapshot for public deployment. Deployment verification is pending at this checkpoint; see VALIDATION.md for the recorded outcome.
+- Kept the backend/database, raw captures, credentials and workspace data local. Repository visibility does not change the `UNLICENSED` first-party license or npm `private: true` setting.
+
+## September 10, 2026 — Fresh inventory and bounded classification repair
+
+- Completed all twelve configured inventory quality gates with 363 fresh pages and no cache hits or budget deferrals. Two Huber detail access failures remain explicit; the collection is partial and neither restriction was bypassed.
+- Retained 1,636 ads, including 1,619 active and 17 sold; 1,557 were observed this run and 79 retain earlier observations. Indexed 43 new ads, recorded 33 asking-price changes (32 drops) and one active-to-sold change.
+- Corrected `Tiger`/`TIGER` versus `Tige` inference and gave explicit PWC/jet-ski/WaveRunner labels priority over generic ski terms, preserving genuine compact Tige names and ordinary jet boats. Applied eight narrow current-capture record repairs under a verified backup and exact fingerprint checks.
+- Passed 34 focused tests across five files and typecheck. Broader engine-brand and ambiguous accessory/PWC inference remains review work; no dependency versions changed.
+- Activated a separately reviewed partial snapshot locally. Production build, exact reviewed-release verification, desktop/mobile checks and the final HTTP/database audit passed; served bytes match the reviewed snapshot. This was initially a local-only review; the subsequent public Pages decision is recorded above. Evidence is recorded in VALIDATION.md and LIVE_DATA.md.
+- Finalized the interrupted September 8 CI handoff: all four hosted jobs passed for `5b8c05c`. That historical validation and its immutable image inventories predate this parser correction.
+
 ## September 8, 2026 — P1/P2 implementation goal
 
 - Added permanent vessel identities/timelines, reviewed known duplicate examples, canonical/local perceptual image evidence and queue filters.

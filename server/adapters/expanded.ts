@@ -35,21 +35,23 @@ function advertisedMotor(description: string) {
   );
 }
 const boatCategory = (v: string) =>
-  /pontoon|tritoon/i.test(v)
-    ? "Pontoon"
-    : /ski|wake|surf|MasterCraft|Nautique|Malibu|Supra|Moomba|Tige|Centurion|Axis/i.test(
-          v,
-        )
-      ? "Ski / wake / surf"
-      : /bass|Phoenix|Ranger|Nitro|Skeeter|Triton|Bass\s*Cat|Falcon|Caymas|Vexus/i.test(
+  /\b(?:personal\s+watercraft|pwc|jet[\s-]*skis?|wave[\s-]*runners?)\b/i.test(v)
+    ? "PWC"
+    : /pontoon|tritoon/i.test(v)
+      ? "Pontoon"
+      : /ski|wake|surf|MasterCraft|Nautique|Malibu|Supra|Moomba|(?<![a-z])Tige(?![a-z])|Centurion|Axis/i.test(
             v,
           )
-        ? "Bass"
-        : /fish|Lund|Alumacraft|Crestliner|Warrior/i.test(v)
-          ? "Deep-V / multi-species"
-          : /bowrider|runabout/i.test(v)
-            ? "Bowrider"
-            : null;
+        ? "Ski / wake / surf"
+        : /bass|Phoenix|Ranger|Nitro|Skeeter|Triton|Bass\s*Cat|Falcon|Caymas|Vexus/i.test(
+              v,
+            )
+          ? "Bass"
+          : /fish|Lund|Alumacraft|Crestliner|Warrior/i.test(v)
+            ? "Deep-V / multi-species"
+            : /bowrider|runabout/i.test(v)
+              ? "Bowrider"
+              : null;
 
 // Dealer Spike's summary JSON-LD omits URLs, IDs, length and motor data.
 // Read the visible inventory cards so every physical inventory record survives.

@@ -1,10 +1,42 @@
 # Verification record
 
-September 8, 2026 evidence, America/Chicago; final hosted CI completion was confirmed and this handoff record finalized on September 10. The inventory counts below remain the historical September 8 scan results. Local checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
+Dated September 8 and September 10, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the September 10 refresh is recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
-## Integrated results
+## September 10 public repository and Pages setup
+
+The owner explicitly requested public repository visibility to use GitHub Pages. GitHub confirmed **PNelsonFTP/BoatMarket is public**; Pages creation succeeded with **GitHub Actions** builds, HTTPS enforcement and URL **https://pnelsonftp.github.io/BoatMarket/**. Repository variable `BOATSCOUT_ENABLE_PAGES=true` enables the existing manual, exact-review-hash workflow. No backend endpoint or password was published; collection and private workspace storage remain local.
+
+A read-only exposure audit examined all six preceding commits, 427 historical blob versions and 273 tracked/pending-public files. It found no actual credentials, private database, backup/archive or private workspace fields in public JSON. The configured local password was absent. Detected credential-shaped strings were setup-generation code and explicit test fixtures. Ignored private data remains outside the commit. This is a bounded inspection, not a guarantee against every possible sensitive string.
+
+Public deployment approval is **`abc34fe3d34418647bf9a0ba1981fb7ea96f2963224e0cead02b10c08775f001`**, with unchanged source hash **`004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`** and the reviewed **1,636-ad** snapshot **`c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781`**. The two Huber detail failures, older retained observation dates and source-published advertisement contact text remain explicitly acknowledged. The source/snapshot/SBOM verification passed locally. Deployment is pending at this checkpoint; the workflow and live-site result will be recorded below after completion. This supersedes the historical private-repository plan limitation; first-party licensing remains `UNLICENSED`.
+
+## September 10 refresh and bounded parser correction
+
+Run `cc9d1814-d2af-4aad-b0d6-d725724b6efa` started at **2026-09-10T20:10:07.604Z** and completed at **20:48:10.130Z**, with outcome **partial**. Its request, original pipeline report, reviewed export, repair preview/apply manifests and focused validation logs are retained under ignored `data/refresh-2026-09-10/`. The one-hour cache setting produced zero cache hits. This run temporarily raised OnlyInboards' detail budget from 100 to 150 in its request-specific source configuration; it did not change the regular source configuration.
+
+| September 10 check | Recorded result |
+|---|---|
+| Inventory coverage | All **12 source quality gates passed**; **76 inventory pages** and **287 successful detail pages**; **363 freshly fetched pages**, **0 cache hits**, **0 budget deferrals** and no inventory caps |
+| Access limitations | Two Huber details failed: 2026 Lund Angler 1650 Tiller (`13995181i`) returned HTTP 403; 2017 Lund 1875 Crossover XS (`14556994i`) returned an access challenge. Neither restriction was bypassed |
+| Inventory changes | **43 newly indexed ads**, **33 asking-price changes including 32 drops**, and **one active-to-sold change**; zero removals |
+| Retained database pool | **1,636 real ads: 1,619 active, 17 sold**; **1,557 observed this run**, **79 retained from earlier observations**; **1,194 active within 150 straight-line miles** of Lake Holiday |
+| Classification regression checks | **34 tests across five files passed**, including four `tige-pwc.test.ts` cases; `npm run typecheck` passed |
+| Reviewed record repairs | **Eight** narrow make/model/category corrections from current captures, with a verified backup, exact record fingerprints and before/after evidence; completed at **20:49:00.179Z** |
+| Snapshot and release | Reviewed partial snapshot activated locally; `npm run build` and exact reviewed-release verification with `--built=out` passed |
+| Desktop/mobile website | Both showed **1,636 ads**, **12 sources**, **75 shortlist records**, **1,189 grouped nearby records** and **93 unknown-length review records**; zero page errors, readable layouts and no horizontal overflow. Authenticated backend connection passed |
+| Final HTTP/database audit | At **20:51:56.239Z**, `/api/health` returned **200** and served snapshot bytes matched the reviewed hash; database retained **1,636 real ads**, **52 samples**, **8 saved searches**, **0 unfinished ingestion runs** and **0 active job locks** |
+
+The correction prevents `Tiger`/`TIGER` from matching the make `Tige`, keeps compact genuine names such as `Tige21`, and prioritizes explicit PWC/jet-ski/WaveRunner labels before generic ski terms without treating every jet boat as personal watercraft. Record IDs and source observation timestamps are preserved. The eight repairs are limited to their reviewed evidence; they do not claim broad cleanup of ambiguous accessories or engine-brand inference. The 2027 Vexus ADX200 title mentioning a Yamaha engine still illustrates an unresolved make-inference error.
+
+The original partial pipeline correctly preserved the prior website snapshot. A separate backed-up reviewed export produced **1,636 ads**, **7,007,261 bytes**, at **2026-09-10T20:49:20.464Z**, with SHA-256 `c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781`. It preserves the run ID, `partial: true` and observation range **2026-09-08T01:17:51.923Z–2026-09-10T20:48:10.017Z**. Release review `5d40bdfb0d2827728c4fcb8a1f1860a5010a56f35dbfa00dfa64e3459b418233` records source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`. The final HTTP audit confirmed that the restarted local website serves this exact generation with its partial status intact.
+
+The production build, release check, desktop/mobile checks and final audit are recorded in `build.log`, `release-verification.log`, `ui-verification.log` and `final-checkpoint.json` under `data/refresh-2026-09-10/`. Desktop/mobile fishing and ski views each displayed twelve cards on their current page; these are pagination counts, not their total search results. At that local-review checkpoint, the refresh had not yet been committed, pushed or publicly deployed; the subsequent public Pages decision is recorded above. The earlier handoff documentation commit `8df1000` was already pushed before the scan finished.
+
+The dependency lock is unchanged. The successful September 8 hosted CI and captured images below cover commit `5b8c05c`; they do not validate or contain the later parser correction.
+
+## September 8 integrated results
 
 | Check | Result |
 |---|---|
@@ -28,7 +60,7 @@ The owner requested winding down enhancements, reviewed the local website, and t
 
 Tests use fixture responses and temporary databases for mutations. The actual review-panel check logs into the local API but makes no listing, duplicate-decision or workspace changes. Screenshots and detailed logs are under ignored `data/p1p2/`.
 
-## Final inventory scan
+## September 8 final inventory scan
 
 The final scan is run `33a33a91-bbd8-4642-86ee-a50c33581938`, started at `2026-09-08T17:12:55.717Z` with `npm run refresh -- --cache-hours=1`. This requests fresh older inventory/detail pages while allowing captures less than one hour old to be reused. Robots checks, source delays, page limits and rotating detail budgets remain enforced.
 
@@ -58,7 +90,7 @@ The fix now assigns isolated temporary databases before test modules import, cap
 
 ## Repository and deployment checkpoint
 
-The owner reviewed the local site and authorized committing/pushing. GitHub Pages creation was attempted with workflow builds in the existing private repository. GitHub returned **HTTP 422: “Your current plan does not support GitHub Pages for this repository.”** Repository visibility was preserved. The available website is **http://127.0.0.1:4310**; the approved exact-hash release is prepared for a later Pages-compatible account/repository decision.
+The owner reviewed the local site and authorized committing/pushing. GitHub Pages creation was attempted with workflow builds in the existing private repository. GitHub returned **HTTP 422: “Your current plan does not support GitHub Pages for this repository.”** Repository visibility was preserved. At that September 8 checkpoint, the available website was **http://127.0.0.1:4310**; the September 10 public visibility decision and Pages setup are recorded above.
 
 The main implementation was committed and pushed as `fa8a04c`. [Its first hosted validation run](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34260064907) passed both Linux AMD64 container builds, exact-image inventories and smoke checks, including rendered-browser execution. Application tests failed on Ubuntu and Windows: fresh checkouts correctly omit the private publication journal, which the snapshot reader had incorrectly required; Windows also exposed short-path canonicalization, line-ending hash and generated target-path errors.
 
@@ -81,7 +113,7 @@ The unchanged downloaded container artifacts and their workflow association are 
 
 The tested ARM64 image digests and source-lock hashes are recorded in [SBOM.md](SBOM.md); those image results do not claim that later application edits are present in an earlier captured image. The final hosted run adds actual AMD64 evidence and successful Windows/Ubuntu application checks; the earlier portability failures and their corrections remain recorded above. Docker collection/connected database views work, but shared app/worker snapshot export is deferred; leave container automatic export off and rebuild from a host-generated snapshot for standalone data updates.
 
-No persistent OS service, public geocoder permission, external routing account, SMTP/webhook destination or public Pages release was enabled. Local/provider fixtures do not prove external delivery or machine-specific scheduler installation. The optional WebMCP path was not exercised because the test browser did not expose `document.modelContext`. No OS vulnerability scan is implied by an npm audit or component inventory.
+At the September 8 checkpoint, no persistent OS service, public geocoder permission, external routing account, SMTP/webhook destination or public Pages release had been enabled. Local/provider fixtures do not prove external delivery or machine-specific scheduler installation. The optional WebMCP path was not exercised because the test browser did not expose `document.modelContext`. No OS vulnerability scan is implied by an npm audit or component inventory.
 
 Source-published specifications, boat location, seller availability and Lake Holiday registration still require confirmation. The current rule screen references the association's publicly linked December 2, 2025 document; the PDF's reviewed hash and exact scope are retained. Blocked marketplaces and unresolved cross-listings remain in [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md) and [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md).
 
