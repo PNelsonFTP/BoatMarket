@@ -1,6 +1,6 @@
 # Source research and coverage
 
-Research passes: September 7–8, 2026. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report.
+Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 10. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
 
 ## Sources included in automatic collection
 
@@ -16,7 +16,7 @@ Research passes: September 7–8, 2026. Counts and the current shortlist are in 
 | Bass Boat Central | Ads located in IL, WI, IN, IA, MI | Every page for the configured brand sections and alphabetical sections; national ads outside these states excluded |
 | Craigslist | 17 nearby regions | Public owner and dealer result pages, joined to their metadata; preferred-make details through 21 ft or missing length |
 | Starved Rock Marina | Ottawa, IL | All three used-inventory pages, including advertised prices and lengths |
-| Huber’s Marine | La Porte, IN | Two current inventory pages; boat/pontoon types only; rotating detail enrichment for reported hull length, installed motor, HIN and price |
+| Huber’s Marine | La Porte, IN | Public inventory pagination; boat/pontoon types only; rotating detail enrichment for reported hull length, installed motor, HIN and price |
 | Quest Watersports | Ottawa, IL | The public inventory response used by the dealer’s own page; 24-item pagination; lift and paired PWC listings excluded |
 
 Craigslist regions: Chicago, La Salle County, Rockford, Peoria, Quad Cities, Milwaukee, Madison, South Bend, Bloomington–Normal, Champaign–Urbana, Springfield IL, Decatur IL, Janesville, Kenosha–Racine, Dubuque, southwest Michigan and Kalamazoo. Out-of-area dealer ads may still appear on these boards; the app uses each ad’s location, not the board’s location, to calculate distance. Cross-posts with different ad IDs may remain separate until reviewed. Connected Settings now shows ranked duplicate pairs and reversible identity decisions.
@@ -31,7 +31,8 @@ OnlyInboards, Dealer Spike sites, Gordy’s, Bass Boat Central, Starved Rock, Hu
 | The Boat House | September 8 robots HTTP 200 permitted the URL; page returned HTTP 403; collection stopped |
 | Munson Ski & Marine, Lake Holiday Marina | September 8 robots retest again returned HTTP 403 |
 | Boats.com, Boatmart | September 8 robots retest again returned HTTP 403 |
-| Huber’s Marine — one detail page | The full scan accepted all 31 inventory ads, but the 2026 Harris Cruiser 190 SL detail (13466402i) returned HTTP 403. Summary retained; partial detail coverage recorded; no bypass |
+| Huber’s Marine — September 8 detail observation | That scan accepted 31 inventory ads, but the 2026 Harris Cruiser 190 SL detail (13466402i) returned HTTP 403. Summary retained; partial detail coverage recorded; no bypass |
+| Huber’s Marine — September 10 detail observations | Five successful inventory pages yielded 29 current ads and passed quality checks; 31 total ads remain retained. Of 29 requested details, 27 succeeded; 2026 Lund Angler 1650 Tiller (13995181i) returned HTTP 403 and 2017 Lund 1875 Crossover XS (14556994i) returned an access challenge. Both restrictions were respected |
 | MarineSource | September 8 robots retest again returned HTTP 429; collection stopped |
 | SkipperBud’s | September 8 inventory HTML HTTP 200 contains Vue templates without actual boat records. Its linked inventory bundle returned HTTP 406; inspection stopped. A permitted feed/integration is still needed; OnlyInboards may already represent some of its stock |
 | Boatzon / Hennepin Marine | Three promising indexed Lund ads checked: removed/sold in current page data; dealer profile returned 404. Excluded from active inventory |
@@ -51,6 +52,12 @@ The main nearby preset selects the preferred fishing and ski makes, active ads w
 Use **Include unknown lengths · verify first** for potential candidates whose dimensions need confirmation. Use **All nearby ads · no lake screen** to inspect the broader local inventory without the make, power or lake-length filters. These views are explicit about their wider scope.
 
 The collector does not infer hull length from a model number, trolling motor shaft, Power Pole or trailer measurement. Likewise, displacement such as a 350-cubic-inch inboard is not treated as horsepower. Prices on request and ambiguous locations remain unknown. Sold/pending indicators are retained when exposed by a source.
+
+## September 10 collection and parser follow-up
+
+Run `cc9d1814-d2af-4aad-b0d6-d725724b6efa` completed at **2026-09-10T20:48:10.130Z**. All twelve enabled inventory quality gates passed, with **76 inventory pages**, **287 successful detail pages**, **363 fresh fetches**, **zero cache hits** and **zero budget deferrals**. The two Huber detail failures above leave the run explicitly partial. OnlyInboards used a temporary 150-detail budget for this request; regular source configuration and source restrictions were preserved. No new source or denied marketplace access is implied.
+
+The bounded parser correction distinguishes `Tiger`/`TIGER` from the boat make `Tige`, preserves `Tige21`, and recognizes explicit PWC/jet-ski/WaveRunner labels before generic ski terms. Eight reviewed corrections used this run's captured evidence, verified backups and exact fingerprints, preserving advertisement identity and source observation times. Thirty-four focused tests across five files and typecheck passed. Broader engine-brand inference and ambiguous accessory/PWC cases remain in [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md). Collection, reviewed export and website activation are separate outcomes; consult [VALIDATION.md](VALIDATION.md) and [LIVE_DATA.md](LIVE_DATA.md) for their dated status.
 
 ## September 8 engineering follow-up
 

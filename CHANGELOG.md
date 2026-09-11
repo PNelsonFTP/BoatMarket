@@ -1,10 +1,10 @@
 # BoatScout delivery history
 
-## September 10, 2026 — Public repository and Pages setup
+## September 10, 2026 — Public repository and live Pages deployment
 
 - Made PNelsonFTP/BoatMarket public at the owner's explicit request after inspecting committed history and pending files for private data.
 - Enabled GitHub Pages with Actions builds and HTTPS at https://pnelsonftp.github.io/BoatMarket/; retained the exact-hash manual release workflow.
-- Approved the refreshed 1,636-ad snapshot for public deployment. Deployment verification is pending at this checkpoint; see VALIDATION.md for the recorded outcome.
+- Committed and pushed the refreshed 1,636-ad snapshot as `e0970f6`, then deployed it in successful Pages run `34547047357`. Public desktop/mobile checks confirmed the exact snapshot/build hashes, images and filters with no runtime or missing-asset errors. See VALIDATION.md.
 - Kept the backend/database, raw captures, credentials and workspace data local. Repository visibility does not change the `UNLICENSED` first-party license or npm `private: true` setting.
 
 ## September 10, 2026 — Fresh inventory and bounded classification repair

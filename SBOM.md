@@ -104,7 +104,7 @@ The manifest overrides `postcss` to `8.5.28` and `deepmerge-ts` to `8.0.2`. The 
 
 ## License metadata and external materials
 
-The manifest explicitly marks BoatScout's own code **`UNLICENSED`**, and there is no first-party `LICENSE` file granting redistribution rights. `private: true` also prevents normal npm publication. Any future open-source license remains an owner decision before distribution.
+The manifest explicitly marks BoatScout's own code **`UNLICENSED`**, and there is no first-party `LICENSE` file granting redistribution rights. npm `private: true` prevents normal npm publication; it does not control GitHub repository visibility. The owner authorized public GitHub visibility on September 10, with no change to this metadata or addition of an open-source license. Any future open-source license remains a separate owner decision.
 
 Third-party declared licenses are not all MIT. The lock includes Apache-2.0, BSD variants, ISC, LGPL-3.0-or-later and compound expressions, MPL-2.0, CC-BY-4.0, BlueOak-1.0.0, MIT-0, and 0BSD. The exact per-package declaration is retained in the inventory; use it to locate applicable upstream notices when preparing a release. These are metadata declarations, not a review of license texts, bundled contents, or obligations for a particular distribution.
 
@@ -168,9 +168,11 @@ Reproduce image evidence with the documented `docker:smoke` and `sbom:runtime` c
 
 ## Final hosted AMD64 runtime inventories
 
-The final application checkout `5b8c05c` passed both container jobs in [GitHub run 34261682769](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261682769). Its exact images and downloaded evidence are retained in the repository, with [artifact hashes and workflow association](sbom/runtime/ci-2026-09-08.json). Both ran as UID 1000 and passed isolated migration, authentication, website, pointer and snapshot checks. The rendered target also executed its browser fixture.
+The September 8 application checkout `5b8c05c` passed both container jobs in [GitHub run 34261682769](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261682769). Its exact images and downloaded evidence are retained in the repository, with [artifact hashes and workflow association](sbom/runtime/ci-2026-09-08.json). Both ran as UID 1000 and passed isolated migration, authentication, website, pointer and snapshot checks. The rendered target also executed its browser fixture.
 
 The same run completed successfully across all four jobs on September 8 at 18:26:48 UTC, including Windows/Ubuntu application tests, SBOM generation/schema checks and production builds. Final completion was confirmed September 10 when the interrupted handoff resumed; [VALIDATION.md](VALIDATION.md) records the exact unit/browser counts. The retained September 8 inventory files and their hashes were not regenerated for this documentation update.
+
+The September 10 Tiger/Tige/PWC parser correction and eight reviewed data repairs changed no dependency versions or lockfile bytes. The npm dependency inventories retain their September 8 generation/advisory dates; no new audit is implied. The captured September 8 images and hosted CI cover `5b8c05c`, so they do not contain or validate this later parser change. Its 34 focused tests, typecheck, local production build, exact reviewed-release verification and desktop/mobile checks passed and are recorded separately in [VALIDATION.md](VALIDATION.md). The refreshed snapshot is served locally; these checks do not constitute a new container build or image inventory.
 
 | Target | Immutable image ID | Evidence |
 | --- | --- | --- |

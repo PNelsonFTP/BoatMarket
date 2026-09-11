@@ -127,6 +127,8 @@ Restore first verifies and previews exact mappings. Apply writes **only into a n
 
 ## Reviewed GitHub Pages release and rollback
 
+On September 10 the owner authorized making [PNelsonFTP/BoatMarket](https://github.com/PNelsonFTP/BoatMarket) public. GitHub Pages is configured for Actions with HTTPS enforced at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/); the reviewed snapshot is live, with deployment and desktop/mobile verification passed on September 10. The earlier September 8 HTTP 422 applied to the then-private repository. The database, collectors and worker remain local; Pages serves the reviewed static snapshot.
+
 ```bash
 npm run sbom
 npm run release -- prepare
@@ -137,12 +139,12 @@ npm run build
 npm run release -- verify --review=REVIEW_SHA256 --built=out
 ```
 
-Only use `--accept-warnings` after reviewing source-published contact details, age/partial-coverage warnings and unusual count changes. Approval stages files locally; it does not publish. After committing the matching source/snapshot/SBOM/release manifest, enable GitHub Pages/Actions and `BOATSCOUT_ENABLE_PAGES=true` only for the intended visibility. Manually run **Deploy reviewed BoatScout release** with the exact review hash. It verifies source and snapshot correspondence, builds the correct Pages path and records matching build provenance. Main pushes run validation, not collection or automatic deployment.
+Only use `--accept-warnings` after reviewing source-published contact details, age/partial-coverage warnings and unusual count changes. Approval stages files locally; it does not publish. After committing the matching source/snapshot/SBOM/release manifest, ensure GitHub Pages uses Actions and `BOATSCOUT_ENABLE_PAGES=true`. Manually run **Deploy reviewed BoatScout release** with the exact review hash. It verifies source and snapshot correspondence, builds the correct Pages path and records matching build provenance. Main pushes run validation, not collection or automatic deployment. Fresh public inventory requires another local collection/export, review, matching commit and manual deployment.
 
-`npm run release -- status` reads local activation. To stage an older retained generation, use `npm run release -- rollback --activation=UUID --current=ACTIVE_SHA256`; the expected-current check prevents overwriting an intervening update. Review, build and deploy that generation to roll back the public site. A private repository push or local activation alone is not a Pages deployment.
+`npm run release -- status` reads local activation. To stage an older retained generation, use `npm run release -- rollback --activation=UUID --current=ACTIVE_SHA256`; the expected-current check prevents overwriting an intervening update. Review, build and deploy that generation to roll back the public site. A repository push or local activation alone is not a Pages deployment.
 
 ## Validation and troubleshooting
 
 `npm run typecheck`, `npm test`, `npm run test:e2e`, `npm run build`, `npm run sbom` and the Docker smoke/runtime inventory commands are recorded in [VALIDATION.md](VALIDATION.md). Browser tests use isolated port 3002 by default; `E2E_PORT` changes it. Reuse requires explicit `E2E_REUSE_SERVER=true`; preserve unrelated applications on port 3000.
 
-For partial/blocked sources, inspect quality/detail/pagination metrics and the dated access ledger. Do not bypass denial/challenge responses or repeatedly retry HTTP 429. For stale jobs, inspect leases and activation before recovery. For failed saves, refresh/review the workspace revision conflict and export private state. For a full disk, review retention's protected paths instead of deleting the last backup or raw evidence blindly. First-party code remains private/UNLICENSED; dependency licenses do not grant a project redistribution license.
+For partial/blocked sources, inspect quality/detail/pagination metrics and the dated access ledger. Do not bypass denial/challenge responses or repeatedly retry HTTP 429. For stale jobs, inspect leases and activation before recovery. For failed saves, refresh/review the workspace revision conflict and export private state. For a full disk, review retention's protected paths instead of deleting the last backup or raw evidence blindly. First-party metadata remains `UNLICENSED` with npm `private: true`, despite public GitHub visibility; no license change accompanied publication.
