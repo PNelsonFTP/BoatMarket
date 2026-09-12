@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-09-11T00:31:57.456Z",
-  "snapshotHash": "c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781",
-  "snapshotBytes": 7007261,
-  "listings": 1636,
+  "createdAt": "2026-09-12T12:41:37.566Z",
+  "snapshotHash": "69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee",
+  "snapshotBytes": 7916788,
+  "listings": 1667,
   "sourceHash": "004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4",
-  "sourceCommit": "8df1000f5ee24b3a85761db0530d94648908c11a",
+  "sourceCommit": "f3b1a1a38cd5f685530349ab943b51c9e85c158c",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -142,14 +142,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-09-10T20:48:10.017Z"
+      "newest": "2026-09-12T12:40:58.144Z"
     }
   },
   "approval": {
-    "reviewHash": "abc34fe3d34418647bf9a0ba1981fb7ea96f2963224e0cead02b10c08775f001",
-    "reviewedAt": "2026-09-11T00:33:13.599Z",
+    "reviewHash": "f424016f9d77a1d393bfb9eb7fc2de110239f95e8408650dfdf8030aec2bc3ec",
+    "reviewedAt": "2026-09-12T12:42:08.422Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781.json"
+  "generation": "snapshots/69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee.json"
 }

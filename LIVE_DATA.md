@@ -1,38 +1,36 @@
-# Live inventory — September 10, 2026
+# Live inventory — September 12, 2026
 
-The [public website](https://pnelsonftp.github.io/BoatMarket/) and local website at **http://127.0.0.1:4310** contain **1,636 real advertisements**: **1,619 active and 17 sold**. The complete configured-source scan finished at **3:48 PM CDT on September 10** after about 38 minutes. All twelve inventory quality gates passed. Two Huber’s Marine detail requests were blocked, so the result remains explicitly **partial**.
+The completed configured-source scan retained **1,667 real advertisements: 1,650 active and 17 sold**. Collection ran from **7:03 AM to 7:40 AM CDT on September 12**, about 38 minutes. All twelve inventory quality gates passed. One Huber’s Marine detail page returned HTTP 403, so the result is explicitly **partial**. The reviewed snapshot is staged locally for the GitHub Pages release; deployment evidence is recorded in [VALIDATION.md](VALIDATION.md).
 
-Compared with the September 8 snapshot, the scan added **43 newly indexed ads**, recorded **33 asking-price changes (32 decreases)**, and changed **one advertisement to sold**. Newly indexed means new to this database, not necessarily newly advertised by its seller. The scan observed **1,557 ads today** and retained **79 earlier records**. Seller availability and distinct physical boats are not guaranteed by these advertisement counts.
+Compared with the September 10 snapshot, this scan added **31 newly indexed ads** and recorded **12 asking-price changes, all decreases**. No status changes were detected. **1,548 ads were observed in this run; 119 retain earlier observation dates.** These are advertisement counts, not verified available boats or deduplicated physical inventory. Newly indexed does not necessarily mean newly advertised by the seller.
 
-The automatic pipeline preserved the previous website snapshot because of the partial result. After reviewing the exact failures and all passed quality gates, a separate verified-backup export activated the accepted data with its original run ID and `partial: true`. Original pipeline and separate export/repair evidence remain intact. Eight proven classification errors were also corrected from this run’s immutable source captures; no IDs, groups, prices, availability, workspace data or observation timestamps changed in that repair.
-
-The owner authorized making the repository public on September 10, and GitHub Pages configuration succeeded with HTTPS enforced at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed 1,636-ad snapshot is live and passed public desktop/mobile checks, including exact snapshot/build provenance, images and preset filters. The local website remains available. The September 8 HTTP 422 applied to the then-private repository. Pages serves this reviewed snapshot, while collection and the backend remain local. Future public updates require collection/export, review, a matching commit and manual deployment.
+The automatic pipeline correctly preserved the previous website snapshot on the partial result. After reviewing the sole failure and all passed quality gates, a separate verified-backup export activated the accepted data with the original run ID and partial status. No code, dependency, search-preset, source-access-policy, or duplicate-decision changes were made. Existing parser fixes were naturally applied to freshly collected evidence.
 
 ## Current inventory
 
-**1,511 active ads** have an asking price. **1,194 active ads** have reported coordinates within 150 straight-line miles of Lake Holiday. **20 active ads** have no usable coordinates and are excluded from nearby presets. The database also retains 52 separate fictional samples, excluded from the normal API and real-data snapshot.
+**1,542 active ads** have an asking price; **1,221 active ads** have reported coordinates within 150 straight-line miles of Lake Holiday. **22 active ads** lack usable coordinates and are excluded from nearby presets. The database retains 52 separate fictional samples, excluded from this snapshot.
 
 | Source | Retained ads | Observed this run | Active ads | Active within 150 mi |
 |---|---:|---:|---:|---:|
-| Craigslist | 913 | 846 | 913 | 799 |
-| OnlyInboards | 390 | 381 | 390 | 129 |
 | Bass Boat Central | 62 | 62 | 62 | 20 |
-| Ted’s Boatarama | 62 | 62 | 62 | 62 |
+| Bedford Sales & Outdoors | 17 | 17 | 17 | 16 |
+| Craigslist | 939 | 837 | 939 | 824 |
 | Fox Lake Harbor | 44 | 44 | 44 | 44 |
-| Huber’s Marine | 31 | 29 | 31 | 31 |
-| Gordy’s Marine | 31 | 31 | 31 | 24 |
-| Starved Rock Marina | 30 | 30 | 18 | 18 |
+| Gordy’s Marine | 32 | 32 | 32 | 25 |
+| Huber’s Marine | 31 | 28 | 31 | 31 |
 | Lake County Watersports | 27 | 26 | 27 | 27 |
 | Miller’s Sport Center | 22 | 22 | 17 | 17 |
-| Bedford Sales & Outdoors | 17 | 17 | 17 | 16 |
+| OnlyInboards | 393 | 381 | 393 | 129 |
 | Quest Watersports | 7 | 7 | 7 | 7 |
-| **Total** | **1,636** | **1,557** | **1,619** | **1,194** |
+| Starved Rock Marina | 30 | 30 | 18 | 18 |
+| Ted’s Boatarama | 63 | 62 | 63 | 63 |
+| **Total** | **1,667** | **1,548** | **1,650** | **1,221** |
 
-The 79 earlier records comprise 67 Craigslist, nine OnlyInboards, two Huber’s and one Lake County ad. Their earlier observation dates are preserved. Absence from one inventory pass does not establish a sale; active records become stale only after the configured 14-day absence threshold. An inventory summary observed today also does not imply every retained detail field was reverified today.
+The 119 earlier records comprise 102 Craigslist, twelve OnlyInboards, three Huber’s, one Lake County and one Ted’s ad. Their dates remain intact. Absence from one pass does not establish a sale; the existing 14-day stale threshold remains unchanged. A fresh inventory summary does not mean every detail field was reverified.
 
 ## Lake Holiday searches
 
-Home remains the reservoir reference **41.6180404, -88.6682705**. Nearby picks target preferred premium fishing and ski makes, reported lengths from 18 through 21 ft, and at least 200 hp when power is known. The dedicated fishing preset requires reported 200+ hp; the ski preset includes MasterCraft, Nautique, Malibu and peers. Presets overlap and their counts must not be added together.
+Home remains **41.6180404, -88.6682705**. Factory presets are unchanged; the fishing preset still requires reported 200+ hp. The recent model/budget discussion did not automatically change saved search criteria. Presets overlap and must not be added together.
 
 | Quick search | Matching ads | Grouped research records |
 |---|---:|---:|
@@ -41,48 +39,40 @@ Home remains the reservoir reference **41.6180404, -88.6682705**. Nearby picks t
 | MasterCraft & peers · up to 21 ft | 53 | 52 |
 | Wider search · within 250 mi | 112 | 111 |
 | Include unknown lengths · verify first | 94 | 93 |
-| All nearby ads · no lake screen | 1,194 | 1,189 |
+| All nearby ads · no lake screen | 1221 | 1216 |
 
-None of the 43 newly indexed ads meets the existing nearby premium fishing/ski presets, and no recorded price change falls within those presets. The broad nearby view gained 33 new ads and lost one active ad to sold, for a net increase of 32. The ski preset decreased by one because a Tiger Shark WaveRunner was incorrectly inferred as a Tige ski boat; its classification is now corrected. The 16 reported-200+hp fishing matches remain available for research.
-
-New wider-area entries include a [2023 Phoenix 920 Elite, 250 hp, $70,000, Brighton MI](https://bassboatcentral.com/boats-for-sale/phoenix/#gallery-17943-1) (about 258 straight-line miles; reported length unknown), a [2020 Ranger Z520C, 250 hp, $59,995, Shelbyville IN](https://bassboatcentral.com/boats-for-sale/ranger/#gallery-17954-3) (reported length and usable coordinates unknown), and a [2026 Tige Z3, 23 ft, $184,995, Leesburg IN](https://onlyinboards.com/listings/2026-tige-z3-for-sale-leesburg-indiana-145711) (about 147 miles; exceeds the 21-ft hull screen). They remain in the broader inventory and are not presented as verified lake-compatible nearby matches.
-
-Distances use advertised boat/dealer locations and are **straight-line miles**, not towing distance or a four-hour driving guarantee. No external routing or public geocoding provider was enabled for this refresh. Unknown/conflicting dimensions, power and actual boat locations remain subject to review.
-
-Identity grouping remains **3 multi-ad groups containing 9 ads**, yielding **1,630 research records** across the retained pool. Original ads, source links and histories remain inspectable. Duplicate candidate pairs remain suggestions requiring review; the September 8 count of 131 unreviewed nearby pairs is historical and was not recomputed in this refresh. Market does not yet distinguish reviewed versus HIN-only grouping.
+Distances are straight-line estimates from source-published locations, not driving times. No routing or public geocoding provider was enabled. Identity grouping remains **three multi-ad groups containing nine ads**, giving **1,661 research records** in the full retained pool. Duplicate suggestions were not re-reviewed; source ads remain individually inspectable.
 
 ## Full-scan evidence
 
-Run **`cc9d1814-d2af-4aad-b0d6-d725724b6efa`** ran from **2026-09-10T20:10:07.604Z** through **2026-09-10T20:48:10.130Z**. It used a private copy of the normal source configuration with OnlyInboards’ detail budget raised from 100 to 150 for this run. Its 99 eligible details all completed; the permanent source configuration remains unchanged.
+Run **`45193ea2-80fb-483c-a267-d1ded9697538`**: **2026-09-12T12:03:21.761Z–2026-09-12T12:40:58.254Z**. The private run configuration raised OnlyInboards’ detail budget from 100 to 150, allowing all 101 eligible details to complete; the permanent configuration is unchanged.
 
-```bash
-SOURCE_CONFIG=data/refresh-2026-09-10/sources.json npm run refresh -- --cache-hours=1
-```
+`SOURCE_CONFIG=data/refresh-2026-09-12/sources.json npm run refresh -- --cache-hours=1`
 
 | Source | Outcome | Ads found this run | Newly indexed |
 |---|---|---:|---:|
-| Craigslist | success | 846 | 38 |
+| Craigslist | success | 837 | 26 |
 | Bedford Sales & Outdoors | success | 17 | 0 |
 | OnlyInboards | success | 381 | 3 |
 | Miller’s Sport Center | success | 22 | 0 |
-| Huber’s Marine | error | 29 | 0 |
+| Huber’s Marine | error | 28 | 0 |
 | Fox Lake Harbor | success | 44 | 0 |
 | Lake County Watersports | success | 26 | 0 |
-| Ted’s Boatarama | success | 62 | 0 |
-| Gordy’s Marine | success | 31 | 0 |
-| Bass Boat Central | success | 62 | 2 |
+| Ted’s Boatarama | success | 62 | 1 |
+| Gordy’s Marine | success | 32 | 1 |
+| Bass Boat Central | success | 62 | 0 |
 | Starved Rock Marina | success | 30 | 0 |
 | Quest Watersports | success | 7 | 0 |
 
-The report records **76 successful inventory pages**, **287 successful detail pages**, **363 newly fetched pages**, **zero cache hits**, **zero inventory caps**, **zero planned detail deferrals**, **zero detail requests under backoff**, and **two failed detail requests**. All eligible detail requests were attempted. Normal robots restrictions, crawl delays and source-access policies remained active.
+The collector reports **76 successful inventory pages, 283 successful detail pages, 359 fresh fetches and zero cache hits**. One detail request failed. There were **no inventory caps, planned detail deferrals or details under backoff**. All eligible detail requests were attempted with normal robots checks and crawl delays.
 
-The Huber failures were the **2026 Lund Angler 1650 Tiller** detail (HTTP 403) and **2017 Lund 1875 Crossover XS** detail (access challenge). Both were still found in accepted inventory summaries; prior detail evidence remains dated. No denial was bypassed. Huber’s current inventory pass found 29 ads, while its two earlier records remain retained separately.
+The only failed detail was Huber’s **2023 Bennington 22 SS**, HTTP 403. Its accepted inventory summary and earlier detail dates are retained; access restrictions were not bypassed. The two detail failures recorded on September 10 are historical and are not this run’s failure list.
 
-Snapshot SHA-256: **`c9f77dd5b111f9e7626556e4263fd2ef267b3c845191883a0b8c147054fce781`**. Size: **7,007,261 bytes**. Generated: **2026-09-10T20:49:20.464Z**. Recorded observation range: **2026-09-08T01:17:51.923Z–2026-09-10T20:48:10.017Z**. Private run reports, verified backups, exact correction preview/apply audit and separate reviewed export are under `data/refresh-2026-09-10/`; they are excluded from Git and publication.
+Snapshot generated **2026-09-12T12:41:36.941Z**, **7,916,788 bytes**, SHA-256 **`69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee`**. Observation range: **2026-09-08T01:17:51.923Z–2026-09-12T12:40:58.144Z**. Exact release review: **`f424016f9d77a1d393bfb9eb7fc2de110239f95e8408650dfdf8030aec2bc3ec`**. Private reports, verified backups, export/release reviews and audit scripts are under ignored `data/refresh-2026-09-12/` and `data/refresh-runs/`.
 
-The bounded parser correction prevents `Tiger` from matching `Tige`, retains genuine compact names such as `Tige21`, and prioritizes explicit PWC terms before generic ski terms. Eight existing records were repaired using exact fresh captures and record fingerprints. Ambiguous accessories, older-only evidence and unrelated make/model differences were excluded. A wider make-inference issue remains: engine-brand words can override hull makes (for example, a Vexus title mentioning Yamaha). See [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md).
+The release privacy/schema check found no blocking issues. Its 111 possible source-contact warnings contain only contact values already in the previously reviewed snapshot; no new contact text was introduced. Private workspace data, raw captures, secrets, manual location evidence and samples remain excluded. Source and dependency/SBOM hashes are unchanged; no new dependency vulnerability audit is implied.
 
-Boat Trader and other listed marketplaces/dealers with robots/page denials, MarineSource throttling and SkipperBud’s restricted response remain coverage gaps. Facebook and unsupported sources need authorized exports or reviewed manual imports. Wider-region Boat Works/The Boat Center profiles remain disabled. This scan covers all twelve enabled sources; it cannot establish exhaustive regional inventory. See [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md).
+Restricted marketplaces and unsupported sources remain coverage gaps. This was a refresh of all twelve enabled sources, not a new nationwide source-discovery exercise. Cross-listings, uncertain specifications and imperfect make/category inference remain documented in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md).
 
 ## Lake rules
 

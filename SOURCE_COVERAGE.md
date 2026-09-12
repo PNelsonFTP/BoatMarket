@@ -1,6 +1,6 @@
 # Source research and coverage
 
-Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 10. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
+Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 12. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
 
 ## Sources included in automatic collection
 

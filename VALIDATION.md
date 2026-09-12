@@ -1,8 +1,16 @@
 # Verification record
 
-Dated September 8 and September 10, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the September 10 refresh is recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
+Dated September 8, September 10 and September 12, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the September 10 refresh is recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
+
+## September 12 inventory refresh
+
+Collection run `45193ea2-80fb-483c-a267-d1ded9697538` completed 2026-09-12T12:40:58.254Z. All twelve quality gates passed; 76 inventory pages and 283 detail pages succeeded, with zero cache hits, inventory caps or deferred detail work. One Huber’s Bennington detail returned HTTP 403. The explicitly partial result contains 1,667 ads (1,650 active / 17 sold), 31 additions, twelve price decreases and no status changes versus September 10. A separate verified backup and reviewed export preserve the original partial outcome and source observation dates.
+
+Snapshot SHA-256: `69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee`; generated 2026-09-12T12:41:36.941Z; 7,916,788 bytes. Review `f424016f9d77a1d393bfb9eb7fc2de110239f95e8408650dfdf8030aec2bc3ec` passed schema/privacy/source/SBOM checks. Source hash remains `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`; lockfile and dependency artifacts are unchanged. All possible contact text was already present in the previous reviewed snapshot. Production build and exact built-output verification passed. Local startup first hit the filesystem sandbox’s port-binding restriction; it was rerun with network/listen permission without changing application code.
+
+Local desktop/mobile checks passed at **2026-09-12T12:42:47.276Z**: exact served snapshot hash, 1,667-ad banner, loaded image, 75 default grouped results, 52 ski results, 16 fishing results, no runtime errors or horizontal overflow. The desktop screenshot was inspected. Operations reported no active locks or queued jobs. Public deployment evidence will be appended after deployment completes. Detailed private logs and comparisons live under `data/refresh-2026-09-12/`.
 
 ## September 10 public repository and live Pages deployment
 
