@@ -1,6 +1,6 @@
 # Live inventory — September 12, 2026
 
-The completed configured-source scan retained **1,667 real advertisements: 1,650 active and 17 sold**. Collection ran from **7:03 AM to 7:40 AM CDT on September 12**, about 38 minutes. All twelve inventory quality gates passed. One Huber’s Marine detail page returned HTTP 403, so the result is explicitly **partial**. The reviewed snapshot is staged locally for the GitHub Pages release; deployment evidence is recorded in [VALIDATION.md](VALIDATION.md).
+The completed configured-source scan retained **1,667 real advertisements: 1,650 active and 17 sold**. Collection ran from **7:03 AM to 7:40 AM CDT on September 12**, about 38 minutes. All twelve inventory quality gates passed. One Huber’s Marine detail page returned HTTP 403, so the result is explicitly **partial**. The reviewed snapshot is live on the [public website](https://pnelsonftp.github.io/BoatMarket/) and the local website at http://127.0.0.1:4310. Deployment and public desktop/mobile verification passed; evidence is recorded in [VALIDATION.md](VALIDATION.md).
 
 Compared with the September 10 snapshot, this scan added **31 newly indexed ads** and recorded **12 asking-price changes, all decreases**. No status changes were detected. **1,548 ads were observed in this run; 119 retain earlier observation dates.** These are advertisement counts, not verified available boats or deduplicated physical inventory. Newly indexed does not necessarily mean newly advertised by the seller.
 
