@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-09-12T12:41:37.566Z",
-  "snapshotHash": "69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee",
-  "snapshotBytes": 7916788,
-  "listings": 1667,
+  "createdAt": "2026-09-24T12:59:03.417Z",
+  "snapshotHash": "e2b2c16193e5841cf802fbd622fda3cb9faea786f41e65e249a39a1417783132",
+  "snapshotBytes": 9442829,
+  "listings": 1917,
   "sourceHash": "004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4",
-  "sourceCommit": "f3b1a1a38cd5f685530349ab943b51c9e85c158c",
+  "sourceCommit": "da4ccb21b475fdd62406de4c2e78dc6e5e77a9cf",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -25,9 +25,17 @@
     "issues": [],
     "warnings": [
       "Snapshot came from an explicitly partial collection",
-      "111 ads contain possible source-published contact details; review before publishing"
+      "79 ads were last observed more than 14 days ago",
+      "118 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
+      "4ec6d116eccb8102eda2ed46",
+      "d97976ab0e446870c74bd79c",
+      "2e6bc363c9dfd886e42ff787",
+      "03e01656113fee55386b9af6",
+      "75400beefd6bb457bce81510",
+      "11e413adf9086486e2115f41",
+      "f3a0b0b4c7915b2d807129fd",
       "def1bb00a362899f9b61668f",
       "fe0b78ca2838a4cd4aab2aa9",
       "3496452c963d577ccdf171c2",
@@ -142,14 +150,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-09-12T12:40:58.144Z"
+      "newest": "2026-09-24T12:58:52.971Z"
     }
   },
   "approval": {
-    "reviewHash": "f424016f9d77a1d393bfb9eb7fc2de110239f95e8408650dfdf8030aec2bc3ec",
-    "reviewedAt": "2026-09-12T12:42:08.422Z",
+    "reviewHash": "62c1caee3ca05beb0c14fc3017c1f739a7d526e734cf616ac1b65ce181f7b25b",
+    "reviewedAt": "2026-09-24T12:59:22.237Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee.json"
+  "generation": "snapshots/e2b2c16193e5841cf802fbd622fda3cb9faea786f41e65e249a39a1417783132.json"
 }

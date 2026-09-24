@@ -1,6 +1,8 @@
 # Source research and coverage
 
-Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 12. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
+Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 24. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
+
+**September 24 access checkpoint:** eleven sources passed after a targeted recovery of temporary DNS failures at Lake County, Ted’s, Gordy’s and Bass Boat Central. Huber’s inventory endpoint returned HTTP 403; its 31 previous ads retain their original observation dates, and two now meet the existing stale threshold. No access restriction was bypassed.
 
 ## Sources included in automatic collection
 

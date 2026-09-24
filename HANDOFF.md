@@ -12,6 +12,8 @@ The September 8, 2026 P1/P2 goal is documented in [P1_P2_IMPLEMENTATION.md](P1_P
 
 **September 12 refresh checkpoint:** run `45193ea2-80fb-483c-a267-d1ded9697538` completed at 2026-09-12T12:40:58.254Z. All twelve inventory quality gates passed: 359 freshly fetched pages, 31 newly indexed ads, twelve price drops and no status changes. The 1,667-ad pool has 1,650 active / 17 sold; 1,548 were observed this run and 119 retain earlier dates. A single Huber’s Bennington detail HTTP 403 keeps the outcome partial. A separate verified-backup export preserved that status. Committed and pushed as `e6a83dd`, the exact reviewed snapshot is live through successful Pages run `34694488481`. Public desktop/mobile checks passed at 2026-09-12T12:46:36.964Z, including snapshot and build provenance. Local health returned HTTP 200; 52 samples and eight saved searches remain intact, with no unfinished ingestion runs or active locks. See LIVE_DATA.md and VALIDATION.md for evidence. Source, presets, dependencies and three SBOM artifacts are unchanged. The September 10 checkpoint above remains historical.
 
+**September 24 refresh checkpoint:** **1,917 real ads: 1,820 active, 18 sold and 79 stale**; **250 newly indexed ads**, **85 price changes (73 decreases)** and **80 status changes** versus September 12. 1495 observed this run and 422 retain older dates. Run `cf08b587-6440-4848-99a7-2b913b7082ba` completed 2026-09-24T12:58:53.300Z with outcome partial; 11/12 inventory quality gates passed. The reviewed snapshot is staged for publication. See LIVE_DATA.md and VALIDATION.md for exact source limitations and release evidence. Previous checkpoints are historical.
+
 ## Architecture
 
 ```text

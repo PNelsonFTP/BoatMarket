@@ -10,7 +10,7 @@ The source [package-lock.json](package-lock.json) is lockfile version 3. Its SHA
 07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e
 ```
 
-**September 12 inventory-only release:** package-lock and all three CycloneDX artifact hashes were verified unchanged against the prior release. The new snapshot review reuses these exact artifacts. No dependency update, SBOM regeneration, new container inventory or fresh vulnerability-audit claim accompanies this data refresh.
+**September 24 inventory-only release:** package-lock and all three CycloneDX artifact hashes were verified unchanged against the prior release. The new snapshot review reuses these exact artifacts. No dependency update, SBOM regeneration, new container inventory or fresh vulnerability-audit claim accompanies this data refresh.
 
 ## Deliverables and scope
 

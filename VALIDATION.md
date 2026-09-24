@@ -4,6 +4,20 @@ Dated September 8, September 10 and September 12, 2026 evidence, America/Chicago
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## September 24 inventory refresh
+
+Run `cf08b587-6440-4848-99a7-2b913b7082ba` ran **2026-09-24T12:12:01.948Z–2026-09-24T12:58:53.300Z**. Outcome: **partial**; 11/12 inventory quality gates passed. Final source attempts fetched **316 fresh pages**, reused **16 cached pages**, and completed **72 inventory pages / 260 detail pages**. There were 0 failed details, 0 deferred details, 0 details under backoff and 0 inventory caps.
+
+The original twelve-source pass (`be3e20ab-e166-420c-bc19-02271711ddad`) encountered a temporary DNS interruption at Lake County, Ted’s, Gordy’s and Bass Boat Central. A targeted recovery pass (`dcc0b4bd-18c8-459d-948e-1413a6699ccd`) completed all four sources successfully after DNS recovered and normal detail backoff elapsed. Neither original report was overwritten. The reviewed multi-pass ID above links both reports in the private session summary. Across both attempts, 332 fresh pages and 16 cache hits were recorded; 6 initial detail failures recovered. Counts below use each source's final result and additions from both passes.
+
+The resulting pool contains **1,917 real ads: 1,820 active, 18 sold and 79 stale**; **250 newly indexed ads**, **85 price changes (73 decreases)** and **80 status changes** versus September 12. 1495 ads were observed this run, with 422 retaining older dates. Original collection provenance is preserved.
+
+Snapshot generated **2026-09-24T12:59:02.743Z**, **9,442,829 bytes**, SHA-256 `e2b2c16193e5841cf802fbd622fda3cb9faea786f41e65e249a39a1417783132`. Observation range: 2026-09-08T01:17:51.923Z–2026-09-24T12:58:52.971Z. Exact release review: `62c1caee3ca05beb0c14fc3017c1f739a7d526e734cf616ac1b65ce181f7b25b`.
+
+Release schema/privacy checks passed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, package-lock hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the previous release. Contact and coverage warnings were reviewed before approval. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-09-24T12:59:55.228Z: exact served snapshot hash, correct listing banner, functioning preset buttons and image decoding, no page errors or horizontal overflow.
+
+Publication results will be appended after deployment. Detailed private evidence is under `data/refresh-2026-09-24/`.
+
 ## September 12 inventory refresh
 
 Collection run `45193ea2-80fb-483c-a267-d1ded9697538` completed 2026-09-12T12:40:58.254Z. All twelve quality gates passed; 76 inventory pages and 283 detail pages succeeded, with zero cache hits, inventory caps or deferred detail work. One Huber’s Bennington detail returned HTTP 403. The explicitly partial result contains 1,667 ads (1,650 active / 17 sold), 31 additions, twelve price decreases and no status changes versus September 10. A separate verified backup and reviewed export preserve the original partial outcome and source observation dates.

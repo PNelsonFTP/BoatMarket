@@ -1,78 +1,85 @@
-# Live inventory — September 12, 2026
+# Live inventory — September 24, 2026
 
-The completed configured-source scan retained **1,667 real advertisements: 1,650 active and 17 sold**. Collection ran from **7:03 AM to 7:40 AM CDT on September 12**, about 38 minutes. All twelve inventory quality gates passed. One Huber’s Marine detail page returned HTTP 403, so the result is explicitly **partial**. The reviewed snapshot is live on the [public website](https://pnelsonftp.github.io/BoatMarket/) and the local website at http://127.0.0.1:4310. Deployment and public desktop/mobile verification passed; evidence is recorded in [VALIDATION.md](VALIDATION.md).
+The configured-source refresh retained **1,917 real ads: 1,820 active, 18 sold and 79 stale**, with **250 newly indexed ads**, **85 price changes (73 decreases)** and **80 status changes** versus September 12. **1,495 ads were observed during this run; 422 retain earlier observation dates.** These are advertisement counts, not independently verified available boats. Newly indexed does not necessarily mean newly advertised or a distinct physical boat.
 
-Compared with the September 10 snapshot, this scan added **31 newly indexed ads** and recorded **12 asking-price changes, all decreases**. No status changes were detected. **1,548 ads were observed in this run; 119 retain earlier observation dates.** These are advertisement counts, not verified available boats or deduplicated physical inventory. Newly indexed does not necessarily mean newly advertised by the seller.
-
-The automatic pipeline correctly preserved the previous website snapshot on the partial result. After reviewing the sole failure and all passed quality gates, a separate verified-backup export activated the accepted data with the original run ID and partial status. No code, dependency, search-preset, source-access-policy, or duplicate-decision changes were made. Existing parser fixes were naturally applied to freshly collected evidence.
+The reviewed snapshot is staged for publication. Deployment evidence will be recorded in [VALIDATION.md](VALIDATION.md). The original collection outcome and source observation dates remain in the exported snapshot. A verified backup protects the prior data. No search presets, source access policies, duplicate decisions or dependencies changed.
 
 ## Current inventory
 
-**1,542 active ads** have an asking price; **1,221 active ads** have reported coordinates within 150 straight-line miles of Lake Holiday. **22 active ads** lack usable coordinates and are excluded from nearby presets. The database retains 52 separate fictional samples, excluded from this snapshot.
+1,698 active ads have a price; 1,344 active ads have source coordinates within 150 straight-line miles of Lake Holiday. 28 active ads have unknown coordinates. The 52 fictional samples remain separate and are excluded from publication.
 
 | Source | Retained ads | Observed this run | Active ads | Active within 150 mi |
 |---|---:|---:|---:|---:|
-| Bass Boat Central | 62 | 62 | 62 | 20 |
-| Bedford Sales & Outdoors | 17 | 17 | 17 | 16 |
-| Craigslist | 939 | 837 | 939 | 824 |
-| Fox Lake Harbor | 44 | 44 | 44 | 44 |
-| Gordy’s Marine | 32 | 32 | 32 | 25 |
-| Huber’s Marine | 31 | 28 | 31 | 31 |
-| Lake County Watersports | 27 | 26 | 27 | 27 |
-| Miller’s Sport Center | 22 | 22 | 17 | 17 |
-| OnlyInboards | 393 | 381 | 393 | 129 |
-| Quest Watersports | 7 | 7 | 7 | 7 |
-| Starved Rock Marina | 30 | 30 | 18 | 18 |
-| Ted’s Boatarama | 63 | 62 | 63 | 63 |
-| **Total** | **1,667** | **1,548** | **1,650** | **1,221** |
+| Bass Boat Central | 65 | 64 | 65 | 20 |
+| Bedford Sales & Outdoors | 19 | 19 | 19 | 18 |
+| Craigslist | 1126 | 794 | 1059 | 927 |
+| Fox Lake Harbor | 49 | 42 | 49 | 49 |
+| Gordy’s Marine | 35 | 35 | 35 | 28 |
+| Huber’s Marine | 31 | 0 | 29 | 29 |
+| Lake County Watersports | 28 | 24 | 27 | 27 |
+| Miller’s Sport Center | 24 | 24 | 18 | 18 |
+| OnlyInboards | 437 | 396 | 428 | 137 |
+| Quest Watersports | 8 | 8 | 8 | 8 |
+| Starved Rock Marina | 30 | 29 | 18 | 18 |
+| Ted’s Boatarama | 65 | 60 | 65 | 65 |
+| **Total** | **1917** | **1495** | **1820** | **1344** |
 
-The 119 earlier records comprise 102 Craigslist, twelve OnlyInboards, three Huber’s, one Lake County and one Ted’s ad. Their dates remain intact. Absence from one pass does not establish a sale; the existing 14-day stale threshold remains unchanged. A fresh inventory summary does not mean every detail field was reverified.
+Records absent from this pass retain their original dates. The existing 14-day threshold marks older active records stale; stale is not evidence of a sale. A fresh inventory summary does not establish that every detail field was reverified.
 
 ## Lake Holiday searches
 
-Home remains **41.6180404, -88.6682705**. Factory presets are unchanged; the fishing preset still requires reported 200+ hp. The recent model/budget discussion did not automatically change saved search criteria. Presets overlap and must not be added together.
+Home remains **41.6180404, -88.6682705**. Factory presets are unchanged, including the fishing preset's 200+ hp minimum. Presets overlap; do not add their counts together.
 
 | Quick search | Matching ads | Grouped research records |
 |---|---:|---:|
-| Lake Holiday · nearby picks | 76 | 75 |
-| Fishing · 200+ hp · nearby | 16 | 16 |
-| MasterCraft & peers · up to 21 ft | 53 | 52 |
-| Wider search · within 250 mi | 112 | 111 |
-| Include unknown lengths · verify first | 94 | 93 |
-| All nearby ads · no lake screen | 1221 | 1216 |
+| Lake Holiday · nearby picks | 74 | 74 |
+| Fishing · 200+ hp · nearby | 18 | 18 |
+| MasterCraft & peers · up to 21 ft | 48 | 48 |
+| Wider search · within 250 mi | 112 | 112 |
+| Include unknown lengths · verify first | 92 | 92 |
+| All nearby ads · no lake screen | 1344 | 1338 |
 
-Distances are straight-line estimates from source-published locations, not driving times. No routing or public geocoding provider was enabled. Identity grouping remains **three multi-ad groups containing nine ads**, giving **1,661 research records** in the full retained pool. Duplicate suggestions were not re-reviewed; source ads remain individually inspectable.
+Distances are straight-line estimates, not driving times. No routing or public geocoding provider was enabled. There are 5 multi-ad groups containing 13 ads and 1909 research records in the full pool. Duplicate decisions were preserved; cross-listings may remain.
 
 ## Full-scan evidence
 
-Run **`45193ea2-80fb-483c-a267-d1ded9697538`**: **2026-09-12T12:03:21.761Z–2026-09-12T12:40:58.254Z**. The private run configuration raised OnlyInboards’ detail budget from 100 to 150, allowing all 101 eligible details to complete; the permanent configuration is unchanged.
+Run `cf08b587-6440-4848-99a7-2b913b7082ba` ran **2026-09-24T12:12:01.948Z–2026-09-24T12:58:53.300Z**. Outcome: **partial**; 11/12 inventory quality gates passed. Final source attempts fetched **316 fresh pages**, reused **16 cached pages**, and completed **72 inventory pages / 260 detail pages**. There were 0 failed details, 0 deferred details, 0 details under backoff and 0 inventory caps.
 
-`SOURCE_CONFIG=data/refresh-2026-09-12/sources.json npm run refresh -- --cache-hours=1`
+The original twelve-source pass (`be3e20ab-e166-420c-bc19-02271711ddad`) encountered a temporary DNS interruption at Lake County, Ted’s, Gordy’s and Bass Boat Central. A targeted recovery pass (`dcc0b4bd-18c8-459d-948e-1413a6699ccd`) completed all four sources successfully after DNS recovered and normal detail backoff elapsed. Neither original report was overwritten. The reviewed multi-pass ID above links both reports in the private session summary. Across both attempts, 332 fresh pages and 16 cache hits were recorded; 6 initial detail failures recovered. Counts below use each source's final result and additions from both passes.
+
+The private run configuration raised OnlyInboards' detail budget from 100 to 150, as in the previous refresh. Permanent configuration remains unchanged.
+
+`SOURCE_CONFIG=data/refresh-2026-09-24/sources.json npm run refresh -- --cache-hours=1`
 
 | Source | Outcome | Ads found this run | Newly indexed |
 |---|---|---:|---:|
-| Craigslist | success | 837 | 26 |
-| Bedford Sales & Outdoors | success | 17 | 0 |
-| OnlyInboards | success | 381 | 3 |
-| Miller’s Sport Center | success | 22 | 0 |
-| Huber’s Marine | error | 28 | 0 |
-| Fox Lake Harbor | success | 44 | 0 |
-| Lake County Watersports | success | 26 | 0 |
-| Ted’s Boatarama | success | 62 | 1 |
-| Gordy’s Marine | success | 32 | 1 |
-| Bass Boat Central | success | 62 | 0 |
-| Starved Rock Marina | success | 30 | 0 |
-| Quest Watersports | success | 7 | 0 |
+| Craigslist | success | 794 | 187 |
+| Bedford Sales & Outdoors | success | 19 | 2 |
+| OnlyInboards | success | 396 | 44 |
+| Miller’s Sport Center | success | 24 | 2 |
+| Huber’s Marine | error | 0 | 0 |
+| Fox Lake Harbor | success | 42 | 5 |
+| Lake County Watersports | success | 24 | 1 |
+| Ted’s Boatarama | success | 60 | 2 |
+| Gordy’s Marine | success | 35 | 3 |
+| Bass Boat Central | success | 64 | 3 |
+| Starved Rock Marina | success | 29 | 0 |
+| Quest Watersports | success | 8 | 1 |
 
-The collector reports **76 successful inventory pages, 283 successful detail pages, 359 fresh fetches and zero cache hits**. One detail request failed. There were **no inventory caps, planned detail deferrals or details under backoff**. All eligible detail requests were attempted with normal robots checks and crawl delays.
+Source errors:
 
-The only failed detail was Huber’s **2023 Bennington 22 SS**, HTTP 403. Its accepted inventory summary and earlier detail dates are retained; access restrictions were not bypassed. The two detail failures recorded on September 10 are historical and are not this run’s failure list.
+- Huber’s Marine: https://www.hubersmarine.com/search/inventory/availability/In%20Stock: Source returned HTTP 403
+- Huber’s Marine: Quality gate: Parsed 0 records, below required 1
+- Huber’s Marine: Quality gate: Inventory fell from 31 to 0, exceeding the configured drop limit
+- Huber’s Marine: Quality gate: price coverage 0% below required 50%
+- Huber’s Marine: Quality gate: location coverage 0% below required 95%
+- Huber’s Marine: Quality gate: identity coverage 0% below required 95%
 
-Snapshot generated **2026-09-12T12:41:36.941Z**, **7,916,788 bytes**, SHA-256 **`69bff7be8fa212c87dcda5a15bd1e95b05e4e2cd8fcaf65f41aa22054f7985ee`**. Observation range: **2026-09-08T01:17:51.923Z–2026-09-12T12:40:58.144Z**. Exact release review: **`f424016f9d77a1d393bfb9eb7fc2de110239f95e8408650dfdf8030aec2bc3ec`**. Private reports, verified backups, export/release reviews and audit scripts are under ignored `data/refresh-2026-09-12/` and `data/refresh-runs/`.
+Snapshot generated **2026-09-24T12:59:02.743Z**, **9,442,829 bytes**, SHA-256 `e2b2c16193e5841cf802fbd622fda3cb9faea786f41e65e249a39a1417783132`. Observation range: 2026-09-08T01:17:51.923Z–2026-09-24T12:58:52.971Z. Exact release review: `62c1caee3ca05beb0c14fc3017c1f739a7d526e734cf616ac1b65ce181f7b25b`.
 
-The release privacy/schema check found no blocking issues. Its 111 possible source-contact warnings contain only contact values already in the previously reviewed snapshot; no new contact text was introduced. Private workspace data, raw captures, secrets, manual location evidence and samples remain excluded. Source and dependency/SBOM hashes are unchanged; no new dependency vulnerability audit is implied.
+Release review found 0 blocking issues. Its 118 possible source-contact ads were reviewed: 3 ads have contact values absent from the prior snapshot, and 114 contact-containing ads have changed text. Private workspace fields, secrets, raw captures, samples and manual location evidence are excluded. Source, lockfile and three SBOM artifact hashes match the prior release; no fresh dependency audit is claimed.
 
-Restricted marketplaces and unsupported sources remain coverage gaps. This was a refresh of all twelve enabled sources, not a new nationwide source-discovery exercise. Cross-listings, uncertain specifications and imperfect make/category inference remain documented in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md).
+Private run reports, reviews, backups and verification evidence are retained under ignored `data/refresh-2026-09-24/` and `data/refresh-runs/`. Restricted marketplaces and unsupported sources remain coverage gaps. This refresh covers the twelve enabled sources; it is not an exhaustive new source-discovery search. See [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md).
 
 ## Lake rules
 
