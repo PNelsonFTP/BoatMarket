@@ -2,7 +2,7 @@
 
 The configured-source refresh retained **1,917 real ads: 1,820 active, 18 sold and 79 stale**, with **250 newly indexed ads**, **85 price changes (73 decreases)** and **80 status changes** versus September 12. **1,495 ads were observed during this run; 422 retain earlier observation dates.** These are advertisement counts, not independently verified available boats. Newly indexed does not necessarily mean newly advertised or a distinct physical boat.
 
-The reviewed snapshot is staged for publication. Deployment evidence will be recorded in [VALIDATION.md](VALIDATION.md). The original collection outcome and source observation dates remain in the exported snapshot. A verified backup protects the prior data. No search presets, source access policies, duplicate decisions or dependencies changed.
+The reviewed snapshot is live on the [public website](https://pnelsonftp.github.io/BoatMarket/) and local website at http://127.0.0.1:4310. Deployment and desktop/mobile verification passed; evidence is recorded in [VALIDATION.md](VALIDATION.md). The original collection outcome and source observation dates remain in the exported snapshot. A verified backup protects the prior data. No search presets, source access policies, duplicate decisions or dependencies changed.
 
 ## Current inventory
 
@@ -77,7 +77,7 @@ Source errors:
 
 Snapshot generated **2026-09-24T12:59:02.743Z**, **9,442,829 bytes**, SHA-256 `e2b2c16193e5841cf802fbd622fda3cb9faea786f41e65e249a39a1417783132`. Observation range: 2026-09-08T01:17:51.923Z–2026-09-24T12:58:52.971Z. Exact release review: `62c1caee3ca05beb0c14fc3017c1f739a7d526e734cf616ac1b65ce181f7b25b`.
 
-Release review found 0 blocking issues. Its 118 possible source-contact ads were reviewed: 3 ads have contact values absent from the prior snapshot, and 114 contact-containing ads have changed text. Private workspace fields, secrets, raw captures, samples and manual location evidence are excluded. Source, lockfile and three SBOM artifact hashes match the prior release; no fresh dependency audit is claimed.
+Release review found 0 blocking issues. Its 118 possible source-contact ads were reviewed: 3 ads have contact values absent from the prior snapshot, and 114 contact-containing ads have changed text or observation metadata (12 have new or changed titles/descriptions). Private workspace fields, secrets, raw captures, samples and manual location evidence are excluded. Source, lockfile and three SBOM artifact hashes match the prior release; no fresh dependency audit is claimed.
 
 Private run reports, reviews, backups and verification evidence are retained under ignored `data/refresh-2026-09-24/` and `data/refresh-runs/`. Restricted marketplaces and unsupported sources remain coverage gaps. This refresh covers the twelve enabled sources; it is not an exhaustive new source-discovery search. See [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md).
 
