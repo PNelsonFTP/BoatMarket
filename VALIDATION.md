@@ -1,6 +1,6 @@
 # Verification record
 
-Dated September 8, September 10, September 12 and September 24, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
+Dated September 8, September 10, September 12, September 24 and September 27, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
@@ -16,7 +16,7 @@ Snapshot generated **2026-09-27T20:42:28.489Z**, 10,568,712 bytes, SHA-256 `4317
 
 Schema/privacy checks passed; contact and coverage warnings were reviewed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, lockfile hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the preceding release. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-09-27T20:43:12.828Z, including snapshot hash, listing banner, preset counts, image decoding, no page errors and no horizontal overflow.
 
-Publication results will be appended after deployment. Detailed evidence is retained in private `data/refresh-2026-09-27/`.
+[Pages run 36349102948](https://github.com/PNelsonFTP/BoatMarket/actions/runs/36349102948) successfully deployed commit `4459ef10e42d5e7812bd98fec6b02a5c83fef7f6`. Its Node 22 checks passed typecheck and 214 tests across 36 files, with one Windows-only test skipped, followed by the production build and exact release verification. Public desktop/mobile checks passed at **2026-09-27T20:46:03.505Z**: exact reviewed snapshot hash, 2,018-ad banner, decoded images, 63 nearby / 40 ski / 15 fishing results, no page errors and no horizontal overflow. Public build provenance matches the approved review, source, snapshot and deployment commit. The final database check retained 52 samples and 8 saved searches, with zero unfinished ingestion runs or active locks. Detailed evidence is retained in private `data/refresh-2026-09-27/`.
 
 ## September 24 inventory refresh
 
