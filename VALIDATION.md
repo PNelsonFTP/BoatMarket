@@ -4,6 +4,20 @@ Dated September 8, September 10, September 12 and September 24, 2026 evidence, A
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## September 27 inventory refresh
+
+Huber’s inventory endpoint returned HTTP 403; its 31 earlier ads retain their original observation dates and are now stale under the unchanged 14-day policy. All eleven other sources completed successfully without recovery retries.
+
+Run `e9304084-e1ea-4752-b282-ab21a5da4054` ran **2026-09-27T20:05:16.637Z–2026-09-27T20:41:56.549Z**. Outcome: **partial**; 11/12 inventory quality gates passed. The collector recorded **345 fresh fetches**, **0 cache hits**, **68 successful inventory pages** and **277 successful detail pages**. There were 0 failed details, 0 deferred details, 0 details under backoff and 0 inventory caps.
+
+The retained pool contains **2,018 real ads: 1,581 active, 18 sold and 419 stale**; **101 newly indexed ads**, **27 price changes (26 decreases)** and **340 status changes** compared with September 24. 1529 ads were observed this run and 489 retain earlier dates. The original collection outcome remains explicit in the snapshot.
+
+Snapshot generated **2026-09-27T20:42:28.489Z**, 10,568,712 bytes, SHA-256 `43174665e50da8e94dce5dc0247149618e83be893c09f2fc66055a6178a4bfae`. Observation range: 2026-09-08T01:17:51.923Z–2026-09-27T20:41:56.402Z. Exact release review: `d34307a528f35243785a74fce6200bc4f080396f19c7ee37ba958ba460f95313`.
+
+Schema/privacy checks passed; contact and coverage warnings were reviewed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, lockfile hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the preceding release. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-09-27T20:43:12.828Z, including snapshot hash, listing banner, preset counts, image decoding, no page errors and no horizontal overflow.
+
+Publication results will be appended after deployment. Detailed evidence is retained in private `data/refresh-2026-09-27/`.
+
 ## September 24 inventory refresh
 
 Run `cf08b587-6440-4848-99a7-2b913b7082ba` ran **2026-09-24T12:12:01.948Z–2026-09-24T12:58:53.300Z**. Outcome: **partial**; 11/12 inventory quality gates passed. Final source attempts fetched **316 fresh pages**, reused **16 cached pages**, and completed **72 inventory pages / 260 detail pages**. There were 0 failed details, 0 deferred details, 0 details under backoff and 0 inventory caps.

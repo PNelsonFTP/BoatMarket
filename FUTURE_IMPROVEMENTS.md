@@ -1,6 +1,6 @@
 # Future improvements and remaining limitations
 
-Re-audited September 8, 2026 when the owner requested winding down the P1/P2 goal for local review; September 10 classification findings and September 24 access/recovery findings are added with their own dates. Delivered work and partial criteria from the previous roadmap are mapped in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md). Verification results are in [VALIDATION.md](VALIDATION.md); exact source access observations are in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [config/source-access.json](config/source-access.json).
+Re-audited September 8, 2026 when the owner requested winding down the P1/P2 goal for local review; September 10 classification findings and September 24–27 access/recovery findings are added with their own dates. Delivered work and partial criteria from the previous roadmap are mapped in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md). Verification results are in [VALIDATION.md](VALIDATION.md); exact source access observations are in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [config/source-access.json](config/source-access.json).
 
 ## P1/P2 work delivered
 
@@ -20,7 +20,7 @@ This does not make the inventory exhaustive. Each row is an advertisement until 
 | Remaining issue | Current handling | What would resolve it |
 |---|---|---|
 | Boat Trader and several nearby dealers reject robots/page requests | Dated restrictions remain visible; collectors stop at denials | Dealer permission, supported API/feed/export, or reviewed manual import. Do not bypass blocks |
-| Huber’s Marine inventory access is currently blocked | September 24: the inventory endpoint returned HTTP 403 and failed its quality gate; all 31 earlier ads retain their original dates (29 active, two stale). September 8–12 detail failures remain historical | Permitted dealer feed or reviewed manual evidence; do not bypass restrictions or relabel older observations as fresh |
+| Huber’s Marine inventory access is currently blocked | September 27: the inventory endpoint again returned HTTP 403 and failed its quality gate; all 31 retained ads now exceed the existing 14-day threshold and are stale. September 24 retained 29 active and two stale. Earlier detail failures remain historical | Permitted dealer feed or reviewed manual evidence; do not bypass restrictions or relabel older observations as fresh |
 | MarineSource throttles requests | Stops on HTTP 429; no retries that evade the throttle | Supported feed or later permitted access under its rate policy |
 | SkipperBud’s inventory data is not yet accessible through the permitted path | Public HTML and restricted inventory response distinguished in ledger | Documented permitted inventory endpoint/feed, representative capture and quality review |
 | Facebook, eBay Motors, iboats, YachtWorld/CPO generic integrations | Manual imports or disabled configuration; no claim of live completeness | Authorized API/export with active status, auction/asking-price semantics and representative fixtures |
