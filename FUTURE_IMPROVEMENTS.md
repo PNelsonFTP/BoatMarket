@@ -1,6 +1,6 @@
 # Future improvements and remaining limitations
 
-Re-audited September 8, 2026 when the owner requested winding down the P1/P2 goal for local review; September 10 classification findings and September 24–27 access/recovery findings are added with their own dates. Delivered work and partial criteria from the previous roadmap are mapped in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md). Verification results are in [VALIDATION.md](VALIDATION.md); exact source access observations are in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [config/source-access.json](config/source-access.json).
+Re-audited September 8, 2026 when the owner requested winding down the P1/P2 goal for local review; September 10 classification findings and September 24–29 access/recovery findings are added with their own dates. Delivered work and partial criteria from the previous roadmap are mapped in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md). Verification results are in [VALIDATION.md](VALIDATION.md); exact source access observations are in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [config/source-access.json](config/source-access.json).
 
 ## P1/P2 work delivered
 
@@ -15,12 +15,14 @@ This does not make the inventory exhaustive. Each row is an advertisement until 
 
 **September 24 operational follow-up:** a temporary DNS interruption affected four sources. One targeted recovery pass completed all four after resolution recovered and normal detail backoff elapsed. A future operator workflow could assemble an explicit multi-pass refresh report and offer bounded retries for transient network failures, while retaining every original report and never retrying access denials as though they were network errors. This refresh documented that recovery manually; no collector behavior changed.
 
+**September 29 empty-region finding:** Craigslist’s Decatur boat-search page contains an empty structured ItemList and no static result rows, but the collector conservatively flags zero parsed records as an error. Add narrowly verified support for legitimate empty Craigslist search pages while keeping denial, challenge and unexpected markup responses reviewable. The original warning and prior ads were preserved in this refresh; no parser behavior changed.
+
 ## External access and owner decisions still open
 
 | Remaining issue | Current handling | What would resolve it |
 |---|---|---|
 | Boat Trader and several nearby dealers reject robots/page requests | Dated restrictions remain visible; collectors stop at denials | Dealer permission, supported API/feed/export, or reviewed manual import. Do not bypass blocks |
-| Huber’s Marine inventory access is currently blocked | September 27: the inventory endpoint again returned HTTP 403 and failed its quality gate; all 31 retained ads now exceed the existing 14-day threshold and are stale. September 24 retained 29 active and two stale. Earlier detail failures remain historical | Permitted dealer feed or reviewed manual evidence; do not bypass restrictions or relabel older observations as fresh |
+| Huber’s Marine inventory access is currently blocked | September 29: the inventory endpoint again returned HTTP 403 and failed its quality gate; all 31 retained ads remain beyond the existing 14-day threshold and are stale. September 24 retained 29 active and two stale. Earlier detail failures remain historical | Permitted dealer feed or reviewed manual evidence; do not bypass restrictions or relabel older observations as fresh |
 | MarineSource throttles requests | Stops on HTTP 429; no retries that evade the throttle | Supported feed or later permitted access under its rate policy |
 | SkipperBud’s inventory data is not yet accessible through the permitted path | Public HTML and restricted inventory response distinguished in ledger | Documented permitted inventory endpoint/feed, representative capture and quality review |
 | Facebook, eBay Motors, iboats, YachtWorld/CPO generic integrations | Manual imports or disabled configuration; no claim of live completeness | Authorized API/export with active status, auction/asking-price semantics and representative fixtures |

@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-09-27T20:42:29.160Z",
-  "snapshotHash": "43174665e50da8e94dce5dc0247149618e83be893c09f2fc66055a6178a4bfae",
-  "snapshotBytes": 10568712,
-  "listings": 2018,
+  "createdAt": "2026-09-29T23:41:07.407Z",
+  "snapshotHash": "fc44bfdbaa3e9ac698e2cf4f0aa8a4a30b792e178ba87dba0c63b52dbfc46202",
+  "snapshotBytes": 11682595,
+  "listings": 2097,
   "sourceHash": "004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4",
-  "sourceCommit": "2a408e4a62de138f74dd5160d00a470bb42b4179",
+  "sourceCommit": "42cd66cfd5f95919a5f6962c8cbd16027b7b6bfc",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -25,7 +25,7 @@
     "issues": [],
     "warnings": [
       "Snapshot came from an explicitly partial collection",
-      "419 ads were last observed more than 14 days ago",
+      "417 ads were last observed more than 14 days ago",
       "120 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
@@ -152,14 +152,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-09-27T20:41:56.402Z"
+      "newest": "2026-09-29T23:40:40.930Z"
     }
   },
   "approval": {
-    "reviewHash": "d34307a528f35243785a74fce6200bc4f080396f19c7ee37ba958ba460f95313",
-    "reviewedAt": "2026-09-27T20:42:39.800Z",
+    "reviewHash": "115195e93f690b37bd00f7497dadf22f87ce7720b965d15565ecdedfb4e6f7d6",
+    "reviewedAt": "2026-09-29T23:41:27.144Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/43174665e50da8e94dce5dc0247149618e83be893c09f2fc66055a6178a4bfae.json"
+  "generation": "snapshots/fc44bfdbaa3e9ac698e2cf4f0aa8a4a30b792e178ba87dba0c63b52dbfc46202.json"
 }

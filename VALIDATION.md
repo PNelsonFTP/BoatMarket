@@ -4,6 +4,20 @@ Dated September 8, September 10, September 12, September 24 and September 27, 20
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## September 29 inventory refresh
+
+Huber’s inventory endpoint returned HTTP 403; its 31 retained ads remain stale with original dates. Craigslist’s Decatur page yielded zero records and an empty structured ItemList; its warning is retained. Ten source runs completed successfully and eleven inventory quality gates passed. The reviewed partial export follows a separate verified backup and preserves the original collection report.
+
+Run `3c1a9ba8-3808-40c3-b1de-c2833b437a80` ran **2026-09-29T23:02:28.062Z–2026-09-29T23:40:41.059Z**. Outcome: **partial**; 11/12 inventory quality gates passed. The collector recorded **363 fresh fetches**, **0 cache hits**, **68 successful inventory pages** and **294 successful detail pages**. There were 0 failed details, 0 deferred details, 0 details under backoff and 0 inventory caps.
+
+The retained pool contains **2,097 real ads: 1,662 active, 18 sold and 417 stale**; **79 newly indexed ads**, **19 price changes (17 decreases)** and **2 status changes** compared with September 27. 1555 ads were observed this run and 542 retain earlier dates. The original collection outcome remains explicit in the snapshot.
+
+Snapshot generated **2026-09-29T23:41:06.681Z**, 11,682,595 bytes, SHA-256 `fc44bfdbaa3e9ac698e2cf4f0aa8a4a30b792e178ba87dba0c63b52dbfc46202`. Observation range: 2026-09-08T01:17:51.923Z–2026-09-29T23:40:40.930Z. Exact release review: `115195e93f690b37bd00f7497dadf22f87ce7720b965d15565ecdedfb4e6f7d6`.
+
+Schema/privacy checks passed; contact and coverage warnings were reviewed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, lockfile hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the preceding release. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-09-29T23:42:05.910Z, including snapshot hash, listing banner, preset counts, image decoding, no page errors and no horizontal overflow.
+
+Publication results will be appended after deployment. Detailed evidence is retained in private `data/refresh-2026-09-29/`.
+
 ## September 27 inventory refresh
 
 Huber’s inventory endpoint returned HTTP 403; its 31 earlier ads retain their original observation dates and are now stale under the unchanged 14-day policy. All eleven other sources completed successfully without recovery retries.

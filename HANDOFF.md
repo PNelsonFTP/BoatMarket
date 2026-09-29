@@ -16,6 +16,8 @@ The September 8, 2026 P1/P2 goal is documented in [P1_P2_IMPLEMENTATION.md](P1_P
 
 **September 27 refresh checkpoint:** **2,018 real ads: 1,581 active, 18 sold and 419 stale**; **101 newly indexed ads**, **27 price changes (26 decreases)** and **340 status changes** compared with September 24. 1529 ads observed this run, 489 retained with earlier dates. Run `e9304084-e1ea-4752-b282-ab21a5da4054` completed 2026-09-27T20:41:56.549Z with outcome partial; 11/12 inventory quality gates passed. The snapshot is live through successful Pages run `36349102948`, from commit `4459ef1`; public desktop/mobile checks passed at 2026-09-27T20:46:03.505Z. See LIVE_DATA.md and VALIDATION.md for limitations and release evidence. Earlier checkpoints remain historical.
 
+**September 29 refresh checkpoint:** **2,097 real ads: 1,662 active, 18 sold and 417 stale**; **79 newly indexed ads**, **19 price changes (17 decreases)** and **2 status changes** compared with September 27. 1555 ads observed this run, 542 retained with earlier dates. Run `3c1a9ba8-3808-40c3-b1de-c2833b437a80` completed 2026-09-29T23:40:41.059Z with outcome partial; 11/12 inventory quality gates passed. The reviewed snapshot is staged for publication. See LIVE_DATA.md and VALIDATION.md for limitations and release evidence. Earlier checkpoints remain historical.
+
 ## Architecture
 
 ```text

@@ -1,10 +1,12 @@
 # Source research and coverage
 
-Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 27. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
+Research passes: September 7–8, 2026; the latest enabled-source refresh completed September 29. Counts and the current shortlist are in [LIVE_DATA.md](LIVE_DATA.md). This is a collection of advertisements, not a census of all boats for sale or a promise that every ad represents a different available vessel. The September 8 additions below were verified against fresh, robots-permitted source captures before enabling their configurations; collection/export status is tracked separately in the refresh report. Earlier restricted-source research retains its original dates.
 
 **September 24 access checkpoint:** eleven sources passed after a targeted recovery of temporary DNS failures at Lake County, Ted’s, Gordy’s and Bass Boat Central. Huber’s inventory endpoint returned HTTP 403; its 31 previous ads retain their original observation dates, and two now meet the existing stale threshold. No access restriction was bypassed.
 
 **September 27 access checkpoint:** eleven sources passed without transient-network retries. Huber’s inventory endpoint again returned HTTP 403; its 31 earlier ads retain their original observation dates and now all meet the existing 14-day stale threshold. All requested details from accessible sources completed, with no detail deferrals or inventory caps. The September 24 checkpoint above remains historical.
+
+**September 29 access checkpoint:** eleven inventory quality gates passed. Ten sources completed successfully; Craigslist retained its warning for Decatur’s empty structured results, while updating 816 ads overall. Huber’s inventory endpoint returned HTTP 403 and its 31 retained ads remain stale with original dates. All eligible detail requests completed; no detail deferrals, backoff skips or inventory caps occurred. The original partial outcome is preserved.
 
 ## Sources included in automatic collection
 
