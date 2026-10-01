@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-09-29T23:41:07.407Z",
-  "snapshotHash": "fc44bfdbaa3e9ac698e2cf4f0aa8a4a30b792e178ba87dba0c63b52dbfc46202",
-  "snapshotBytes": 11682595,
-  "listings": 2097,
+  "createdAt": "2026-10-01T11:29:44.297Z",
+  "snapshotHash": "d8038fec6ac8990de7c504a3e2570fa4b6afcd2559a8eecd5aa49fc7557de706",
+  "snapshotBytes": 12645141,
+  "listings": 2126,
   "sourceHash": "004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4",
-  "sourceCommit": "42cd66cfd5f95919a5f6962c8cbd16027b7b6bfc",
+  "sourceCommit": "de84752b8f0b139083dea82747134fdf52938bda",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -26,9 +26,12 @@
     "warnings": [
       "Snapshot came from an explicitly partial collection",
       "417 ads were last observed more than 14 days ago",
-      "120 ads contain possible source-published contact details; review before publishing"
+      "123 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
+      "778a2a9e73531913b003431b",
+      "5aa849b8fc49e1fe0a7d0b59",
+      "3bbb2cdfaa79bb3dfc2aff5f",
       "e6fa7247044a83a8397dcbdc",
       "b8f8d67edeee5c4bb1d0bcd1",
       "4ec6d116eccb8102eda2ed46",
@@ -152,14 +155,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-09-29T23:40:40.930Z"
+      "newest": "2026-10-01T11:29:20.346Z"
     }
   },
   "approval": {
-    "reviewHash": "115195e93f690b37bd00f7497dadf22f87ce7720b965d15565ecdedfb4e6f7d6",
-    "reviewedAt": "2026-09-29T23:41:27.144Z",
+    "reviewHash": "def773d623b609b5b735bf0f51167f04e9e7395ff02a1c311b2dac1b40e07205",
+    "reviewedAt": "2026-10-01T11:30:07.945Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/fc44bfdbaa3e9ac698e2cf4f0aa8a4a30b792e178ba87dba0c63b52dbfc46202.json"
+  "generation": "snapshots/d8038fec6ac8990de7c504a3e2570fa4b6afcd2559a8eecd5aa49fc7557de706.json"
 }
