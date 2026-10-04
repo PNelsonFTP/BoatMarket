@@ -4,6 +4,20 @@ Dated September 8, September 10, September 12, September 24, September 27, Septe
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## October 4 inventory refresh
+
+Huber’s inventory endpoint returned HTTP 403; its 31 retained ads remain stale with original dates. Freshly captured Craigslist pages for Decatur and Champaign–Urbana have no static result rows and empty structured ItemLists; both original parser warnings remain. Ten source runs completed successfully and eleven inventory quality gates passed. A separately backed-up export preserves the original partial outcome. No denied access was bypassed.
+
+Run `dfe96540-f36e-40d2-9cac-b038075f78e7` ran **2026-10-04T12:42:49.344Z–2026-10-04T13:21:20.050Z**. Outcome: **partial**; 11/12 inventory quality gates passed. The collector recorded **366 fresh fetches**, **0 cache hits**, **71 successful inventory pages** and **293 successful detail pages**. There were 0 failed details, 0 deferred details, 0 details under backoff and 0 inventory caps.
+
+The retained pool contains **2,180 real ads: 1,746 active, 18 sold and 416 stale**; **54 newly indexed ads**, **27 price changes (26 decreases)** and **1 status change (stale to active)** compared with October 1. 1511 ads were observed this run and 669 retain earlier dates. The original collection outcome remains explicit in the snapshot.
+
+Snapshot generated **2026-10-04T13:21:42.021Z**, 13,682,830 bytes, SHA-256 `6dd4efa2926ef5a2394b02496c72a93b2e64e8378ac6cf90369bb467c8d4b1a2`. Observation range: 2026-09-08T01:17:51.923Z–2026-10-04T13:21:19.895Z. Exact release review: `c954653c9594acfd873997e57c9c7f999dc06d94636e102787e017d1f1c94c90`.
+
+Schema/privacy checks passed; contact and coverage warnings were reviewed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, lockfile hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the preceding release. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-10-04T13:22:32.130Z, including snapshot hash, listing banner, preset counts, image decoding, no page errors and no horizontal overflow.
+
+Publication results will be appended after deployment. Detailed evidence is retained in private `data/refresh-2026-10-04/`.
+
 ## October 1 inventory refresh
 
 Huber’s inventory endpoint returned HTTP 403; its 31 retained ads remain stale with original dates. Craigslist’s freshly captured Decatur page has no static rows and an empty structured ItemList; its original warning remains. Ten source runs completed successfully and eleven inventory quality gates passed. A separately backed-up export preserves the original partial outcome. No denied access was bypassed.
