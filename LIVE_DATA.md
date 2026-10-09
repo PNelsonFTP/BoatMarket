@@ -2,7 +2,7 @@
 
 The refresh retained **2,262 real ads: 1,759 active, 18 sold and 485 stale**, with **72 newly indexed ads**, **34 price changes (31 decreases)** and **69 status changes** compared with October 5. All 69 are active-to-stale transitions under the existing 14-day policy; no new sale is inferred. **1,466 ads were observed during this run; 796 retain earlier observation dates.** These are advertisement counts, not independently verified available boats. Newly indexed does not necessarily mean newly advertised or a distinct physical boat.
 
-The reviewed snapshot is staged for publication. Deployment evidence will be recorded in [VALIDATION.md](VALIDATION.md). A verified backup protects the earlier data. The exported snapshot preserves the collection outcome and observation dates. Search presets, source access policies, duplicate decisions and dependencies are unchanged.
+The reviewed snapshot is live on the [public website](https://pnelsonftp.github.io/BoatMarket/) and local website at http://127.0.0.1:4310. Deployment and desktop/mobile verification passed; evidence is recorded in [VALIDATION.md](VALIDATION.md). A verified backup protects the earlier data. The exported snapshot preserves the collection outcome and observation dates. Search presets, source access policies, duplicate decisions and dependencies are unchanged.
 
 ## Current inventory
 
