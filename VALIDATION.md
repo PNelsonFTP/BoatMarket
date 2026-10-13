@@ -4,6 +4,20 @@ Dated September 8, September 10, September 12, September 24, September 27, Septe
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## October 13 inventory refresh
+
+Huber’s and Gordy’s inventory endpoints again returned HTTP 403; their 31 and 35 retained ads keep original observation dates. Huber’s ads remain stale; Gordy’s has 33 active and two stale under the unchanged age policy. All ten accessible sources completed successfully and passed their quality gates. Fresh Craigslist captures contain three Decatur ads and two Champaign–Urbana ads, with no parser warnings today. A separately backed-up export preserves the explicitly partial outcome. No denied access was bypassed.
+
+Reviewed multi-pass session `3cb59579-7c41-46d5-9c49-8616f8704472` ran **2026-10-13T12:26:18.299Z–2026-10-13T13:07:56.772Z**. Outcome: **partial**; 10/12 inventory quality gates passed. The initial twelve-source pass `53dc27a0-a4b9-4cb1-8370-c8f0bb62c20e` recorded **372 fresh fetches**, **0 cache hits**, **71 successful inventory pages** and **301 successful detail pages**, with 2 OnlyInboards details deferred by the 150-page budget. A permitted completion pass `eb8865ff-899f-404e-99d1-f2d0c340e7fd` used a private 200-detail budget, reused **163 captures with their original observation dates** and fetched **2 additional details**. All **303 eligible details** are covered in the final per-source reports, with zero failed details, remaining deferrals, backoff skips or inventory caps. Across both passes: **374 fresh fetches**, **163 cache hits**, **84 successful inventory-page operations** and **453 successful detail-page operations**; repeated cached operations are not additional unique pages. Original component reports are preserved.
+
+The retained pool contains **2,326 real ads: 1,769 active, 19 sold and 538 stale**; **64 newly indexed ads**, **22 price changes (19 decreases)** and **54 status changes** compared with October 9. These comprise 53 age-based active-to-stale transitions and one source-reported active-to-sold transition. 1462 ads were observed this run and 864 retain earlier dates. The original collection outcome remains explicit in the snapshot.
+
+Snapshot generated **2026-10-13T13:09:11.828Z**, 16,654,758 bytes, SHA-256 `c4ffefe0ecaf403c590ea6311539b5608168b56ddcf7b7f8fff176230c10105b`. Observation range: 2026-09-08T01:17:51.923Z–2026-10-13T13:07:50.368Z. Exact release review: `cb42d172c55f01d9b17b38759e023bdcb7e8487c9eeca8ff3ce30f8980fba85a`.
+
+Schema/privacy checks passed; contact and coverage warnings were reviewed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, lockfile hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the preceding release. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-10-13T13:10:47.463Z, including snapshot hash, listing banner, preset counts, image decoding, no page errors and no horizontal overflow.
+
+Publication results will be appended after deployment. Detailed evidence is retained in private `data/refresh-2026-10-13/`.
+
 ## October 9 inventory refresh
 
 Huber’s and Gordy’s inventory endpoints returned HTTP 403; their 31 and 35 retained ads keep original observation dates. Huber’s ads remain stale; Gordy’s has 34 active and one stale under the unchanged age policy. Craigslist’s freshly captured Decatur page has no static result rows and an empty structured ItemList; its original parser warning remains. Nine source runs completed successfully and ten inventory quality gates passed. A separately backed-up export preserves the explicitly partial outcome. No denied access was bypassed.

@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-10-09T14:27:18.949Z",
-  "snapshotHash": "c45da3a4a4162aaecb8036592d8abbe09ab6759abe1f0a5eb53bf390ce04e4a8",
-  "snapshotBytes": 15647545,
-  "listings": 2262,
+  "createdAt": "2026-10-13T13:09:25.374Z",
+  "snapshotHash": "c4ffefe0ecaf403c590ea6311539b5608168b56ddcf7b7f8fff176230c10105b",
+  "snapshotBytes": 16654758,
+  "listings": 2326,
   "sourceHash": "004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4",
-  "sourceCommit": "df79b2ebf4db1fed7d98217de128ef832140b4dd",
+  "sourceCommit": "5852ef8d2ac8616c43efa205be417ff62b8547ec",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -25,10 +25,12 @@
     "issues": [],
     "warnings": [
       "Snapshot came from an explicitly partial collection",
-      "485 ads were last observed more than 14 days ago",
-      "126 ads contain possible source-published contact details; review before publishing"
+      "538 ads were last observed more than 14 days ago",
+      "128 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
+      "e397642003535c060d3adab3",
+      "0ed5e9708e8458df8af5a499",
       "c4412e4c39a4247f43cb680d",
       "df20b7aa925cd4eb64391a07",
       "f89491ab7a775628a4f40c48",
@@ -158,14 +160,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-10-09T14:26:20.517Z"
+      "newest": "2026-10-13T13:07:50.368Z"
     }
   },
   "approval": {
-    "reviewHash": "b0d51b04833a19f5b17e09ee75cb68a2297c1bafecec1b0593e6fb169ccc341c",
-    "reviewedAt": "2026-10-09T14:27:42.567Z",
+    "reviewHash": "cb42d172c55f01d9b17b38759e023bdcb7e8487c9eeca8ff3ce30f8980fba85a",
+    "reviewedAt": "2026-10-13T13:09:55.965Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/c45da3a4a4162aaecb8036592d8abbe09ab6759abe1f0a5eb53bf390ce04e4a8.json"
+  "generation": "snapshots/c4ffefe0ecaf403c590ea6311539b5608168b56ddcf7b7f8fff176230c10105b.json"
 }
