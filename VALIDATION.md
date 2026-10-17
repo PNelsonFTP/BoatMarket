@@ -4,6 +4,20 @@ Dated September 8, September 10, September 12, September 24, September 27, Septe
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## October 17 inventory refresh
+
+Huber’s and Gordy’s inventory endpoints again returned HTTP 403; their 31 and 35 retained ads keep original observation dates. Huber’s ads remain stale; Gordy’s has 32 active and three stale under the unchanged age policy. All ten accessible sources completed successfully and passed their quality gates. Fresh Craigslist captures contain two Decatur ads and three Champaign–Urbana ads, with no parser warnings today. A separately backed-up export preserves the explicitly partial outcome. No denied access was bypassed.
+
+Reviewed multi-pass session `3bfbe52a-075f-4634-971c-eed61ad93ce5` ran **2026-10-17T11:42:56.702Z–2026-10-17T12:24:04.980Z**. Outcome: **partial**; 10/12 inventory quality gates passed. The initial twelve-source pass `72672728-209d-4f35-badb-03b24c885d39` recorded **375 fresh fetches**, **0 cache hits**, **71 successful inventory pages** and **304 successful detail pages**, with 3 OnlyInboards details deferred by the 150-page budget. A permitted completion pass `a0ca745a-9aad-4cbd-85f9-11bd18d7efeb` used a private 200-detail budget, reused **162 captures with their original observation dates** and fetched **3 additional details**. All **307 eligible details** are covered in the final per-source reports, with zero failed details, remaining deferrals, backoff skips or inventory caps. Across both passes: **378 fresh fetches**, **162 cache hits**, **83 successful inventory-page operations** and **457 successful detail-page operations**; repeated cached operations are not additional unique pages. Original component reports are preserved.
+
+The retained pool contains **2,401 real ads: 1,714 active, 19 sold and 668 stale**; **75 newly indexed ads**, **22 price changes (16 decreases)** and **130 status changes** compared with October 13. All 130 are age-based active-to-stale transitions; no new sale is inferred. 1459 ads were observed this run and 942 retain earlier dates. The original collection outcome remains explicit in the snapshot.
+
+Snapshot generated **2026-10-17T12:24:20.971Z**, 17,692,819 bytes, SHA-256 `072713ca2155324733662ca2f1470717e379d170a7f20440b0d460da94462d4f`. Observation range: 2026-09-08T01:17:51.923Z–2026-10-17T12:23:56.782Z. Exact release review: `2abdad6f89e87957ba12edb5af67527eba214cbada324a62f14e1b5abcd4a80e`.
+
+Schema/privacy checks passed; contact and coverage warnings were reviewed. Source hash `004f34817bf307ee42ef67cbbbd121bd7a79fc467d24de80727411b744a596f4`, lockfile hash `07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e` and all three SBOM artifact hashes match the preceding release. Production build and exact built-output verification passed. Local desktop/mobile checks passed at 2026-10-17T12:25:42.860Z, including snapshot hash, listing banner, preset counts, image decoding, no page errors and no horizontal overflow.
+
+Publication results will be appended after deployment. Detailed evidence is retained in private `data/refresh-2026-10-17/`.
+
 ## October 13 inventory refresh
 
 Huber’s and Gordy’s inventory endpoints again returned HTTP 403; their 31 and 35 retained ads keep original observation dates. Huber’s ads remain stale; Gordy’s has 33 active and two stale under the unchanged age policy. All ten accessible sources completed successfully and passed their quality gates. Fresh Craigslist captures contain three Decatur ads and two Champaign–Urbana ads, with no parser warnings today. A separately backed-up export preserves the explicitly partial outcome. No denied access was bypassed.
