@@ -711,10 +711,23 @@ export async function collect(
           };
           staged.push({ listing, previous });
         }
+        // Retained ads include historical listings absent from recent inventories.
+        // Compare inventory size with an accepted scan, while retaining every old
+        // ad for field-regression checks and change reporting.
+        const previousInventoryRun = await db.ingestRun.findFirst({
+          where: {
+            source: config.name,
+            status: "success",
+            completedAt: { not: null },
+          },
+          orderBy: { completedAt: "desc" },
+          select: { id: true, found: true, completedAt: true },
+        });
         const quality = inspectSourceQuality(
           staged.map((s) => s.listing),
           [...previousBySourceId.values()],
           config.quality,
+          previousInventoryRun?.found ?? previousBySourceId.size,
         );
         const qualityPath = join(
           reportDirectory(),
@@ -725,6 +738,9 @@ export async function collect(
           sourceId: config.id,
           runId: report.runId,
           generatedAt: new Date().toISOString(),
+          inventoryBaseline: previousInventoryRun
+            ? { kind: "successful-ingestion", ...previousInventoryRun }
+            : { kind: "retained-ads", count: previousBySourceId.size },
         });
         metrics.quality = {
           status: quality.status,

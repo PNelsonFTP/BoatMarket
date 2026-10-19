@@ -24,6 +24,7 @@ export function inspectSourceQuality(
   input: unknown[],
   previous: Listing[] = [],
   policy: SourceQualityPolicy = {},
+  previousInventoryCount = previous.length,
 ) {
   const parsed = input.map((x) => listingSchema.safeParse(x));
   const issues: string[] = parsed.flatMap((r, i) =>
@@ -59,12 +60,13 @@ export function inspectSourceQuality(
       `Parsed ${listings.length} records, below required ${policy.minRecords}`,
     );
   if (
-    previous.length &&
+    previousInventoryCount &&
     policy.maxRecordDropFraction != null &&
-    listings.length < previous.length * (1 - policy.maxRecordDropFraction)
+    listings.length <
+      previousInventoryCount * (1 - policy.maxRecordDropFraction)
   )
     issues.push(
-      `Inventory fell from ${previous.length} to ${listings.length}, exceeding the configured drop limit`,
+      `Inventory fell from ${previousInventoryCount} to ${listings.length}, exceeding the configured drop limit`,
     );
   for (const [key, minimum] of [
     ["price", policy.minPriceCoverage],
@@ -132,6 +134,7 @@ export function inspectSourceQuality(
     counts: {
       parsed: listings.length,
       previous: previous.length,
+      previousInventory: previousInventoryCount,
       new: changes.filter((c) => c.kind === "new").length,
       changed: changes.filter((c) => c.kind === "changed").length,
       missingFromCapture: previous.filter((l) => !currentKeys.has(identity(l)))

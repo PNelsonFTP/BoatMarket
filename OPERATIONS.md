@@ -65,6 +65,8 @@ Only one worker owns the renewable worker lease. Its owner-specific heartbeat is
 - `detailPolicy: "summary-only"`: explicitly requests summaries only. Prior details can remain visible with their original observation age.
 - `quality` supports minimum records, maximum record-drop fraction, minimum price/location/identity coverage and maximum comparable-field coverage drop. Threshold failure preserves the prior source data; it does not delete the inventory.
 
+Automatic inventory-drop checks compare the current count with the most recent completed successful ingestion for that source, rather than the growing archive of retained ads. Without a successful ingestion, the retained count remains the conservative fallback. Failed, interrupted and running ingestions do not reset that baseline; the private quality report records the baseline and ingestion ID. Historical ads still participate in field-regression checks and change reporting, and no count threshold is relaxed. Manual parser previews keep their retained-ad comparison so a partial capture cannot silently stand in for a full inventory.
+
 `data/enrichment` retains detail attempt/success/backoff checkpoints. `data/cache` is the per-URL reuse cache; `data/evidence` retains immutable captured bodies and dated observation records. These are private. Capture/preview/reparse tools:
 
 ```bash

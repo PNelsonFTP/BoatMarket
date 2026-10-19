@@ -13,6 +13,8 @@ const mocks = vi.hoisted(() => ({
   parse: vi.fn(),
   renew: vi.fn(),
   findListing: vi.fn(),
+  findListings: vi.fn(),
+  previousInventoryRun: vi.fn(),
   reconcile: vi.fn(),
   createRun: vi.fn(),
   updateRun: vi.fn(),
@@ -32,12 +34,15 @@ vi.mock("../server/db", () => {
     listing: {
       findUnique: mocks.findListing,
       findMany: async () => {
+        const rows = await mocks.findListings();
+        if (rows) return rows;
         const old = await mocks.findListing();
         return old ? [{ sourceListingId: "one", ...old }] : [];
       },
       updateMany: mocks.stale,
     },
     ingestRun: {
+      findFirst: mocks.previousInventoryRun,
       updateMany: mocks.reconcile,
       create: mocks.createRun,
       update: mocks.updateRun,
@@ -120,6 +125,8 @@ beforeEach(async () => {
     ...data,
   }));
   mocks.findListing.mockResolvedValue(null);
+  mocks.findListings.mockResolvedValue(undefined);
+  mocks.previousInventoryRun.mockResolvedValue(null);
   mocks.upsert.mockResolvedValue({ isNew: false, updated: true });
   mocks.stale.mockResolvedValue({ count: 0 });
 });
@@ -401,6 +408,119 @@ it("summary-only policy avoids detail requests and source quality gates reject a
   });
   expect(mocks.upsert).not.toHaveBeenCalled();
 });
+
+describe("inventory count baseline", () => {
+  const historical = () =>
+    Array.from({ length: 10 }, (_, i) =>
+      boat({
+        id: `old-${i}`,
+        sourceListingId: `old-${i}`,
+        sourceUrl: `https://dealer.example/boat/${i}`,
+        price: 20000,
+        length: 20,
+      }),
+    );
+
+  it.each([
+    {
+      name: "accepts a stable inventory despite archived ads",
+      found: 3,
+      baseline: 3,
+      accepted: true,
+    },
+    {
+      name: "still rejects a real inventory collapse",
+      found: 1,
+      baseline: 3,
+      accepted: false,
+    },
+    {
+      name: "keeps the retained-ad fallback without an accepted scan",
+      found: 3,
+      baseline: null,
+      accepted: false,
+    },
+  ])("$name", async ({ found, baseline, accepted }) => {
+    await cache(inventoryUrl, "inventory");
+    const old = historical();
+    mocks.findListings.mockResolvedValue(
+      old.map((data) => ({
+        sourceListingId: data.sourceListingId,
+        data,
+        status: data.status,
+      })),
+    );
+    if (baseline != null)
+      mocks.previousInventoryRun.mockResolvedValue({
+        id: "accepted-scan",
+        found: baseline,
+        completedAt: new Date("2026-09-01T00:00:00Z"),
+      });
+    mocks.parse.mockReturnValue(old.slice(0, found));
+    const result = await collect([
+      {
+        ...source,
+        followDetails: false,
+        quality: { minRecords: 1, maxRecordDropFraction: 0.5 },
+      },
+    ]);
+    expect(result.metrics[0].quality?.status).toBe(
+      accepted ? "passed" : "failed",
+    );
+    expect(mocks.upsert).toHaveBeenCalledTimes(accepted ? found : 0);
+    const report = JSON.parse(
+      await readFile(result.metrics[0].quality!.reportPath, "utf8"),
+    );
+    expect(report.counts).toMatchObject({
+      previous: 10,
+      previousInventory: baseline ?? 10,
+    });
+    expect(mocks.previousInventoryRun).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          source: "Dealer",
+          status: "success",
+          completedAt: { not: null },
+        },
+        orderBy: { completedAt: "desc" },
+      }),
+    );
+  });
+
+  it("retains historical field-regression checks with a smaller count baseline", async () => {
+    await cache(inventoryUrl, "inventory");
+    const old = historical();
+    mocks.findListings.mockResolvedValue(
+      old.map((data) => ({
+        sourceListingId: data.sourceListingId,
+        data,
+        status: data.status,
+      })),
+    );
+    mocks.previousInventoryRun.mockResolvedValue({
+      id: "accepted-scan",
+      found: 5,
+      completedAt: new Date("2026-09-01T00:00:00Z"),
+    });
+    mocks.parse.mockReturnValue(
+      old
+        .slice(0, 5)
+        .map((l) => ({ ...l, price: undefined, length: undefined })),
+    );
+    const result = await collect([
+      {
+        ...source,
+        followDetails: false,
+        quality: { maxRecordDropFraction: 0.5, maxFieldCoverageDrop: 0.5 },
+      },
+    ]);
+    expect(result.metrics[0].quality?.issues.join(" ")).toMatch(
+      /price coverage fell/,
+    );
+    expect(mocks.upsert).not.toHaveBeenCalled();
+  });
+});
+
 it("honors an operator cancellation marker before any source request", async () => {
   await mkdir(join(directory, "reports"), { recursive: true });
   await writeFile(
