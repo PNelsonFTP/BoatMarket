@@ -1,5 +1,9 @@
 # BoatScout delivery history
 
+## October 22, 2026 — Inventory refresh and reviewed publication
+
+Refreshed all twelve enabled sources through a durable two-pass session. Ten accessible inventories passed; Huber’s and Gordy’s HTTP 403 gaps retain their original dated ads. All 304 eligible details completed, with no outstanding deferrals. The reviewed snapshot contains 2,536 ads, including 107 newly indexed ads and 34 price changes (27 decreases); 1,491 ads were observed this session. Local tests, the Pages build, exact release correspondence and all twelve production browser checks passed. Source/dependency/configuration versions are unchanged. See LIVE_DATA.md and VALIDATION.md for the reviewed release and subsequent deployment evidence.
+
 ## October 21, 2026 — Imports, refresh sessions, grouping, catalog and lifecycle
 
 Implemented engineering-review items **1–7, 10 and 11**. Listing files now support 64 MiB while API chunks keep 12 MiB/1,000-record limits. Hull and motor make inference is separate; four evidence-backed historical Vexus ads were corrected without re-observation. Inventory acceptance has a durable configuration-specific baseline; strict captured-empty Craigslist detection avoids accepting arbitrary blank pages. Bounded refresh sessions defer export until explicit finalization; live progress explains phases, waits and cancellation. Market counts distinguish reviewed/HIN/unresolved records. A verified compact search catalog loads provenance lazily, retaining all shared filter inputs and full export compatibility. Archive packages, exact-hash retirement controls and concurrent bounded log rotation preserve recovery evidence. Root and Pages production browser suites replace make-dependent verification. Documentation and SBOM/advisory evidence were refreshed; no dependency version, service schedule or medium/low cleanup retirement changed. See IMPLEMENTATION_2026-10-21.md and VALIDATION.md for final checks and remaining limits.

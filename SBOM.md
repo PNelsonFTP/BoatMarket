@@ -16,6 +16,8 @@ The source [package-lock.json](package-lock.json) is lockfile version 3. Its SHA
 
 ## Deliverables and scope
 
+**October 22 inventory publication:** no application source, dependency, source configuration or lockfile change accompanies the refreshed data. All three approved source SBOM hashes match the October 21 generation and the new reviewed release `bb9b399c6f93ec4fe55511e02e41547edbf9a9161e6e6733d592c1e420ebd7b8`. Runtime captures below retain their exact earlier source/image/inventory scope; they are not relabeled as images containing the new snapshot. The latest registry advisory audit remains dated October 21. No fresh dependency audit or package upgrade is claimed for this inventory refresh.
+
 | Artifact | Contents |
 | --- | --- |
 | [All-platform lock and verified bundle CycloneDX SBOM](sbom/boatscout-all-platforms.cdx.json) | 441 physical third-party package instances and 721 dependency edges: all 435 lock entries plus six exact bundled package instances. Includes development and platform-optional contents; not an installed deployment inventory. |
