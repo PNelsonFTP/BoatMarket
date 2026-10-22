@@ -1,6 +1,13 @@
 import { expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  rm,
+  symlink,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { createHash } from "node:crypto";
@@ -15,6 +22,8 @@ it("returns real one-shot exit codes and runs a complete cached refresh against 
   const config = join(directory, "sources.json");
   const cache = join(directory, "cache");
   const target = join(directory, "snapshot.json");
+  const project = resolve(".");
+  const workspace = join(directory, "workspace");
   const env = {
     ...process.env,
     DATABASE_URL: databaseUrl,
@@ -26,13 +35,29 @@ it("returns real one-shot exit codes and runs a complete cached refresh against 
     ALERT_WEBHOOK_URL: "",
   };
   const run = (script: string, args: string[] = []) =>
-    spawnSync(process.execPath, ["--import", "tsx", script, ...args], {
-      env,
-      encoding: "utf8",
-      cwd: resolve("."),
-      timeout: 20000,
-    });
+    spawnSync(
+      process.execPath,
+      ["--import", "tsx", resolve(project, script), ...args],
+      {
+        env,
+        encoding: "utf8",
+        cwd: workspace,
+        timeout: 20000,
+      },
+    );
   try {
+    // Keep default public/journal/log paths inside the fixture. Backups must
+    // exercise this test's data rather than the growing published inventory.
+    await mkdir(workspace);
+    await symlink(
+      join(project, "node_modules"),
+      join(workspace, "node_modules"),
+      process.platform === "win32" ? "junction" : "dir",
+    );
+    const publishedPointer = await readFile(
+      join(project, "public/data-mode.json"),
+      "utf8",
+    );
     await writeFile(join(directory, "fixture.db"), "");
     const migrate = spawnSync(
       process.execPath,
@@ -135,6 +160,9 @@ it("returns real one-shot exit codes and runs a complete cached refresh against 
     ).toBe("complete");
     await writeFile(config, JSON.stringify([{ ...source, urls: [brokenUrl] }]));
     expect(run("server/worker.ts", ["--once"]).status).toBe(1);
+    expect(await readFile(join(project, "public/data-mode.json"), "utf8")).toBe(
+      publishedPointer,
+    );
   } finally {
     await database.$disconnect();
     await rm(directory, { recursive: true, force: true });

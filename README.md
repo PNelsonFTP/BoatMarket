@@ -1,6 +1,6 @@
 # BoatScout
 
-**Live website:** [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/) — the reviewed October 19 inventory snapshot. Collection and private workspace storage run locally.
+**Live website:** [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/) — the reviewed October 22 inventory: **2,536 ads**, including **107 newly indexed ads** and **27 price drops**. Collection and private workspace storage run locally.
 
 A boat-search workspace with a GitHub Pages website and an authenticated local backend. Search, save, compare, map, track prices, and monitor boat listings across configured sources.
 
@@ -10,7 +10,7 @@ A boat-search workspace with a GitHub Pages website and an authenticated local b
 
 If another application uses port 3000, preserve it. Run `npm run build` followed by `npm start` and open **http://127.0.0.1:4310** for the website and API together; run `npm run worker` separately when collection is wanted. Browser tests use isolated port 3002.
 
-**October 21 engineering update:** improvements **1–7, 10 and 11** from the engineering review are implemented: full-size listing imports, hull/engine separation, accepted inventory baselines, durable refresh sessions, production browser checks, Market grouping counts, scan progress, a smaller verified search catalog and reviewed archive/log lifecycle tools. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for behavior, measurements and limits. Restart an existing API/worker after pulling to load the new routes; no database migration is needed. This is an implementation update; inventory observation dates remain October 19 or earlier.
+**October 21 engineering update:** improvements **1–7, 10 and 11** from the engineering review are implemented: full-size listing imports, hull/engine separation, accepted inventory baselines, durable refresh sessions, production browser checks, Market grouping counts, scan progress, a smaller verified search catalog and reviewed archive/log lifecycle tools. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for behavior, measurements and limits. Restart an existing API/worker after pulling to load the new routes; no database migration is needed. That implementation pass preserved earlier observation dates; the subsequent October 22 refresh and public deployment are recorded in [LIVE_DATA.md](LIVE_DATA.md).
 
 ## Documentation map
 
@@ -92,7 +92,7 @@ Connected workspaces also keep an isolated browser backup; the backend remains a
 GitHub Pages serves static HTML, JavaScript, and assets; it does not run the database, API, or background jobs. BoatScout exports the website to `out/` with relative project support and `.nojekyll`. See [GitHub’s Pages overview](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages) and [Next.js static exports](https://nextjs.org/docs/app/guides/static-exports).
 
 1. The public repository is [PNelsonFTP/BoatMarket](https://github.com/PNelsonFTP/BoatMarket), with `main` as the primary branch. Do not add `.env`, `data/`, or `logs/`; they are ignored.
-2. GitHub Pages is configured for **GitHub Actions**, with HTTPS enforced, at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed 2,429-ad snapshot is live; deployment and desktop/mobile verification passed on October 19.
+2. GitHub Pages is configured for **GitHub Actions**, with HTTPS enforced, at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed 2,536-ad snapshot is live; deployment and desktop/mobile verification passed on October 22.
 3. Set the repository Actions variable **`BOATSCOUT_ENABLE_PAGES` to `true`**. Prepare and approve an exact-hash release with `npm run release` (see OPERATIONS.md), commit its matching source/snapshot/SBOM/manifest, then manually dispatch `.github/workflows/pages.yml` with that review hash. Main pushes do not publish; the Pages workflow refuses unreviewed or mismatched artifacts.
 4. The independent validation workflow runs on pushes to `main` and pull requests regardless of Pages settings. The Pages workflow obtains the repository base path from `configure-pages`, so `/BoatMarket/` works without edits. Configure custom domains in Pages settings if needed.
 
