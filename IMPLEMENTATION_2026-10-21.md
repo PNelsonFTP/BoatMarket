@@ -4,6 +4,8 @@ This implements **items 1–7, 10 and 11** from [the engineering review](IMPROVE
 
 This is an implementation and historical normalization update. It does **not** represent a fresh inventory scan. The 2,429-ad dataset retains its October 19 generation date, original partial collection outcome, observation range, prices, statuses and histories. Four verified Vexus ads have corrected hull makes; grouping metadata and derived catalog files are new packaging. GitHub pushes validate the project; the reviewed Pages workflow remains a separate manual deployment.
 
+Final implementation commit `9407ee1b010b229f0214ceab287148fbf04e9a24` passed [all four hosted CI jobs](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39708801286): Windows 318 tests, Ubuntu 317 tests plus one platform-specific skip, 46 desktop/mobile browser checks on each platform, both production builds and both exact-image container probes/inventories. Source and runtime SBOM evidence is retained separately by scope and image identity; dated advisory findings remain an explicit follow-up. See VALIDATION.md for counts, source/review hashes and the Windows portability/contention fixes exposed by testing.
+
 ## Delivery map
 
 | Item | Delivered behavior | Main regression coverage |

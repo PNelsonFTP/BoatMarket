@@ -157,7 +157,7 @@ This is not package-signature validation, independent hashing of every locked di
 
 ## October 21 runtime inventories
 
-Both images were rebuilt from the implemented source and staged canonical snapshot, then smoke-tested with isolated tmpfs SQLite databases. No production volume was mounted. Authentication, migrations/listing reads, website/pointer/canonical hash and non-root runtime checks passed. The rendered image additionally passed Chromium execution; the default image omits browser binaries. Node reports `v22.23.2`. Scanner Syft 1.51.1 and its verified toolchain hashes are recorded in each provenance file; full CycloneDX 1.5 schema validation passed.
+Both images were rebuilt from the initial implementation fingerprint `a75ad507041e358df1fedf8f7faafa605424a0af170d65ec079eb111f090738e` and staged canonical snapshot, then smoke-tested with isolated tmpfs SQLite databases. These captures precede the later Windows log-sharing correction. No production volume was mounted. Authentication, migrations/listing reads, website/pointer/canonical hash and non-root runtime checks passed. The rendered image additionally passed Chromium execution; the default image omits browser binaries. Node reports `v22.23.2`. Scanner Syft 1.51.1 and its verified toolchain hashes are recorded in each provenance file; full CycloneDX 1.5 schema validation passed.
 
 | Target / local image identity | Components recorded | Exact inventory and evidence |
 | --- | ---: | --- |
@@ -166,7 +166,7 @@ Both images were rebuilt from the implemented source and staged canonical snapsh
 
 Generated at `2026-10-22T01:33:15.845Z` and `01:34:55.844Z` (October 21 CDT). SBOM SHA-256 values are `ec82c1d318a6712be55e4a1ac678a9db54a4a371ec575f0798dc49988f118260` and `c72f9a4157333c50bb58b08d8b9c1d989174fa17c132e4741bb060f173992cc3`. These identify the exact local Linux ARM64 images, not registry publication or an OS vulnerability scan. Current hosted AMD64 evidence is recorded below. Source advisory reports above have their separate lock scope. Old image evidence below remains historical and does not describe the newly built images.
 
-## October 21 hosted AMD64 runtime inventories
+## October 21 hosted AMD64 initial implementation inventories
 
 The successful container jobs in [run 39707211804](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39707211804) built and inventoried the same application fingerprint `a75ad507041e358df1fedf8f7faafa605424a0af170d65ec079eb111f090738e` from implementation commit `1a1d0d6`. Both isolated smoke probes and full CycloneDX validation passed; rendered Chromium execution passed. The separate Windows test-harness import correction changes neither this application fingerprint nor dependencies.
 
@@ -176,6 +176,17 @@ The successful container jobs in [run 39707211804](https://github.com/PNelsonFTP
 | Rendered | `sha256:1777cf5f277d3c2db7543abc821bc71bbfa34d852035cad02bb17a9355054bd7` | 5,267 | [CycloneDX](sbom/runtime/sha256-1777cf5f277d3c2db7543abc821bc71bbfa34d852035cad02bb17a9355054bd7.2026-10-22T01-44-36.684Z.cdx.json) |
 
 The [hosted capture index](sbom/runtime/ci-2026-10-21.json) records job URLs, generation times, source commit/fingerprint and SHA-256 for each inventory/provenance/smoke file. Downloaded SBOM hashes were checked and their schemas revalidated before copying. Old duplicate inventories bundled in CI artifacts were retained only in ignored private download evidence. No registry image was published. The index records successful container jobs separately from the first run's Windows harness failure.
+
+## October 21 final-source AMD64 runtime inventories
+
+Successful container jobs in [run 39708801286](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39708801286) built corrected-source commit `9407ee1b010b229f0214ceab287148fbf04e9a24`, application fingerprint `21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe`. These include the Windows log-sharing/unknown-owner correction. Both isolated non-root migration/authentication/database/static-snapshot/native smoke checks passed; the rendered target also passed its loopback JavaScript browser fixture. The downloaded inventories passed independent hash and full-schema verification.
+
+| Target | Exact Linux AMD64 image identity | Components | Inventory |
+| --- | --- | ---: | --- |
+| Runtime | `sha256:79f9231bdc01012a1e15fcbc3f925be4942de5f0f3932aaf855e40ebe8be3801` | 3,954 | [CycloneDX](sbom/runtime/sha256-79f9231bdc01012a1e15fcbc3f925be4942de5f0f3932aaf855e40ebe8be3801.2026-10-22T02-00-52.493Z.cdx.json) |
+| Rendered | `sha256:058a7ff3b06bde376bad5bae6a1e71220dac1f36331249f6dbfcc15a8fb34704` | 5,267 | [CycloneDX](sbom/runtime/sha256-058a7ff3b06bde376bad5bae6a1e71220dac1f36331249f6dbfcc15a8fb34704.2026-10-22T02-01-14.488Z.cdx.json) |
+
+Generated at `2026-10-22T02:00:52.493Z` and `02:01:14.488Z` (October 21 CDT). Inventory SHA-256 values are `2d7c23b7d969cedf587ca5d01aad6177a207776be0bd9bfe28ab7d2e3dc83e78` and `646fd21ddca91bbb11d894d10c8dc8e5cbf56644c506282a087b5cd2089f9c59`. The [final capture index](sbom/runtime/ci-2026-10-21-final.json) records exact job/source associations and all inventory/provenance/smoke hashes. Earlier ARM64 and initial AMD64 captures above remain separate evidence for their source versions. No registry publication or OS vulnerability scan is implied; source-lock advisories remain those in the dated audit reports above.
 
 ## September 8 local Docker runtime inventories
 

@@ -1,6 +1,6 @@
 # Verification record
 
-Dated September 8, September 10, September 12, September 24, September 27, September 29, October 1, October 4, October 5, October 9, October 13, October 17, October 19 October 20 and October 21, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
+Dated September 8, September 10, September 12, September 24, September 27, September 29, October 1, October 4, October 5, October 9, October 13, October 17, October 19, October 20 and October 21, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. That September checkpoint deferred the Market grouping-basis criterion; the October 21 implementation closes it with conservative reviewed/HIN/unresolved counts. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for the current delivery map.
 
@@ -13,8 +13,8 @@ The owner requested implementation, testing, documentation/SBOM updates and comm
 | TypeScript | `npm run typecheck` passed; both production builds also type-check |
 | Full unit/integration suite | **45 files passed; 317 tests passed, 1 platform-specific test skipped** after the final Windows lock-handling fix |
 | Full development browser suite | **22/22**: 11 desktop + 11 mobile; includes full formatted export/import, progress/session controls, grouping, notes and workspace restore |
-| Root production export | Build passed; **12/12** desktop/mobile browser checks passed in 21.0 seconds |
-| `/BoatMarket` production export | Build passed; **12/12** desktop/mobile browser checks passed in 21.4 seconds |
+| Root production export | Build passed; **12/12** desktop/mobile browser checks passed; final corrected-source rerun completed in 16.0 seconds |
+| `/BoatMarket` production export | Build passed; **12/12** desktop/mobile browser checks passed; final corrected-source rerun completed in 15.7 seconds |
 | Exact reviewed release | Source, lock, three source SBOMs, canonical bytes and complete catalog graph verified; built root and Pages outputs verified |
 | Source SBOM/advisories | All three CycloneDX 1.5 schemas/graphs validated; lock unchanged; read-only audits completed with findings detailed in SBOM.md |
 | Container variants | Both new ARM64 runtime/rendered images built, passed isolated health/auth/database/static smoke and full runtime SBOM schema validation; rendered Chromium execution passed |
@@ -42,6 +42,17 @@ Implementation commit **`1a1d0d615acf8c03f9b7d32beddd9ab16564e458`** was pushed 
 The two exact successful hosted AMD64 image inventories, provenance and smoke reports are retained in `sbom/runtime`, indexed by [ci-2026-10-21.json](sbom/runtime/ci-2026-10-21.json). Download bundles also contain older committed inventories; only the newly generated image triples were added. ARM64 and AMD64 inventory results have their separate image identities and counts in SBOM.md. The original advisory findings remain unchanged. Main pushes validate and do not automatically deploy Pages.
 
 Follow-up commit `05081d06fbe5c9283b079771022d514e87f9d5d2` passed Ubuntu verification and both containers in [run 39707861143](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39707861143). Windows reached the real concurrent logger and reported **305 passed / 1 failed**: exclusive creation of a delete-pending/shared lock can return `EPERM` instead of `EEXIST`. The correction retries Windows sharing errors within the existing acquisition deadline without inferring stale ownership. Persistent errors still report stdout fallback; malformed/unknown owner records remain intact regardless of age, and recovery/release recheck PID/nonce/regular-file guards. The final local suite passed **317 tests / 1 skip** with all 150 concurrent records retained. A new source-specific review was prepared and approved; hosted verification is repeated for the corrected source, rather than skipping Windows or relaxing record assertions.
+
+**Final result: all four jobs passed** for source commit **`9407ee1b010b229f0214ceab287148fbf04e9a24`** in [run 39708801286](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39708801286). The last job completed at **2026-10-22T02:06:54Z** (October 21, 9:06 PM CDT). This closes the earlier failures without reducing assertions.
+
+| Final hosted job | Confirmed result |
+| --- | --- |
+| Ubuntu / Node 22 | Types, exact reviewed release, **317 unit/integration tests passed + 1 platform-specific skip across 45 files**, catalog/growth budgets and CycloneDX validation; **22 development + 12 root-production + 12 Pages-production browser tests passed**; both builds passed |
+| Windows / Node 22 | Types, exact reviewed release, **318 unit/integration tests passed across 45 files**, catalog/growth budgets and CycloneDX validation; **22 development + 12 root-production + 12 Pages-production browser tests passed**; both builds passed |
+| Linux AMD64 runtime | Build, isolated non-root migration/authentication/database/static-snapshot/native smoke, full-schema **3,954-component** exact-image SBOM and artifact upload passed |
+| Linux AMD64 rendered | The same checks plus the JavaScript browser fixture, full-schema **5,267-component** exact-image SBOM and artifact upload passed |
+
+The final image triples were independently hash/schema checked after download and are indexed in [ci-2026-10-21-final.json](sbom/runtime/ci-2026-10-21-final.json), separately from earlier implementation captures. Source-lock dependencies and the three approved source SBOM hashes remain unchanged. Final database comparison verified all 21 non-lease tables against the pre-repair backup: only the four intended listing make/evidence repairs differ; SQLite integrity is OK, with no unfinished ingestion or active lease. All 208 local links across twelve current documentation files resolve. The final evidence/documentation follow-up contains no application changes and does not require another matrix run. No Pages workflow was dispatched; public inventory remains the October 19 deployed release, with these source and locally staged packaging changes awaiting a deliberate deployment.
 
 ## October 21 second review and commit/push
 

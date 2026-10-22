@@ -1,0 +1,60 @@
+{
+  "capturedAt": "2026-10-22T02:02:50.011Z",
+  "runId": 39708801286,
+  "runUrl": "https://github.com/PNelsonFTP/BoatMarket/actions/runs/39708801286",
+  "sourceCommit": "9407ee1b010b229f0214ceab287148fbf04e9a24",
+  "sourceHash": "21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe",
+  "jobs": [
+    {
+      "target": "runtime",
+      "jobId": 119594965582,
+      "jobUrl": "https://github.com/PNelsonFTP/BoatMarket/actions/runs/39708801286/job/119594965582",
+      "conclusion": "success",
+      "imageId": "sha256:79f9231bdc01012a1e15fcbc3f925be4942de5f0f3932aaf855e40ebe8be3801",
+      "platform": "linux/amd64",
+      "generatedAt": "2026-10-22T02:00:52.493Z",
+      "components": 3954,
+      "files": [
+        {
+          "path": "sbom/runtime/sha256-79f9231bdc01012a1e15fcbc3f925be4942de5f0f3932aaf855e40ebe8be3801.2026-10-22T02-00-52.493Z.cdx.json",
+          "sha256": "2d7c23b7d969cedf587ca5d01aad6177a207776be0bd9bfe28ab7d2e3dc83e78"
+        },
+        {
+          "path": "sbom/runtime/sha256-79f9231bdc01012a1e15fcbc3f925be4942de5f0f3932aaf855e40ebe8be3801.2026-10-22T02-00-52.493Z.provenance.json",
+          "sha256": "b58d935585f7f37895494515451bfa9ee3c84d0f507c28d42c9f158bda880ccc"
+        },
+        {
+          "path": "sbom/runtime/sha256-79f9231bdc01012a1e15fcbc3f925be4942de5f0f3932aaf855e40ebe8be3801.2026-10-22T02-00-52.493Z.smoke.json",
+          "sha256": "8914809e22485be4bbd6affab04f1018c7ad2ba3aa44d7932b4fdd11bd036f66"
+        }
+      ]
+    },
+    {
+      "target": "rendered",
+      "jobId": 119594965319,
+      "jobUrl": "https://github.com/PNelsonFTP/BoatMarket/actions/runs/39708801286/job/119594965319",
+      "conclusion": "success",
+      "imageId": "sha256:058a7ff3b06bde376bad5bae6a1e71220dac1f36331249f6dbfcc15a8fb34704",
+      "platform": "linux/amd64",
+      "generatedAt": "2026-10-22T02:01:14.488Z",
+      "components": 5267,
+      "files": [
+        {
+          "path": "sbom/runtime/sha256-058a7ff3b06bde376bad5bae6a1e71220dac1f36331249f6dbfcc15a8fb34704.2026-10-22T02-01-14.488Z.cdx.json",
+          "sha256": "646fd21ddca91bbb11d894d10c8dc8e5cbf56644c506282a087b5cd2089f9c59"
+        },
+        {
+          "path": "sbom/runtime/sha256-058a7ff3b06bde376bad5bae6a1e71220dac1f36331249f6dbfcc15a8fb34704.2026-10-22T02-01-14.488Z.provenance.json",
+          "sha256": "72d2b711b2eade4d5e54bc83807180715a9312b56b9fe05cf1d582db74eb98c3"
+        },
+        {
+          "path": "sbom/runtime/sha256-058a7ff3b06bde376bad5bae6a1e71220dac1f36331249f6dbfcc15a8fb34704.2026-10-22T02-01-14.488Z.smoke.json",
+          "sha256": "962bd0f207e4bb749cd60f729c293e4c85463a248c6cacd2a02c94c36dd7a4ba"
+        }
+      ]
+    }
+  ],
+  "note": "Exact final-source AMD64 container captures after the Windows log-sharing correction. Both container jobs passed. Download bundles also contain older committed inventories; only new image triples were copied. No registry publication or OS vulnerability scan is implied. Full application matrix conclusions are recorded separately in VALIDATION.md.",
+  "workflowConclusion": "success",
+  "jobsCompletedAt": "2026-10-22T02:06:54Z"
+}
