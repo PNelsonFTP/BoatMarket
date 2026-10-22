@@ -97,21 +97,52 @@ export function rotatingLogDestination(options: LogRotationOptions): Writable {
       return (error as NodeJS.ErrnoException).code !== "ESRCH";
     }
   }
-  function recoverAbandonedLock() {
+  const windowsSharingError = (error: unknown) =>
+    process.platform === "win32" &&
+    ["EPERM", "EACCES", "EBUSY"].includes(
+      (error as NodeJS.ErrnoException).code || "",
+    );
+  function retryOwnedWindowsIo<T>(
+    work: () => T,
+    deadline = Date.now() + lockTimeoutMs,
+  ) {
+    for (;;) {
+      try {
+        return work();
+      } catch (error) {
+        if (!windowsSharingError(error) || Date.now() >= deadline) throw error;
+        pause(3);
+      }
+    }
+  }
+  function recoverAbandonedLock(deadline: number) {
     let descriptor: number | undefined;
     try {
       // The recovery barrier keeps a new writer from acquiring a just-released lock.
       descriptor = openSync(recovery, "wx", 0o600);
       const info = regular(lock);
       if (!info) return;
-      let record: { pid?: number } = {};
+      let record: { pid?: unknown; nonce?: unknown };
       try {
         record = JSON.parse(readFileSync(lock, "utf8"));
-      } catch {
-        /* Interrupted creation waits 30 seconds. */
+      } catch (error) {
+        // A writer can still be creating its record. Unknown/corrupt ownership
+        // is never proof that its process is dead, regardless of file age.
+        if (
+          error instanceof SyntaxError ||
+          (error as NodeJS.ErrnoException).code === "ENOENT"
+        )
+          return;
+        throw error;
       }
       if (
-        record.pid ? ownerAlive(record.pid) : Date.now() - info.mtimeMs < 30000
+        !record ||
+        typeof record.pid !== "number" ||
+        !Number.isSafeInteger(record.pid) ||
+        record.pid < 1 ||
+        typeof record.nonce !== "string" ||
+        !record.nonce ||
+        ownerAlive(record.pid)
       )
         return;
       const current = regular(lock);
@@ -119,48 +150,80 @@ export function rotatingLogDestination(options: LogRotationOptions): Writable {
         current &&
         current.ino === info.ino &&
         current.mtimeMs === info.mtimeMs
-      )
-        unlinkSync(lock);
+      ) {
+        const latest = JSON.parse(readFileSync(lock, "utf8")) as {
+          pid?: unknown;
+          nonce?: unknown;
+        } | null;
+        if (latest?.pid === record.pid && latest.nonce === record.nonce)
+          unlinkSync(lock);
+      }
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
     } finally {
       if (descriptor !== undefined) {
         closeSync(descriptor);
-        unlinkSync(recovery);
+        retryOwnedWindowsIo(() => {
+          regular(recovery);
+          unlinkSync(recovery);
+        }, deadline);
       }
     }
   }
   function acquire() {
     const deadline = Date.now() + lockTimeoutMs;
+    let lastSharingError: unknown;
     while (Date.now() <= deadline) {
       if (existsSync(recovery)) {
         pause(3);
         continue;
       }
+      let descriptor: number;
       try {
-        const descriptor = openSync(lock, "wx", 0o600);
-        const nonce = randomUUID();
-        try {
-          writeFileSync(
-            descriptor,
-            JSON.stringify({
-              pid: process.pid,
-              nonce,
-              createdAt: new Date().toISOString(),
-            }),
-          );
-        } finally {
-          closeSync(descriptor);
-        }
-        return nonce;
+        descriptor = openSync(lock, "wx", 0o600);
       } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
-        recoverAbandonedLock();
+        if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+          try {
+            recoverAbandonedLock(deadline);
+          } catch (recoveryError) {
+            if (!windowsSharingError(recoveryError)) throw recoveryError;
+            lastSharingError = recoveryError;
+          }
+        } else if (windowsSharingError(error)) {
+          // Windows can report sharing/delete-pending contention as a permission
+          // error. Retry O_EXCL within this deadline; never infer stale ownership
+          // or remove a lock from EPERM/EACCES/EBUSY alone.
+          try {
+            regular(lock);
+          } catch (inspectionError) {
+            if (!windowsSharingError(inspectionError)) throw inspectionError;
+          }
+          lastSharingError = error;
+        } else throw error;
         pause(3);
+        continue;
       }
+      const nonce = randomUUID();
+      try {
+        writeFileSync(
+          descriptor,
+          JSON.stringify({
+            pid: process.pid,
+            nonce,
+            createdAt: new Date().toISOString(),
+          }),
+        );
+      } finally {
+        closeSync(descriptor);
+      }
+      return nonce;
     }
+    if (lastSharingError)
+      throw new Error(
+        `File-log lock remained unavailable after bounded Windows sharing retries: ${lastSharingError instanceof Error ? lastSharingError.message : String(lastSharingError)}`,
+      );
     throw new Error(
-      `another writer holds ${basename(lock)} (or an abandoned recovery barrier needs operator inspection)`,
+      `another writer holds ${basename(lock)} (or unknown ownership/an abandoned recovery barrier needs operator inspection)`,
     );
   }
   function state(
@@ -264,8 +327,14 @@ export function rotatingLogDestination(options: LogRotationOptions): Writable {
       } finally {
         if (nonce) {
           try {
-            if (JSON.parse(readFileSync(lock, "utf8")).nonce === nonce)
+            retryOwnedWindowsIo(() => {
+              regular(lock);
+              if (JSON.parse(readFileSync(lock, "utf8")).nonce !== nonce)
+                throw new Error(
+                  "file-log lock ownership changed; refusing to unlink another owner",
+                );
               unlinkSync(lock);
+            });
           } catch (error) {
             warn(`could not release file-log lock: ${String(error)}`);
           }

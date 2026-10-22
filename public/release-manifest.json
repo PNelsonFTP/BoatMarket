@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-10-22T01:30:16.669Z",
+  "createdAt": "2026-10-22T01:56:48.872Z",
   "snapshotHash": "e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829",
   "snapshotBytes": 18831527,
   "listings": 2429,
-  "sourceHash": "a75ad507041e358df1fedf8f7faafa605424a0af170d65ec079eb111f090738e",
-  "sourceCommit": "37994afb97193e0164bae90ed7b250d59235a46b",
+  "sourceHash": "21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe",
+  "sourceCommit": "05081d06fbe5c9283b079771022d514e87f9d5d2",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -167,8 +167,8 @@
     }
   },
   "approval": {
-    "reviewHash": "7e320f969776f47aa6631c2774d50937da2214b28bc18ef27316623d7656ef1d",
-    "reviewedAt": "2026-10-22T01:30:43.463Z",
+    "reviewHash": "826f0427b70643e667d6a2b366c858e9429e2242b9b532edb2c3fe7622a118a6",
+    "reviewedAt": "2026-10-22T01:57:01.321Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
