@@ -1,6 +1,6 @@
 # BoatScout software bill of materials
 
-This package records the dependencies actually locked for BoatScout 1.0.0. It contains three schema-validated CycloneDX 1.5 JSON SBOMs, the complete lockfile inventory, exact metadata from the verified optional WASM bundle, generation evidence, and fresh read-only vulnerability reports. Two SBOMs come from npm; the all-platform artifact adds verified bundled contents to the locked package graph. It does not change or install dependencies.
+This package records the dependencies actually locked for BoatScout 1.0.0. It contains three schema-validated CycloneDX 1.5 JSON SBOMs, the complete lockfile inventory, exact metadata from the verified optional WASM bundle, generation evidence, and dated read-only vulnerability reports. Two SBOMs come from npm; the all-platform artifact adds verified bundled contents to the locked package graph. It does not change or install dependencies.
 
 Generated **September 8, 2026 at 12:01 PM America/Chicago** (`2026-09-08T17:01:48.335Z`) with Node `v26.7.0` and npm `11.19.0` on macOS arm64. The project supports Node `>=22.12.0`; GitHub Actions and Docker use Node 22. The actual tested Docker runtime reports Node `22.23.2`. These recorded generation/runtime versions describe their respective environments.
 
@@ -11,6 +11,8 @@ The source [package-lock.json](package-lock.json) is lockfile version 3. Its SHA
 ```
 
 **October 19 inventory and collector-correction release:** package-lock and all three CycloneDX artifact hashes were verified unchanged against the prior release. The new snapshot review reuses these exact artifacts. The first-party collector correction changes the separately reviewed source hash, without changing the dependency graph. No dependency update, SBOM regeneration, new container inventory or fresh vulnerability-audit claim accompanies this data refresh.
+
+**October 20 project review:** the lockfile and all three CycloneDX hashes again match the retained provenance and current release manifest. No dependency was added, removed or updated; the SBOM artifacts retain their September 8 generation/advisory dates. Local dependency files were inventoried for cleanup, and exact redundant CI download copies were distinguished from unique earlier image evidence. `@radix-ui/react-tooltip` has no detected application import and is a candidate for a later validated dependency change, not an applied removal. See [CLEANUP_REVIEW.md](CLEANUP_REVIEW.md). No fresh vulnerability scan or container inventory was run. The subsequently approved high-confidence cleanup removed build caches, Finder metadata and expired unreferenced HTML only; dependency packages, the lockfile and all SBOM artifacts are unchanged, and exact reviewed-release verification passed afterward.
 
 ## Deliverables and scope
 

@@ -1,5 +1,27 @@
 # BoatScout delivery history
 
+## October 20, 2026 — Owner-approved high-confidence cleanup
+
+- Removed 271 approved files totaling 373,794,950 bytes (356.5 MiB), plus 48 empty build directories: `.next/`, `.next-dev/`, TypeScript incremental cache, Finder metadata and 14 expired unreferenced HTML cache files.
+- Applied only the 14 approved cache entries through a fresh hash-bound retention subset; no backup or price-history pruning. Preserved database contents, historical evidence/releases, dependencies and `out/`.
+- Verified protected hashes, logical database contents, SQLite/Git integrity and the existing exact reviewed release. Documented per-file removal receipts and remaining candidates in [CLEANUP_REVIEW.md](CLEANUP_REVIEW.md). No commit, push, inventory collection or deployment.
+
+## October 20, 2026 — Project and cleanup review
+
+- Inventoried hidden, ignored and tracked files, imports, dynamic assets, configuration, backup protection and duplicate evidence; documented exact cleanup candidates and non-overlapping space estimates in [CLEANUP_REVIEW.md](CLEANUP_REVIEW.md).
+- Corrected stale deployment/source-count-gate descriptions and separated configured startup from actual process availability. Verified existing release/lock/SBOM hashes without regenerating inventory or dependency artifacts.
+- Proposed cleanup for owner approval; no deletion, collection, commit, push or deployment was performed.
+
+## October 19, 2026 — Inventory baseline correction and refreshed release
+
+- Changed automatic inventory count comparison to the last completed successful source ingestion, preserving drop thresholds, historical field checks and failed/running-baseline protections. Added four regression tests; all 218 local tests passed.
+- Refreshed to 2,429 real ads (1,615 active, 19 sold, 795 stale). All ten accessible sources passed; Huber’s and Gordy’s HTTP 403 gaps remain explicit. Cached recovery preserved capture dates and completed deferred OnlyInboards details.
+- Deployed commit `2b69f12` through successful Pages run `39257842442`; exact reviewed snapshot/build and public desktop/mobile verification passed. See [LIVE_DATA.md](LIVE_DATA.md) and [VALIDATION.md](VALIDATION.md) for dated evidence.
+
+## September 12–October 17, 2026 — Recorded inventory releases
+
+- Repeated reviewed refreshes, retained coverage gaps and observation dates, and manually deployed matching approved snapshots. Complete dated release/run/count evidence is preserved in [LIVE_DATA.md](LIVE_DATA.md), [HANDOFF.md](HANDOFF.md) and [VALIDATION.md](VALIDATION.md).
+
 ## September 10, 2026 — Public repository and live Pages deployment
 
 - Made PNelsonFTP/BoatMarket public at the owner's explicit request after inspecting committed history and pending files for private data.

@@ -10,7 +10,7 @@ npm run setup
 npm run dev
 ```
 
-Setup preserves existing `.env` and data, generates a password for a new installation, applies migrations and generates Prisma. Development normally starts the website at 3000 and API at 4310; read Next's actual startup URL if a port is occupied. The bundled launchers and Cursor tasks invoke these commands. Stop your foreground processes with Ctrl+C.
+Setup preserves existing `.env` and data, generates a password for a new installation, applies migrations and generates Prisma. Development normally starts the website at 3000 and API at 4310; read Next's actual startup URL if a port is occupied. Cursor tasks invoke the documented npm commands. The bundled launchers run `npm install` if `node_modules` is absent, then setup/dev; their initially opened port-3000 tab can differ from Next's actual port. Stop your foreground processes with Ctrl+C.
 
 For a built website and API at the same address, avoiding another app on port 3000:
 
@@ -125,11 +125,13 @@ Backups use consistent SQLite `VACUUM INTO`, integrity checks and a SHA-256 mani
 
 Retention defaults in `config/retention.json` keep cache 30 days, immutable evidence/reports 90 days, backups/rotated logs 30 days, and at least two verified backups. It protects database-referenced evidence, current reports/publication, open logs and audit history. The 10-GiB managed-storage budget can warn when protected data prevents reclaiming enough. Optional `--price-history-days=365` selects only old intermediate price points and creates a fresh verified backup before pruning; first/latest points are retained. Apply rechecks file hashes, symlinks, live references and exclusive leases. A changed plan or newly referenced file refuses the operation. No automatic prune schedule was installed.
 
+Retention only scans its fixed managed roots: `data/cache`, `data/evidence`, `data/refresh-runs`, `data/backups` and `logs`. Legacy backups without a verifiable manifest are not automatically disposable; dated research/release folders and nested backups outside those roots need separate review. Plans expire after 24 hours by default, so regenerate before any later approved application. [CLEANUP_REVIEW.md](CLEANUP_REVIEW.md) records the October 20 dry-run and candidate register; the owner-approved high-confidence cleanup subsequently removed 14 expired cache entries plus build/incremental/Finder caches (271 files total, 356.5 MiB). No backup pruning or price-history deletion was applied; medium/low/optional groups still need separate approval. Do not delete individual files from a manifest-bound backup to deduplicate it.
+
 Restore first verifies and previews exact mappings. Apply writes **only into a new directory**, refuses existing destinations/symlink ancestors and rechecks copied hashes. It never replaces a running database or starts a service. Inspect the restored database/configuration, stop the intended writers, and deliberately choose it for recovery. Free-space checks reserve 512 MiB by default (`MIN_FREE_DISK_BYTES`) plus estimated write needs before collection/export/backup.
 
 ## Reviewed GitHub Pages release and rollback
 
-On September 10 the owner authorized making [PNelsonFTP/BoatMarket](https://github.com/PNelsonFTP/BoatMarket) public. GitHub Pages is configured for Actions with HTTPS enforced at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/); the reviewed snapshot is live, with deployment and desktop/mobile verification passed on September 10. The earlier September 8 HTTP 422 applied to the then-private repository. The database, collectors and worker remain local; Pages serves the reviewed static snapshot.
+On September 10 the owner authorized making [PNelsonFTP/BoatMarket](https://github.com/PNelsonFTP/BoatMarket) public. GitHub Pages is configured for Actions with HTTPS enforced at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/); the first reviewed public deployment passed September 10, and the latest recorded inventory deployment and desktop/mobile verification passed October 19. See [LIVE_DATA.md](LIVE_DATA.md) for the exact dated snapshot and coverage. The earlier September 8 HTTP 422 applied to the then-private repository. The database, collectors and worker remain local; Pages serves the reviewed static snapshot.
 
 ```bash
 npm run sbom

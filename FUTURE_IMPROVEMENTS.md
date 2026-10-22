@@ -57,6 +57,15 @@ Market needs a separate breakdown of reviewed identities, HIN-only groups and un
 
 The container supports collection into its shared database and viewing that data through a connected workspace. Its built static snapshot is fixed at image build time. Container `WORKER_AUTO_EXPORT` and the default full refresh/export command are not yet supported: the app and worker need a deliberately shared writable publication directory, with validated snapshot routes and preserved activation/backup/rollback semantics. Leave automatic export off in containers; rebuild the image from a host-generated snapshot to update the standalone view. The final pass fixes readability of private-mode snapshot files copied into the non-root image, while the shared-publication layout remains deferred at the owner's wind-down request.
 
+## October 20 storage and maintenance follow-ups
+
+The project review in [CLEANUP_REVIEW.md](CLEANUP_REVIEW.md) was followed by owner-approved high-confidence cleanup: 271 files (356.5 MiB) and 48 empty build directories removed. Medium/low/optional candidates remain pending; backup/evidence/archive work below has not been applied. Before future storage work, distinguish reconstructible build/dependency output from historical evidence and manifest-bound backup members. The main follow-ups are:
+
+- Introduce a reviewed archive/retirement policy for historical release bundles, dated refresh baselines and QA media. Older helper scripts read their local baseline paths; content-addressed references need a migration that preserves reproducible audits and rollback routes. Legacy and nested backups currently sit outside normal manifest/retention eligibility.
+- Remove the apparently unused direct Radix Tooltip dependency only through a validated lockfile/SBOM/source-release update; do not hand-prune installed package files or shared transitive dependencies.
+- Parameterize/consolidate manual QA utilities only after preserving equivalent checks. The Pages verifier currently searches for Falcon and can reject a valid inventory if that make disappears; the older browser verifier assumes port 3000.
+- Consider changing launcher installation from `npm install` to `npm ci` for lockfile reproducibility, and open the actual development URL when the default port is occupied. These are documented proposals, not implemented changes.
+
 ## P3 — Later enhancements
 
 1. Persist buying checklists, confirmed availability/date, measured dimensions, motor-capacity evidence, appointments, towing plans and private attachments. The comparison packet is printable; it is not yet a persisted inspection tracker.
