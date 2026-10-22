@@ -10,7 +10,7 @@ A boat-search workspace with a GitHub Pages website and an authenticated local b
 
 If another application uses port 3000, preserve it. Run `npm run build` followed by `npm start` and open **http://127.0.0.1:4310** for the website and API together; run `npm run worker` separately when collection is wanted. Browser tests use isolated port 3002.
 
-**October 21 engineering update:** improvements **1–7, 10 and 11** from the engineering review are implemented: full-size listing imports, hull/engine separation, accepted inventory baselines, durable refresh sessions, production browser checks, Market grouping counts, scan progress, a smaller verified search catalog and reviewed archive/log lifecycle tools. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for behavior, measurements and limits. This is an implementation update; inventory observation dates remain October 19 or earlier.
+**October 21 engineering update:** improvements **1–7, 10 and 11** from the engineering review are implemented: full-size listing imports, hull/engine separation, accepted inventory baselines, durable refresh sessions, production browser checks, Market grouping counts, scan progress, a smaller verified search catalog and reviewed archive/log lifecycle tools. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for behavior, measurements and limits. Restart an existing API/worker after pulling to load the new routes; no database migration is needed. This is an implementation update; inventory observation dates remain October 19 or earlier.
 
 ## Documentation map
 

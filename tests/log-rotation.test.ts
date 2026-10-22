@@ -10,6 +10,7 @@ import {
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { spawn } from "node:child_process";
+import { pathToFileURL } from "node:url";
 import { rotatingLogDestination } from "../server/log-rotation";
 const directory = await mkdtemp(join(tmpdir(), "boatscout-log-rotation-"));
 afterAll(async () => {
@@ -88,7 +89,7 @@ it("bounds disk usage/count without deleting young rotations and reports stdout 
 });
 it("serializes concurrent app/worker processes without corrupting or losing JSON records", async () => {
   const path = join(directory, "concurrent.log"),
-    module = resolve("server/log-rotation.ts");
+    module = pathToFileURL(resolve("server/log-rotation.ts")).href;
   const results = await Promise.all(
     [0, 1, 2].map(
       (worker) =>
@@ -156,7 +157,7 @@ it("refuses symlink targets and recovers a dead writer's lock without changing i
 
 it("preserves every stdout record when the bounded file sink reaches its limit", async () => {
   const path = join(directory, "integrated.log");
-  const source = `import { logger } from ${JSON.stringify(resolve("server/logger.ts"))}; for(let i=0;i<20;i++) logger.info({i,payload:'x'.repeat(120)},'budget fixture');`;
+  const source = `import { logger } from ${JSON.stringify(pathToFileURL(resolve("server/logger.ts")).href)}; for(let i=0;i<20;i++) logger.info({i,payload:'x'.repeat(120)},'budget fixture');`;
   const output = await new Promise<{ stdout: string; stderr: string }>(
     (done, reject) => {
       const child = spawn(

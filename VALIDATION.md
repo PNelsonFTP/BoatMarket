@@ -35,6 +35,12 @@ The real archival drill completed at `2026-10-22T01:41:19.428Z`. Package/plan `e
 
 Detailed private logs/receipts are under `data/improvement-review-2026-10-21/`; browser reports remain under the private E2E report and `playwright-report/production-{root,pages}`. The old failed CI/deployment records below remain historical; this pass repairs the reproduced full-import failure and adds production smoke coverage. Main push validation and manual Pages deployment remain distinct.
 
+## Hosted validation follow-through
+
+Implementation commit **`1a1d0d615acf8c03f9b7d32beddd9ab16564e458`** was pushed to `main`. [Validation run 39707211804](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39707211804) passed both AMD64 container jobs. The Windows job passed types and release verification, then reported **304 passed / 2 failed**: two subprocess tests interpolated Windows `D:` filesystem paths directly into ESM imports. The logging implementation was not reached by those subprocesses. The fix uses Node `pathToFileURL` for both imports, preserving all concurrent-writer and stdout assertions. All five focused logging tests pass locally after the fix; hosted verification is rerun for that follow-up commit. No application/dependency code or reviewed source fingerprint changes accompany this test portability fix.
+
+The two exact successful hosted AMD64 image inventories, provenance and smoke reports are retained in `sbom/runtime`, indexed by [ci-2026-10-21.json](sbom/runtime/ci-2026-10-21.json). Download bundles also contain older committed inventories; only the newly generated image triples were added. ARM64 and AMD64 inventory results have their separate image identities and counts in SBOM.md. The original advisory findings remain unchanged. Main pushes validate and do not automatically deploy Pages.
+
 ## October 21 second review and commit/push
 
 The reviewed audit and cleanup documentation was committed and pushed as `e3ec52e16d06cf1d2fad6683ee847f743689c316`. Only nine Markdown files entered that commit. Private/ignored database, logs, build/dependency output and raw audit evidence were excluded.
