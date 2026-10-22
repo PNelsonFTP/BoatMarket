@@ -25,6 +25,10 @@ Post-cleanup checks confirmed no unexpected missing project paths, unchanged pro
 
 The next build/dev/compiler run will regenerate the deleted caches. The retained `out/` still supports `npm start`; no rebuild was run merely to recreate removed output. **Medium-confidence, low-confidence and optional candidates remain untouched. No collection, commit, push or deployment was performed.** The original register and estimates below are retained as audit history; high-confidence rows are completed removals, not pending candidates.
 
+## October 21 follow-up
+
+The completed review/cleanup documentation was committed and pushed as `e3ec52e16d06cf1d2fad6683ee847f743689c316`. Private local evidence remains Git-ignored. [The subsequent improvement review](IMPROVEMENT_REVIEW_2026-10-21.md) contains 15 recommendations; it performs no further deletion. The no-commit/no-push statements in the dated cleanup record above describe that earlier checkpoint.
+
 ## Scope and evidence
 
 The recursive scan included tracked, untracked, hidden and Git-ignored content: **50,126 regular files**, **25 symlinks**, and 53,509 entries including directories. It reported no read errors and no symlink targets outside this project. Logical file/symlink storage was **4,741,056,060 bytes (4.42 GiB)**; allocated file blocks were **4,896,903,168 bytes (4.56 GiB)**. Directory blocks are excluded. APFS clones/compression, filesystem metadata and future regeneration mean neither measure guarantees the same increase in free space.

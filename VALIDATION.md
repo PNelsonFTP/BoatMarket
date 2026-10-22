@@ -4,6 +4,16 @@ Dated September 8, September 10, September 12, September 24, September 27, Septe
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
 
+## October 21 second review and commit/push
+
+The reviewed audit and cleanup documentation was committed and pushed as `e3ec52e16d06cf1d2fad6683ee847f743689c316`. Only nine Markdown files entered that commit. Private/ignored database, logs, build/dependency output and raw audit evidence were excluded.
+
+Fresh local checks against that source passed: `npm run typecheck`, **218 passing tests / 1 skipped across 36 passing files**, and exact reviewed-release verification for `e0df6ec3eafd67f509687623addfb46d01ea6f4f432f269b09e401b3233235db`. No production build or full local browser suite was run. Logs and reproductions are private under `data/improvement-review-2026-10-21/`.
+
+The new review confirmed two concrete issues: the snapshot is 18,602,774 bytes formatted / 13,419,396 bytes compact, above the 12,582,912-byte browser file limit before import chunking; normalization replaces explicit Vexus with Yamaha from an engine-bearing title. Four snapshot advertisements have that Vexus/Yamaha mismatch. No data repair was applied.
+
+Full CI differs from unit/Pages results. [Run 39257813829](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39257813829) failed full-export connected-import E2E on desktop/mobile on Windows and Ubuntu, while both container jobs passed. [Run 39702836613](https://github.com/PNelsonFTP/BoatMarket/actions/runs/39702836613), triggered by the cleanup documentation push, has both containers passed and Ubuntu **18 browser tests passed / 2 failed**, repeating that test’s missing validated-import dialog; Windows was still running at the recorded checkpoint. A direct completed-job log confirms the Ubuntu assertion at `tests/e2e/transfers.spec.ts:225`. Do not treat a successful Pages deployment or unit run as an all-green full matrix. [The 15-item improvement report](IMPROVEMENT_REVIEW_2026-10-21.md) prioritizes repairing the actual file/request-limit mismatch rather than relaxing test assertions.
+
 ## October 20 approved high-confidence cleanup
 
 After explicit owner approval, exact path/size/timestamp/hash/symlink/ignore and build-tree membership checks passed for 271 files. Fresh open-file inspection found no holders of `.next/`, `.next-dev/` or `tsconfig.tsbuildinfo`. A fresh retention preview retained the original 113 candidates; only the 14 approved cache files were selected into a new hash-bound plan and applied with lease/reference checks. The other approved build/incremental/Finder files were removed by exact path, followed by 48 empty build directories. Total removed: **373,794,950 logical bytes (356.5 MiB)**; original allocated file blocks: **374,452,224 bytes**.

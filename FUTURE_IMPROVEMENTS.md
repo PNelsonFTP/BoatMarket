@@ -2,6 +2,14 @@
 
 Re-audited September 8, 2026 when the owner requested winding down the P1/P2 goal for local review; September 10 classification findings and September 24–29 access/recovery findings are added with their own dates. Delivered work and partial criteria from the previous roadmap are mapped in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md). Verification results are in [VALIDATION.md](VALIDATION.md); exact source access observations are in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [config/source-access.json](config/source-access.json).
 
+## October 21 prioritized engineering review
+
+[IMPROVEMENT_REVIEW_2026-10-21.md](IMPROVEMENT_REVIEW_2026-10-21.md) provides 15 prioritized proposals with code evidence, effort, dependencies and acceptance checks. The first fixes should address full-inventory import compatibility, hull-make inference and production browser validation, followed by independent inventory outcomes, reproducible refresh sessions and grouping-basis counts. These are recommendations, not shipped changes.
+
+Two defects were reproduced without changing inventory: the current snapshot exceeds the browser’s 12 MiB file limit before request chunking, and an explicit Vexus make becomes Yamaha when the engine brand appears in its title. The current snapshot has four affected Vexus advertisements. The October 19 full CI run failed the full-export import E2E test on both platforms; the October 21 cleanup-documentation push also reproduces that failure in its completed Ubuntu job. The separate Pages deployment was successful. Current CI evidence and fresh local 218-test/typecheck results are recorded in the report and VALIDATION.md.
+
+The longer-term constraints below remain useful; use the dated review to distinguish confirmed failures, unfinished criteria and new product opportunities. No additional deletion, source access or feature implementation accompanies the report.
+
 ## P1/P2 work delivered
 
 - **Identity:** reviewed known reposts, conflicting-HIN stock protection, permanent vessel identities, reversible aliases and membership, source/price/review timelines, active/nearby/changed review filters, original-image identity and bounded optional perceptual evidence.

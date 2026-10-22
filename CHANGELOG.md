@@ -1,5 +1,11 @@
 # BoatScout delivery history
 
+## October 21, 2026 — Committed cleanup and second engineering review
+
+- Committed and pushed the reviewed audit/cleanup documentation as `e3ec52e`; private raw audit evidence remains ignored and local.
+- Re-reviewed implementation, runtime/deployment workflows, test coverage, current snapshot and remaining roadmap. Added [15 prioritized recommendations](IMPROVEMENT_REVIEW_2026-10-21.md) with evidence, effort, dependencies and acceptance checks.
+- Reproduced full-inventory import size incompatibility and hull/engine make confusion. Retrieved failing hosted browser evidence; fresh local typecheck and 218 tests passed with one skip. No feature, inventory, dependency or publication change was made.
+
 ## October 20, 2026 — Owner-approved high-confidence cleanup
 
 - Removed 271 approved files totaling 373,794,950 bytes (356.5 MiB), plus 48 empty build directories: `.next/`, `.next-dev/`, TypeScript incremental cache, Finder metadata and 14 expired unreferenced HTML cache files.

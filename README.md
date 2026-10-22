@@ -18,6 +18,7 @@ If another application uses port 3000, preserve it. Run `npm run build` followed
 | [HANDOFF.md](HANDOFF.md) | Current delivery state, architecture, data model/API, implementation map, and how another maintainer should resume |
 | [LIVE_DATA.md](LIVE_DATA.md) | Dated collection counts, search matches, geographic assumptions, and Lake Holiday screening |
 | [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) | Integrated sources, collected regions, pagination, blocked sites, and missing coverage |
+| [IMPROVEMENT_REVIEW_2026-10-21.md](IMPROVEMENT_REVIEW_2026-10-21.md) | 15 prioritized improvements with source evidence, effort and acceptance checks; includes confirmed import and make-inference defects |
 | [CLEANUP_REVIEW.md](CLEANUP_REVIEW.md) | October 20 implementation/storage audit, completed high-confidence cleanup and remaining approval conditions |
 | [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md) | Requirement-by-requirement delivery and verification map |
 | [FUTURE_IMPROVEMENTS.md](FUTURE_IMPROVEMENTS.md) | Prioritized open issues, current mitigations, proposed fixes, and acceptance criteria |
