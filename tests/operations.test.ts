@@ -9,7 +9,8 @@ process.env.DATABASE_URL = `file:${join(directory, "test.db")}`;
 process.env.REFRESH_REPORT_DIR = join(directory, "reports");
 const { db } = await import("../server/db");
 const { atomicJson } = await import("../server/refresh-report");
-const { recoverOperations } = await import("../server/operations");
+const { recoverOperations, readOperationStatus } =
+  await import("../server/operations");
 const { runWorker, readWorkerHeartbeat } = await import("../server/worker");
 const { watchJobCancellation, requestJobCancellation } =
   await import("../server/job-control");
@@ -128,6 +129,73 @@ it("cancellation targets a job identity without sending PID signals", async () =
   } finally {
     watch.stop();
   }
+});
+it("distinguishes intentional delays, possible stalls and cancellation pending, then preserves interrupted progress during recovery", async () => {
+  const old = new Date(Date.now() - 180000).toISOString();
+  const progress = {
+    version: 1,
+    runId: "slow-progress",
+    leaseOwner: "collector-owner",
+    status: "running",
+    startedAt: old,
+    updatedAt: old,
+    completedAt: null,
+    elapsedMs: 180000,
+    lastSuccessfulCheckpointAt: old,
+    sourceId: "fixture",
+    source: "Fixture",
+    ingestRunId: "ingest",
+    sourceIndex: 1,
+    sourceCount: 1,
+    phase: "inventory",
+    currentUrl: "https://fixture.example/inventory",
+    wait: {
+      reason: "Source robots.txt crawl delay",
+      until: new Date(Date.now() + 30000).toISOString(),
+    },
+    cancellationPending: false,
+    metrics: null,
+    error: null,
+    reportPath: join(directory, "reports/progress/slow-progress.json"),
+  };
+  await atomicJson(progress.reportPath, progress);
+  await db.jobLock.create({
+    data: {
+      key: "collector",
+      owner: "collector-owner",
+      expiresAt: new Date(Date.now() + 600000),
+    },
+  });
+  expect((await readOperationStatus()).jobs[0]).toMatchObject({
+    leaseLive: true,
+    progressState: "waiting",
+    progress: { phase: "inventory" },
+  });
+  await atomicJson(progress.reportPath, { ...progress, wait: null });
+  expect((await readOperationStatus()).jobs[0].progressState).toBe(
+    "possible-stall",
+  );
+  await requestJobCancellation(progress.runId);
+  expect((await readOperationStatus()).jobs[0].progressState).toBe(
+    "cancellation-pending",
+  );
+  await db.jobLock.deleteMany();
+  const recovered = await recoverOperations({ apply: true });
+  expect("recovered" in recovered && recovered.recovered).toContain(
+    "slow-progress",
+  );
+  expect(JSON.parse(await readFile(progress.reportPath, "utf8"))).toMatchObject(
+    { status: "failed", recovery: { outcome: "interrupted" } },
+  );
+  expect(
+    JSON.parse(
+      await readFile(
+        join(directory, "reports/recovered/progress/slow-progress.json"),
+        "utf8",
+      ),
+    ),
+  ).toMatchObject({ status: "running", updatedAt: old });
+  expect((await readOperationStatus()).jobs).toHaveLength(0);
 });
 
 it("supervises a real idle worker and cooperatively stops its own identity", async () => {

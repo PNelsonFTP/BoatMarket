@@ -52,7 +52,10 @@ vi.mock("../server/db", () => {
   return { db: database };
 });
 vi.mock("../server/adapters", () => ({
-  adapters: { dealer: { parse: mocks.parse } },
+  adapters: {
+    dealer: { parse: mocks.parse },
+    craigslist: { parse: mocks.parse },
+  },
 }));
 vi.mock("../server/locations", () => ({
   readLocations: vi.fn(async () => []),
@@ -64,6 +67,9 @@ vi.mock("../server/network", () => ({
   }),
   publicUrl: vi.fn(),
 }));
+vi.mock("../server/logger", () => ({
+  logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
+}));
 import {
   collect,
   preserveEnrichedDetail,
@@ -73,6 +79,8 @@ import {
 } from "../server/collector";
 import { startCollectorLease } from "../server/lease";
 import { collectionExitCode } from "../server/refresh-report";
+import { readInventoryBaseline } from "../server/inventory-outcome";
+import { readCollectorProgress } from "../server/collector-progress";
 
 let directory = "";
 const inventoryUrl = "https://dealer.example/inventory";
@@ -519,7 +527,180 @@ describe("inventory count baseline", () => {
     );
     expect(mocks.upsert).not.toHaveBeenCalled();
   });
+  it("uses an accepted 722-ad inventory as the next baseline despite a failed detail", async () => {
+    await cache(inventoryUrl, "inventory");
+    await cache(detailUrl, "invalid-detail");
+    const rows = Array.from({ length: 1000 }, (_, index) =>
+      boat({
+        id: `ad-${index}`,
+        sourceListingId: `ad-${index}`,
+        sourceUrl: index ? `https://dealer.example/boat/${index}` : detailUrl,
+        make: index ? "Ranger" : "Lund",
+      }),
+    );
+    mocks.findListings.mockResolvedValue(
+      rows.map((data) => ({
+        sourceListingId: data.sourceListingId,
+        data,
+        status: data.status,
+      })),
+    );
+    mocks.previousInventoryRun.mockResolvedValue({
+      id: "legacy-complete",
+      found: 722,
+      completedAt: new Date("2026-10-01T00:00:00Z"),
+    });
+    let found = 722;
+    mocks.parse.mockImplementation((html) =>
+      html === "inventory" ? rows.slice(0, found) : [],
+    );
+    const config = {
+      ...source,
+      detailMakes: ["Lund"],
+      quality: { minRecords: 1, maxRecordDropFraction: 0.5 },
+    };
+    const first = await collect([config]);
+    expect(first.status).toBe("partial");
+    expect(first.metrics[0]).toMatchObject({
+      detailPagesFailed: 1,
+      inventory: { status: "accepted", accepted: true, count: 722 },
+    });
+    expect(await readInventoryBaseline(config)).toMatchObject({
+      count: 722,
+      runId: first.runId,
+    });
+    mocks.previousInventoryRun.mockResolvedValue({
+      id: "old-success-with-historical-count",
+      found: 1000,
+      completedAt: new Date("2026-10-01T00:00:00Z"),
+    });
+    found = 400;
+    const next = await collect([config]);
+    expect(next.metrics[0]).toMatchObject({
+      quality: { status: "passed" },
+      inventory: {
+        accepted: true,
+        baseline: {
+          kind: "accepted-inventory",
+          count: 722,
+          runId: first.runId,
+        },
+      },
+    });
+    expect(mocks.previousInventoryRun).toHaveBeenCalledTimes(1);
+  });
+  it("does not advance an accepted baseline from a capped or rejected inventory", async () => {
+    await cache(inventoryUrl, "inventory");
+    mocks.parse.mockReturnValue([boat()]);
+    const config = {
+      ...source,
+      followDetails: false,
+      maxInventoryPages: 1,
+      autoPaginate: true,
+    };
+    const complete = await collect([config]);
+    await cache(
+      inventoryUrl,
+      '<div class="v7list-results"><a href="?pg=2">Next page</a></div>',
+    );
+    const capped = await collect([config]);
+    expect(capped.metrics[0].inventory).toMatchObject({
+      accepted: false,
+      status: "incomplete",
+      reasons: ["inventory-cap"],
+    });
+    expect(await readInventoryBaseline(config)).toMatchObject({
+      runId: complete.runId,
+    });
+    const rejectedConfig = { ...config, quality: { minRecords: 2 } };
+    expect(
+      (await collect([rejectedConfig])).metrics[0].inventory,
+    ).toMatchObject({ accepted: false, status: "rejected" });
+    expect(await readInventoryBaseline(rejectedConfig)).toBeNull();
+  });
+  it("accepts a narrowly verified empty Craigslist inventory without weakening configured drop/minimum guards", async () => {
+    const url = "https://www.craigslist.org/search/area/decatur?cat=boo";
+    const html = await readFile(
+      "tests/fixtures/craigslist-empty-decatur.html",
+      "utf8",
+    );
+    await cache(url, html);
+    mocks.parse.mockReturnValue([]);
+    const config = sourceConfigSchema.parse({
+      ...source,
+      id: "craigslist",
+      name: "Craigslist",
+      adapter: "craigslist",
+      urls: [url],
+      followDetails: false,
+      quality: { minRecords: 0, maxRecordDropFraction: 0.5 },
+    });
+    const empty = await collect([config]);
+    expect(empty.status).toBe("success");
+    expect(empty.metrics[0].inventory).toMatchObject({
+      status: "verified-empty",
+      accepted: true,
+      count: 0,
+    });
+    expect(await readInventoryBaseline(config)).toMatchObject({
+      verifiedEmpty: true,
+      count: 0,
+    });
+    const required = { ...config, quality: { minRecords: 1 } };
+    expect((await collect([required])).metrics[0].inventory).toMatchObject({
+      status: "rejected",
+      accepted: false,
+    });
+    expect(await readInventoryBaseline(required)).toBeNull();
+    await cache(url, html.replace("</body>", "Verify you are human</body>"));
+    const challenged = await collect([config]);
+    expect(challenged.metrics[0].inventory).toMatchObject({
+      accepted: false,
+      status: "incomplete",
+    });
+    expect(challenged.metrics[0].failures?.[0].reason).toBe("challenge");
+    expect(await readInventoryBaseline(config)).toMatchObject({
+      runId: empty.runId,
+      count: 0,
+    });
+  });
 });
+
+it("writes live progress while a slow source is still being processed", async () => {
+  await cache(inventoryUrl, "inventory");
+  mocks.parse.mockReturnValue([boat()]);
+  let releaseWrite!: () => void;
+  const blockedWrite = new Promise<void>((resolve) => {
+    releaseWrite = resolve;
+  });
+  mocks.upsert.mockImplementation(async () => {
+    await blockedWrite;
+    return { isNew: false, updated: true };
+  });
+  const runId = "slow-progress";
+  const collecting = collect([{ ...source, followDetails: false }], { runId });
+  try {
+    let progress;
+    for (let attempt = 0; attempt < 70; attempt++) {
+      progress = await readCollectorProgress(runId);
+      if (progress?.phase === "writing") break;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    expect(progress).toMatchObject({
+      status: "running",
+      phase: "writing",
+      metrics: { inventoryPagesSucceeded: 1, inventoryPagesAttempted: 1 },
+    });
+    expect(progress?.metrics).not.toHaveProperty("inventoryIds");
+  } finally {
+    releaseWrite();
+    await collecting;
+  }
+  expect(await readCollectorProgress(runId)).toMatchObject({
+    status: "success",
+    phase: "complete",
+  });
+}, 10000);
 
 it("honors an operator cancellation marker before any source request", async () => {
   await mkdir(join(directory, "reports"), { recursive: true });

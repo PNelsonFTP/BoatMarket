@@ -33,6 +33,7 @@ import {
   type Filters,
 } from "@/lib/types";
 import { isActive, matches, searchListings } from "@/lib/search";
+import { measureWork } from "@/lib/performance";
 import { FIELD_MAP } from "@/lib/catalog";
 import { useBoatStore } from "@/lib/client";
 import { money } from "@/lib/utils";
@@ -76,6 +77,8 @@ export default function Page() {
   const [favoriteOnly, setFavoriteOnly] = useState(false);
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [detail, setDetail] = useState<BoatResult | null>(null);
+  const [detailEvidence, setDetailEvidence] = useState("");
+  const detailRequest = useRef(0);
   const [limit, setLimit] = useState(12);
   const [mobileFilters, setMobileFilters] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -213,7 +216,7 @@ export default function Page() {
     return () => lifecycle.abort();
   }, []);
   const filtered = useMemo(
-    () => searchListings(store.listings, filters),
+    () => measureWork("filter", () => searchListings(store.listings, filters)),
     [store.listings, filters],
   );
   const results = useMemo(
@@ -255,6 +258,34 @@ export default function Page() {
     (filters.ruleSet ? 1 : 0) +
     (filters.driving ? 1 : 0);
   const showSearch = ["discover", "shortlist", "market"].includes(tab);
+  function openDetail(boat: BoatResult) {
+    const request = ++detailRequest.current;
+    setDetail(boat);
+    setDetailEvidence("Loading detailed source evidence…");
+    void store
+      .ensureDetails([boat.id])
+      .then((listings) => {
+        if (request !== detailRequest.current) return;
+        const full = listings.find((l) => l.id === boat.id);
+        setDetail((current) =>
+          current?.id === boat.id && full
+            ? {
+                ...current,
+                ...full,
+                sourceLinks: current.sourceLinks,
+                distance: current.distance,
+              }
+            : current,
+        );
+        setDetailEvidence("");
+      })
+      .catch((error) => {
+        if (request === detailRequest.current)
+          setDetailEvidence(
+            `Detailed source evidence is unavailable: ${error.message}. The other reported fields remain available. Retry by reopening this boat.`,
+          );
+      });
+  }
   function navigate(next: Tab) {
     setTab(next);
     setMobileFilters(false);
@@ -753,7 +784,7 @@ export default function Page() {
                 <BoatMap
                   key={draw ? "draw" : "map"}
                   boats={results}
-                  onOpen={setDetail}
+                  onOpen={openDetail}
                   drawInitially={draw}
                   onArea={(a) =>
                     setFilters((f) => ({ ...f, areas: [...f.areas, a] }))
@@ -806,7 +837,7 @@ export default function Page() {
                         )}
                         onFavorite={() => favorite(boat.id)}
                         onCompare={() => compare(boat.id)}
-                        onOpen={() => setDetail(boat)}
+                        onOpen={() => openDetail(boat)}
                       />
                     ))}
                   </div>
@@ -838,7 +869,11 @@ export default function Page() {
             live={store.mode === "live"}
           />
         ) : tab === "compare" ? (
-          <Compare boats={compareBoats} onRemove={compare} onOpen={setDetail} />
+          <Compare
+            boats={compareBoats}
+            onRemove={compare}
+            onOpen={openDetail}
+          />
         ) : tab === "settings" ? (
           <Settings
             connection={store.connection}
@@ -850,6 +885,7 @@ export default function Page() {
             onChange={store.updateWorkspace}
             mode={store.mode}
             listings={store.listings}
+            loadCompleteListings={() => store.ensureDetails()}
           />
         ) : null}
       </main>
@@ -886,7 +922,12 @@ export default function Page() {
       <ListingDetail
         connection={store.connection}
         boat={detail}
-        onClose={() => setDetail(null)}
+        evidenceStatus={detailEvidence}
+        onClose={() => {
+          detailRequest.current++;
+          setDetail(null);
+          setDetailEvidence("");
+        }}
         workspace={store.workspace}
         onFavorite={favorite}
         onNote={(id, text) =>
@@ -902,7 +943,7 @@ export default function Page() {
         similar={allBoats.filter(
           (b) => b.id !== detail?.id && b.category === detail?.category,
         )}
-        onOpen={setDetail}
+        onOpen={openDetail}
       />
       <Dialog open={saveOpen} onOpenChange={setSaveOpen}>
         <DialogContent>
@@ -1005,7 +1046,7 @@ export default function Page() {
                           key={id}
                           onClick={() => {
                             setAlertsOpen(false);
-                            setDetail(boat);
+                            openDetail(boat);
                             store.updateWorkspace((w) => ({
                               ...w,
                               alerts: w.alerts.map((x) =>

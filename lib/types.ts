@@ -245,6 +245,13 @@ export const listingSchema = z.object({
     )
     .default([]),
   confidence: z.record(z.number().min(0).max(1)).default({}),
+  grouping: z
+    .object({
+      basis: z.enum(["reviewed", "hin", "unresolved"]),
+      totalAdvertisements: z.number().int().positive(),
+    })
+    .strict()
+    .optional(),
   groupId: z.string().nullable().default(null),
   vesselId: z.string().nullable().default(null),
   fieldProvenance: z.record(z.array(fieldObservationSchema).max(30)).optional(),

@@ -2,12 +2,24 @@ import { z } from "zod";
 import { listingSchema, type Listing } from "./types";
 export const IMPORT_MAX_BYTES = 12 * 1024 * 1024;
 export const IMPORT_MAX_ITEMS = 1000;
+// A selected export is validated once, then sent in bounded API requests. Keep
+// its envelope separate from the server body limit so complete exports work.
+export const IMPORT_MAX_FILE_BYTES = 64 * 1024 * 1024;
+export const IMPORT_MAX_FILE_ITEMS = 10000;
+export function assertListingImportFileSize(size: number) {
+  if (!Number.isSafeInteger(size) || size < 0)
+    throw new Error("The selected file has an invalid size.");
+  if (size > IMPORT_MAX_FILE_BYTES)
+    throw new Error(
+      "Listing file exceeds 64 MiB. Export smaller batches before importing.",
+    );
+}
 export const listingImportSchema = z.object({
   generatedAt: z.string().datetime().optional(),
   listings: z
     .array(listingSchema)
     .min(1)
-    .max(10000)
+    .max(IMPORT_MAX_FILE_ITEMS)
     .superRefine((items, context) => {
       const ids = new Set<string>();
       const identities = new Set<string>();
@@ -28,6 +40,17 @@ export function parseListingImport(value: unknown) {
   return listingImportSchema.parse(
     Array.isArray(value) ? { listings: value } : value,
   );
+}
+/** Check the browser's byte count before allocating text/JSON/validation copies. */
+export async function readListingImportFile(file: {
+  size: number;
+  text: () => Promise<string>;
+}) {
+  assertListingImportFileSize(file.size);
+  const parsed = parseListingImport(JSON.parse(await file.text()));
+  // Reject an oversized individual record before any request can be sent.
+  importChunks(parsed.listings);
+  return parsed;
 }
 export function importChunks(
   listings: Listing[],

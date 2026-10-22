@@ -3,8 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 import { makeSeed, seedWorkspace } from "../lib/seed";
 import {
   importChunks,
+  IMPORT_MAX_BYTES,
+  IMPORT_MAX_FILE_BYTES,
   mergeListingImport,
   parseListingImport,
+  readListingImportFile,
   runListingImport,
   type ImportChunkResult,
 } from "../lib/import-listings";
@@ -32,10 +35,14 @@ const accepted = (items: Listing[]): ImportChunkResult => ({
 });
 describe("validated listing transfer", () => {
   it("roundtrips the entire published export in bounded requests", async () => {
-    const exported = JSON.parse(
-      readFileSync(new URL("../public/snapshot.json", import.meta.url), "utf8"),
+    const body = readFileSync(
+      new URL("../public/snapshot.json", import.meta.url),
+      "utf8",
     );
-    const data = parseListingImport(exported);
+    const data = await readListingImportFile({
+      size: Buffer.byteLength(body),
+      text: async () => body,
+    });
     expect(data.listings.length).toBeGreaterThan(1000);
     const send = vi.fn(async (items: Listing[]) => {
       expect(items.length).toBeLessThanOrEqual(1000);
@@ -56,6 +63,57 @@ describe("validated listing transfer", () => {
     expect(parseListingImport({ listings: data.listings }).listings).toEqual(
       data.listings,
     );
+  });
+  it("accepts a generated formatted export above the API limit without increasing request sizes", async () => {
+    const generated = boatList(170).map((listing) => ({
+      ...listing,
+      description: "Boat condition and service evidence. ".repeat(2500),
+    }));
+    const body = JSON.stringify({ listings: generated }, null, 2);
+    expect(Buffer.byteLength(body)).toBeGreaterThan(IMPORT_MAX_BYTES);
+    expect(Buffer.byteLength(body)).toBeLessThan(IMPORT_MAX_FILE_BYTES);
+    const parsed = await readListingImportFile({
+      size: Buffer.byteLength(body),
+      text: async () => body,
+    });
+    const requests: number[] = [];
+    const result = await runListingImport(
+      parsed.listings,
+      "fixture",
+      async (items) => {
+        requests.push(Buffer.byteLength(JSON.stringify({ listings: items })));
+        expect(items.length).toBeLessThanOrEqual(1000);
+        return accepted(items);
+      },
+    );
+    expect(requests.length).toBeGreaterThan(1);
+    expect(requests.every((bytes) => bytes <= IMPORT_MAX_BYTES)).toBe(true);
+    expect(result.acceptedIds).toHaveLength(generated.length);
+    expect(result.failed).toEqual([]);
+    expect(result.uncertainIds).toEqual([]);
+  });
+  it("rejects unsupported file sizes before reading and bounds record count", async () => {
+    const text = vi.fn(async () => "{}");
+    await expect(
+      readListingImportFile({ size: IMPORT_MAX_FILE_BYTES + 1, text }),
+    ).rejects.toThrow(/64 MiB/);
+    expect(text).not.toHaveBeenCalled();
+    await expect(readListingImportFile({ size: -1, text })).rejects.toThrow(
+      /invalid size/,
+    );
+    expect(text).not.toHaveBeenCalled();
+    expect(() => parseListingImport(boatList(10001))).toThrow();
+  });
+  it("rejects an oversized single record during preview before any request", async () => {
+    const body = JSON.stringify({
+      listings: [{ ...boat, rawPayload: "x".repeat(IMPORT_MAX_BYTES) }],
+    });
+    await expect(
+      readListingImportFile({
+        size: Buffer.byteLength(body),
+        text: async () => body,
+      }),
+    ).rejects.toThrow(/Listing .*exceeds the request size limit/);
   });
   it("splits by actual UTF-8 request bytes as well as record count", () => {
     const boats = boatList(5).map((l) => ({

@@ -1,4 +1,5 @@
 import { FIELD_MAP } from "./catalog";
+import { groupingForMembers } from "./grouping";
 import { matchesDrivingFilter } from "./routing";
 import {
   type Listing,
@@ -195,8 +196,10 @@ export function searchListings(
 ): BoatResult[] {
   const groups = new Map<string, BoatResult>();
   const sourceLinks = new Map<string, BoatResult["sourceLinks"]>();
+  const members = new Map<string, Listing[]>();
   for (const source of listings) {
     const key = source.groupId || source.id;
+    members.set(key, [...(members.get(key) ?? []), source]);
     const links = sourceLinks.get(key) || [];
     links.push({
       id: source.id,
@@ -229,6 +232,7 @@ export function searchListings(
     ...l,
     // Source links remain inspectable even when one copy misses a filter.
     sourceLinks: sourceLinks.get(l.groupId || l.id) || l.sourceLinks,
+    grouping: groupingForMembers(members.get(l.groupId || l.id) ?? [l]),
     distance: fieldValue(l, "distance", f, now) as number | undefined,
   }));
   const asc = (a: unknown, b: unknown) =>

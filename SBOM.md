@@ -2,7 +2,7 @@
 
 This package records the dependencies actually locked for BoatScout 1.0.0. It contains three schema-validated CycloneDX 1.5 JSON SBOMs, the complete lockfile inventory, exact metadata from the verified optional WASM bundle, generation evidence, and dated read-only vulnerability reports. Two SBOMs come from npm; the all-platform artifact adds verified bundled contents to the locked package graph. It does not change or install dependencies.
 
-Generated **September 8, 2026 at 12:01 PM America/Chicago** (`2026-09-08T17:01:48.335Z`) with Node `v26.7.0` and npm `11.19.0` on macOS arm64. The project supports Node `>=22.12.0`; GitHub Actions and Docker use Node 22. The actual tested Docker runtime reports Node `22.23.2`. These recorded generation/runtime versions describe their respective environments.
+Source SBOMs regenerated **October 21, 2026 at 8:23 PM America/Chicago** (`2026-10-22T01:23:31.412Z`) with Node `v26.7.0` and npm `11.19.0` on macOS arm64. The project supports Node `>=22.12.0`; GitHub Actions and Docker use Node 22. The actual tested Docker runtime reports Node `22.23.2`. These recorded generation/runtime versions describe their respective environments.
 
 The source [package-lock.json](package-lock.json) is lockfile version 3. Its SHA-256 is:
 
@@ -28,7 +28,7 @@ The source [package-lock.json](package-lock.json) is lockfile version 3. Its SHA
 | [Generation provenance and validation](sbom/provenance.json) | Commands, timestamps, tool versions, source/output SHA-256 values, transformations, scope counts, and validation results. |
 | [Full optional-tree generation limitation](sbom/full-sbom-generation-limitation.json) | npm's failed full lock-only generation attempt remains documented. The separately generated all-platform artifact resolves that metadata gap using verified bundle evidence. |
 | [Audit provenance](sbom/audit-provenance.json) | Exact audit commands, times, lock hash, report hashes, and results. |
-| [Runtime image inventory directory](sbom/runtime/) | Four captured Docker image CycloneDX inventories (two local ARM64 and two final hosted AMD64), scanner/digest provenance and isolated smoke reports; operating-system packages, Node, native Prisma files and optional browser binaries are recorded separately from the source lock graph. |
+| [Runtime image inventory directory](sbom/runtime/) | Dated Docker image CycloneDX inventories: current October 21 local ARM64 runtime/rendered images, plus retained September 8 ARM64/AMD64 evidence, scanner/digest provenance and isolated smoke reports; operating-system packages, Node, native Prisma files and optional browser binaries are recorded separately from the source lock graph. |
 
 All 435 available lock entries carry declared license metadata and an integrity value. All three SBOMs include an application root component in addition to the counts above. The six bundled copies are distinct physical package instances even where the same name/version also exists elsewhere in the lock. Component counts differ because dependency reachability and omission rules differ; do not add these overlapping counts together.
 
@@ -57,7 +57,7 @@ Ordinary generation verifies the committed evidence against the current parent p
 
 These are the exact locked versions, rather than the version ranges in the manifest. Dependencies categorized as production by npm can still serve build or local execution needs: for example, `next` creates the static website and `tsx` runs the local TypeScript backend.
 
-No locked package version changed in this implementation pass. `prisma` moved from development to runtime for container database migrations; already-locked `playwright` became an explicit runtime dependency for the optional rendered collector. `@playwright/test` remains development-only. Those reachability changes explain the larger production scope and changed lock hash/edge counts. The new identity/source adapters add no packages. Optional locally supplied image auditing uses the existing `sharp` dependency available through the full Next installation; URL-based duplicate evidence works independently of it.
+No dependency was added, removed or updated for the October 21 improvements; the lockfile hash and 435 locked / 441 bundle-enriched components are unchanged. Catalog, refresh-session, archive and rotation features use existing packages and Node APIs. **Historical September 8 runtime-scope adjustment:** `prisma` moved from development to runtime for container database migrations; already-locked `playwright` became an explicit runtime dependency for the optional rendered collector. `@playwright/test` remains development-only. Those reachability changes explain the larger production scope and changed lock hash/edge counts. The new identity/source adapters add no packages. Optional locally supplied image auditing uses the existing `sharp` dependency available through the full Next installation; URL-based duplicate evidence works independently of it.
 
 | Application dependency | Locked version |
 | --- | --- |
@@ -116,14 +116,16 @@ Boat advertisements, seller photos, externally fetched HTML, lake-rule documents
 
 ## Fresh vulnerability checks
 
-Read-only npm audits against `https://registry.npmjs.org` completed at `2026-09-08T17:01:49.066Z` and `17:01:49.465Z` (September 8, 12:01 PM CDT), matching the source lock hash above:
+Read-only npm audits against `https://registry.npmjs.org` completed **October 21 at 8:23 PM CDT** (`2026-10-22T01:23:32.636Z` full; `01:23:34.853Z` production), matching the unchanged lock hash above:
 
 | Scope | Info | Low | Moderate | High | Critical | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| [Full declared dependency audit](sbom/npm-audit-full-2026-09-08T17-01-48Z.json) | 0 | 0 | 0 | 0 | 0 | 0 |
-| [Production audit](sbom/npm-audit-production-2026-09-08T17-01-48Z.json) | 0 | 0 | 0 | 0 | 0 | 0 |
+| [Full declared dependency audit](sbom/npm-audit-full-2026-10-22T01-23-31Z.json) | 0 | 0 | 4 | 5 | 4 | 13 |
+| [Production audit](sbom/npm-audit-production-2026-10-22T01-23-31Z.json) | 0 | 0 | 3 | 4 | 0 | 7 |
 
-Both commands exited successfully. These results mean the registry reported no known advisories for the audited dependency descriptions at that time. They are not a security certification, an application penetration test, a container scan, or a separate advisory scan of the enriched bundle-only components. Exact bundled metadata is now verified, but npm audit still operates on its lock-derived scope. npm audit reports package metadata to its configured registry; the script explicitly selects the public npm registry and never runs `npm audit fix`. [npm audit documentation](https://docs.npmjs.com/cli/v11/commands/npm-audit/)
+Both audit commands returned exit 1 because advisories were reported; generation and schema validation succeeded. The former September 8 zero-advisory reports remain historical files. No `npm audit fix`, package installation or dependency change was performed. These findings move reviewed dependency maintenance (#15) into the remaining priority queue rather than silently changing packages during this feature implementation.
+
+Production scope flags `brace-expansion`, `fast-uri`, `fastify`, `next`, `nodemailer`, `sharp` and `source-map-js`. Full scope also flags development tooling, including critical findings through `concurrently` / `shell-quote` and `vitest` / `tinypool`. Consult the JSON reports for advisory IDs, dependency paths and proposed fix ranges; some suggested changes require a major version upgrade and a separate compatibility review. These are lock-scope registry findings, not proof of exploitability in BoatScout, and do not scan the container OS or separately enriched bundle-only contents. Audit commands send dependency metadata to the explicitly selected public npm registry.
 
 ## Regenerate and validate
 
@@ -153,7 +155,18 @@ The official schemas are pinned to [CycloneDX specification commit c320fc0](http
 
 This is not package-signature validation, independent hashing of every locked distribution, or complete semantic version-range validation of every edge (the project deliberately overrides two transitive package versions). Among locked npm distribution contents, the optional parent archive has independently verified evidence; this generation reused that earlier verified evidence. Scanner downloads and installed runtime binaries have their separate evidence described below. npm execution uses its JavaScript entry point when available, avoiding direct `.cmd` spawning on Windows; generation was exercised on macOS and in the final Windows/Ubuntu Node 22 hosted jobs. Git preserves LF in byte-hashed source, schema and snapshot artifacts across platforms.
 
-## Actual Docker runtime inventories
+## October 21 runtime inventories
+
+Both images were rebuilt from the implemented source and staged canonical snapshot, then smoke-tested with isolated tmpfs SQLite databases. No production volume was mounted. Authentication, migrations/listing reads, website/pointer/canonical hash and non-root runtime checks passed. The rendered image additionally passed Chromium execution; the default image omits browser binaries. Node reports `v22.23.2`. Scanner Syft 1.51.1 and its verified toolchain hashes are recorded in each provenance file; full CycloneDX 1.5 schema validation passed.
+
+| Target / local image identity | Components recorded | Exact inventory and evidence |
+| --- | ---: | --- |
+| Runtime `sha256:508f777815c5202faf046ecf3503b23eef20a6cff805f398417836fa0a7d0bb3` | 3,955 | [SBOM](sbom/runtime/sha256-508f777815c5202faf046ecf3503b23eef20a6cff805f398417836fa0a7d0bb3.2026-10-22T01-33-15.845Z.cdx.json), [provenance](sbom/runtime/sha256-508f777815c5202faf046ecf3503b23eef20a6cff805f398417836fa0a7d0bb3.2026-10-22T01-33-15.845Z.provenance.json), [smoke](sbom/runtime/sha256-508f777815c5202faf046ecf3503b23eef20a6cff805f398417836fa0a7d0bb3.2026-10-22T01-33-15.845Z.smoke.json) |
+| Rendered `sha256:f04e2c980bc82de9d17a63e67d53c96a6f61e4f6b33a2ce59d562c2c12d66e7a` | 5,290 | [SBOM](sbom/runtime/sha256-f04e2c980bc82de9d17a63e67d53c96a6f61e4f6b33a2ce59d562c2c12d66e7a.2026-10-22T01-34-55.844Z.cdx.json), [provenance](sbom/runtime/sha256-f04e2c980bc82de9d17a63e67d53c96a6f61e4f6b33a2ce59d562c2c12d66e7a.2026-10-22T01-34-55.844Z.provenance.json), [smoke](sbom/runtime/sha256-f04e2c980bc82de9d17a63e67d53c96a6f61e4f6b33a2ce59d562c2c12d66e7a.2026-10-22T01-34-55.844Z.smoke.json) |
+
+Generated at `2026-10-22T01:33:15.845Z` and `01:34:55.844Z` (October 21 CDT). SBOM SHA-256 values are `ec82c1d318a6712be55e4a1ac678a9db54a4a371ec575f0798dc49988f118260` and `c72f9a4157333c50bb58b08d8b9c1d989174fa17c132e4741bb060f173992cc3`. These identify exact local Linux ARM64 images, not registry publication, a new AMD64 inventory, or an OS vulnerability scan. Source advisory reports above have their separate lock scope. Old image evidence below remains historical and does not describe the newly built images.
+
+## September 8 local Docker runtime inventories
 
 Both Docker targets were built and smoke-tested as non-root UID 1000 on linux/arm64, using an isolated temporary database. Migrations, authenticated listing queries and health checks passed; the rendered target also executed a loopback-only JavaScript rendering fixture. This validates those captured images, not an unbuilt later source revision or every CPU/OS platform.
 
@@ -170,7 +183,7 @@ Runtime pruning retains the backend's direct dependencies and removes the Next/R
 
 Reproduce image evidence with the documented `docker:smoke` and `sbom:runtime` commands in [OPERATIONS.md](OPERATIONS.md). The local daemon's repository-digest metadata does not imply that an image was pushed to a registry. Temporary validation containers were removed; no production volume was used.
 
-## Final hosted AMD64 runtime inventories
+## September 8 hosted AMD64 runtime inventories
 
 The September 8 application checkout `5b8c05c` passed both container jobs in [GitHub run 34261682769](https://github.com/PNelsonFTP/BoatMarket/actions/runs/34261682769). Its exact images and downloaded evidence are retained in the repository, with [artifact hashes and workflow association](sbom/runtime/ci-2026-09-08.json). Both ran as UID 1000 and passed isolated migration, authentication, website, pointer and snapshot checks. The rendered target also executed its browser fixture.
 

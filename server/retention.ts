@@ -276,6 +276,29 @@ async function protectedState(
   )
     reportRoots.add(configuredReportRoot);
   const protectedRunIds = new Set<string>();
+  // Accepted inventory baselines and refresh sessions are durable provenance, not age-based cache.
+  // Retain all session manifests/pass records so an interrupted or reviewed session stays reproducible.
+  for (const file of files) {
+    const durable = [...reportRoots].some(
+      (directory) =>
+        file.path.startsWith(`${directory}/inventory-baselines/`) ||
+        file.path.startsWith(`${directory}/sessions/`),
+    );
+    if (!durable) continue;
+    paths.add(file.path);
+    try {
+      const record = JSON.parse(await readFile(join(root, file.path), "utf8"));
+      referencedValues(record, root, hashes, paths);
+      for (const match of JSON.stringify(record).matchAll(
+        /"(?:runId|lastRunId|collectionRunId|refreshRunId)"\s*:\s*"([^"/]+)"/g,
+      ))
+        protectedRunIds.add(match[1]);
+    } catch {
+      warnings.push(
+        `Protected unreadable durable refresh metadata: ${file.path}`,
+      );
+    }
+  }
   const workerOwner = await db.jobLock.findFirst({
     where: { key: "worker", expiresAt: { gt: new Date() } },
   });
@@ -290,7 +313,14 @@ async function protectedState(
         name.startsWith("latest-") ||
         name === "worker.json" ||
         name === `worker-${workerOwner?.owner}.json` ||
-        ["running", "queued"].includes(record.status)
+        [
+          "running",
+          "queued",
+          "stalled",
+          "review",
+          "cancel-requested",
+          "cancelling",
+        ].includes(record.status)
       ) {
         paths.add(file.path);
         for (const id of [record.runId, record.lastRunId])

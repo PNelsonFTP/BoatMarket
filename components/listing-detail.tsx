@@ -45,6 +45,7 @@ export function ListingDetail({
   similar,
   onOpen,
   connection = null,
+  evidenceStatus = "",
 }: {
   boat: BoatResult | null;
   onClose: () => void;
@@ -56,6 +57,7 @@ export function ListingDetail({
   similar: BoatResult[];
   onOpen: (b: BoatResult) => void;
   connection?: Connection | null;
+  evidenceStatus?: string;
 }) {
   return (
     <Dialog
@@ -76,6 +78,7 @@ export function ListingDetail({
           similar={similar}
           onOpen={onOpen}
           connection={connection}
+          evidenceStatus={evidenceStatus}
         />
       )}
     </Dialog>
@@ -91,6 +94,7 @@ function DetailContent({
   similar,
   onOpen,
   connection,
+  evidenceStatus,
 }: {
   boat: BoatResult;
   workspace: Workspace;
@@ -101,6 +105,7 @@ function DetailContent({
   similar: BoatResult[];
   onOpen: (b: BoatResult) => void;
   connection: Connection | null;
+  evidenceStatus: string;
 }) {
   const [photo, setPhoto] = useState(0);
   const [note, setNote] = useState(workspace.notes[boat.id] || "");
@@ -117,6 +122,11 @@ function DetailContent({
   );
   return (
     <DialogContent className="detail-modal">
+      {evidenceStatus && (
+        <p className="notice" role="status">
+          {evidenceStatus}
+        </p>
+      )}
       <div className="detail-gallery">
         {boat.photos[photo] ? (
           <img

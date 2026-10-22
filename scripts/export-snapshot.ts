@@ -115,6 +115,7 @@ export async function exportSnapshot(
     publicDirectory?: string;
     allowEmpty?: boolean;
     provenance?: SnapshotProvenance;
+    generatedAt?: string;
     loadListings?: () => Promise<unknown[]>;
     backupDirectory?: string;
     updateMode?: boolean;
@@ -181,6 +182,7 @@ export async function exportSnapshot(
             publicDirectory,
             runId: options.provenance?.runId,
             listings: snapshot.listings.length,
+            catalog: snapshot.listings.length > 0,
             beforeCommit: options.beforeCommit,
             signal: options.signal,
             publicationLease,

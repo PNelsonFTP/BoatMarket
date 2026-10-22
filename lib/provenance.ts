@@ -3,6 +3,8 @@ import type { z } from "zod";
 export type FieldObservation = z.infer<typeof fieldObservationSchema>;
 export const provenanceFields = (listing: Listing) => [
   ...new Set([
+    "make",
+    "engines.make",
     "length",
     "horsepower",
     "engineHours",
@@ -20,7 +22,11 @@ const scalar = (
   field: string,
 ): FieldObservation["value"] | undefined => {
   const value =
-    field in listing ? listing[field as keyof Listing] : listing.specs[field];
+    field === "engines.make"
+      ? (listing.engines[0]?.make ?? listing.specs.engineMake)
+      : field in listing
+        ? listing[field as keyof Listing]
+        : listing.specs[field];
   return value === null ||
     ["string", "number", "boolean"].includes(typeof value)
     ? (value as FieldObservation["value"])
@@ -64,11 +70,39 @@ export function recordFieldProvenance(
   if (options.observe === false) return { ...next, fieldProvenance };
   for (const field of provenanceFields(next)) {
     const value = scalar(next, field);
-    if (value === undefined || value === null || value === "") continue;
+    const makeEvidence =
+      field === "make"
+        ? [
+            ...(typeof next.specs.makeReported === "string" &&
+            next.specs.makeReported
+              ? [
+                  {
+                    value: next.specs.makeReported,
+                    evidence: "Structured make reported by the source.",
+                  },
+                ]
+              : []),
+            ...(typeof next.specs.makeTitleCandidates === "string"
+              ? next.specs.makeTitleCandidates
+                  .split(" | ")
+                  .filter(Boolean)
+                  .map((value) => ({
+                    value,
+                    evidence: "Hull-brand candidate in the source title.",
+                  }))
+              : []),
+          ].slice(0, 30)
+        : [];
+    if (
+      (value === undefined || value === null || value === "") &&
+      !makeEvidence.length
+    )
+      continue;
     const inherited = fieldProvenance[field] || [];
     const existingMatch = inherited.find((entry) => entry.value === value);
     const retainedDetail =
       retained.has(field) ||
+      (field === "engines.make" && retained.has("engines")) ||
       (field.startsWith("equipment.") && !!next.specs.retainedDetailObservedAt);
     if (retainedDetail && existingMatch) continue;
     const supplied = options.fieldSources?.[field];
@@ -83,8 +117,7 @@ export function recordFieldProvenance(
         : typeof next.specs.summaryCheckedAt === "string"
           ? next.specs.summaryCheckedAt
           : next.lastSeenAt);
-    const parsed = fieldObservationSchema.safeParse({
-      value,
+    const observationBase = {
       sourceUrl: supplied?.sourceUrl || options.sourceUrl || next.sourceUrl,
       source: next.source,
       observedAt,
@@ -96,10 +129,29 @@ export function recordFieldProvenance(
               "Retained from an earlier successful detail observation; not freshly reconfirmed.",
           }
         : {}),
+    };
+    const evidence =
+      field === "make" && typeof next.specs.makeWarning === "string"
+        ? next.specs.makeWarning
+        : field === "engines.make"
+          ? "Engine manufacturer evidence, separate from hull make."
+          : undefined;
+    const observations = [
+      ...(value !== undefined && value !== null && value !== ""
+        ? [{ value, ...(evidence ? { evidence } : {}) }]
+        : []),
+      ...(retainedDetail ? [] : makeEvidence).map((item) => ({
+        ...item,
+        ...(evidence ? { evidence: `${item.evidence} ${evidence}` } : {}),
+      })),
+    ].flatMap((item) => {
+      const parsed = fieldObservationSchema.safeParse({
+        ...observationBase,
+        ...item,
+      });
+      return parsed.success ? [parsed.data] : [];
     });
-    if (!parsed.success) continue;
-    const observation = parsed.data;
-    const combined = [...inherited, observation].filter(
+    const combined = [...inherited, ...observations].filter(
       (entry, index, all) =>
         all.findIndex(
           (candidate) =>

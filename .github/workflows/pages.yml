@@ -45,6 +45,19 @@ jobs:
         run: npm run release -- verify --review="$REVIEW_HASH" --built=out
         env:
           REVIEW_HASH: ${{ inputs.review_hash }}
+      - name: Install the production smoke-test browser
+        run: npx playwright install --with-deps chromium
+      - name: Smoke-test the exact reviewed Pages artifact
+        run: npm run test:production
+        env:
+          BUILT_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: failure()
+        with:
+          name: pages-production-browser-failure
+          path: |
+            playwright-report
+            test-results
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: out

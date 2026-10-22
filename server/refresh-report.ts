@@ -1,6 +1,11 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { dirname, join } from "node:path";
+import type {
+  InventoryOutcome,
+  SourceFailure,
+  FailureReason,
+} from "./inventory-outcome";
 
 export type CollectionStatus =
   "success" | "partial" | "failed" | "busy" | "cancelled";
@@ -35,6 +40,27 @@ export type SourceMetrics = {
   cacheMaxAgeHours: number;
   oldestObservationAt: string | null;
   newestObservationAt: string | null;
+  inventory?: InventoryOutcome;
+  failures?: SourceFailure[];
+  inventoryIds?: string[];
+  eligibleDetailUrls?: string[];
+  detailResults?: {
+    url: string;
+    status: "succeeded" | "failed" | "deferred" | "backoff" | "not-requested";
+    reason?: FailureReason;
+    observedAt?: string;
+    attemptedAt?: string;
+    nextAttemptAt?: string | null;
+  }[];
+  observations?: {
+    url: string;
+    observedAt: string;
+    retrieval: "cache" | "fetched";
+    phase: "inventory" | "detail";
+  }[];
+  ingestRunId?: string;
+  writeFingerprint?: string;
+  sessionAggregate?: boolean;
 };
 export type CollectionReport = {
   version: 1;
@@ -57,6 +83,8 @@ export type CollectionReport = {
   reconciledRuns: number;
   errors: string[];
   reportPath: string;
+  progressPath?: string;
+  sessionId?: string;
 };
 export const reportDirectory = () =>
   process.env.REFRESH_REPORT_DIR || "data/refresh-runs";

@@ -1,8 +1,39 @@
 # Verification record
 
-Dated September 8, September 10, September 12, September 24, September 27, September 29, October 1, October 4, October 5, October 9, October 13, October 17, October 19 and October 20, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
+Dated September 8, September 10, September 12, September 24, September 27, September 29, October 1, October 4, October 5, October 9, October 13, October 17, October 19 October 20 and October 21, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
-The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. The original P1 Market criterion for reviewed-versus-HIN grouping classification remains explicitly deferred. Current ad/group counts and the limitation are visible in Market and documented in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md).
+The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. That September checkpoint deferred the Market grouping-basis criterion; the October 21 implementation closes it with conservative reviewed/HIN/unresolved counts. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for the current delivery map.
+
+## October 21 implementation of improvements 1–7, 10 and 11
+
+The owner requested implementation, testing, documentation/SBOM updates and commit/push. Final local checks on macOS arm64 / Node 26.7 passed:
+
+| Check | Result |
+| --- | --- |
+| TypeScript | `npm run typecheck` passed; both production builds also type-check |
+| Full unit/integration suite | **45 files passed; 305 tests passed, 1 platform-specific test skipped** |
+| Full development browser suite | **22/22**: 11 desktop + 11 mobile; includes full formatted export/import, progress/session controls, grouping, notes and workspace restore |
+| Root production export | Build passed; **12/12** desktop/mobile browser checks passed in 21.0 seconds |
+| `/BoatMarket` production export | Build passed; **12/12** desktop/mobile browser checks passed in 21.4 seconds |
+| Exact reviewed release | Source, lock, three source SBOMs, canonical bytes and complete catalog graph verified; built root and Pages outputs verified |
+| Source SBOM/advisories | All three CycloneDX 1.5 schemas/graphs validated; lock unchanged; read-only audits completed with findings detailed in SBOM.md |
+| Container variants | Both new ARM64 runtime/rendered images built, passed isolated health/auth/database/static smoke and full runtime SBOM schema validation; rendered Chromium execution passed |
+| Backup graph | Actual post-activation catalog-bearing backup verified, including all 30 detail chunks; missing/undeclared/corrupt member regressions passed |
+| Payload/equivalence | Current 2,429 and 3,037 growth records passed all field/filter/group comparisons; 8 MiB initial budget enforced and rich 10,000-record expansion refused |
+| Real archive round trip | Restored the retained September 12 audit into a new private directory, verified all 20,442 bytes and SHA-256; original preserved, no retirement |
+| Concurrent file logging | Three writers / 150 JSON records, bounded rotation, cap/stdout fallback and lock recovery tests passed |
+
+New behavior is tested with captured fixtures or isolated temporary databases. No live source collection ran. One earlier desktop import check was interrupted by HMR during concurrent edits; the final frozen-source desktop/mobile run passed with the same assertions. The first unprivileged production attempt could not bind loopback under the execution sandbox; rerunning with permission for the local test server passed. Test servers stop after completion.
+
+The narrow historical repair used a verified SQLite backup and a hashed/fingerprinted plan. Exactly four Vexus-title/Yamaha-hull ads changed make/engine evidence. A table/column comparison against the backup confirmed unchanged observation dates, prices, histories, identities, private tables, six duplicate decisions, eight searches and 52 samples; SQLite `quick_check` passed. Public comparison found only the four repairs and new grouping metadata, preserving original refresh metadata/date/range. The accepted warnings remain explicit: original partial coverage, 795 older ads and 131 ads with already source-published contact details. No extra public private-field/credential issue was found.
+
+Locally staged canonical snapshot: **18,831,527 bytes**, SHA-256 `e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829`; generation time stays **2026-10-19T13:05:08.428Z**, with 2,429 ads. Search catalog: **5,632,015 bytes**, SHA-256 `c350d1485db1e67cf047de355fa1376c390abe199b0ce97241f4d225d947086d`; 30 detail chunks total 8,008,629 bytes. Initial decoded JSON fell 70.09% versus formatted / 58.47% versus compact canonical. Reviewed release: `7e320f969776f47aa6631c2774d50937da2214b28bc18ef27316623d7656ef1d`, source fingerprint `a75ad507041e358df1fedf8f7faafa605424a0af170d65ec079eb111f090738e`.
+
+The root production benchmark used the same host with Desktop Chrome and iPhone 13 Chromium **emulation**, not physical mobile hardware or network throttling. Current full/catalog readiness was 868/568 ms desktop and 796/457 ms mobile; JSON parse was 18.9/6.3 ms and 16.0/4.9 ms. With 3,037 records, readiness was 806/647 ms desktop and 661/681 ms mobile. The slower mobile growth observation is retained rather than asserting every run gets faster. Shared filter interaction was 25–35 ms across these samples, including render/test-driver overhead; no detail chunk was requested before opening. Timing and heap are diagnostics, not a performance SLA or measured Pages compression.
+
+The real archival drill completed at `2026-10-22T01:41:19.428Z`. Package/plan `eaf0a5279db67c3ed5f689bba6ab0d0081cb59573833e0f84f7f503a6fd83613` reproduced the retained September 12 audit at SHA-256 `1a86e5b77946401497c96929564b1c659393a6fab83659a86c9befb418f8f4b6`. Verification/restore receipts are private under `data/archives/`; no originals were retired. Earlier copy attempts correctly refused previews after the reference inventory changed while other reports were generated. Preview/pack succeeds once that inventory is stable.
+
+Detailed private logs/receipts are under `data/improvement-review-2026-10-21/`; browser reports remain under the private E2E report and `playwright-report/production-{root,pages}`. The old failed CI/deployment records below remain historical; this pass repairs the reproduced full-import failure and adds production smoke coverage. Main push validation and manual Pages deployment remain distinct.
 
 ## October 21 second review and commit/push
 

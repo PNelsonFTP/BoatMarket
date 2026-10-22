@@ -28,6 +28,7 @@ import {
 import { exportSnapshot } from "../scripts/export-snapshot";
 import { readSnapshotActivation } from "./publication";
 import { assertDiskSpace } from "./disk-space";
+import { verifiedCatalogFiles } from "./snapshot-catalog";
 
 export type RefreshOptions = {
   runId?: string;
@@ -37,6 +38,9 @@ export type RefreshOptions = {
   geocode?: boolean;
   allowPartial?: boolean;
   target?: string;
+  deferExport?: boolean;
+  sessionId?: string;
+  detailUrlsBySource?: Record<string, string[]>;
 };
 export type RefreshReport = {
   version: 1;
@@ -44,7 +48,7 @@ export type RefreshReport = {
   status: CollectionStatus | "running";
   startedAt: string;
   completedAt: string | null;
-  stage: "backup" | "collection" | "geocode" | "export" | "complete";
+  stage: "backup" | "collection" | "geocode" | "export" | "review" | "complete";
   allowPartial: boolean;
   backupDirectory: string | null;
   collection: CollectionReport | null;
@@ -55,6 +59,8 @@ export type RefreshReport = {
   leaseOwner?: string;
   host?: string;
   pid?: number;
+  sessionId?: string;
+  publicationDeferred?: boolean;
 };
 
 export async function readLatestRefreshReport(): Promise<RefreshReport | null> {
@@ -170,6 +176,39 @@ export async function backupBeforeRefresh(
     await copyFile(join(enrichmentDirectory, filename), join(directory, name));
     files.push(name);
   }
+  // These small private manifests carry accepted inventory baselines and the
+  // component reports needed to resume a multi-pass session after restore.
+  const copyRefreshMetadata = async (source: string, name: string) => {
+    let entries;
+    try {
+      if (!(await lstat(source)).isDirectory())
+        throw new Error("Refresh metadata backup requires real directories");
+      entries = await readdir(source, { withFileTypes: true });
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+      throw error;
+    }
+    for (const entry of entries) {
+      if (!/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(entry.name))
+        throw new Error("Unsafe refresh metadata name");
+      if (entry.isSymbolicLink())
+        throw new Error("Refresh metadata backup refuses symlinks");
+      const childName = `${name}/${entry.name}`,
+        childSource = join(source, entry.name);
+      if (entry.isDirectory())
+        await copyRefreshMetadata(childSource, childName);
+      else if (entry.isFile() && entry.name.endsWith(".json")) {
+        await mkdir(dirname(join(directory, childName)), { recursive: true });
+        await copyFile(childSource, join(directory, childName));
+        files.push(childName);
+      }
+    }
+  };
+  for (const root of ["inventory-baselines", "sessions", "progress"])
+    await copyRefreshMetadata(
+      join(reportDirectory(), root),
+      `refresh-metadata/${root}`,
+    );
   const activation = await readSnapshotActivation(
     undefined,
     options.publicDirectory || "public",
@@ -201,6 +240,53 @@ export async function backupBeforeRefresh(
     });
     if (!files.includes("data-mode.json")) files.push("data-mode.json");
     files.push(name);
+    const catalog = (activation as typeof activation & { catalog?: unknown })
+      .catalog;
+    // The committed pointer may carry a catalog even when the activation journal
+    // predates catalog support. Read its public pointer, then verify every shard.
+    let catalogReference = catalog;
+    if (!catalogReference) {
+      try {
+        const pointer = JSON.parse(
+          await readFile(
+            join(options.publicDirectory || "public", "data-mode.json"),
+            "utf8",
+          ),
+        );
+        if (pointer.sha256 === activation.sha256)
+          catalogReference = pointer.catalog;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      }
+    }
+    for (const catalogFile of await verifiedCatalogFiles(
+      options.publicDirectory || "public",
+      catalogReference,
+      await readFile(join(directory, name), "utf8"),
+    )) {
+      const catalogName = `public/${catalogFile.path}`;
+      await mkdir(dirname(join(directory, catalogName)), { recursive: true });
+      await copyFile(
+        join(options.publicDirectory || "public", catalogFile.path),
+        join(directory, catalogName),
+      );
+      if (
+        createHash("sha256")
+          .update(await readFile(join(directory, catalogName)))
+          .digest("hex") !== catalogFile.sha256
+      )
+        throw new Error("Catalog changed during backup");
+      files.push(catalogName);
+    }
+    if (catalogReference) {
+      const pointer = JSON.parse(
+        await readFile(join(directory, "data-mode.json"), "utf8"),
+      );
+      await atomicJson(join(directory, "data-mode.json"), {
+        ...pointer,
+        catalog: catalogReference,
+      });
+    }
   }
   const manifest = {
     version: 1,
@@ -263,6 +349,62 @@ export async function verifyBackup(directory: string) {
     )
       throw new Error(`Backup hash mismatch: ${file.name}`);
   }
+  // Catalog-bearing backups must contain the complete immutable graph, not
+  // merely a self-consistent subset of member hashes. Otherwise restore could
+  // report success while its public pointer references omitted files.
+  let mode: unknown;
+  try {
+    const pointerPath = join(directory, "data-mode.json");
+    if ((await lstat(pointerPath)).isSymbolicLink())
+      throw new Error("Backup verification refuses symlinked public pointers");
+    mode = JSON.parse(await readFile(pointerPath, "utf8"));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  if (
+    mode &&
+    typeof mode === "object" &&
+    "catalog" in mode &&
+    mode.catalog != null
+  ) {
+    const pointer = z
+      .object({
+        snapshot: z.literal(true),
+        path: z.string().regex(/^snapshots\/[a-f0-9]{64}\.json$/),
+        sha256: z.string().regex(/^[a-f0-9]{64}$/),
+        catalog: z.unknown(),
+      })
+      .passthrough()
+      .parse(mode);
+    if (pointer.path !== `snapshots/${pointer.sha256}.json`)
+      throw new Error("Backup public pointer path/hash mismatch");
+    const declared = new Set(manifest.files.map((file) => file.name));
+    const canonicalName = `public/${pointer.path}`;
+    for (const name of ["data-mode.json", canonicalName])
+      if (!declared.has(name))
+        throw new Error(
+          `Backup catalog graph member missing from manifest: ${name}`,
+        );
+    const canonicalBody = await readFile(
+      join(directory, canonicalName),
+      "utf8",
+    );
+    if (
+      createHash("sha256").update(canonicalBody).digest("hex") !==
+      pointer.sha256
+    )
+      throw new Error("Backup public generation does not match its pointer");
+    const graph = await verifiedCatalogFiles(
+      join(directory, "public"),
+      pointer.catalog,
+      canonicalBody,
+    );
+    for (const file of graph)
+      if (!declared.has(`public/${file.path}`))
+        throw new Error(
+          `Backup catalog graph member missing from manifest: public/${file.path}`,
+        );
+  }
   const restored = createDatabaseClient({
     datasources: { db: { url: `file:${resolve(directory, "boatscout.db")}` } },
   });
@@ -321,6 +463,7 @@ export async function runRefresh(
     backup?: typeof backupBeforeRefresh;
     geocode?: typeof runGeocode;
     export?: typeof exportSnapshot;
+    validateCollection?: (collection: CollectionReport) => Promise<void>;
   } = {},
 ): Promise<RefreshReport> {
   const runId = options.runId ?? randomUUID();
@@ -340,6 +483,8 @@ export async function runRefresh(
     snapshot: null,
     errors: [],
     reportPath: join(reportDirectory(), `${runId}-refresh.json`),
+    ...(options.sessionId ? { sessionId: options.sessionId } : {}),
+    ...(options.deferExport ? { publicationDeferred: true } : {}),
   };
   const save = async () => {
     await atomicJson(report.reportPath, report);
@@ -392,8 +537,15 @@ export async function runRefresh(
         signal: lease.signal,
         cacheMaxAgeHours: options.cacheMaxAgeHours,
         runId,
+        sessionId: options.sessionId,
+        detailUrlsBySource: options.detailUrlsBySource,
       },
     );
+    if (options.deferExport) {
+      report.status = report.collection.status;
+      report.stage = "review";
+      return report;
+    }
     if (
       !shouldExportCollection(report.collection.status, options.allowPartial)
     ) {
@@ -415,6 +567,7 @@ export async function runRefresh(
     }
     exportLease = startCollectorLease(exportOwner, { signal: lease.signal });
     await exportLease.checkpoint();
+    await dependencies.validateCollection?.(report.collection);
     if (options.geocode) {
       report.stage = "geocode";
       await save();

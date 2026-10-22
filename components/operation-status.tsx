@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { api, type Connection } from "@/lib/client";
+import type { CollectorProgress } from "@/server/collector-progress";
 type Status = {
   locks: { key: string; owner: string; live: boolean; expiresAt: string }[];
   worker: { state?: string; nextRunAt?: string; instanceId?: string } | null;
@@ -9,6 +10,9 @@ type Status = {
     status?: string;
     leaseLive: boolean;
     stage?: string;
+    progress?: CollectorProgress | null;
+    progressState?: string;
+    cancelRequested?: boolean;
   }[];
 };
 export function OperationStatus({
@@ -29,7 +33,7 @@ export function OperationStatus({
     if (!connection) return;
     const timer = setInterval(
       () => void load().catch((e) => setMessage(e.message)),
-      15000,
+      5000,
     );
     return () => clearInterval(timer);
   }, [connection?.url, connection?.token]);
@@ -64,26 +68,66 @@ export function OperationStatus({
             · {status.locks.filter((l) => l.live).length} live leases
           </p>
           {status.jobs.map((job) => (
-            <p key={job.runId}>
-              {job.runId} · {job.status} · {job.stage || "collection"} ·{" "}
-              {job.leaseLive ? "lease live" : "no live lease"}{" "}
-              <button
-                className="button"
-                disabled={busy || !job.leaseLive}
-                onClick={() =>
-                  void action(async () => {
-                    await api(connection, "/admin/operations/cancel", {
-                      runId: job.runId,
-                    });
-                    setMessage(
-                      "Cancellation requested. Status changes when the job acknowledges it.",
-                    );
-                  })
-                }
-              >
-                Cancel job
-              </button>
-            </p>
+            <div key={job.runId} className="notice" role="status">
+              <p>
+                {job.runId} · {job.status} · {job.stage || "collection"} ·{" "}
+                {job.leaseLive ? "lease live" : "no live lease"}{" "}
+                <button
+                  className="button"
+                  disabled={busy || !job.leaseLive || job.cancelRequested}
+                  onClick={() =>
+                    void action(async () => {
+                      await api(connection, "/admin/operations/cancel", {
+                        runId: job.runId,
+                      });
+                      setMessage(
+                        "Cancellation requested. Status changes when the job acknowledges it.",
+                      );
+                    })
+                  }
+                >
+                  Cancel job
+                </button>
+              </p>
+              {job.progress && (
+                <p>
+                  {job.progress.source || "Preparing collection"} ·{" "}
+                  {job.progress.phase}
+                  {` · source ${job.progress.sourceIndex}/${job.progress.sourceCount} · ${Math.round((Date.now() - Date.parse(job.progress.startedAt)) / 1000)}s elapsed`}
+                  {job.progress.metrics &&
+                    ` · inventory ${job.progress.metrics.inventoryPagesSucceeded}/${job.progress.metrics.inventoryPagesAttempted} pages (${job.progress.metrics.inventoryPagesDiscovered} discovered) · details ${job.progress.metrics.detailPagesAttempted}/${job.progress.metrics.detailPagesEligible} attempted, ${job.progress.metrics.detailPagesSucceeded} succeeded`}
+                  {job.progress.lastSuccessfulCheckpointAt &&
+                    ` · last successful checkpoint ${new Date(job.progress.lastSuccessfulCheckpointAt).toLocaleTimeString()}`}
+                </p>
+              )}
+              {job.progressState === "waiting" && (
+                <p>
+                  Intentional wait: {job.progress?.wait?.reason} until{" "}
+                  {job.progress?.wait &&
+                    new Date(job.progress.wait.until).toLocaleTimeString()}
+                  . Source crawl restrictions remain in effect.
+                </p>
+              )}
+              {job.progressState === "possible-stall" && (
+                <p>
+                  Possible stall: no progress checkpoint for over two minutes
+                  and no recorded source delay is active. A live lease shows
+                  ownership; inspect the report before cancelling or recovering.
+                </p>
+              )}
+              {job.progressState === "cancellation-pending" && (
+                <p>
+                  Cancellation requested; waiting for the current request or
+                  cooperative checkpoint to acknowledge it.
+                </p>
+              )}
+              {job.progressState === "interrupted" && (
+                <p>
+                  No live job lease. The last progress checkpoint is retained;
+                  preview recovery before continuing.
+                </p>
+              )}
+            </div>
           ))}
           <details>
             <summary>Lease details</summary>

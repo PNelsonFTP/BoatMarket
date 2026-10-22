@@ -24,6 +24,7 @@ test("source health queues a refresh and location review saves explicit coordina
       };
     else if (path === "/api/admin/operations")
       json = { locks: [], worker: null, jobs: [] };
+    else if (path === "/api/admin/refresh-sessions") json = [];
     else if (path === "/api/admin/routing")
       json = { configured: false, base: "", provider: "OSRM", cacheDays: 7 };
     else if (path === "/api/admin/locations/listings") json = { listings: [] };

@@ -76,6 +76,7 @@ export function Settings({
   onChange,
   mode,
   listings,
+  loadCompleteListings,
 }: {
   connection: Connection | null;
   onConnect: (url: string, password: string) => Promise<void>;
@@ -86,6 +87,7 @@ export function Settings({
   onChange: (f: (w: Workspace) => Workspace) => void | Promise<boolean>;
   mode: string;
   listings: Listing[];
+  loadCompleteListings?: () => Promise<Listing[]>;
 }) {
   const [url, setUrl] = useState(
     connection?.url ||
@@ -269,13 +271,27 @@ export function Settings({
             </button>
             <button
               className="button"
-              onClick={() =>
-                downloadJson("boatscout-listings.json", {
-                  version: 1,
-                  generatedAt: new Date().toISOString(),
-                  listings: listings.map(({ rawPayload, ...l }) => l),
-                })
-              }
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                setError("");
+                try {
+                  const complete = loadCompleteListings
+                    ? await loadCompleteListings()
+                    : listings;
+                  downloadJson("boatscout-listings.json", {
+                    version: 1,
+                    generatedAt: new Date().toISOString(),
+                    listings: complete.map(({ rawPayload, ...l }) => l),
+                  });
+                } catch (error) {
+                  setError(
+                    `Export could not load full source evidence: ${(error as Error).message}`,
+                  );
+                } finally {
+                  setBusy(false);
+                }
+              }}
             >
               <Download size={15} />
               Export listings
@@ -295,6 +311,7 @@ export function Settings({
             listings={listings}
             workspace={workspace}
             mode={mode}
+            loadCompleteListings={loadCompleteListings}
             onImport={onImport}
             onRefresh={async () => {
               await onRefresh();
@@ -737,11 +754,15 @@ export function Settings({
                       "The backend did not confirm this listing was imported. Refresh before retrying.",
                   );
                 await onRefresh();
-              } else
+              } else {
+                const complete = loadCompleteListings
+                  ? await loadCompleteListings()
+                  : listings;
                 onImport({
                   generatedAt: new Date().toISOString(),
-                  listings: [...listings, l],
+                  listings: [...complete, l],
                 });
+              }
               setManual(false);
             }}
           />

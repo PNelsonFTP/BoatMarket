@@ -95,6 +95,24 @@ export function inventoryPages(html: string, pageUrl: string): string[] {
 }
 
 export function verifiedEmptyRegionalPage(html: string, url: string) {
+  const base = new URL(url);
+  // Captured regional Craigslist pages expose both an explicit empty ItemList
+  // and their static results container. Missing scripts/markup are not emptiness.
+  if (base.hostname === "www.craigslist.org" && /^\/search\/area\/[a-z0-9]+$/.test(base.pathname) && base.searchParams.get("cat") === "boo") {
+    const $ = cheerio.load(html);
+    if (/captcha|verify you are human|access denied|cf-chl-|automated access prohibited/i.test($("body").text())) return false;
+    if ($(".cl-static-search-result, .result-row, .cl-search-result").length) return false;
+    try {
+      const data = JSON.parse($("#ld_searchpage_results").text());
+      const search = JSON.parse($("#ld_searchpage_data").text());
+      const canonical = new URL($("link[rel='canonical']").attr("href") || "");
+      return canonical.href === base.href &&
+        /boats for sale.*craigslist/i.test($("title").text()) &&
+        search["@type"] === "SearchResultsPage" &&
+        data["@type"] === "ItemList" && Array.isArray(data.itemListElement) && data.itemListElement.length === 0 &&
+        $("ol.cl-static-search-results .cl-static-hub-links").length > 0;
+    } catch { return false; }
+  }
   if (new URL(url).hostname === "www.hubersmarine.com") {
     const $ = cheerio.load(html);
     const types = $(".search-result-grid .datasource")

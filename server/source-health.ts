@@ -7,6 +7,7 @@ import { readSources } from "./collector";
 import { readLatestCollectionReport, reportDirectory } from "./refresh-report";
 import { readLatestRefreshReport } from "./refresh";
 import { readWorkerHeartbeat } from "./worker";
+import { listCollectorProgress } from "./collector-progress";
 const ledgerSchema = z.object({
   version: z.literal(1),
   note: z.string(),
@@ -45,30 +46,49 @@ async function readAlertEvaluation(
   }
 }
 export async function sourceHealth() {
-  const [sources, collection, refresh, worker, ledger, runs, alertEvaluation] =
-    await Promise.all([
-      readSources(),
-      readLatestCollectionReport(),
-      readLatestRefreshReport(),
-      readWorkerHeartbeat(),
-      readFile("config/source-access.json", "utf8").then((s) =>
-        ledgerSchema.parse(JSON.parse(s)),
-      ),
-      db.ingestRun.findMany({ orderBy: { startedAt: "desc" }, take: 500 }),
-      readAlertEvaluation(),
-    ]);
+  const [
+    sources,
+    collection,
+    refresh,
+    worker,
+    ledger,
+    runs,
+    alertEvaluation,
+    progress,
+  ] = await Promise.all([
+    readSources(),
+    readLatestCollectionReport(),
+    readLatestRefreshReport(),
+    readWorkerHeartbeat(),
+    readFile("config/source-access.json", "utf8").then((s) =>
+      ledgerSchema.parse(JSON.parse(s)),
+    ),
+    db.ingestRun.findMany({ orderBy: { startedAt: "desc" }, take: 500 }),
+    readAlertEvaluation(),
+    listCollectorProgress(),
+  ]);
   return {
     generatedAt: new Date().toISOString(),
     sources: sources.map((s) => {
       const latestRun = runs.find((r) => r.source === s.name) || null;
       const matchingReportRun =
         latestRun && collection?.runs.some((run) => run.id === latestRun.id);
+      const liveProgress =
+        progress.find(
+          (item) =>
+            item.status === "running" &&
+            item.ingestRunId === latestRun?.id &&
+            item.sourceId === s.id,
+        ) ?? null;
       return {
         ...s,
         latestRun,
-        metrics: matchingReportRun
-          ? collection?.metrics.find((m) => m.sourceId === s.id) || null
-          : null,
+        progress: liveProgress,
+        metrics:
+          liveProgress?.metrics ??
+          (matchingReportRun
+            ? collection?.metrics.find((m) => m.sourceId === s.id) || null
+            : null),
       };
     }),
     collection,

@@ -21,7 +21,18 @@ function restoredPath(name: string) {
   if (fixed[name]) return fixed[name];
   if (/^enrichment\/[a-z0-9-]+\.json$/.test(name)) return `data/${name}`;
   if (/^publication\/[a-f0-9-]{36}\.json$/.test(name)) return `data/${name}`;
-  if (/^public\/snapshots\/[a-f0-9]{64}\.json$/.test(name)) return name;
+  if (
+    /^public\/(?:snapshots|catalogs|catalog-details)\/[a-f0-9]{64}\.json$/.test(
+      name,
+    )
+  )
+    return name;
+  if (
+    /^refresh-metadata\/(?:inventory-baselines|sessions|progress)\/[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\.json$/.test(
+      name,
+    )
+  )
+    return `data/refresh-runs/${name.slice("refresh-metadata/".length)}`;
   throw new Error(`No reviewed restore mapping for ${name}`);
 }
 async function noSymlinkAncestors(path: string) {

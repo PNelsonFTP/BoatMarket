@@ -40,7 +40,11 @@
     "docker:smoke": "node scripts/docker-smoke.mjs",
     "sbom:runtime": "node scripts/runtime-sbom.mjs",
     "retention": "node --import tsx scripts/retention.ts",
-    "restore": "node --import tsx scripts/restore.ts"
+    "restore": "node --import tsx scripts/restore.ts",
+    "test:production": "playwright test --config=playwright.production.config.ts",
+    "verify:pages": "node scripts/verify-pages.mjs",
+    "archive": "node --import tsx scripts/archive.ts",
+    "benchmark:snapshot": "node --import tsx scripts/benchmark-snapshot.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.1.0",

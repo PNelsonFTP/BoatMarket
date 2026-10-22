@@ -13,6 +13,7 @@ import {
 import type { BoatResult } from "@/lib/types";
 import { median, DAY } from "@/lib/search";
 import { money } from "@/lib/utils";
+import { summarizeGrouping } from "@/lib/grouping";
 export function Market({
   boats,
   matchingAdCount,
@@ -20,6 +21,7 @@ export function Market({
   boats: BoatResult[];
   matchingAdCount: number;
 }) {
+  const grouping = summarizeGrouping(boats);
   const linkedRecords = boats.filter(
     (boat) => boat.sourceLinks.length > 1,
   ).length;
@@ -100,6 +102,18 @@ export function Market({
           </div>
         ))}
       </div>
+      <section className="market-stats" aria-label="Grouping basis">
+        {[
+          ["Reviewed vessel groups", grouping.reviewed],
+          ["HIN-only vessel groups", grouping.hin],
+          ["Unresolved research records", grouping.unresolved],
+        ].map(([label, value]) => (
+          <div key={label}>
+            <span>{label}</span>
+            <strong>{value}</strong>
+          </div>
+        ))}
+      </section>
       {boats.length === 0 ? (
         <div className="empty-state">
           <h2>No boats match these filters</h2>
@@ -224,8 +238,10 @@ export function Market({
         {associatedAdCount} associated ads include any linked copies outside
         these filters. These are research records, not a verified count of
         distinct available boats; unresolved cross-posts can remain. This view
-        does not separate reviewed groups from HIN-only matches; inspect
-        Duplicate review for that evidence. Price statistics use the lowest
+        separates reviewed groups, HIN-only groups and unresolved records using
+        the published evidence for all linked ads. A single advertisement or
+        missing/conflicting grouping metadata remains unresolved. Inspect
+        Duplicate review for the decisions. Price statistics use the lowest
         matching asking price per record, not completed sale values. Average
         time tracked: {avg == null ? "unknown" : `${Math.round(avg)} days`}.
         Tracking starts when BoatScout first sees the displayed ad.

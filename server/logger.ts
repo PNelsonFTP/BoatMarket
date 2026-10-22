@@ -1,6 +1,5 @@
-import { mkdirSync } from "node:fs";
 import pino from "pino";
-mkdirSync("logs", { recursive: true });
+import { rotatingLogDestination } from "./log-rotation";
 export const logger = pino(
   {
     level: process.env.LOG_LEVEL || "info",
@@ -15,6 +14,12 @@ export const logger = pino(
   },
   pino.multistream([
     { stream: process.stdout },
-    { stream: pino.destination("logs/boatscout.log") },
+    {
+      stream: rotatingLogDestination({
+        path: process.env.LOG_FILE || "logs/boatscout.log",
+        maximumBytes: Number(process.env.LOG_MAX_BYTES || 10 * 1024 ** 2),
+        maximumRotations: Number(process.env.LOG_MAX_ROTATIONS || 12),
+      }),
+    },
   ]),
 );

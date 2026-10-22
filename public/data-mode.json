@@ -1,6 +1,12 @@
 {
   "snapshot": true,
-  "path": "snapshots/d747dbd5f9f89e9fd928ea7b22eb972a02a80057d9983b5bf89554fb5fc942aa.json",
-  "sha256": "d747dbd5f9f89e9fd928ea7b22eb972a02a80057d9983b5bf89554fb5fc942aa",
-  "activationId": "2071ceac-0439-4bda-a5b9-3e32eed358fb"
+  "path": "snapshots/e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829.json",
+  "sha256": "e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829",
+  "activationId": "5b2aa731-fd1a-46ab-97c2-913c63c76c0f",
+  "catalog": {
+    "version": 1,
+    "path": "catalogs/c350d1485db1e67cf047de355fa1376c390abe199b0ce97241f4d225d947086d.json",
+    "sha256": "c350d1485db1e67cf047de355fa1376c390abe199b0ce97241f4d225d947086d",
+    "snapshotHash": "e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829"
+  }
 }

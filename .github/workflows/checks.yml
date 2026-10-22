@@ -26,6 +26,8 @@ jobs:
       - name: Verify committed reviewed release before regenerating SBOMs
         run: node --input-type=module -e "import {readFileSync} from 'node:fs'; import {spawnSync} from 'node:child_process'; const manifest=JSON.parse(readFileSync('public/release-manifest.json','utf8')); const result=spawnSync(process.execPath,['--import','tsx','scripts/release.ts','verify','--review='+manifest.approval.reviewHash],{stdio:'inherit'}); process.exit(result.status ?? 1);"
       - run: npm test
+      - name: Enforce catalog payload and full/growth filter-equivalence budgets
+        run: npm run benchmark:snapshot -- --output=data/benchmarks/ci-snapshot.json
       - run: npm run sbom
       - name: Validate generated CycloneDX inventory
         run: node --input-type=module -e "import {schemaValidator} from './scripts/sbom-schema.mjs'; import {readFileSync} from 'node:fs'; const validator=schemaValidator(process.cwd()); for(const name of ['boatscout-all-platforms.cdx.json','boatscout-production.cdx.json']) validator.validate(JSON.parse(readFileSync('sbom/'+name,'utf8')),name);"
@@ -34,11 +36,24 @@ jobs:
       - run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: 1
+      - name: Smoke-test the production root export
+        run: npm run test:production
+      - name: Build the GitHub Pages base-path export
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          NEXT_PUBLIC_BASE_PATH: /BoatMarket
+      - name: Smoke-test the production GitHub Pages export
+        run: npm run test:production
+        env:
+          BUILT_BASE_PATH: /BoatMarket
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: failure()
         with:
           name: playwright-report-${{ matrix.os }}
-          path: playwright-report
+          path: |
+            playwright-report
+            test-results
   container:
     runs-on: ubuntu-latest
     timeout-minutes: 40

@@ -6,6 +6,11 @@ import { acquireLock, releaseLock } from "./repository";
 import { startCollectorLease } from "./lease";
 import { assertDiskSpace } from "./disk-space";
 import { z } from "zod";
+import {
+  catalogReferenceSchema,
+  type CatalogReference,
+} from "../lib/snapshot-catalog";
+import { writeSearchCatalog, verifiedCatalogFiles } from "./snapshot-catalog";
 
 export type PublicationLease = ReturnType<typeof startCollectorLease> & {
   owner: string;
@@ -51,7 +56,13 @@ export type SnapshotActivation = {
   committedAt: string | null;
   sha256: string;
   path: string;
-  previous: { snapshot?: boolean; path?: string; sha256?: string } | null;
+  catalog?: CatalogReference;
+  previous: {
+    snapshot?: boolean;
+    path?: string;
+    sha256?: string;
+    catalog?: CatalogReference;
+  } | null;
   listings: number;
 };
 const activationSchema = z.object({
@@ -68,9 +79,11 @@ const activationSchema = z.object({
       snapshot: z.boolean().optional(),
       path: z.string().optional(),
       sha256: z.string().optional(),
+      catalog: catalogReferenceSchema.optional(),
     })
     .nullable(),
   listings: z.number().int().nonnegative(),
+  catalog: catalogReferenceSchema.optional(),
 });
 /** A single atomic pointer switches readers only after an immutable, verified generation exists. */
 export async function activateSnapshot(
@@ -79,6 +92,7 @@ export async function activateSnapshot(
     publicDirectory?: string;
     runId?: string;
     listings: number;
+    catalog?: boolean;
     beforeCommit?: () => Promise<void>;
     signal?: AbortSignal;
     publicationLease?: PublicationLease;
@@ -112,6 +126,9 @@ export async function activateSnapshot(
   }
   if (snapshotHash(await readFile(destination)) !== sha256)
     throw new Error("Immutable snapshot hash mismatch; activation refused");
+  const catalog = options.catalog
+    ? await writeSearchCatalog(publicDirectory, body)
+    : undefined;
   let previous: SnapshotActivation["previous"] = null;
   try {
     previous = JSON.parse(await readFile(modePath, "utf8"));
@@ -129,6 +146,7 @@ export async function activateSnapshot(
     path,
     previous,
     listings: options.listings,
+    ...(catalog ? { catalog } : {}),
   };
   const marker = join(publicationDirectory(), `${record.id}.json`);
   await atomicJson(marker, record);
@@ -141,6 +159,7 @@ export async function activateSnapshot(
     path,
     sha256,
     activationId: record.id,
+    ...(catalog ? { catalog } : {}),
   });
   // Readers already have a coherent generation if a crash occurs before this audit marker is updated.
   record.state = "committed";
@@ -166,6 +185,7 @@ export async function readPublicSnapshotGeneration(publicDirectory = "public") {
     path?: string;
     sha256?: string;
     activationId?: string;
+    catalog?: CatalogReference;
   };
   try {
     mode = JSON.parse(await readFile(modePath, "utf8"));
@@ -191,11 +211,22 @@ export async function readPublicSnapshotGeneration(publicDirectory = "public") {
     mode.sha256
   )
     throw new Error("Public snapshot generation hash mismatch");
+  if (mode.catalog) {
+    catalogReferenceSchema.parse(mode.catalog);
+    if (mode.catalog.snapshotHash !== mode.sha256)
+      throw new Error("Catalog snapshot hash mismatch");
+    await verifiedCatalogFiles(
+      publicDirectory,
+      mode.catalog,
+      await readFile(join(publicDirectory, mode.path!), "utf8"),
+    );
+  }
   return {
     snapshot: true as const,
     path: mode.path!,
     sha256: mode.sha256!,
     activationId: mode.activationId ?? null,
+    ...(mode.catalog ? { catalog: mode.catalog } : {}),
   };
 }
 export async function readSnapshotActivation(
@@ -277,6 +308,7 @@ export async function rollbackSnapshot(
     return activateSnapshot(body, {
       publicDirectory,
       listings: record.listings,
+      catalog: !!record.catalog,
       runId: `rollback-${activationId}`,
       publicationLease: lease,
       signal: lease.signal,

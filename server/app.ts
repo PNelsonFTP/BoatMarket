@@ -41,6 +41,7 @@ import {
 } from "./operations";
 import { registerSourceToolsRoutes } from "./source-tools";
 import { registerSourceHealthRoutes } from "./source-health";
+import { registerRefreshSessionRoutes } from "./refresh-session";
 import { readWorkerHeartbeat } from "./worker";
 import { runRefresh } from "./refresh";
 import { atomicJson, reportDirectory } from "./refresh-report";
@@ -158,6 +159,7 @@ export function buildApp(
   registerLocationRoutes(app);
   registerRoutingRoutes(app);
   registerSourceHealthRoutes(app);
+  registerRefreshSessionRoutes(app);
   registerAlertRoutes(app);
   registerSourceToolsRoutes(app);
   app.get("/api/admin/operations", async () => readOperationStatus());

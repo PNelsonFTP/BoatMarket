@@ -18,6 +18,13 @@ import {
   workspaceRestoreSchema,
 } from "./import-workspace";
 import { parseListingImport } from "./import-listings";
+import { measureWork } from "./performance";
+import {
+  catalogReferenceSchema,
+  searchCatalogSchema,
+  createCatalogLoader,
+  fetchVerifiedJson,
+} from "./snapshot-catalog";
 export type Connection = { url: string; token: string };
 export async function api<T = unknown>(
   connection: Connection,
@@ -54,6 +61,11 @@ function cachedWorkspace(
 }
 export function useBoatStore() {
   const [listings, setListings] = useState<Listing[]>([]);
+  const listingsRef = useRef<Listing[]>([]);
+  const dataEpoch = useRef(0);
+  const catalogLoader = useRef<ReturnType<typeof createCatalogLoader> | null>(
+    null,
+  );
   const [workspace, setWorkspace] = useState<Workspace>(seedWorkspace);
   const [mode, setMode] = useState<WorkspaceMode>("sample");
   const [connection, setConnection] = useState<Connection | null>(null);
@@ -74,7 +86,12 @@ export function useBoatStore() {
     updatedAt: string | null;
   }>({ mode: "sample", listings: [], updatedAt: null });
   const setData = useCallback((data: unknown, date?: string) => {
-    setListings(z.array(listingSchema).parse(data));
+    const parsed = measureWork("listing-validate", () =>
+      z.array(listingSchema).parse(data),
+    );
+    dataEpoch.current++;
+    listingsRef.current = parsed;
+    setListings(parsed);
     setUpdatedAt(date || new Date().toISOString());
   }, []);
   const applyWorkspace = useCallback((next: Workspace) => {
@@ -133,6 +150,8 @@ export function useBoatStore() {
           "The saved sample workspace could not be read. Its stored copy has been preserved.",
         );
       }
+      dataEpoch.current++;
+      listingsRef.current = sampleListings;
       setListings(sampleListings);
       applyWorkspace(restored);
       offline.current = {
@@ -141,36 +160,72 @@ export function useBoatStore() {
         updatedAt: null,
       };
       try {
-        const config: { snapshot?: boolean; path?: string; sha256?: string } =
-          await fetch(asset("/data-mode.json")).then((r) =>
-            r.ok ? r.json() : {},
-          );
+        const config: {
+          snapshot?: boolean;
+          path?: string;
+          sha256?: string;
+          catalog?: unknown;
+        } = await fetch(asset("/data-mode.json")).then((r) =>
+          r.ok ? r.json() : {},
+        );
         if (config.snapshot) {
           if (
             config.path &&
             !/^snapshots\/[a-f0-9]{64}\.json$/.test(config.path)
           )
             throw new Error("Invalid snapshot activation path");
-          const response = await fetch(
-            asset(config.path ? `/${config.path}` : "/snapshot.json"),
-          );
-          if (!response.ok)
-            throw new Error("Snapshot generation could not be loaded");
-          const body = await response.text();
-          if (config.sha256) {
-            const digest = await crypto.subtle.digest(
-              "SHA-256",
-              new TextEncoder().encode(body),
-            );
-            const actual = Array.from(new Uint8Array(digest), (byte) =>
-              byte.toString(16).padStart(2, "0"),
-            ).join("");
-            if (actual !== config.sha256)
-              throw new Error("Snapshot generation failed its integrity check");
+          let snapshot: ReturnType<typeof parseListingImport> | null = null;
+          let nextCatalogLoader: ReturnType<typeof createCatalogLoader> | null =
+            null;
+          let catalogWarning = "";
+          if (config.catalog) {
+            try {
+              const reference = catalogReferenceSchema.parse(config.catalog);
+              if (reference.snapshotHash !== config.sha256)
+                throw new Error("Search catalog belongs to another snapshot");
+              const catalogValue = await fetchVerifiedJson(
+                asset(`/${reference.path}`),
+                reference.sha256,
+                { maximumBytes: 8 * 1024 * 1024 },
+              );
+              const catalog = measureWork("catalog-validate", () =>
+                searchCatalogSchema.parse(catalogValue),
+              );
+              if (catalog.snapshotHash !== reference.snapshotHash)
+                throw new Error("Search catalog snapshot mismatch");
+              snapshot = {
+                generatedAt: catalog.generatedAt,
+                listings: catalog.listings,
+              };
+              nextCatalogLoader = createCatalogLoader(catalog, asset);
+            } catch {
+              // A verified full-generation fallback preserves offline compatibility and all evidence.
+              catalogWarning =
+                "Fast search data is unavailable. Loaded the verified full inventory instead.";
+            }
           }
-          const snapshot = parseListingImport(JSON.parse(body));
+          if (!snapshot) {
+            const path = asset(
+              config.path ? `/${config.path}` : "/snapshot.json",
+            );
+            if (config.sha256) {
+              const value = await fetchVerifiedJson(path, config.sha256, {
+                maximumBytes: 64 * 1024 * 1024,
+              });
+              snapshot = measureWork("canonical-validate", () =>
+                parseListingImport(value),
+              );
+            } else {
+              const response = await fetch(path);
+              if (!response.ok)
+                throw new Error("Snapshot generation could not be loaded");
+              snapshot = parseListingImport(await response.json());
+            }
+          }
           if (cancelled) return;
+          catalogLoader.current = nextCatalogLoader;
           setData(snapshot.listings, snapshot.generatedAt);
+          if (catalogWarning) setError(catalogWarning);
           setMode("snapshot");
           modeRef.current = "snapshot";
           let w = lakeHolidayWorkspace();
@@ -214,6 +269,43 @@ export function useBoatStore() {
       cancelled = true;
     };
   }, [refresh, setData, applyWorkspace]);
+  async function ensureDetails(
+    ids: string[] = listingsRef.current.map((l) => l.id),
+  ) {
+    const loader = catalogLoader.current;
+    const epoch = dataEpoch.current;
+    if (!loader || modeRef.current !== "snapshot") return listingsRef.current;
+    try {
+      const fields = await loader.load(ids);
+      if (
+        catalogLoader.current !== loader ||
+        modeRef.current !== "snapshot" ||
+        epoch !== dataEpoch.current
+      )
+        throw new Error(
+          "Inventory changed while loading detailed evidence; retry from the current inventory",
+        );
+      const next = listingsRef.current.map((listing) =>
+        fields.has(listing.id)
+          ? { ...listing, fieldProvenance: fields.get(listing.id) }
+          : listing,
+      );
+      listingsRef.current = next;
+      setListings(next);
+      offline.current.listings = next;
+      return next;
+    } catch (error) {
+      if (
+        epoch === dataEpoch.current &&
+        catalogLoader.current === loader &&
+        modeRef.current === "snapshot"
+      )
+        setError(
+          `Detailed source evidence could not be loaded: ${(error as Error).message}. The verified search data remains available; retry when connected.`,
+        );
+      throw error;
+    }
+  }
   async function connect(input: string, password: string) {
     const url = backendIdentity(input);
     await queue.current;
@@ -251,8 +343,10 @@ export function useBoatStore() {
     connectionRef.current = null;
     setConnection(null);
     const state = offline.current;
+    dataEpoch.current++;
     setMode(state.mode);
     modeRef.current = state.mode;
+    listingsRef.current = state.listings;
     setListings(state.listings);
     setUpdatedAt(state.updatedAt);
     let w =
@@ -361,6 +455,7 @@ export function useBoatStore() {
         );
       }
     }
+    catalogLoader.current = null;
     setData(data.listings, data.generatedAt);
     setMode("snapshot");
     modeRef.current = "snapshot";
@@ -386,6 +481,7 @@ export function useBoatStore() {
     refresh,
     updateWorkspace,
     importSnapshot,
+    ensureDetails,
   };
 }
 export function downloadJson(name: string, data: unknown) {

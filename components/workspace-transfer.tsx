@@ -15,6 +15,7 @@ import {
   importChunks,
   mergeListingImport,
   parseListingImport,
+  readListingImportFile,
   runListingImport,
   type ImportChunkResult,
   type ImportManifest,
@@ -32,6 +33,7 @@ type Props = {
   mode: string;
   onImport: (value: unknown) => void;
   onRefresh: () => Promise<void>;
+  loadCompleteListings?: () => Promise<Listing[]>;
   onChange: (
     change: (workspace: Workspace) => Workspace,
   ) => void | Promise<boolean>;
@@ -43,6 +45,7 @@ export function WorkspaceTransfer({
   mode,
   onImport,
   onRefresh,
+  loadCompleteListings,
   onChange,
 }: Props) {
   const [listingDraft, setListingDraft] = useState<ReturnType<
@@ -102,15 +105,12 @@ export function WorkspaceTransfer({
     setError("");
     setMessage("");
     try {
-      if (file.size > IMPORT_MAX_BYTES)
-        throw new Error(
-          "File exceeds 12 MiB. Split larger exports before importing.",
-        );
-      const input: unknown = JSON.parse(await file.text());
-      if (kind === "workspace") prepareWorkspace(input);
-      else {
-        const parsed = parseListingImport(input);
-        importChunks(parsed.listings);
+      if (kind === "workspace") {
+        if (file.size > IMPORT_MAX_BYTES)
+          throw new Error("Workspace file exceeds 12 MiB.");
+        prepareWorkspace(JSON.parse(await file.text()));
+      } else {
+        const parsed = await readListingImportFile(file);
         setListingDraft(parsed);
         setListingMode("merge");
         setReviewed(false);
@@ -151,7 +151,12 @@ export function WorkspaceTransfer({
           setListingDraft(null);
         }
       } else {
-        const merged = mergeListingImport(listings, listingDraft.listings);
+        // Hydrate the original generation before replacing its lazy loader.
+        const originals =
+          listingMode === "merge" && loadCompleteListings
+            ? await loadCompleteListings()
+            : listings;
+        const merged = mergeListingImport(originals, listingDraft.listings);
         const next =
           listingMode === "merge" ? merged.listings : listingDraft.listings;
         onImport({ ...listingDraft, listings: next });
@@ -236,7 +241,8 @@ export function WorkspaceTransfer({
         Personal data is separate for this website deployment, sample/snapshot
         modes, and each connected backend. A listing import never replaces
         backend notes or favorites. Workspace restore needs a preview and
-        confirmation.
+        confirmation. Listing files support up to 64 MiB and 10,000 records;
+        connected imports send at most 1,000 records and 12 MiB per request.
       </p>
       {legacy.length > 0 && (
         <details className="setup-help">

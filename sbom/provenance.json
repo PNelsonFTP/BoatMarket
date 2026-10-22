@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-08T17:01:48.335Z",
-  "chicagoDate": "2026-09-08",
+  "generatedAt": "2026-10-22T01:23:31.412Z",
+  "chicagoDate": "2026-10-21",
   "timezone": "America/Chicago",
   "nodeVersion": "v26.7.0",
   "npmVersion": "11.19.0",
@@ -66,39 +66,39 @@
   "artifacts": [
     {
       "file": "sbom/package-lock-inventory.json",
-      "sha256": "0661c8fd17121fb06525cba6254b85dc6f0a009b94979ccdcc821dccf4b436f7"
+      "sha256": "751ba45938dc9f8f3b9a5862d701469b324e6e4f02735775450263c4d3e53485"
     },
     {
       "file": "sbom/full-sbom-generation-limitation.json",
-      "sha256": "97d194442d2a2d4ae907e3e652d32dfadd4bee316c65d699b0fa98428aa4024f"
+      "sha256": "aa4df4aff6a4e9b70010a0e3718d58f13a613d0c5f38b46b6d8816b80ffb607f"
     },
     {
       "file": "sbom/boatscout-full-required.cdx.json",
-      "sha256": "0b8a909611c5ba55d85307feca51ff60718002d686d9a6f55d6ceef20b57dac9"
+      "sha256": "421d62e0769151a35e133ae0410eb569b519443d1551539c7c6bf218b19de768"
     },
     {
       "file": "sbom/boatscout-production.cdx.json",
-      "sha256": "d6201236692b0c9b249a610bcdafec75f0ac249236d7e2111403b451cab6b30c"
+      "sha256": "c8a2c650b1a6490e889b434b60eb02e7102480f36c2abd579c179bb714f4735a"
     },
     {
       "file": "sbom/boatscout-all-platforms.cdx.json",
-      "sha256": "3c1d2a477988c6c4ce23eb6bef76b4b52166e4d3ded703de2f2f98b32c5606a1"
+      "sha256": "f130cd4b0dd6d9db34c2b95b3bd5d384bb28eeab6cacce5e91810937a6cc600e"
     },
     {
       "file": "sbom/enriched-dependency-evidence.json",
-      "sha256": "4b8dbcd59ce8dcb2618ffa7ca6d0be45fc3dc560e743381c3a409ae6b0660173"
+      "sha256": "ada6bc652249ef442fc5f3341576f4329652748520f8a4c86390fafed9dd6e2f"
     },
     {
       "file": "sbom/bundled-package-evidence.json",
       "sha256": "572d0a555791d2feae444971ebeabf5ec4c5cc4d30f37ac33efa44f044066273"
     },
     {
-      "file": "sbom/npm-audit-full-2026-09-08T17-01-48Z.json",
-      "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82"
+      "file": "sbom/npm-audit-full-2026-10-22T01-23-31Z.json",
+      "sha256": "6d59865accb864958dd73d4b0e542fba42bfdba1d07a7ee6fd314a726a9b65ba"
     },
     {
-      "file": "sbom/npm-audit-production-2026-09-08T17-01-48Z.json",
-      "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82"
+      "file": "sbom/npm-audit-production-2026-10-22T01-23-31Z.json",
+      "sha256": "b2e562d4278192d4c1e5daad0fec8e3d48b2201872f0d1c96994c8b91145b746"
     }
   ],
   "validation": [

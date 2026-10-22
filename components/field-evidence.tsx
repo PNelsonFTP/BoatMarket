@@ -41,7 +41,9 @@ export function FieldProvenance({ listing }: { listing: Listing }) {
           <div key={field} className="settings-row">
             <div>
               <strong>
-                {field.replace(/^equipment\./, "").replaceAll("_", " ")}
+                {field === "engines.make"
+                  ? "engine make"
+                  : field.replace(/^equipment\./, "").replaceAll("_", " ")}
               </strong>
               <br />
               <FieldEvidence listing={listing} field={field} />

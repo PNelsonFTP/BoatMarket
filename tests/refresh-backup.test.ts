@@ -139,12 +139,43 @@ it("backs up and restores the active immutable generation, marker and private en
     vi.stubEnv("PUBLICATION_DIR", join(directory, "publication"));
     vi.stubEnv("IMAGE_EVIDENCE_FILE", join(directory, "image-evidence.json"));
     vi.stubEnv("ENRICHMENT_STATE_DIR", join(directory, "enrichment"));
+    vi.stubEnv("REFRESH_REPORT_DIR", join(directory, "reports"));
     await writeFile(process.env.IMAGE_EVIDENCE_FILE!, "[]");
     await mkdir(process.env.ENRICHMENT_STATE_DIR!);
     await writeFile(
       join(process.env.ENRICHMENT_STATE_DIR!, "fixture.json"),
       '{"version":1,"entries":{}}',
     );
+    for (const [path, value] of [
+      [
+        "inventory-baselines/fixture-deadbeef.json",
+        { version: 1, sourceId: "fixture", count: 12 },
+      ],
+      [
+        "sessions/fixture-session.json",
+        { version: 1, sessionId: "fixture-session", status: "partial" },
+      ],
+      [
+        "sessions/fixture-session/passes/fixture-run.json",
+        { version: 1, runId: "fixture-run", status: "partial" },
+      ],
+      [
+        "progress/fixture-run.json",
+        { version: 1, runId: "fixture-run", status: "partial" },
+      ],
+    ] as const) {
+      await mkdir(
+        join(
+          process.env.REFRESH_REPORT_DIR!,
+          path.split("/").slice(0, -1).join("/"),
+        ),
+        { recursive: true },
+      );
+      await writeFile(
+        join(process.env.REFRESH_REPORT_DIR!, path),
+        JSON.stringify(value),
+      );
+    }
     const activation = await activateSnapshot('{"listings":[]}', {
       publicDirectory: join(directory, "public"),
       runId: "fixture",
@@ -162,6 +193,10 @@ it("backs up and restores the active immutable generation, marker and private en
         `public/${activation.path}`,
         `publication/${activation.id}.json`,
         "data-mode.json",
+        "refresh-metadata/inventory-baselines/fixture-deadbeef.json",
+        "refresh-metadata/sessions/fixture-session.json",
+        "refresh-metadata/sessions/fixture-session/passes/fixture-run.json",
+        "refresh-metadata/progress/fixture-run.json",
       ]),
     );
     const preview = await previewBackupRestore(
@@ -208,6 +243,28 @@ it("backs up and restores the active immutable generation, marker and private en
         "utf8",
       ),
     ).toContain('"version":1');
+    expect(
+      JSON.parse(
+        await readFile(
+          join(
+            directory,
+            "restored/data/refresh-runs/inventory-baselines/fixture-deadbeef.json",
+          ),
+          "utf8",
+        ),
+      ),
+    ).toMatchObject({ sourceId: "fixture", count: 12 });
+    expect(
+      JSON.parse(
+        await readFile(
+          join(
+            directory,
+            "restored/data/refresh-runs/sessions/fixture-session/passes/fixture-run.json",
+          ),
+          "utf8",
+        ),
+      ),
+    ).toMatchObject({ runId: "fixture-run", status: "partial" });
     await expect(
       restoreBackupToDirectory(
         backup.directory,

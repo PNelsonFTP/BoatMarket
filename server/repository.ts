@@ -44,7 +44,13 @@ export function sourceRecordFingerprint(
 export async function allListings(includeSamples = false) {
   const rows = await db.listing.findMany({
     where: includeSamples ? {} : { isSample: false },
-    include: { prices: { orderBy: { at: "asc" } }, engines: true },
+    include: {
+      prices: { orderBy: { at: "asc" } },
+      engines: true,
+      group: {
+        select: { reason: true, _count: { select: { listings: true } } },
+      },
+    },
     orderBy: { firstSeenAt: "desc" },
   });
   return rows.map((r) =>
@@ -54,6 +60,14 @@ export async function allListings(includeSamples = false) {
       price: r.price,
       status: r.status,
       groupId: r.groupId,
+      grouping: {
+        basis: r.group?.reason.startsWith("Reviewed")
+          ? "reviewed"
+          : r.group?.reason.startsWith("Matching modern-format HIN")
+            ? "hin"
+            : "unresolved",
+        totalAdvertisements: r.group?._count.listings ?? 1,
+      },
       vesselId: r.vesselId,
       firstSeenAt: r.firstSeenAt.toISOString(),
       lastSeenAt: r.lastSeenAt.toISOString(),

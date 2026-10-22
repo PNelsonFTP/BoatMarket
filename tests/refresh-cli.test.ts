@@ -91,6 +91,48 @@ it("returns real one-shot exit codes and runs a complete cached refresh against 
       partial: false,
     });
     expect(snapshot.listings[0]).not.toHaveProperty("rawPayload");
+    const previousBody = await readFile(target, "utf8");
+    const sessionStart = run("scripts/refresh.ts", [
+      "--session=start",
+      `--target=${target}`,
+      "--max-passes=2",
+    ]);
+    expect(sessionStart.status, sessionStart.stdout + sessionStart.stderr).toBe(
+      0,
+    );
+    expect(await readFile(target, "utf8")).toBe(previousBody);
+    const sessionId = JSON.parse(
+      await readFile(
+        join(directory, "reports/sessions/latest-session.json"),
+        "utf8",
+      ),
+    ).sessionId;
+    const manifest = JSON.parse(
+      await readFile(
+        join(directory, "reports/sessions", `${sessionId}.json`),
+        "utf8",
+      ),
+    );
+    expect(manifest).toMatchObject({
+      status: "review",
+      passes: [{ report: { publicationDeferred: true, snapshot: null } }],
+    });
+    const sessionFinalize = run("scripts/refresh.ts", [
+      "--session=finalize",
+      `--session-id=${sessionId}`,
+    ]);
+    expect(
+      sessionFinalize.status,
+      sessionFinalize.stdout + sessionFinalize.stderr,
+    ).toBe(0);
+    expect(
+      JSON.parse(
+        await readFile(
+          join(directory, "reports/sessions", `${sessionId}.json`),
+          "utf8",
+        ),
+      ).status,
+    ).toBe("complete");
     await writeFile(config, JSON.stringify([{ ...source, urls: [brokenUrl] }]));
     expect(run("server/worker.ts", ["--once"]).status).toBe(1);
   } finally {

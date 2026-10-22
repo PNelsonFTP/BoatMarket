@@ -13,6 +13,7 @@ import { z } from "zod";
 import { prepareSnapshot } from "../scripts/export-snapshot";
 import { atomicJson } from "./refresh-report";
 import { activateSnapshot, withPublicationLease } from "./publication";
+import { buildSearchCatalog, verifiedCatalogFiles } from "./snapshot-catalog";
 const hash = (body: string | Buffer) =>
   createHash("sha256").update(body).digest("hex");
 const releaseDirectory = () => process.env.RELEASE_DIR || "data/releases";
@@ -67,6 +68,7 @@ export async function releaseSourceHash(
     "next.config.ts",
     "tsconfig.json",
     "tsconfig.check.json",
+    "playwright.production.config.ts",
     "Dockerfile",
     ".github",
     ".gitattributes",
@@ -327,6 +329,15 @@ export async function prepareRelease(snapshotPath = "public/snapshot.json") {
   const body = await readFile(snapshotPath, "utf8"),
     snapshot = JSON.parse(body),
     quality = reviewSnapshotQuality(snapshot);
+  if (!quality.issues.length) {
+    try {
+      buildSearchCatalog(body);
+    } catch (error) {
+      quality.issues.push(
+        `Search catalog cannot be published: ${(error as Error).message}`,
+      );
+    }
+  }
   let previous: { listings?: unknown[] } | null = null;
   try {
     previous = JSON.parse(await readFile("public/snapshot.json", "utf8"));
@@ -389,6 +400,8 @@ export async function approveRelease(
   if (!options.privacyReviewed || options.note.trim().length < 5)
     throw new Error("Record the privacy review and a meaningful review note");
   const { payload, body } = await loadRelease(reviewHash);
+  // Fail before writing approval/activation artifacts if a legacy review cannot produce its catalog.
+  buildSearchCatalog(body);
   if (payload.quality.issues.length)
     throw new Error("Release quality checks failed");
   if (payload.quality.warnings.length && !options.acceptWarnings)
@@ -427,6 +440,7 @@ export async function approveRelease(
     });
     const activation = await activateSnapshot(body, {
       listings: payload.listings,
+      catalog: true,
       runId: `release-${reviewHash.slice(0, 24)}`,
       publicationLease: lease,
       signal: lease.signal,
@@ -508,6 +522,7 @@ export async function verifyRelease(
     throw new Error(
       "Legacy snapshot alias does not match the reviewed generation; stage the release again",
     );
+  await verifiedCatalogFiles(publicDirectory, mode.catalog, body);
   const quality = reviewSnapshotQuality(JSON.parse(body));
   if (quality.issues.length) throw new Error(quality.issues.join("; "));
   if (options.builtDirectory) {
@@ -517,6 +532,7 @@ export async function verifyRelease(
       generation,
       snapshotHash: payload.snapshotHash,
       activationId: mode.activationId,
+      catalog: mode.catalog,
     });
     const commit = spawnSync("git", ["rev-parse", "HEAD"], {
       encoding: "utf8",
@@ -548,6 +564,7 @@ export async function verifyBuiltSnapshotFiles(
     generation: string;
     snapshotHash: string;
     activationId: string;
+    catalog?: unknown;
   },
 ) {
   const { publicDirectory, generation, snapshotHash, activationId } = options;
@@ -559,6 +576,11 @@ export async function verifyBuiltSnapshotFiles(
       hash(await readFile(join(publicDirectory, "release-manifest.json")))
   )
     throw new Error("Built output does not match the reviewed release");
+  await verifiedCatalogFiles(
+    built,
+    options.catalog,
+    await readFile(join(built, generation), "utf8"),
+  );
   const builtMode = JSON.parse(
     await readFile(join(built, "data-mode.json"), "utf8"),
   );
@@ -567,6 +589,7 @@ export async function verifyBuiltSnapshotFiles(
     builtMode.path !== generation ||
     builtMode.sha256 !== snapshotHash ||
     builtMode.activationId !== activationId ||
+    JSON.stringify(builtMode.catalog) !== JSON.stringify(options.catalog) ||
     hash(await readFile(join(built, "snapshot.json"))) !== snapshotHash
   )
     throw new Error(

@@ -2,11 +2,13 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { z } from "zod";
 import { atomicJson } from "./refresh-report";
+import { failureReasonSchema, type FailureReason } from "./inventory-outcome";
 const entrySchema = z.object({
   lastAttemptAt: z.string().datetime().nullable(),
   lastSuccessAt: z.string().datetime().nullable(),
   failures: z.number().int().nonnegative(),
   nextAttemptAt: z.string().datetime().nullable(),
+  lastFailureReason: failureReasonSchema.nullable().optional(),
 });
 export type EnrichmentEntry = z.infer<typeof entrySchema>;
 export type EnrichmentState = {
@@ -70,6 +72,7 @@ export function recordDetailAttempt(
   url: string,
   success: boolean,
   now = new Date(),
+  reason?: FailureReason,
 ) {
   const previous = state.entries[url],
     failures = success ? 0 : (previous?.failures || 0) + 1;
@@ -79,6 +82,7 @@ export function recordDetailAttempt(
       ? now.toISOString()
       : previous?.lastSuccessAt || null,
     failures,
+    lastFailureReason: success ? null : (reason ?? "other"),
     nextAttemptAt: success
       ? null
       : new Date(

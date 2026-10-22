@@ -16,6 +16,7 @@ test("market distinguishes matching ads from grouped records and retains out-of-
     lng: -88.668,
     status: "active" as const,
     groupId: "reviewed-group",
+    grouping: { basis: "reviewed" as const, totalAdvertisements: 3 },
     price: 40000,
   };
   const listings = [
@@ -78,4 +79,17 @@ test("market distinguishes matching ads from grouped records and retains out-of-
     "1 records have linked advertisements; 1 have one advertisement",
   );
   await expect(page.locator(".market-note")).toContainText("4 associated ads");
+  const basis = page.getByLabel("Grouping basis");
+  await expect(
+    basis.getByText("Reviewed vessel groups").locator("..").locator("strong"),
+  ).toHaveText("1");
+  await expect(
+    basis.getByText("HIN-only vessel groups").locator("..").locator("strong"),
+  ).toHaveText("0");
+  await expect(
+    basis
+      .getByText("Unresolved research records")
+      .locator("..")
+      .locator("strong"),
+  ).toHaveText("1");
 });

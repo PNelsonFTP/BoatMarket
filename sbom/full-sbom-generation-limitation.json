@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T17:01:48.335Z",
+  "generatedAt": "2026-10-22T01:23:31.412Z",
   "sourceLockSha256": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "command": "npm sbom --package-lock-only --sbom-format=cyclonedx --sbom-type=application --include=dev --include=optional --include=peer",
   "exitCode": 1,

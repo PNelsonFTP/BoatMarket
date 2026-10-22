@@ -6,6 +6,16 @@ import { recordFieldProvenance } from "../lib/provenance";
 import { restoreSourceLocation } from "../lib/boat-location";
 import { inspectSourceQuality } from "../lib/source-quality";
 import {
+  acceptInventoryBaseline,
+  readInventoryBaseline,
+  inventoryConfigHash,
+  inventoryBaselinePath,
+  failureReason,
+  sourceWriteFingerprint,
+  type InventoryOutcome,
+} from "./inventory-outcome";
+import { createCollectorProgress } from "./collector-progress";
+import {
   readEnrichmentState,
   saveEnrichmentState,
   selectDetailWork,
@@ -82,21 +92,44 @@ type FetchOptions = {
   signal?: AbortSignal;
   cacheMaxAgeHours?: number;
   metrics?: SourceMetrics;
+  onWait?: (reason: string, milliseconds: number) => Promise<void>;
 };
+function assertNotAccessChallenge(html: string) {
+  if (
+    html.length < 100000 &&
+    /captcha|verify you are human|access denied|cf-chl-|automated access prohibited/i.test(
+      html,
+    )
+  )
+    throw Object.assign(
+      new Error("Source returned an access challenge; use manual import"),
+      { code: "SOURCE_ACCESS_CHALLENGE" },
+    );
+}
 export async function politeFetch(url: string, options: FetchOptions = {}) {
   options.signal?.throwIfAborted();
   const cacheHours = cacheAgeHours(options.cacheMaxAgeHours);
-  const sleep = (ms: number) =>
-    delay(ms, undefined, { signal: options.signal });
+  const sleep = async (ms: number, reason: string) => {
+    if (ms <= 0) return;
+    await options.onWait?.(reason, ms);
+    try {
+      await delay(ms, undefined, { signal: options.signal });
+    } finally {
+      await options.onWait?.("", 0);
+    }
+  };
   const file = cacheFile(url);
   try {
     const meta = await stat(file);
     if (Date.now() - meta.mtimeMs < cacheHours * 3600000) {
       const cached = await readFile(file, "utf8");
+      assertNotAccessChallenge(cached);
       if (options.metrics) options.metrics.cacheHits++;
       return cached;
     }
-  } catch {
+  } catch (error) {
+    if ((error as { code?: string }).code === "SOURCE_ACCESS_CHALLENGE")
+      throw error;
     /* cache miss: verify robots rules before making a new page request */
   }
   await assertDiskSpace(file);
@@ -105,7 +138,7 @@ export async function politeFetch(url: string, options: FetchOptions = {}) {
     0,
     (lastRequest.get(origin) ?? 0) + 2500 + Math.random() * 1500 - Date.now(),
   );
-  await sleep(wait);
+  await sleep(wait, "Polite per-origin request spacing");
   lastRequest.set(origin, Date.now());
   options.signal?.throwIfAborted();
   const robots = await requestPublic(`${origin}/robots.txt`, {
@@ -128,24 +161,19 @@ export async function politeFetch(url: string, options: FetchOptions = {}) {
           0,
           delay * 1000 - (Date.now() - (lastRequest.get(origin) ?? 0)),
         ),
+        "Source robots.txt crawl delay",
       );
   }
   await mkdir(process.env.COLLECTION_CACHE_DIR || "data/cache", {
     recursive: true,
   });
-  await sleep(2000);
+  await sleep(2000, "Polite request delay");
   const response = await requestPublic(url, { signal: options.signal });
   options.signal?.throwIfAborted();
   lastRequest.set(origin, Date.now());
   if (response.status !== 200)
     throw new Error(`Source returned HTTP ${response.status}`);
-  if (
-    /captcha|verify you are human|access denied|cf-chl-|automated access prohibited/i.test(
-      response.body,
-    ) &&
-    response.body.length < 100000
-  )
-    throw new Error("Source returned an access challenge; use manual import");
+  assertNotAccessChallenge(response.body);
   await archiveExistingCache(url, file);
   await archiveEvidence(url, response.body, new Date().toISOString());
   const temporary = `${file}.${randomUUID()}.tmp`;
@@ -166,9 +194,14 @@ async function renderAllowed(
     if (
       Date.now() - info.mtimeMs <
       cacheAgeHours(options.cacheMaxAgeHours) * 3600000
-    )
-      return await readFile(cachedFile, "utf8");
-  } catch {
+    ) {
+      const cached = await readFile(cachedFile, "utf8");
+      assertNotAccessChallenge(cached);
+      return cached;
+    }
+  } catch (error) {
+    if ((error as { code?: string }).code === "SOURCE_ACCESS_CHALLENGE")
+      throw error;
     /* first render */
   }
   const { chromium } = await import("playwright");
@@ -220,6 +253,7 @@ async function renderAllowed(
       .waitForLoadState("networkidle", { timeout: 10000 })
       .catch(() => {});
     const result = await page.content();
+    assertNotAccessChallenge(result);
     options.signal?.throwIfAborted();
     await archiveExistingCache(url, cachedFile, "rendered");
     await archiveEvidence(url, result, new Date().toISOString(), "rendered");
@@ -392,6 +426,8 @@ export async function collect(
     signal?: AbortSignal;
     cacheMaxAgeHours?: number;
     runId?: string;
+    sessionId?: string;
+    detailUrlsBySource?: Record<string, string[]>;
   } = {},
 ): Promise<CollectionReport> {
   const report: CollectionReport = {
@@ -406,6 +442,7 @@ export async function collect(
     reconciledRuns: 0,
     errors: [],
     reportPath: "",
+    ...(options.sessionId ? { sessionId: options.sessionId } : {}),
   };
   if (!/^[a-zA-Z0-9-]{1,100}$/.test(report.runId))
     throw new Error("Invalid collection run ID");
@@ -425,8 +462,17 @@ export async function collect(
     return finish();
   }
   const lease = startCollectorLease(owner, { signal: control.signal });
+  const progress = createCollectorProgress(report.runId, owner);
+  report.progressPath = progress.value.reportPath;
+  const onCancel = () => {
+    void progress
+      .checkpoint({ cancellationPending: true }, true)
+      .catch(() => {});
+  };
+  control.signal.addEventListener("abort", onCancel, { once: true });
   let currentRun: string | null = null;
   try {
+    await progress.checkpoint({}, true);
     await control.check();
     await lease.checkpoint();
     await reconcileAbandonedReports({
@@ -451,6 +497,12 @@ export async function collect(
     );
     if (!selected.length)
       throw new Error("No enabled sources; collection did not run");
+    if (
+      new Set(selected.map((config) => config.id)).size !== selected.length ||
+      new Set(selected.map((config) => config.name)).size !== selected.length
+    )
+      throw new Error("Enabled source IDs and names must be unique");
+    await progress.checkpoint({ sourceCount: selected.length });
     for (const config of selected) {
       await lease.checkpoint();
       const run = await db.ingestRun.create({
@@ -463,6 +515,7 @@ export async function collect(
       const metrics: SourceMetrics = {
         sourceId: config.id,
         source: config.name,
+        ingestRunId: run.id,
         inventoryPagesConfigured: new Set(config.urls).size,
         inventoryPagesDiscovered: 0,
         inventoryPagesAttempted: 0,
@@ -488,13 +541,54 @@ export async function collect(
         ),
         oldestObservationAt: null,
         newestObservationAt: null,
+        failures: [],
+        inventoryIds: [],
+        eligibleDetailUrls: [],
+        detailResults: [],
+        observations: [],
+        inventory: {
+          status: "incomplete",
+          accepted: false,
+          count: 0,
+          configHash: inventoryConfigHash(config),
+          capturedAt: null,
+          reasons: [],
+          baseline: { kind: "retained-ads", count: 0 },
+        },
       };
       report.metrics.push(metrics);
+      const checkpoint = (
+        patch: Parameters<typeof progress.checkpoint>[0] = {},
+        force = false,
+      ) => progress.checkpoint({ metrics, ...patch }, force);
+      await checkpoint(
+        {
+          sourceId: config.id,
+          source: config.name,
+          ingestRunId: run.id,
+          sourceIndex: report.metrics.length,
+          phase: "inventory",
+          currentUrl: null,
+          wait: null,
+        },
+        true,
+      );
       const fetchOptions = {
         signal: lease.signal,
         cacheMaxAgeHours: metrics.cacheMaxAgeHours,
         metrics,
+        onWait: (reason: string, milliseconds: number) =>
+          checkpoint({
+            wait: milliseconds
+              ? {
+                  reason,
+                  until: new Date(Date.now() + milliseconds).toISOString(),
+                }
+              : null,
+          }),
       };
+      let allPagesVerifiedEmpty = true;
+      const inventoryObservations: string[] = [];
       try {
         if (!config.urls.length)
           throw new Error("Add one or more inventory URLs");
@@ -514,6 +608,43 @@ export async function collect(
             ),
           ]),
         );
+        const acceptedBaseline = await readInventoryBaseline(config);
+        const previousInventoryRun = acceptedBaseline
+          ? null
+          : await db.ingestRun.findFirst({
+              where: {
+                source: config.name,
+                status: "success",
+                completedAt: { not: null },
+              },
+              orderBy: { completedAt: "desc" },
+              select: { id: true, found: true, completedAt: true },
+            });
+        const baseline: InventoryOutcome["baseline"] = acceptedBaseline
+          ? {
+              kind: "accepted-inventory",
+              count: acceptedBaseline.count,
+              runId: acceptedBaseline.runId,
+              capturedAt: acceptedBaseline.capturedAt,
+              configHash: acceptedBaseline.configHash,
+            }
+          : previousInventoryRun
+            ? {
+                kind: "successful-ingestion",
+                count: previousInventoryRun.found,
+                runId: previousInventoryRun.id,
+                capturedAt: previousInventoryRun.completedAt!.toISOString(),
+              }
+            : { kind: "retained-ads", count: previousBySourceId.size };
+        metrics.inventory = {
+          status: "incomplete",
+          accepted: false,
+          count: 0,
+          configHash: inventoryConfigHash(config),
+          capturedAt: null,
+          reasons: [],
+          baseline,
+        };
         const pages = [...new Set(config.urls)].slice(
           0,
           config.maxInventoryPages,
@@ -532,6 +663,8 @@ export async function collect(
           try {
             await lease.checkpoint();
             metrics.inventoryPagesAttempted++;
+            await checkpoint({ phase: "inventory", currentUrl: url });
+            const fetchedBefore = metrics.fetchedPages;
             let html = await politeFetch(url, fetchOptions);
             if (config.render)
               html = await renderAllowed(url, html, fetchOptions);
@@ -547,12 +680,23 @@ export async function collect(
                 metrics.inventoryPagesDiscovered++;
               }
             const parsed = adapters[config.adapter].parse(html, url, config);
-            if (!parsed.length && !verifiedEmptyRegionalPage(html, url))
+            const verifiedEmpty =
+              !parsed.length && verifiedEmptyRegionalPage(html, url);
+            if (!parsed.length && !verifiedEmpty)
               throw new Error(
                 "No listing records parsed. Check source markup or selectors; existing records are preserved.",
               );
+            if (parsed.length) allPagesVerifiedEmpty = false;
             metrics.inventoryPagesSucceeded++;
             const at = await observedAt(url, config.render);
+            inventoryObservations.push(at);
+            metrics.observations!.push({
+              url,
+              observedAt: at,
+              retrieval:
+                metrics.fetchedPages > fetchedBefore ? "fetched" : "cache",
+              phase: "inventory",
+            });
             recordObservation(metrics, at);
             const evidence = await archiveEvidence(
               url,
@@ -573,14 +717,27 @@ export async function collect(
                 evidenceHash: evidence.sha256,
               });
             }
+            await checkpoint({
+              lastSuccessfulCheckpointAt: new Date().toISOString(),
+            });
           } catch (error) {
             if (isCollectionAbort(error, lease.signal)) throw error;
             errors.push(
               `${url}: ${error instanceof Error ? error.message : String(error)}`,
             );
+            metrics.failures!.push({
+              phase: "inventory",
+              reason: failureReason(error),
+              url,
+              message: error instanceof Error ? error.message : String(error),
+            });
+            await checkpoint();
           }
         }
         stats.found = summaries.length;
+        metrics.inventoryIds = summaries.map(
+          ({ listing }) => listing.sourceListingId,
+        );
         const eligible = (listing: Listing, url: string) =>
           config.followDetails &&
           listing.sourceUrl !== url &&
@@ -599,18 +756,44 @@ export async function collect(
           ),
         ];
         metrics.detailPagesEligible = eligibleUrls.length;
+        metrics.eligibleDetailUrls = eligibleUrls;
         const state = await readEnrichmentState(config.id);
+        const requestedDetails = options.detailUrlsBySource?.[config.id];
+        const workUrls = requestedDetails
+          ? eligibleUrls.filter((url) => requestedDetails.includes(url))
+          : eligibleUrls;
         const work = selectDetailWork(
-          eligibleUrls,
+          workUrls,
           state,
           policy === "summary-only" ? 0 : config.maxDetailPages,
         );
         metrics.detailPagesBackoff =
           policy === "summary-only" ? 0 : work.backoff;
         metrics.detailPagesDeferred =
-          policy === "summary-only" ? eligibleUrls.length : work.deferred;
+          policy === "summary-only" ? workUrls.length : work.deferred;
         if (policy === "complete")
           metrics.detailPagesSkippedLimit = work.deferred + work.backoff;
+        metrics.detailResults = eligibleUrls.map((url) => ({
+          url,
+          status:
+            policy === "summary-only" ||
+            (requestedDetails && !requestedDetails.includes(url))
+              ? ("not-requested" as const)
+              : state.entries[url]?.nextAttemptAt &&
+                  Date.parse(state.entries[url].nextAttemptAt!) > Date.now()
+                ? ("backoff" as const)
+                : ("deferred" as const),
+          ...(state.entries[url]?.nextAttemptAt
+            ? { nextAttemptAt: state.entries[url].nextAttemptAt }
+            : {}),
+          ...(state.entries[url]?.failures
+            ? {
+                reason:
+                  state.entries[url].lastFailureReason ?? ("other" as const),
+              }
+            : {}),
+        }));
+        await checkpoint({ phase: "details", currentUrl: null });
         const detailed = new Set<string>(),
           staged: { listing: Listing; previous: Listing | null }[] = [];
         for (const summary of summaries) {
@@ -636,11 +819,18 @@ export async function collect(
           if (selectedDetail) {
             detailed.add(listing.sourceUrl);
             metrics.detailPagesAttempted++;
+            await checkpoint({
+              phase: "details",
+              currentUrl: listing.sourceUrl,
+            });
             const attempted = new Date();
             let success = false;
+            let detailObservedAt: string | undefined;
+            let failedReason: ReturnType<typeof failureReason> | undefined;
             try {
               if (new URL(listing.sourceUrl).origin !== new URL(url).origin)
                 throw new Error("Detail URL must stay on the inventory origin");
+              const fetchedBefore = metrics.fetchedPages;
               const html = await politeFetch(listing.sourceUrl, fetchOptions);
               await lease.checkpoint();
               const detail = adapters[config.adapter]
@@ -648,6 +838,14 @@ export async function collect(
                 .find((l) => l.sourceUrl === listing.sourceUrl);
               if (!detail) throw new Error("No matching detail record parsed");
               const at = await observedAt(listing.sourceUrl);
+              detailObservedAt = at;
+              metrics.observations!.push({
+                url: listing.sourceUrl,
+                observedAt: at,
+                retrieval:
+                  metrics.fetchedPages > fetchedBefore ? "fetched" : "cache",
+                phase: "detail",
+              });
               recordObservation(metrics, at);
               seenAt = at > seenAt ? at : seenAt;
               detailHash = (await archiveEvidence(listing.sourceUrl, html, at))
@@ -664,11 +862,21 @@ export async function collect(
               );
               metrics.detailPagesSucceeded++;
               success = true;
+              await checkpoint({
+                lastSuccessfulCheckpointAt: new Date().toISOString(),
+              });
             } catch (error) {
               if (isCollectionAbort(error, lease.signal)) throw error;
               metrics.detailPagesFailed++;
               const message =
                 error instanceof Error ? error.message : String(error);
+              failedReason = failureReason(error);
+              metrics.failures!.push({
+                phase: "detail",
+                reason: failedReason,
+                url: listing.sourceUrl,
+                message,
+              });
               errors.push(`${listing.sourceUrl}: ${message}`);
               listing = preserveEnrichedDetail(
                 listing,
@@ -678,9 +886,26 @@ export async function collect(
               );
               listing.specs.detailEnrichmentError = message;
             }
-            recordDetailAttempt(state, listing.sourceUrl, success, attempted);
+            recordDetailAttempt(
+              state,
+              listing.sourceUrl,
+              success,
+              attempted,
+              failedReason,
+            );
+            const detailResult = metrics.detailResults!.find(
+              (entry) => entry.url === listing.sourceUrl,
+            )!;
+            Object.assign(detailResult, {
+              status: success ? "succeeded" : "failed",
+              attemptedAt: attempted.toISOString(),
+              ...(detailObservedAt ? { observedAt: detailObservedAt } : {}),
+              ...(failedReason ? { reason: failedReason } : {}),
+              nextAttemptAt: state.entries[listing.sourceUrl].nextAttemptAt,
+            });
             await lease.checkpoint();
             await saveEnrichmentState(state);
+            await checkpoint();
           } else {
             listing = preserveEnrichedDetail(
               listing,
@@ -714,20 +939,12 @@ export async function collect(
         // Retained ads include historical listings absent from recent inventories.
         // Compare inventory size with an accepted scan, while retaining every old
         // ad for field-regression checks and change reporting.
-        const previousInventoryRun = await db.ingestRun.findFirst({
-          where: {
-            source: config.name,
-            status: "success",
-            completedAt: { not: null },
-          },
-          orderBy: { completedAt: "desc" },
-          select: { id: true, found: true, completedAt: true },
-        });
+        await checkpoint({ phase: "quality", currentUrl: null });
         const quality = inspectSourceQuality(
           staged.map((s) => s.listing),
           [...previousBySourceId.values()],
           config.quality,
-          previousInventoryRun?.found ?? previousBySourceId.size,
+          baseline.count,
         );
         const qualityPath = join(
           reportDirectory(),
@@ -738,20 +955,26 @@ export async function collect(
           sourceId: config.id,
           runId: report.runId,
           generatedAt: new Date().toISOString(),
-          inventoryBaseline: previousInventoryRun
-            ? { kind: "successful-ingestion", ...previousInventoryRun }
-            : { kind: "retained-ads", count: previousBySourceId.size },
+          inventoryBaseline: baseline,
         });
         metrics.quality = {
           status: quality.status,
           issues: quality.issues,
           reportPath: qualityPath,
         };
-        if (quality.status === "failed")
+        if (quality.status === "failed") {
+          metrics.failures!.push(
+            ...quality.issues.map((message) => ({
+              phase: "quality" as const,
+              reason: "quality" as const,
+              message,
+            })),
+          );
           errors.push(
             ...quality.issues.map((issue) => `Quality gate: ${issue}`),
           );
-        else
+        } else {
+          await checkpoint({ phase: "writing", currentUrl: null });
           for (const { listing, previous } of staged) {
             await lease.checkpoint();
             const result = await upsertListing(listing, {
@@ -778,10 +1001,67 @@ export async function collect(
               }
             }
             if (listing.status === "removed") stats.removed++;
+            await checkpoint();
           }
+        }
+        const completeInventory =
+          metrics.inventoryPagesAttempted > 0 &&
+          metrics.inventoryPagesSucceeded === pages.length &&
+          !metrics.inventoryPageLimitReached &&
+          !metrics.failures!.some((failure) => failure.phase === "inventory");
+        metrics.inventory.count = stats.found;
+        metrics.inventory.capturedAt =
+          inventoryObservations.sort().at(-1) ?? null;
+        metrics.inventory.reasons = [
+          ...new Set(
+            metrics
+              .failures!.filter((failure) => failure.phase !== "detail")
+              .map((failure) => failure.reason),
+          ),
+        ];
+        if (metrics.inventoryPageLimitReached)
+          metrics.inventory.reasons.push("inventory-cap");
+        metrics.inventory.status =
+          quality.status === "failed" ? "rejected" : "incomplete";
+        if (completeInventory && quality.status === "passed") {
+          await lease.checkpoint();
+          await acceptInventoryBaseline(config, {
+            runId: report.runId,
+            ingestRunId: run.id,
+            count: stats.found,
+            capturedAt: metrics.inventory.capturedAt!,
+            acceptedAt: new Date().toISOString(),
+            oldestObservationAt: inventoryObservations[0] ?? null,
+            newestObservationAt: metrics.inventory.capturedAt,
+            verifiedEmpty: stats.found === 0 && allPagesVerifiedEmpty,
+            qualityReportPath: qualityPath,
+            collectionReportPath: join(
+              reportDirectory(),
+              `${report.runId}.json`,
+            ),
+          });
+          metrics.inventory.accepted = true;
+          metrics.inventory.status =
+            stats.found === 0 && allPagesVerifiedEmpty
+              ? "verified-empty"
+              : "accepted";
+          metrics.inventory.observationPath = inventoryBaselinePath(config);
+        }
       } catch (error) {
         if (isCollectionAbort(error, lease.signal)) throw error;
         errors.push(error instanceof Error ? error.message : String(error));
+        metrics.failures!.push({
+          phase: progress.value.phase === "writing" ? "write" : "inventory",
+          reason: failureReason(error),
+          message: error instanceof Error ? error.message : String(error),
+        });
+        if (metrics.inventory) {
+          metrics.inventory.accepted = false;
+          metrics.inventory.status = "incomplete";
+          metrics.inventory.reasons = [
+            ...new Set([...metrics.inventory.reasons, failureReason(error)]),
+          ];
+        }
       }
       if (metrics.inventoryPageLimitReached)
         errors.push(
@@ -802,11 +1082,25 @@ export async function collect(
         },
       });
       currentRun = null;
+      const {
+        inventoryIds,
+        eligibleDetailUrls,
+        detailResults,
+        observations,
+        ...summaryMetrics
+      } = metrics;
       logger.info(
-        { source: config.name, ...stats, errors, metrics },
+        {
+          source: config.name,
+          ...stats,
+          errors: errors.slice(0, 20),
+          errorCount: errors.length,
+          metrics: summaryMetrics,
+        },
         "Ingestion completed",
       );
       report.runs.push(result);
+      await checkpoint({ currentUrl: null, wait: null }, true);
     }
     await lease.checkpoint();
     await db.$transaction(async (tx) => {
@@ -835,6 +1129,23 @@ export async function collect(
   } catch (error) {
     report.status = control.signal.aborted ? "cancelled" : "failed";
     report.errors.push(error instanceof Error ? error.message : String(error));
+    if (currentRun) {
+      const active = report.metrics.at(-1);
+      if (active) {
+        const reason = control.signal.aborted
+          ? "cancelled"
+          : failureReason(error);
+        active.failures?.push({
+          phase: progress.value.phase === "details" ? "detail" : "inventory",
+          reason,
+          message: error instanceof Error ? error.message : String(error),
+        });
+        if (active.inventory && !active.inventory.accepted)
+          active.inventory.reasons = [
+            ...new Set([...active.inventory.reasons, reason]),
+          ];
+      }
+    }
     if (currentRun && !isCollectionAbort(error, lease.signal)) {
       report.runs.push(
         await db.ingestRun.update({
@@ -848,9 +1159,36 @@ export async function collect(
       );
     }
   } finally {
-    control.stop();
-    await lease.stop();
-    await releaseLock("collector", owner);
+    control.signal.removeEventListener("abort", onCancel);
+    try {
+      try {
+        if (
+          await db.jobLock.findFirst({
+            where: { key: "collector", owner, expiresAt: { gt: new Date() } },
+          })
+        )
+          for (const metric of report.metrics)
+            metric.writeFingerprint = await sourceWriteFingerprint(
+              metric.source,
+            );
+        else if (report.status !== "cancelled") {
+          report.status = "failed";
+          report.errors.push(
+            "Collector lease lost before source write checkpoints; website export must be reviewed",
+          );
+        }
+      } catch (error) {
+        report.status = "failed";
+        report.errors.push(
+          `Source write checkpoint failed: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
+      await progress.finish(report.status, report.errors.at(-1) ?? null);
+    } finally {
+      control.stop();
+      await lease.stop();
+      await releaseLock("collector", owner);
+    }
   }
   return finish();
 }

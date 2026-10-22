@@ -219,7 +219,8 @@ test("connected import handles the full export in chunks and reports a failed sa
   await page.getByLabel("Import listing JSON", { exact: true }).setInputFiles({
     name: "all-listings.json",
     mimeType: "application/json",
-    buffer: Buffer.from(JSON.stringify(exported)),
+    // Exercise the normal formatted export, not only a compact JSON string.
+    buffer: Buffer.from(JSON.stringify(exported, null, 2)),
   });
   const dialog = page.getByRole("dialog");
   await expect(dialog).toContainText(

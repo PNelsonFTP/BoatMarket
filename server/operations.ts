@@ -6,6 +6,7 @@ import { atomicJson, reportDirectory } from "./refresh-report";
 import { requestJobCancellation } from "./job-control";
 import { startCollectorLease } from "./lease";
 import { readSnapshotActivation } from "./publication";
+import { listCollectorProgress } from "./collector-progress";
 
 type RunRecord = {
   runId?: string;
@@ -55,11 +56,23 @@ async function records() {
       /* Corrupt files are reported independently by the normal reader; do not overwrite unknown evidence. */
     }
   }
+  for (const progress of await listCollectorProgress()) {
+    if (
+      progress.status === "running" &&
+      !result.some(({ report }) => report.runId === progress.runId)
+    )
+      result.push({
+        filename: `progress/${progress.runId}.json`,
+        report: { ...progress, stage: progress.phase },
+        key: "collector",
+      });
+  }
   return result;
 }
 export async function readOperationStatus() {
   const locks = await db.jobLock.findMany();
   const pending = await records();
+  const progress = await listCollectorProgress();
   let worker: Record<string, unknown> | null = null;
   const workerOwner = locks.find(
     (lock) => lock.key === "worker" && +lock.expiresAt > Date.now(),
@@ -82,16 +95,57 @@ export async function readOperationStatus() {
     generatedAt: new Date(now).toISOString(),
     locks: locks.map((lock) => ({ ...lock, live: +lock.expiresAt > now })),
     worker,
-    jobs: pending.map(({ report, key }) => ({
-      ...report,
-      leaseKey: key,
-      leaseLive: locks.some(
-        (lock) =>
-          lock.key === key &&
-          +lock.expiresAt > now &&
-          (!report.leaseOwner || report.leaseOwner === lock.owner),
-      ),
-    })),
+    jobs: await Promise.all(
+      pending.map(async ({ report, key }) => {
+        const live = locks.some(
+          (lock) =>
+            lock.key === key &&
+            +lock.expiresAt > now &&
+            (!report.leaseOwner || report.leaseOwner === lock.owner),
+        );
+        const checkpoint =
+          progress.find((item) => item.runId === report.runId) ?? null;
+        let cancelRequested = checkpoint?.cancellationPending ?? false;
+        try {
+          cancelRequested ||= !!JSON.parse(
+            await readFile(
+              join(reportDirectory(), `cancel-${report.runId}.json`),
+              "utf8",
+            ),
+          ).requestedAt;
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+        }
+        const intentionalWait =
+          !!checkpoint?.wait && Date.parse(checkpoint.wait.until) > now;
+        const possibleStall =
+          !!checkpoint &&
+          checkpoint.status === "running" &&
+          !intentionalWait &&
+          now -
+            Math.max(
+              Date.parse(checkpoint.updatedAt),
+              checkpoint.wait ? Date.parse(checkpoint.wait.until) : 0,
+            ) >
+            120000;
+        return {
+          ...report,
+          leaseKey: key,
+          leaseLive: live,
+          progress: checkpoint,
+          cancelRequested,
+          progressState: cancelRequested
+            ? "cancellation-pending"
+            : !live
+              ? "interrupted"
+              : intentionalWait
+                ? "waiting"
+                : possibleStall
+                  ? "possible-stall"
+                  : "running",
+        };
+      }),
+    ),
   };
 }
 export async function reconcileAbandonedReports(

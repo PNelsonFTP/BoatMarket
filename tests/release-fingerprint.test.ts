@@ -19,6 +19,7 @@ it("normalizes Windows separators before ordering prefix-colliding source paths"
 
 it.each([
   ".github/workflows/checks.yml",
+  "playwright.production.config.ts",
   ".github/workflows/pages.yml",
   ".gitattributes",
   ".dockerignore",

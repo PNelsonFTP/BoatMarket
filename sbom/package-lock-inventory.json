@@ -1,7 +1,7 @@
 {
   "format": "boatscout-lock-inventory",
   "formatVersion": 1,
-  "generatedAt": "2026-09-08T17:01:48.335Z",
+  "generatedAt": "2026-10-22T01:23:31.412Z",
   "source": {
     "file": "package-lock.json",
     "sha256": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",

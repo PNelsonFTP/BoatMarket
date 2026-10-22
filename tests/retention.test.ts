@@ -311,3 +311,52 @@ it("checks nearest existing volume and rejects insufficient disk space before wr
     code: "ENOENT",
   });
 });
+it("preserves accepted inventory baselines, sessions and their component reports/progress regardless of age", async () => {
+  await file(
+    "data/refresh-runs/inventory-baselines/source-config.json",
+    JSON.stringify({
+      runId: "accepted-inventory",
+      qualityReportPath: "data/refresh-runs/accepted-quality.json",
+    }),
+  );
+  await file(
+    "data/refresh-runs/accepted-inventory.json",
+    JSON.stringify({ status: "success" }),
+  );
+  await file(
+    "data/refresh-runs/accepted-quality.json",
+    JSON.stringify({ status: "passed" }),
+  );
+  await file(
+    "data/refresh-runs/progress/accepted-inventory.json",
+    JSON.stringify({ status: "success" }),
+  );
+  await file(
+    "data/refresh-runs/sessions/old-partial.json",
+    JSON.stringify({ status: "partial", passes: [{ runId: "recovery-pass" }] }),
+  );
+  await file(
+    "data/refresh-runs/sessions/old-partial/passes/recovery-pass.json",
+    JSON.stringify({ runId: "recovery-pass", status: "success" }),
+  );
+  await file(
+    "data/refresh-runs/recovery-pass-refresh.json",
+    JSON.stringify({ status: "partial" }),
+  );
+  await file(
+    "data/refresh-runs/progress/recovery-pass.json",
+    JSON.stringify({ status: "success" }),
+  );
+  await file(
+    "data/refresh-runs/progress/running.json",
+    JSON.stringify({ status: "running", runId: "running" }),
+  );
+  await file(
+    "data/refresh-runs/expired-unreferenced.json",
+    JSON.stringify({ status: "success" }),
+  );
+  const plan = await createRetentionPlan({ projectRoot: root });
+  expect(plan.files.map((file) => file.path)).toEqual([
+    "data/refresh-runs/expired-unreferenced.json",
+  ]);
+});

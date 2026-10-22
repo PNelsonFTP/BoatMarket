@@ -1,40 +1,40 @@
 {
-  "generatedAt": "2026-09-08T17:01:48.335Z",
-  "chicagoDate": "2026-09-08",
+  "generatedAt": "2026-10-22T01:23:31.412Z",
+  "chicagoDate": "2026-10-21",
   "timezone": "America/Chicago",
   "sourceLockSha256": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "audits": [
     {
       "scope": "full",
-      "checkedAt": "2026-09-08T17:01:49.066Z",
+      "checkedAt": "2026-10-22T01:23:32.636Z",
       "command": "npm audit --package-lock-only --json --ignore-scripts --registry=https://registry.npmjs.org --include=dev --include=optional --include=peer",
-      "exitCode": 0,
-      "file": "sbom/npm-audit-full-2026-09-08T17-01-48Z.json",
-      "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82",
+      "exitCode": 1,
+      "file": "sbom/npm-audit-full-2026-10-22T01-23-31Z.json",
+      "sha256": "6d59865accb864958dd73d4b0e542fba42bfdba1d07a7ee6fd314a726a9b65ba",
       "vulnerabilities": {
         "info": 0,
         "low": 0,
-        "moderate": 0,
-        "high": 0,
-        "critical": 0,
-        "total": 0
+        "moderate": 4,
+        "high": 5,
+        "critical": 4,
+        "total": 13
       },
       "note": "Read-only registry advisory report; no audit fix or dependency changes performed."
     },
     {
       "scope": "production",
-      "checkedAt": "2026-09-08T17:01:49.465Z",
+      "checkedAt": "2026-10-22T01:23:34.853Z",
       "command": "npm audit --package-lock-only --json --ignore-scripts --registry=https://registry.npmjs.org --omit=dev --include=optional --include=peer",
-      "exitCode": 0,
-      "file": "sbom/npm-audit-production-2026-09-08T17-01-48Z.json",
-      "sha256": "d5835f7ed60d163e85091d816bb31510b5500f5ab76e0389cadf332de045ff82",
+      "exitCode": 1,
+      "file": "sbom/npm-audit-production-2026-10-22T01-23-31Z.json",
+      "sha256": "b2e562d4278192d4c1e5daad0fec8e3d48b2201872f0d1c96994c8b91145b746",
       "vulnerabilities": {
         "info": 0,
         "low": 0,
-        "moderate": 0,
-        "high": 0,
+        "moderate": 3,
+        "high": 4,
         "critical": 0,
-        "total": 0
+        "total": 7
       },
       "note": "Read-only registry advisory report; no audit fix or dependency changes performed."
     }

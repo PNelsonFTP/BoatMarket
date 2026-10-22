@@ -1,5 +1,7 @@
 # BoatScout improvement review — October 21, 2026
 
+**Implementation follow-through:** the owner authorized #1–7, #10 and #11 after this review. Those items are implemented in [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md), with current tests in VALIDATION.md. The defect reproductions, counts and CI failures below describe the pre-implementation checkpoint; they are retained as evidence. #8, #9 and #12–15 remain open.
+
 The highest-value next work is to **restore full-inventory import/export compatibility, correct hull-make inference, and make multi-pass refreshes reproducible**. These changes improve the data you use to choose a boat and reduce the manual work needed to renew the website.
 
 This review follows the owner-approved cleanup. Commit **`e3ec52e16d06cf1d2fad6683ee847f743689c316`** committed and pushed the nine audit/cleanup documentation files to `main`. The 271 removed files were ignored build/cache/metadata files; private audit evidence remains local. No additional cleanup, inventory refresh, product changes, scheduler installation or Pages deployment accompanied this review. The recommendations below are proposals.

@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "createdAt": "2026-10-19T13:05:19.220Z",
-  "snapshotHash": "d747dbd5f9f89e9fd928ea7b22eb972a02a80057d9983b5bf89554fb5fc942aa",
-  "snapshotBytes": 18602774,
+  "createdAt": "2026-10-22T01:30:16.669Z",
+  "snapshotHash": "e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829",
+  "snapshotBytes": 18831527,
   "listings": 2429,
-  "sourceHash": "6c786dcce86ecb47f8aa2b48cd3c6f8304d57dd8e7d55d33536ac0773cef7d78",
-  "sourceCommit": "78a559d066fe03db64c6dc9153713d9813a29c6e",
+  "sourceHash": "a75ad507041e358df1fedf8f7faafa605424a0af170d65ec079eb111f090738e",
+  "sourceCommit": "37994afb97193e0164bae90ed7b250d59235a46b",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
       "path": "sbom/boatscout-production.cdx.json",
-      "sha256": "d6201236692b0c9b249a610bcdafec75f0ac249236d7e2111403b451cab6b30c"
+      "sha256": "c8a2c650b1a6490e889b434b60eb02e7102480f36c2abd579c179bb714f4735a"
     },
     {
       "path": "sbom/boatscout-full-required.cdx.json",
-      "sha256": "0b8a909611c5ba55d85307feca51ff60718002d686d9a6f55d6ceef20b57dac9"
+      "sha256": "421d62e0769151a35e133ae0410eb569b519443d1551539c7c6bf218b19de768"
     },
     {
       "path": "sbom/boatscout-all-platforms.cdx.json",
-      "sha256": "3c1d2a477988c6c4ce23eb6bef76b4b52166e4d3ded703de2f2f98b32c5606a1"
+      "sha256": "f130cd4b0dd6d9db34c2b95b3bd5d384bb28eeab6cacce5e91810937a6cc600e"
     }
   ],
   "quality": {
@@ -167,10 +167,10 @@
     }
   },
   "approval": {
-    "reviewHash": "e0df6ec3eafd67f509687623addfb46d01ea6f4f432f269b09e401b3233235db",
-    "reviewedAt": "2026-10-19T13:06:45.786Z",
+    "reviewHash": "7e320f969776f47aa6631c2774d50937da2214b28bc18ef27316623d7656ef1d",
+    "reviewedAt": "2026-10-22T01:30:43.463Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/d747dbd5f9f89e9fd928ea7b22eb972a02a80057d9983b5bf89554fb5fc942aa.json"
+  "generation": "snapshots/e6289fde229ec6c94e0b3166dc5903ef5bfc081e5bfc228ec18b39edc8a25829.json"
 }

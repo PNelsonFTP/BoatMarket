@@ -4,6 +4,8 @@ The refresh retained **2,429 real ads: 1,615 active, 19 sold and 795 stale**, wi
 
 The reviewed snapshot is live on the [public website](https://pnelsonftp.github.io/BoatMarket/) and local website at http://127.0.0.1:4310. Deployment and desktop/mobile verification passed; evidence is recorded in [VALIDATION.md](VALIDATION.md). A verified backup protects the earlier data. The exported snapshot preserves the collection outcome and observation dates. Search presets, source access policies, duplicate decisions and dependencies are unchanged.
 
+**October 21 implementation repackaging:** the dataset still describes October 19 and earlier observations. Four Vexus ads previously classified as Yamaha hulls were corrected from their preserved titles/capture times after verified backup and fingerprint checks. New public grouping metadata and the derived search catalog do not add listings or refresh seller availability. Observation dates, prices, history and the original partial collection outcome are retained. See IMPLEMENTATION_2026-10-21.md and VALIDATION.md for the new local snapshot/release hashes. The deployment history below describes the October 19 public release.
+
 ## Current inventory
 
 1,469 active ads have a price; 1,115 active ads have source coordinates within 150 straight-line miles of Lake Holiday. 32 active ads have unknown coordinates. The 52 fictional samples remain separate and excluded from publication.
