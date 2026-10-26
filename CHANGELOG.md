@@ -1,5 +1,9 @@
 # BoatScout delivery history
 
+## October 26, 2026 — Reviewed inventory refresh
+
+Refreshed all twelve enabled sources with a durable two-pass session. Ten complete inventories passed; all 299 accepted-inventory eligible details completed. Huber’s supplied 26 partial summaries, including four new ads, while its pagination and 26 detail requests were denied; Gordy’s inventory remains HTTP 403. The reviewed snapshot contains 2,584 ads, 48 new ads, 19 price changes (16 drops), and explicit age/fresh-observation status transitions. Private workspace data and samples are preserved. Local tests, payload/equivalence checks, Pages build and twelve production browser checks passed. Application source, dependencies, source policies and source SBOMs remain unchanged. See LIVE_DATA.md and VALIDATION.md for publication evidence and scope.
+
 ## October 22, 2026 — Inventory refresh and reviewed publication
 
 Refreshed all twelve enabled sources through a durable two-pass session. Ten accessible inventories passed; Huber’s and Gordy’s HTTP 403 gaps retain their original dated ads. All 304 eligible details completed, with no outstanding deferrals. The reviewed snapshot contains 2,536 ads, including 107 newly indexed ads and 34 price changes (27 decreases); 1,491 ads were observed this session. Local tests, the Pages build, exact release correspondence and all twelve production browser checks passed. The application fingerprint, dependencies and source configuration are unchanged. Pages deployment and public snapshot/catalog/build verification passed, followed by desktop/mobile preset/photo/layout checks and the public production suite. A Windows CLI-test timeout exposed a fixture coupled to the growing published graph; isolated its working directory while preserving every assertion and deadline. The final Windows/Ubuntu/container matrix is green. See LIVE_DATA.md and VALIDATION.md for the reviewed release, deployed commit and exact results.
