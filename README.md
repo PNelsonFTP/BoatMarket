@@ -1,6 +1,6 @@
 # BoatScout
 
-**Live website:** [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed October 30 inventory is staged for publication: **2,666 ads**, including **82 newly indexed ads** and **25 price drops**. Collection and private workspace storage run locally. See [LIVE_DATA.md](LIVE_DATA.md) for publication status.
+**Live website:** [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/) — the reviewed October 30 inventory: **2,666 ads**, including **82 newly indexed ads** and **25 price drops**. Collection and private workspace storage run locally.
 
 A boat-search workspace with a GitHub Pages website and an authenticated local backend. Search, save, compare, map, track prices, and monitor boat listings across configured sources.
 
@@ -92,7 +92,7 @@ Connected workspaces also keep an isolated browser backup; the backend remains a
 GitHub Pages serves static HTML, JavaScript, and assets; it does not run the database, API, or background jobs. BoatScout exports the website to `out/` with relative project support and `.nojekyll`. See [GitHub’s Pages overview](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages) and [Next.js static exports](https://nextjs.org/docs/app/guides/static-exports).
 
 1. The public repository is [PNelsonFTP/BoatMarket](https://github.com/PNelsonFTP/BoatMarket), with `main` as the primary branch. Do not add `.env`, `data/`, or `logs/`; they are ignored.
-2. GitHub Pages is configured for **GitHub Actions**, with HTTPS enforced, at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed 2,584-ad snapshot is live; deployment and desktop/mobile verification passed on October 26.
+2. GitHub Pages is configured for **GitHub Actions**, with HTTPS enforced, at [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed 2,666-ad snapshot is live; deployment and desktop/mobile verification passed on October 30.
 3. Set the repository Actions variable **`BOATSCOUT_ENABLE_PAGES` to `true`**. Prepare and approve an exact-hash release with `npm run release` (see OPERATIONS.md), commit its matching source/snapshot/SBOM/manifest, then manually dispatch `.github/workflows/pages.yml` with that review hash. Main pushes do not publish; the Pages workflow refuses unreviewed or mismatched artifacts.
 4. The independent validation workflow runs on pushes to `main` and pull requests regardless of Pages settings. The Pages workflow obtains the repository base path from `configure-pages`, so `/BoatMarket/` works without edits. Configure custom domains in Pages settings if needed.
 
