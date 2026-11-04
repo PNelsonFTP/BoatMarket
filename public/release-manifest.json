@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-10-30T19:34:23.348Z",
-  "snapshotHash": "b09956a4aaf6baf4ea6d08df5bf13d81dfb883851b83261161cf255c0b76f0f0",
-  "snapshotBytes": 23655751,
-  "listings": 2666,
+  "createdAt": "2026-11-04T13:20:56.761Z",
+  "snapshotHash": "802c9a09fb2acbf4384f02b82cc70a0eb5d27b620fc94aa1127dc39e887387e3",
+  "snapshotBytes": 24858909,
+  "listings": 2717,
   "sourceHash": "21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe",
-  "sourceCommit": "b2ffe049ec87c38389846c4a6b9f03a2c5115928",
+  "sourceCommit": "3385e5cb28dbf7aa6b2b9189fe235cf30a643aa7",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -25,10 +25,12 @@
     "issues": [],
     "warnings": [
       "Snapshot came from an explicitly partial collection",
-      "918 ads were last observed more than 14 days ago",
-      "137 ads contain possible source-published contact details; review before publishing"
+      "1019 ads were last observed more than 14 days ago",
+      "139 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
+      "dc2485ada190ecfbecd64ab9",
+      "d34691c118fb9a723eb7c0dd",
       "a9cabc327b6accb967c15704",
       "1a362e7dd41d418cc01c735b",
       "1309060c1a0d6f421216c285",
@@ -169,14 +171,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-10-30T19:33:54.636Z"
+      "newest": "2026-11-04T13:20:10.002Z"
     }
   },
   "approval": {
-    "reviewHash": "d5b8f67325578602f1ea55c3be0b9f031beca3c4a658cbcbf911c826e12c169b",
-    "reviewedAt": "2026-10-30T19:34:39.522Z",
+    "reviewHash": "24ecb3d5b5daae39eea8b58a6edb78b36808fa14eb2ae56d3223add7203f4217",
+    "reviewedAt": "2026-11-04T13:21:24.597Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/b09956a4aaf6baf4ea6d08df5bf13d81dfb883851b83261161cf255c0b76f0f0.json"
+  "generation": "snapshots/802c9a09fb2acbf4384f02b82cc70a0eb5d27b620fc94aa1127dc39e887387e3.json"
 }
