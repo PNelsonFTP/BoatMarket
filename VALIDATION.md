@@ -1,5 +1,13 @@
 # Verification record
 
+## November 14 refresh and publication
+
+November 14 refresh: 2,831 ads (1,508 active / 21 sold / 1,302 stale); 89 newly indexed ads and 35 price drops (42 price changes). Ten inventories and all 301 eligible details succeeded. Huber’s and Gordy’s returned HTTP 403; their original observation dates remain unchanged. 1,376 ads were observed this session; 1,455 retain earlier dates. Counts describe ads, not verified distinct available boats.
+
+Session `6f0e52fc-3a89-491f-9695-6a3b4e543a30`; snapshot `1a9a462fc0e100f36f7c46f7800a42323fdc25db133e08e284b66e385a33349e`; exact review `d936e2b3a1928b375e1cae204e9a3d76931b26db6512dd966c7c6ab8fa70adfd`. Verified backup, typecheck, 317 tests plus one platform-specific skip across 45 files, privacy/credential checks, protected workspace comparison and current/growth catalog budget/filter equivalence passed. Five ads with new contact values were verified against their captured public seller descriptions. Source, lockfile and three source SBOM hashes remain unchanged. Raw evidence is private under `data/refresh-2026-11-14/`. Publication remains pending.
+
+Previous November 6 validation passed, but [Pages run 42238446147](https://github.com/PNelsonFTP/BoatMarket/actions/runs/42238446147) timed out synchronizing files; that release was not verified publicly.
+
 Dated September 8, September 10, September 12, September 24, September 27, September 29, October 1, October 4, October 5, October 9, October 13, October 17, October 19, October 20, October 21, October 22, October 26, October 30, November 4 and November 6, 2026 evidence, America/Chicago. The September 8 implementation/CI and scan results remain historical; the subsequent refreshes are recorded separately below. Local September 8 checks used Node 26.7/npm 11.19 on macOS; the supported minimum remains Node 22.12. Captured Docker runtime checks used Node 22.23.2 on Linux ARM64. This document records actual checks, not a guarantee of marketplace completeness.
 
 The owner requested winding down enhancements, reviewed the local website, and then authorized the final commit/push. The completed repository/deployment checkpoint is recorded below. That September checkpoint deferred the Market grouping-basis criterion; the October 21 implementation closes it with conservative reviewed/HIN/unresolved counts. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for the current delivery map.

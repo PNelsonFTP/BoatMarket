@@ -1,6 +1,6 @@
-# Live inventory — November 6, 2026
+# Live inventory — November 14, 2026
 
-The refresh retained **2,742 real ads: 1,626 active, 19 sold and 1,097 stale**, with **25 newly indexed ads**, **9 price changes (7 decreases)** and **78 status changes** compared with the preceding November 4 inventory. Status transitions: active → stale: 78. Age-based staleness is not evidence of a sale. **1,394 ads were observed during this session; 1,348 retain earlier observation dates.** Counts describe advertisements, not independently verified available boats; newly indexed ads can be reposts or cross-listings.
+The refresh retained **2,831 real ads: 1,508 active, 21 sold and 1,302 stale**, with **89 newly indexed ads**, **42 price changes (35 decreases)** and **207 status changes** compared with the preceding November 6 inventory. Status transitions: active → stale: 205; active → sold: 2. Age-based staleness is not evidence of a sale. **1,376 ads were observed during this session; 1,455 retain earlier observation dates.** Counts describe advertisements, not independently verified available boats; newly indexed ads can be reposts or cross-listings.
 
 The exact reviewed snapshot is staged locally for publication. The public site remains on its previous release until the reviewed Pages workflow and public verification complete.
 
@@ -8,23 +8,23 @@ Verified backups protect the earlier data and every collection pass. The snapsho
 
 ## Current inventory
 
-1,465 active ads have a price; 1,088 active ads have source coordinates within 150 straight-line miles of Lake Holiday. 56 active ads have unknown coordinates. The 52 fictional samples remain separate and excluded from publication.
+1,355 active ads have a price; 981 active ads have source coordinates within 150 straight-line miles of Lake Holiday. 54 active ads have unknown coordinates. The 52 fictional samples remain separate and excluded from publication.
 
 | Source | Retained ads | Observed this session | Active ads | Active within 150 mi |
 |---|---:|---:|---:|---:|
-| Bass Boat Central | 71 | 60 | 62 | 16 |
-| Bedford Sales & Outdoors | 24 | 23 | 23 | 23 |
-| Craigslist | 1704 | 632 | 816 | 704 |
-| Fox Lake Harbor | 66 | 49 | 52 | 52 |
+| Bass Boat Central | 71 | 56 | 60 | 15 |
+| Bedford Sales & Outdoors | 26 | 23 | 25 | 25 |
+| Craigslist | 1768 | 602 | 724 | 623 |
+| Fox Lake Harbor | 68 | 52 | 52 | 52 |
 | Gordy’s Marine | 35 | 0 | 0 | 0 |
-| Huber’s Marine | 35 | 0 | 26 | 26 |
-| Lake County Watersports | 28 | 21 | 22 | 22 |
-| Miller’s Sport Center | 24 | 24 | 18 | 18 |
-| OnlyInboards | 645 | 492 | 523 | 143 |
+| Huber’s Marine | 35 | 0 | 0 | 0 |
+| Lake County Watersports | 29 | 22 | 22 | 22 |
+| Miller’s Sport Center | 24 | 23 | 16 | 16 |
+| OnlyInboards | 661 | 501 | 522 | 141 |
 | Quest Watersports | 8 | 7 | 7 | 7 |
 | Starved Rock Marina | 32 | 30 | 17 | 17 |
-| Ted’s Boatarama | 70 | 56 | 60 | 60 |
-| **Total** | **2742** | **1394** | **1626** | **1088** |
+| Ted’s Boatarama | 74 | 60 | 63 | 63 |
+| **Total** | **2831** | **1376** | **1508** | **981** |
 
 Ads absent from this session retain their original dates. The unchanged 14-day threshold marks older active records stale. A fresh summary does not establish that every detail field was reverified.
 
@@ -34,33 +34,33 @@ Home remains **41.6180404, -88.6682705**. Factory presets are unchanged, includi
 
 | Quick search | Matching ads | Grouped research records |
 |---|---:|---:|
-| Lake Holiday · nearby picks | 69 | 68 |
-| Fishing · 200+ hp · nearby | 16 | 15 |
-| MasterCraft & peers · up to 21 ft | 44 | 44 |
-| Wider search · within 250 mi | 101 | 100 |
-| Include unknown lengths · verify first | 88 | 87 |
-| All nearby ads · no lake screen | 1088 | 1087 |
+| Lake Holiday · nearby picks | 63 | 63 |
+| Fishing · 200+ hp · nearby | 14 | 14 |
+| MasterCraft & peers · up to 21 ft | 40 | 40 |
+| Wider search · within 250 mi | 95 | 95 |
+| Include unknown lengths · verify first | 79 | 79 |
+| All nearby ads · no lake screen | 981 | 981 |
 
-Distances are straight-line estimates, not driving times. No routing or public geocoding provider was enabled. There are 6 multi-ad groups containing 15 ads and 2733 research records in the full pool. Existing duplicate decisions were preserved; unresolved cross-listings can remain.
+Distances are straight-line estimates, not driving times. No routing or public geocoding provider was enabled. There are 6 multi-ad groups containing 15 ads and 2822 research records in the full pool. Existing duplicate decisions were preserved; unresolved cross-listings can remain.
 
 ## Full-scan evidence
 
-Reviewable session **20fd0418-1dbc-4767-a86f-c38df346b2fe** ran **2026-11-06T14:02:29.224Z–2026-11-06T14:42:56.057Z**, with 2 bounded collection passes followed by explicit reviewed finalization. Outcome: **partial**; **10/12** inventory outcomes accepted. Accepted-inventory sources cover **293/293** eligible details, with **0** remaining in that scope. Across all source attempts, **0** detail requests failed; attempts from incomplete inventories remain explicitly documented below and in the original reports. All component reports and original capture times are retained; cached observations are not relabeled fresh.
+Reviewable session **6f0e52fc-3a89-491f-9695-6a3b4e543a30** ran **2026-11-14T13:50:56.916Z–2026-11-14T14:31:50.954Z**, with 2 bounded collection passes followed by explicit reviewed finalization. Outcome: **partial**; **10/12** inventory outcomes accepted. Accepted-inventory sources cover **301/301** eligible details, with **0** remaining in that scope. Across all source attempts, **0** detail requests failed; attempts from incomplete inventories remain explicitly documented below and in the original reports. All component reports and original capture times are retained; cached observations are not relabeled fresh.
 
-Collection-attempt totals: **365 fresh fetches**, **13 cache hits**, **85 successful inventory-page operations**, and **293 successful detail-page operations**. Repeated operations across passes are not additional distinct ads or pages. Session reports separately reconcile unique URL/capture observations. The supported one-hour cache policy is used throughout; previous multi-day captures were refreshed, while any same-session reuse preserves its original timestamp. Permanent source limits and quality thresholds were not changed.
+Collection-attempt totals: **372 fresh fetches**, **13 cache hits**, **84 successful inventory-page operations**, and **301 successful detail-page operations**. Repeated operations across passes are not additional distinct ads or pages. Session reports separately reconcile unique URL/capture observations. The supported one-hour cache policy is used throughout; previous multi-day captures were refreshed, while any same-session reuse preserves its original timestamp. Permanent source limits and quality thresholds were not changed.
 
 | Source | Outcome | Parsed ads (including incomplete inventory) | Newly indexed | Eligible details completed |
 |---|---|---:|---:|---:|
-| Craigslist | success | 632 | 15 | 65/65 |
-| Bedford Sales & Outdoors | success | 23 | 0 | 23/23 |
-| OnlyInboards | success | 492 | 10 | 160/160 |
-| Miller’s Sport Center | success | 24 | 0 | 24/24 |
+| Craigslist | success | 602 | 64 | 69/69 |
+| Bedford Sales & Outdoors | success | 23 | 2 | 23/23 |
+| OnlyInboards | success | 501 | 16 | 164/164 |
+| Miller’s Sport Center | success | 23 | 0 | 23/23 |
 | Huber’s Marine | partial / restricted | 0 | 0 | 0/0 |
-| Fox Lake Harbor | success | 49 | 0 | 10/10 |
-| Lake County Watersports | success | 21 | 0 | 7/7 |
-| Ted’s Boatarama | success | 56 | 0 | 4/4 |
+| Fox Lake Harbor | success | 52 | 2 | 11/11 |
+| Lake County Watersports | success | 22 | 1 | 7/7 |
+| Ted’s Boatarama | success | 60 | 4 | 4/4 |
 | Gordy’s Marine | partial / restricted | 0 | 0 | 0/0 |
-| Bass Boat Central | success | 60 | 0 | 0/0 |
+| Bass Boat Central | success | 56 | 0 | 0/0 |
 | Starved Rock Marina | success | 30 | 0 | 0/0 |
 | Quest Watersports | success | 7 | 0 | 0/0 |
 
@@ -73,11 +73,11 @@ Blocked or challenged endpoints are not retried as transient failures. Their pri
 
 ## Reviewed publication
 
-Snapshot generated **2026-11-06T14:42:57.913Z**, 25,994,279 formatted bytes, SHA-256 **9266be491ab13dcdd516a896e4aa6b54e032313ce71d9b2655deddd591760160**. Observation range: 2026-09-08T01:17:51.923Z–2026-11-06T14:42:27.365Z. Exact release review: **3cebe1c96fba2662180a021e7630407cb3afa8bbd472d361d39752b69851267c**. Application source fingerprint: **21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe**. The initial catalog is 6,542,824 bytes at **a95313b84da2f07c70f6d0e5d40b77370c5437f00e13b1167fa2b8db510f47a4**; canonical and evidence files remain verified immutable objects.
+Snapshot generated **2026-11-14T14:31:53.162Z**, 27,328,773 formatted bytes, SHA-256 **1a9a462fc0e100f36f7c46f7800a42323fdc25db133e08e284b66e385a33349e**. Observation range: 2026-09-08T01:17:51.923Z–2026-11-14T14:31:29.281Z. Exact release review: **d936e2b3a1928b375e1cae204e9a3d76931b26db6512dd966c7c6ab8fa70adfd**. Application source fingerprint: **21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe**. The initial catalog is 6,762,431 bytes at **71c65a8e6e8aa70bfa318c646d147f490b746df5abbb3984145423881a6c73bd**; canonical and evidence files remain verified immutable objects.
 
-Release review found **0 blocking issues**. Partial coverage, older ads and 140 possible source-published contact ads were reviewed explicitly. Private workspace records, credentials, raw payloads, samples, manual location/review evidence and private routes are excluded. Dependency versions and source SBOM artifacts remain unchanged; the latest advisory audit retains its October 21 date, with no new vulnerability-scan claim.
+Release review found **0 blocking issues**. Partial coverage, older ads and 148 possible source-published contact ads were reviewed explicitly. Private workspace records, credentials, raw payloads, samples, manual location/review evidence and private routes are excluded. Dependency versions and source SBOM artifacts remain unchanged; the latest advisory audit retains its October 21 date, with no new vulnerability-scan claim.
 
-Private reports, backups, contact review, comparisons, browser checks and public provenance are retained under ignored **data/refresh-2026-11-06/** and **data/refresh-runs/sessions/20fd0418-1dbc-4767-a86f-c38df346b2fe.json**. No recurring worker, OS service or notification destination was enabled.
+Private reports, backups, contact review, comparisons, browser checks and public provenance are retained under ignored **data/refresh-2026-11-14/** and **data/refresh-runs/sessions/6f0e52fc-3a89-491f-9695-6a3b4e543a30.json**. No recurring worker, OS service or notification destination was enabled.
 
 ## Lake rules
 

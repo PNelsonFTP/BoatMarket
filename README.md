@@ -1,6 +1,6 @@
 # BoatScout
 
-**Live website:** [pnelsonftp.github.io/BoatMarket](https://pnelsonftp.github.io/BoatMarket/). The reviewed November 6 inventory is staged for publication: **2,742 ads**, including **25 newly indexed ads** and **7 price drops**. Collection and private workspace storage run locally. See [LIVE_DATA.md](LIVE_DATA.md) for publication status.
+**Live website:** [BoatMarket](https://pnelsonftp.github.io/BoatMarket/). November 14 inventory is staged: **2,831 ads**, **89 newly indexed**, **35 price drops**. See [LIVE_DATA.md](LIVE_DATA.md) for publication status.
 
 A boat-search workspace with a GitHub Pages website and an authenticated local backend. Search, save, compare, map, track prices, and monitor boat listings across configured sources.
 

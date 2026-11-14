@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-11-06T14:44:12.148Z",
-  "snapshotHash": "9266be491ab13dcdd516a896e4aa6b54e032313ce71d9b2655deddd591760160",
-  "snapshotBytes": 25994279,
-  "listings": 2742,
+  "createdAt": "2026-11-14T14:32:09.742Z",
+  "snapshotHash": "1a9a462fc0e100f36f7c46f7800a42323fdc25db133e08e284b66e385a33349e",
+  "snapshotBytes": 27328773,
+  "listings": 2831,
   "sourceHash": "21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe",
-  "sourceCommit": "b2642284ee841b09b92bd31c0a9d6b56860e10af",
+  "sourceCommit": "08d91cfdb3df083d5b6aa468feb261edad604feb",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -25,10 +25,15 @@
     "issues": [],
     "warnings": [
       "Snapshot came from an explicitly partial collection",
-      "1097 ads were last observed more than 14 days ago",
-      "140 ads contain possible source-published contact details; review before publishing"
+      "1302 ads were last observed more than 14 days ago",
+      "148 ads contain possible source-published contact details; review before publishing"
     ],
     "contactListingIds": [
+      "f81bdd2d430101f078e6a979",
+      "7b5ec5cb89915030887cda3c",
+      "6bb59507e0fee5c72031b566",
+      "72a4f494ee30e4c2848c46c7",
+      "3a143cf7cb243562c618f484",
       "8d23ea8a27cb41f013f3dced",
       "dc2485ada190ecfbecd64ab9",
       "d34691c118fb9a723eb7c0dd",
@@ -44,6 +49,8 @@
       "0ed5e9708e8458df8af5a499",
       "c4b1808d133b20d7c15e688a",
       "c4412e4c39a4247f43cb680d",
+      "1641e5b4daf5d49b5d0416f7",
+      "8adbaaa04f27410914148a80",
       "df20b7aa925cd4eb64391a07",
       "f89491ab7a775628a4f40c48",
       "778a2a9e73531913b003431b",
@@ -163,6 +170,7 @@
       "c26c8f6d053a91b9b8a6833b",
       "e9f8794d586e8ab818be7124",
       "d4926157b28c104478497541",
+      "03b1331dafeb2d4a63dec47b",
       "a9c8b22d2887bad1ff50be38",
       "4ac61c03a13661f903e0dfa2",
       "1aa549883f7fdcdecd46f4d2",
@@ -172,14 +180,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-11-06T14:42:27.365Z"
+      "newest": "2026-11-14T14:31:29.281Z"
     }
   },
   "approval": {
-    "reviewHash": "3cebe1c96fba2662180a021e7630407cb3afa8bbd472d361d39752b69851267c",
-    "reviewedAt": "2026-11-06T14:49:42.555Z",
+    "reviewHash": "d936e2b3a1928b375e1cae204e9a3d76931b26db6512dd966c7c6ab8fa70adfd",
+    "reviewedAt": "2026-11-14T14:32:27.398Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/9266be491ab13dcdd516a896e4aa6b54e032313ce71d9b2655deddd591760160.json"
+  "generation": "snapshots/1a9a462fc0e100f36f7c46f7800a42323fdc25db133e08e284b66e385a33349e.json"
 }

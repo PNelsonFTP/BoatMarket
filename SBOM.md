@@ -1,5 +1,7 @@
 # BoatScout software bill of materials
 
+**November 14 data refresh:** dependency graph, lockfile and all three source CycloneDX hashes are unchanged and verified by review `d936e2b3a1928b375e1cae204e9a3d76931b26db6512dd966c7c6ab8fa70adfd`. No packages were updated or source SBOMs regenerated. Existing registry advisory audit retains its October 21 date. Existing runtime captures retain their original image scope.
+
 This package records the dependencies actually locked for BoatScout 1.0.0. It contains three schema-validated CycloneDX 1.5 JSON SBOMs, the complete lockfile inventory, exact metadata from the verified optional WASM bundle, generation evidence, and dated read-only vulnerability reports. Two SBOMs come from npm; the all-platform artifact adds verified bundled contents to the locked package graph. It does not change or install dependencies.
 
 Source SBOMs regenerated **October 21, 2026 at 8:23 PM America/Chicago** (`2026-10-22T01:23:31.412Z`) with Node `v26.7.0` and npm `11.19.0` on macOS arm64. The project supports Node `>=22.12.0`; GitHub Actions and Docker use Node 22. The actual tested Docker runtime reports Node `22.23.2`. These recorded generation/runtime versions describe their respective environments.

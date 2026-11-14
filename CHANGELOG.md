@@ -1,5 +1,9 @@
 # BoatScout delivery history
 
+## November 14, 2026 — Inventory refresh
+
+November 14 refresh: 2,831 ads (1,508 active / 21 sold / 1,302 stale); 89 newly indexed ads and 35 price drops (42 price changes). Ten inventories and all 301 eligible details succeeded. Huber’s and Gordy’s returned HTTP 403; their original observation dates remain unchanged. 1,376 ads were observed this session; 1,455 retain earlier dates. Counts describe ads, not verified distinct available boats.
+
 ## November 6, 2026 — Inventory refresh
 
 Refreshed all twelve enabled sources through a durable two-pass session. Ten inventories passed and all 293 eligible details succeeded. Huber’s and Gordy’s inventory requests returned HTTP 403; retained ads keep their original dates. The reviewed snapshot contains **2,742 ads**, **25 new ads** and **9 price changes (7 decreases)**. All 78 status changes are active-to-stale transitions under the existing age policy; absence does not establish a sale. Private workspace records, source configuration, application dependencies and source SBOMs are unchanged. One new seller phone was verified against the captured public listing before release approval. See LIVE_DATA.md and VALIDATION.md for review, validation and publication status.
