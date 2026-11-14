@@ -1,5 +1,7 @@
 # BoatScout software bill of materials
 
+Both new container builds, runtime inventories and smoke checks passed in [validation run 43605504335](https://github.com/PNelsonFTP/BoatMarket/actions/runs/43605504335). New image records remain in workflow artifacts; committed historical image evidence keeps its original scope.
+
 **November 14 data refresh:** dependency graph, lockfile and all three source CycloneDX hashes are unchanged and verified by review `d936e2b3a1928b375e1cae204e9a3d76931b26db6512dd966c7c6ab8fa70adfd`. No packages were updated or source SBOMs regenerated. Existing registry advisory audit retains its October 21 date. Existing runtime captures retain their original image scope.
 
 This package records the dependencies actually locked for BoatScout 1.0.0. It contains three schema-validated CycloneDX 1.5 JSON SBOMs, the complete lockfile inventory, exact metadata from the verified optional WASM bundle, generation evidence, and dated read-only vulnerability reports. Two SBOMs come from npm; the all-platform artifact adds verified bundled contents to the locked package graph. It does not change or install dependencies.
