@@ -1,5 +1,9 @@
 # BoatScout delivery history
 
+[Validation run 45186811731](https://github.com/PNelsonFTP/BoatMarket/actions/runs/45186811731) passed all four jobs by 2026-11-23T13:55:58Z: Windows 318 tests; Ubuntu 317 plus one platform-specific skip; 22 development, 12 root-production and 12 Pages-production browser checks on each platform; both builds, catalog budgets/equivalence, source SBOM/schema checks and both container inventories/smoke probes. Completed logs remain private under `data/refresh-2026-11-23/`. No dependency update or fresh advisory audit is claimed. This follow-up changes documentation only; deployed data/application identity remains commit `64312bd0db60024b028ca9fd358bb92a79cffe20`.
+
+[Pages run 45186835176](https://github.com/PNelsonFTP/BoatMarket/actions/runs/45186835176) deployed commit `64312bd0db60024b028ca9fd358bb92a79cffe20` successfully. Public verification at `2026-11-23T13:48:11.462Z` matched the canonical snapshot, catalog and all 39 evidence shards, source/SBOM review and deployed commit/workflow identity. Desktop/mobile checks at `2026-11-23T13:48:13.663Z` passed inventory counts, filters, photo decoding and layout with no page errors. Public production suite: 12/12 passed; local Pages and root production suites: 12/12 each. The root build remains ready for local startup; no persistent service was started.
+
 ## November 23, 2026 — Inventory refresh
 
 November 23 refresh: 2,928 ads (1,452 active / 21 sold / 1,455 stale); 97 newly indexed ads and 22 price drops (24 price changes). Ten inventories and all 299 eligible details succeeded. Huber’s and Gordy’s returned HTTP 403; original observation dates remain unchanged and all their retained ads remain stale. 1,319 ads were observed this session; 1,609 retain earlier dates. Counts describe ads, not independently verified distinct available boats.

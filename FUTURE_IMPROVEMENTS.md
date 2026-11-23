@@ -50,8 +50,8 @@ This does not make the inventory exhaustive. Each row is an advertisement until 
 | Remaining issue | Current handling | What would resolve it |
 |---|---|---|
 | Boat Trader and several nearby dealers reject robots/page requests | Dated restrictions remain visible; collectors stop at denials | Dealer permission, supported API/feed/export, or reviewed manual import. Do not bypass blocks |
-| Huber’s Marine inventory, pagination and details remain restricted | November 14: inventory HTTP 403; all 35 retained ads are now stale and keep original dates. No accepted baseline advances | Permitted feed or reviewed manual evidence; do not bypass restrictions |
-| Gordy’s Marine inventory access blocked since October 9 | November 14: inventory HTTP 403; all 35 ads remain stale with original dates | Permitted dealer feed or reviewed manual evidence |
+| Huber’s Marine inventory, pagination and details remain restricted | November 23: inventory HTTP 403; all 35 retained ads remain stale with original dates. No accepted baseline advances | Permitted feed or reviewed manual evidence; do not bypass restrictions |
+| Gordy’s Marine inventory access blocked since October 9 | November 23: inventory HTTP 403; all 35 ads remain stale with original dates | Permitted dealer feed or reviewed manual evidence |
 | MarineSource throttles requests | Stops on HTTP 429; no retries that evade the throttle | Supported feed or later permitted access under its rate policy |
 | SkipperBud’s inventory data is not yet accessible through the permitted path | Public HTML and restricted inventory response distinguished in ledger | Documented permitted inventory endpoint/feed, representative capture and quality review |
 | Facebook, eBay Motors, iboats, YachtWorld/CPO generic integrations | Manual imports or disabled configuration; no claim of live completeness | Authorized API/export with active status, auction/asking-price semantics and representative fixtures |

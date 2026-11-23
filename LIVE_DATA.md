@@ -2,7 +2,7 @@
 
 The refresh retained **2,928 real ads: 1,452 active, 21 sold and 1,455 stale**, with **97 newly indexed ads**, **24 price changes (22 decreases)** and **153 status changes** compared with the preceding November 14 inventory. Status transitions: active → stale: 153. Age-based staleness is not evidence of a sale. **1,319 ads were observed during this session; 1,609 retain earlier observation dates.** Counts describe advertisements, not independently verified available boats; newly indexed ads can be reposts or cross-listings.
 
-The exact reviewed snapshot is staged locally for publication. The public site remains on its previous release until the reviewed Pages workflow and public verification complete.
+The reviewed snapshot is live on the [public website](https://pnelsonftp.github.io/BoatMarket/). Deployment succeeded and public hash/catalog/build verification completed at **2026-11-23T13:48:11.462Z**. Desktop/mobile website checks are recorded in [VALIDATION.md](VALIDATION.md).
 
 Verified backups protect the earlier data and every collection pass. The snapshot preserves the original partial outcome and capture dates. Lake Holiday search presets, source access policies, duplicate-review decisions, application/dependency source and all three approved source SBOM hashes are unchanged. The site includes the October 21 engineering improvements, including the smaller search catalog, on-demand evidence, import fixes and grouping-basis counts.
 
