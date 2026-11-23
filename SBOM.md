@@ -1,5 +1,7 @@
 # BoatScout software bill of materials
 
+**November 23 data refresh:** dependencies, lockfile and all three source CycloneDX hashes are unchanged and verified by review `e4157c352651624cd0b412f566e8b1dc56d016b496a22e122131d3e561ce34c4`. No packages were updated or source SBOMs regenerated. Existing advisory audit retains its October 21 date; historical runtime captures retain original image scope.
+
 Both new container builds, runtime inventories and smoke checks passed in [validation run 43605504335](https://github.com/PNelsonFTP/BoatMarket/actions/runs/43605504335). New image records remain in workflow artifacts; committed historical image evidence keeps its original scope.
 
 **November 14 data refresh:** dependency graph, lockfile and all three source CycloneDX hashes are unchanged and verified by review `d936e2b3a1928b375e1cae204e9a3d76931b26db6512dd966c7c6ab8fa70adfd`. No packages were updated or source SBOMs regenerated. Existing registry advisory audit retains its October 21 date. Existing runtime captures retain their original image scope.

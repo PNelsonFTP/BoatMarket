@@ -1,5 +1,7 @@
 # Future improvements and remaining limitations
 
+**November 23 refresh:** Huber’s and Gordy’s inventory endpoints remain HTTP 403; retained ads keep original dates and remain stale. Current catalog is 6,982,916 bytes; the 25% growth scenario is 8,242,352 bytes, close to the 8 MiB publication budget (8,388,608). Plan further search partitioning before inventory growth exceeds that gate; do not weaken the budget or discard evidence to publish. Cross-listing uncertainty remains.
+
 **November 14 refresh:** Huber’s and Gordy’s inventory endpoints remain HTTP 403; all retained ads from both sources are now stale. The November 6 Pages release timed out during file synchronization despite successful validation; verify public hashes after every deployment, and the November 14 release subsequently deployed successfully and its public hashes were verified; retain the older failure as historical evidence. Cross-listing uncertainty remains.
 
 Re-audited September 8, 2026 when the owner requested winding down the P1/P2 goal for local review; September 10 classification findings and September 24–29 access/recovery findings are added with their own dates. Delivered work and partial criteria from the previous roadmap are mapped in [P1_P2_IMPLEMENTATION.md](P1_P2_IMPLEMENTATION.md). Verification results are in [VALIDATION.md](VALIDATION.md); exact source access observations are in [SOURCE_COVERAGE.md](SOURCE_COVERAGE.md) and [config/source-access.json](config/source-access.json).
