@@ -1,5 +1,7 @@
 # BoatScout software bill of materials
 
+**November 26 refresh and source-only catalog fix:** no dependency, lockfile or source CycloneDX artifact changed. Exact approved review `d8556255d6adc339940006eb667a372d530b23c836946fc05ab8625cb0435319` verifies all three existing SBOM hashes and lockfile hash. Application source changes only catalog serialization/legacy verification, with two regression tests; no new dependency or migration. Source SBOMs retain their original generation metadata and the advisory audit retains its October 21 date. New hosted runtime inventories and checks will be linked after the validation run completes; older image evidence retains its original scope.
+
 Both new container builds, runtime inventories and smoke checks passed in [validation run 45186811731](https://github.com/PNelsonFTP/BoatMarket/actions/runs/45186811731). New image records remain in workflow artifacts; committed historical image evidence keeps its original scope.
 
 **November 23 data refresh:** dependencies, lockfile and all three source CycloneDX hashes are unchanged and verified by review `e4157c352651624cd0b412f566e8b1dc56d016b496a22e122131d3e561ce34c4`. No packages were updated or source SBOMs regenerated. Existing advisory audit retains its October 21 date; historical runtime captures retain original image scope.

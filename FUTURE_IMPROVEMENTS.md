@@ -1,5 +1,9 @@
 # Future improvements and remaining limitations
 
+**November 26 follow-ups:** Huber’s remains HTTP 403. Gordy’s has moved to a bare-hostname website and replaced its old inventory route; a permitted isolated preview of `/boats/` finds 53 detail links but the current parser yields zero records. Integrate the new origin, adapter and pagination with captured fixtures and quality checks before applying any listings. All retained ads from both sources remain stale with actual dates. Cross-listing uncertainty remains.
+
+**Catalog capacity mitigation delivered November 26:** the growth benchmark first hit the 8 MiB gate. Schema-default null compaction plus strict historical-catalog verification now passes at 6,604,098 bytes current and 7,723,832 bytes for 25% growth (3,719 ads). Canonical/evidence records are unchanged. Keep the 8,388,608-byte hard limit and plan partitioning/worker-based search before further growth; the 10,000-ad simulation remains intentionally refused. Older measurements below describe their dated checkpoints.
+
 **November 23 refresh:** Huber’s and Gordy’s inventory endpoints remain HTTP 403; retained ads keep original dates and remain stale. Current catalog is 6,982,916 bytes; the 25% growth scenario is 8,242,352 bytes, close to the 8 MiB publication budget (8,388,608). Plan further search partitioning before inventory growth exceeds that gate; do not weaken the budget or discard evidence to publish. Cross-listing uncertainty remains.
 
 **November 14 refresh:** Huber’s and Gordy’s inventory endpoints remain HTTP 403; all retained ads from both sources are now stale. The November 6 Pages release timed out during file synchronization despite successful validation; verify public hashes after every deployment, and the November 14 release subsequently deployed successfully and its public hashes were verified; retain the older failure as historical evidence. Cross-listing uncertainty remains.

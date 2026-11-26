@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "createdAt": "2026-11-23T13:42:23.282Z",
-  "snapshotHash": "d31cf52d6b1da50dcd80bf8659be72f480acf460cc006ba7e7b83c37728fc043",
-  "snapshotBytes": 28617084,
-  "listings": 2928,
-  "sourceHash": "21a235515d6798bc0289b251f9a2734a136be3b29613abeb42355dd6a1618abe",
-  "sourceCommit": "e9b450203b87ca14deeb86fe0b1394c12d324f55",
+  "createdAt": "2026-11-26T14:42:08.349Z",
+  "snapshotHash": "2f439427b62b4d1c758e8cb074b9a35089dd9e8eb56b573499d6af217ba1b358",
+  "snapshotBytes": 29752003,
+  "listings": 2975,
+  "sourceHash": "8fbb7611cb5b647d1eefda29714f7e242b146e1996cd958fb674b88fad688b48",
+  "sourceCommit": "39547ba06140c1e552b02ad706b05b762d57c748",
   "packageLockHash": "07da22e2a6a002c0c9ea2c2836257d28d4c60b011439f5d645f8c57ec173b15e",
   "sboms": [
     {
@@ -182,14 +182,14 @@
     ],
     "observationRange": {
       "oldest": "2026-09-08T01:17:51.923Z",
-      "newest": "2026-11-23T13:41:48.517Z"
+      "newest": "2026-11-26T14:38:55.666Z"
     }
   },
   "approval": {
-    "reviewHash": "e4157c352651624cd0b412f566e8b1dc56d016b496a22e122131d3e561ce34c4",
-    "reviewedAt": "2026-11-23T13:42:57.730Z",
+    "reviewHash": "d8556255d6adc339940006eb667a372d530b23c836946fc05ab8625cb0435319",
+    "reviewedAt": "2026-11-26T14:43:46.520Z",
     "privacyReviewed": true,
     "acceptedWarnings": true
   },
-  "generation": "snapshots/d31cf52d6b1da50dcd80bf8659be72f480acf460cc006ba7e7b83c37728fc043.json"
+  "generation": "snapshots/2f439427b62b4d1c758e8cb074b9a35089dd9e8eb56b573499d6af217ba1b358.json"
 }

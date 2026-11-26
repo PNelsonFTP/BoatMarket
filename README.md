@@ -1,6 +1,6 @@
 # BoatScout
 
-**Live website:** [BoatMarket](https://pnelsonftp.github.io/BoatMarket/) — November 23 inventory: **2,928 ads (1,452 active)**, **97 newly indexed**, **22 price drops**.
+**Live website:** [BoatMarket](https://pnelsonftp.github.io/BoatMarket/) — November 26 inventory prepared: **2,975 ads (1,499 active)**, **47 newly indexed**, **16 price drops**. Publication verification is in progress.
 
 A boat-search workspace with a GitHub Pages website and an authenticated local backend. Search, save, compare, map, track prices, and monitor boat listings across configured sources.
 
@@ -10,7 +10,7 @@ A boat-search workspace with a GitHub Pages website and an authenticated local b
 
 If another application uses port 3000, preserve it. Run `npm run build` followed by `npm start` and open **http://127.0.0.1:4310** for the website and API together; run `npm run worker` separately when collection is wanted. Browser tests use isolated port 3002.
 
-**October 21 engineering update:** improvements **1–7, 10 and 11** from the engineering review are implemented: full-size listing imports, hull/engine separation, accepted inventory baselines, durable refresh sessions, production browser checks, Market grouping counts, scan progress, a smaller verified search catalog and reviewed archive/log lifecycle tools. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for behavior, measurements and limits. Restart an existing API/worker after pulling to load the new routes; no database migration is needed. That implementation pass preserved earlier observation dates; the subsequent November 6 refresh is recorded in [LIVE_DATA.md](LIVE_DATA.md).
+**October 21 engineering update:** improvements **1–7, 10 and 11** from the engineering review are implemented: full-size listing imports, hull/engine separation, accepted inventory baselines, durable refresh sessions, production browser checks, Market grouping counts, scan progress, a smaller verified search catalog and reviewed archive/log lifecycle tools. See [IMPLEMENTATION_2026-10-21.md](IMPLEMENTATION_2026-10-21.md) for behavior, measurements and limits. Restart an existing API/worker after pulling to load the new routes; no database migration is needed. That implementation pass preserved earlier observation dates; the latest November 26 refresh is recorded in [LIVE_DATA.md](LIVE_DATA.md).
 
 ## Documentation map
 

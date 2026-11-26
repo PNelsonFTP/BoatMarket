@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, lstat, readFile, writeFile, realpath } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { parseListingImport } from "../lib/import-listings";
+import { listingSchema } from "../lib/types";
 import {
   catalogReferenceSchema,
   searchCatalogSchema,
@@ -11,13 +12,21 @@ import {
 const hash = (body: string | Buffer) =>
   createHash("sha256").update(body).digest("hex");
 export const SEARCH_CATALOG_MAX_BYTES = 8 * 1024 * 1024;
+// The v1 reader restores these exact values. Elide them only on the wire,
+// never inside specs/engines or the canonical snapshot.
+const nullDefaultFields = Object.entries(listingSchema.shape)
+  .filter(([, field]) => {
+    const result = field.safeParse(undefined);
+    return result.success && result.data === null;
+  })
+  .map(([key]) => key);
 export type CatalogFile = {
   path: string;
   sha256: string;
   bytes: number;
   body: string;
 };
-export function buildSearchCatalog(canonicalBody: string) {
+function buildCatalog(canonicalBody: string, compactDefaults: boolean) {
   const snapshot = parseListingImport(JSON.parse(canonicalBody));
   for (const listing of snapshot.listings)
     if (
@@ -62,7 +71,16 @@ export function buildSearchCatalog(canonicalBody: string) {
     ),
     details,
   });
-  const body = JSON.stringify(catalog);
+  const body = JSON.stringify({
+    ...catalog,
+    listings: catalog.listings.map((listing) => {
+      const wire: Record<string, unknown> = { ...listing };
+      if (compactDefaults)
+        for (const key of nullDefaultFields)
+          if (wire[key] === null) delete wire[key];
+      return wire;
+    }),
+  });
   if (Buffer.byteLength(body) > SEARCH_CATALOG_MAX_BYTES)
     throw new Error(
       "Search catalog exceeds 8 MiB publication budget; review payload growth before publishing",
@@ -81,6 +99,9 @@ export function buildSearchCatalog(canonicalBody: string) {
     body,
   });
   return { reference, catalog, files };
+}
+export function buildSearchCatalog(canonicalBody: string) {
+  return buildCatalog(canonicalBody, true);
 }
 async function safeFile(directory: string, relative: string) {
   const root = resolve(directory);
@@ -155,9 +176,14 @@ export async function verifiedCatalogFiles(
 ) {
   if (reference == null) return [];
   const actual = catalogReferenceSchema.parse(reference);
-  const expected = buildSearchCatalog(canonicalBody);
-  if (JSON.stringify(actual) !== JSON.stringify(expected.reference))
-    throw new Error("Catalog does not match the reviewed snapshot");
+  let expected = buildSearchCatalog(canonicalBody);
+  if (JSON.stringify(actual) !== JSON.stringify(expected.reference)) {
+    // Historical v1 releases/backups explicitly encoded the same null defaults.
+    // Recompute those exact bytes too; never trust a merely self-consistent hash.
+    expected = buildCatalog(canonicalBody, false);
+    if (JSON.stringify(actual) !== JSON.stringify(expected.reference))
+      throw new Error("Catalog does not match the reviewed snapshot");
+  }
   for (const file of expected.files) {
     const path = await safeFile(publicDirectory, file.path);
     const info = await lstat(path);

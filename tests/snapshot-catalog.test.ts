@@ -10,6 +10,7 @@ import {
 } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+import { createHash } from "node:crypto";
 import { makeSeed } from "../lib/seed";
 import { FIELDS } from "../lib/catalog";
 import { DEFAULT_FILTERS, type Listing } from "../lib/types";
@@ -86,6 +87,31 @@ it("preserves every searchable value, complete photo count, price history and gr
     ).toEqual(searchListings(input, filters, Date.parse(at)).map((b) => b.id));
   expect(buildSearchCatalog(body(input)).reference).toEqual(built.reference);
 });
+it("restores omitted null defaults without dropping zero values or nested null evidence", () => {
+  const built = buildSearchCatalog(
+    body([
+      {
+        ...sample(),
+        model: null,
+        year: null,
+        price: 0,
+        horsepower: 0,
+        engineHours: 0,
+        specs: { price: null, review: "retained" },
+        engines: [{ make: null, model: null, year: null, hp: 0, hours: 0 }],
+      },
+    ]),
+  );
+  const wire = JSON.parse(built.files[0].body);
+  expect(wire.listings[0]).not.toHaveProperty("year");
+  expect(wire.listings[0]).not.toHaveProperty("model");
+  expect(wire.listings[0].price).toBe(0);
+  expect(wire.listings[0].horsepower).toBe(0);
+  expect(wire.listings[0].engineHours).toBe(0);
+  expect(wire.listings[0].specs.price).toBeNull();
+  expect(wire.listings[0].engines[0].make).toBeNull();
+  expect(searchCatalogSchema.parse(wire)).toEqual(built.catalog);
+});
 it("hydrates only requested immutable chunks, deduplicates requests, and reconstructs complete records", async () => {
   const input = Array.from({ length: 111 }, (_, i) => sample(i));
   const built = buildSearchCatalog(body(input));
@@ -111,6 +137,29 @@ it("hydrates only requested immutable chunks, deduplicates requests, and reconst
       fieldProvenance: all.get(l.id),
     })),
   ).toEqual(input);
+});
+it("verifies historical v1 catalogs with explicit nulls against canonical bytes", async () => {
+  const canonical = body([{ ...sample(), year: null, sellerLat: null }]);
+  const built = buildSearchCatalog(canonical);
+  const legacyBody = JSON.stringify(built.catalog);
+  const legacyHash = createHash("sha256").update(legacyBody).digest("hex");
+  const legacy = {
+    ...built.reference,
+    path: `catalogs/${legacyHash}.json`,
+    sha256: legacyHash,
+  };
+  const dir = await mkdtemp(join(tmpdir(), "boatscout-legacy-catalog-"));
+  dirs.push(dir);
+  await mkdir(join(dir, "catalogs"));
+  await mkdir(join(dir, "catalog-details"));
+  await writeFile(join(dir, legacy.path), legacyBody);
+  for (const file of built.files.slice(1))
+    await writeFile(join(dir, file.path), file.body);
+  const verified = await verifiedCatalogFiles(dir, legacy, canonical);
+  expect(verified[0].sha256).toBe(legacyHash);
+  expect(searchCatalogSchema.parse(JSON.parse(legacyBody))).toEqual(
+    built.catalog,
+  );
 });
 it("rejects corrupted or mismatched chunks and permits deliberate retry", async () => {
   const built = buildSearchCatalog(body());
